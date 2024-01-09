@@ -1,10 +1,10 @@
 import Image from "next/image"
-import MenuItems from "@/app/ui/menu_items";
+import MenuItems from "@/app/ui/main/menu_items";
 import Link from "next/link";
-import AuthButtons from "@/app/ui/auth_buttons";
+import AuthButtons from "@/app/ui/main/auth_buttons";
 
 export default function Header() {
-    return <div className={"w-4/5 h-20 flex justify-between"}>
+    return <nav className={"my-0 mx-auto w-3/4 h-20 flex justify-between"}>
         <div className={"flex justify-start gap-3 h-full"}>
             <Link
                 href={"/"}
@@ -22,5 +22,5 @@ export default function Header() {
         </div>
 
         <AuthButtons/>
-    </div>
+    </nav>
 }
