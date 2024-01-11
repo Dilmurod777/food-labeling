@@ -36,6 +36,7 @@ const items: MenuItem[] = [
 export default function MenuItems() {
     return <div className={"flex gap-3 items-center pt-3"}>
         {items.map(item => <Link
+            key={item.text.toLowerCase()}
             href={item.url}
             className={"group flex items-center h-full text-black font-bold text-lg hover:bg-gray-50 px-3 rounded-md"}
         >
