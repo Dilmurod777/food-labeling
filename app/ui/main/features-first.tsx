@@ -8,7 +8,7 @@ interface Feature {
     url: string
 }
 
-export default function Features() {
+export default function FeaturesFirst() {
     const features: Feature[] = [
         {
             name: "Cloud Saves",
@@ -36,7 +36,7 @@ export default function Features() {
         }
     ]
 
-    return <div className={"flex justify-between gap-4 w-[90%] mx-auto my-0 py-12"}>
+    return <div className={"flex justify-between gap-24 w-[90%] mx-auto my-0 py-16"}>
         {features.map((feature, i) => <Link
             href={feature.url}
             key={`${feature.name.toLowerCase()}_${i}`}
@@ -50,14 +50,14 @@ export default function Features() {
                     width={150}
                     style={{
                         height: "100%",
-                        width:"fit-content",
+                        width: "fit-content",
                         left: 0,
                         objectFit: "contain"
                     }}
                 />
             </div>
 
-            <p className={"text-black font-bold py-4 text-lg"}>{feature.name}</p>
+            <p className={"text-black font-bold py-4 text-xl"}>{feature.name}</p>
             <p className={"text-black font-light text-lg"}>{feature.description}</p>
         </Link>)}
     </div>

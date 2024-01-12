@@ -8,13 +8,13 @@ export default function Header() {
         <div className={"flex justify-start gap-3 h-full"}>
             <Link
                 href={"/"}
-                className={"flex items-center justify-center mr-5"}
+                className={"flex items-center justify-center mr-3"}
             >
                 <Image
-                    src={"/logo.svg"}
+                    src={"/logo.jpg"}
                     alt={"Logo"}
-                    width={150}
-                    height={100}
+                    width={80}
+                    height={80}
                 />
             </Link>
 
