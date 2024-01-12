@@ -11,7 +11,7 @@ export default function Header() {
                 className={"flex items-center justify-center mr-3"}
             >
                 <Image
-                    src={"/logo.jpg"}
+                    src={"/logo.png"}
                     alt={"Logo"}
                     width={80}
                     height={80}
