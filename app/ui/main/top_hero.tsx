@@ -1,14 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import {FaRegPlayCircle} from "react-icons/fa";
+
 export default function TopHero() {
-    return <div className={"flex items-center h-[650px] w-4/5 m-auto"}>
+    return <div className={"flex items-center h-[650px] w-4/5 mx-auto my-0"}>
         <div className={"flex flex-1 flex-col justify-center"}>
             <p className={"text-4xl text-black font-bold mb-6"}>
                 Create Your Own <br/>Nutrition Fact Labels
             </p>
             <p className={"text-lg text-black font-thin"}>
-                Our nutrition label generator makes it easy to create FDA and CFIA-compliant labels from anywhere. Recipe costing and inventory to
+                Our nutrition label generator makes it easy to create FDA and CFIA-compliant labels from anywhere.
+                Recipe costing and inventory to
                 improve your business.
             </p>
             <div className={"flex gap-4 my-12"}>
@@ -26,9 +29,15 @@ export default function TopHero() {
                     Try Our Sample Label
                 </Link>
             </div>
-            <div>
-                <span>How does ReciPal work?</span>
-            </div>
+            <Link
+                href={"/"}
+                className={"flex items-center text-main-blue hover:text-hover-main-blue"}
+            >
+                <FaRegPlayCircle size={18}/>
+                <span className={"ml-2"}>
+                    How does ReciPal work?
+                </span>
+            </Link>
         </div>
         <div className={"flex flex-1 items-center justify-center"}>
             <Image

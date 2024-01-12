@@ -1,4 +1,5 @@
 import type {Config} from 'tailwindcss'
+import colors from "tailwindcss/colors";
 
 const config: Config = {
     content: [
@@ -13,20 +14,12 @@ const config: Config = {
                 'gradient-conic':
                     'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
             },
-            backgroundColor: {
+            colors:{
+                ...colors,
                 "main-green": "#00a734",
                 "hover-main-green": "#00982f",
-                "main-blue": "#408abf"
-            },
-            textColor: {
-                "main-green": "#00a734",
-                "hover-main-green": "#00982f",
-                "main-blue": "#408abf"
-            },
-            borderColor: {
-                "main-green": "#00a734",
-                "hover-main-green": "#00982f",
-                "main-blue": "#408abf"
+                "main-blue": "#408abf",
+                "hover-main-blue": "#336e99"
             }
         },
     },
