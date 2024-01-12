@@ -3,6 +3,7 @@ import TopHero from "@/app/ui/main/top_hero";
 import TrustedBusinesses from "@/app/ui/main/trusted_businesses";
 import Features from "@/app/ui/main/features";
 import Divider from "@/app/ui/divider";
+import NutritionAnalysisMadeEasy from "@/app/ui/main/nutrition_analysis_made_easy";
 
 export default function Home() {
     return (
@@ -12,6 +13,7 @@ export default function Home() {
             <TrustedBusinesses/>
             <Divider margin={1.5} marginUnits={"rem"} height={2} heightUnits={"px"} color={"#f2f7fb"}/>
             <Features/>
+            <NutritionAnalysisMadeEasy/>
         </main>
     )
 }
