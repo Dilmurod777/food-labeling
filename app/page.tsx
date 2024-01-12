@@ -3,8 +3,9 @@ import TopHero from "@/app/ui/main/top_hero";
 import TrustedBusinesses from "@/app/ui/main/trusted_businesses";
 import Features from "@/app/ui/main/features";
 import Divider from "@/app/ui/divider";
-import NutritionAnalysisMadeEasy from "@/app/ui/main/nutrition_analysis_made_easy";
-import NutritionLabelingThatIsFun from "@/app/ui/main/nutrition_labeling_that_is_fun";
+import NutritionAnalysisMadeEasy from "@/app/ui/main/nutrition-analysis-made-easy";
+import NutritionLabelingThatIsFun from "@/app/ui/main/nutrition-labeling-that-is-fun";
+import RecipeCostingToMakeDecisions from "@/app/ui/main/recipe-costing-to-make-decisions";
 
 export default function Home() {
     return (
@@ -16,6 +17,7 @@ export default function Home() {
             <Features/>
             <NutritionAnalysisMadeEasy/>
             <NutritionLabelingThatIsFun/>
+            <RecipeCostingToMakeDecisions/>
         </main>
     )
 }
