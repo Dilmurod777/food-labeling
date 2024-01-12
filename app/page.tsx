@@ -7,6 +7,7 @@ import NutritionAnalysisMadeEasy from "@/app/ui/main/nutrition-analysis-made-eas
 import NutritionLabelingThatIsFun from "@/app/ui/main/nutrition-labeling-that-is-fun";
 import RecipeCostingToMakeDecisions from "@/app/ui/main/recipe-costing-to-make-decisions";
 import FeaturesSecond from "@/app/ui/main/features-second";
+import CustomerServiceToDieFor from "@/app/ui/main/customer-service-to-die-for";
 
 export default function Home() {
     return (
@@ -20,6 +21,7 @@ export default function Home() {
             <NutritionLabelingThatIsFun/>
             <RecipeCostingToMakeDecisions/>
             <FeaturesSecond/>
+            <CustomerServiceToDieFor/>
         </main>
     )
 }

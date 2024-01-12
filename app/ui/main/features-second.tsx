@@ -55,14 +55,14 @@ export default function FeaturesSecond() {
                 />
             </div>
 
-            <p className={"text-black font-bold py-4 text-2xl"}>{feature.name}</p>
-            <p className={"text-black font-light text-lg"}>{feature.description}</p>
+            <p className={"text-black font-bold py-4 text-xl"}>{feature.name}</p>
+            <p className={"text-black font-light text-sm"}>{feature.description}</p>
 
             <Link
                 href={feature.url}
-                className={"group flex items-center text-lg font-normal mt-12 text-main-blue hover:text-hover-main-blue"}
+                className={"group flex items-center text-lg font-normal mt-8 text-main-blue hover:text-hover-main-blue"}
             >
-                <span className={"mr-2 group-hover:mr-4 transition-all font-bold text-lg"}>{feature.url_text}</span>
+                <span className={"mr-2 group-hover:mr-4 transition-all font-bold text-sm"}>{feature.url_text}</span>
                 <GrLinkNext/>
             </Link>
         </div>)}
