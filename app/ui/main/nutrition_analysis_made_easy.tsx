@@ -5,7 +5,7 @@ import IngredientListImage from "@/public/images/ingredient-list.png";
 import Divider from "@/app/ui/divider";
 
 export default function NutritionAnalysisMadeEasy() {
-    return <div className={"bg-main-blue text-white mt-6 p-12 flex"}>
+    return <div className={"bg-main-blue text-white mt-6 p-12 flex items-center justify-between"}>
         <div className={"px-12 py-6 w-1/2 h-full"}>
             <Image
                 src={IngredientListImage}
