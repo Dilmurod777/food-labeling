@@ -12,6 +12,7 @@ import FoodEntrepreneurs from "@/app/ui/main/food-entrepreneurs";
 import CaseStudies from "@/app/ui/main/case-studies";
 import Testimonials from "@/app/ui/main/testimonials";
 import FAQ from "@/app/ui/main/faq";
+import SignUpForFree from "@/app/ui/main/signup-for-free";
 
 export default function Home() {
     return (
@@ -30,6 +31,7 @@ export default function Home() {
             <CaseStudies/>
             <Testimonials/>
             <FAQ/>
+            <SignUpForFree/>
         </main>
     )
 }
