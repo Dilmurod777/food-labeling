@@ -10,6 +10,7 @@ import FeaturesSecond from "@/app/ui/main/features-second";
 import CustomerServiceToDieFor from "@/app/ui/main/customer-service-to-die-for";
 import FoodEntrepreneurs from "@/app/ui/main/food-entrepreneurs";
 import CaseStudies from "@/app/ui/main/case-studies";
+import Testimonials from "@/app/ui/main/testimonials";
 
 export default function Home() {
     return (
@@ -26,6 +27,7 @@ export default function Home() {
             <CustomerServiceToDieFor/>
             <FoodEntrepreneurs/>
             <CaseStudies/>
+            <Testimonials/>
         </main>
     )
 }
