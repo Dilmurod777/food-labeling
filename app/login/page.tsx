@@ -1,20 +1,18 @@
 "use client";
 
 import {useFormState, useFormStatus} from 'react-dom';
-import {authenticate} from '@/app/lib/actions';
+import {login} from '@/app/lib/actions';
 import {Lato} from 'next/font/google'
 import {MdEmail} from "react-icons/md";
 import {FaLock} from "react-icons/fa";
-import {useRef} from "react";
 import Divider from "@/app/ui/divider";
 import Link from "next/link";
+import AuthButton from "@/app/ui/auth_button";
 
 const lato = Lato({weight: ["300", "400", "700", "900"], subsets: ['latin']})
 
 export default function Login() {
-    const [errorMessage, dispatch] = useFormState(authenticate, undefined);
-    const {pending} = useFormStatus();
-    const emailIcon = useRef<HTMLElement>(null)
+    const [errorMessage, dispatch] = useFormState(login, undefined);
 
     return <div className={`w-full h-full py-12 ${lato.className}`}>
         <form
@@ -39,7 +37,6 @@ export default function Login() {
                     />
 
                     <MdEmail
-                        ref={emailIcon}
                         className={"absolute text-lg left-3 top-1/2"}
                         style={{
                             transform: "translateY(-50%)"
@@ -58,7 +55,6 @@ export default function Login() {
                     />
 
                     <FaLock
-                        ref={emailIcon}
                         className={"absolute text-lg left-3 top-1/2"}
                         style={{
                             transform: "translateY(-50%)"
@@ -66,14 +62,9 @@ export default function Login() {
                     />
                 </div>
             </div>
-            <button
-                type={"submit"}
-                className="mt-4 bg-main-green rounded-md py-2 px-6 text-white cursor-pointer"
-                aria-disabled={pending}
-                disabled={!pending}
-            >
-                Log in
-            </button>
+
+            <AuthButton text={"Log in"}/>
+
             {errorMessage && (<div
                 className="flex h-8 items-end space-x-1"
                 aria-live="polite"

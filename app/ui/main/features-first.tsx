@@ -1,5 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import CloudSvg from "@/public/images/features/cloud.svg";
+import IngredientsSvg from "@/public/images/features/ingredients.svg";
+import CostSvg from "@/public/images/features/cost.svg";
+import HelpSvg from "@/public/images/features/help.svg";
 
 interface Feature {
     name: string,
@@ -13,25 +17,25 @@ export default function FeaturesFirst() {
         {
             name: "Cloud Saves",
             description: "Store your recipes securely in the cloud",
-            image_url: "cloud.svg",
+            image_url: CloudSvg,
             url: "/"
         },
         {
             name: "Ingredients Database",
             description: "Search our database, or add your own ingredients",
-            image_url: "ingredients.svg",
+            image_url: IngredientsSvg,
             url: "/"
         },
         {
             name: "Cost Calculations",
             description: "Calculate recipe costs and price your product",
-            image_url: "cost.svg",
+            image_url: CostSvg,
             url: "/"
         },
         {
             name: "Expert Help",
             description: "Labeling experts to answer questions and hire for help",
-            image_url: "help.svg",
+            image_url: HelpSvg,
             url: "/"
         }
     ]
@@ -44,12 +48,9 @@ export default function FeaturesFirst() {
         >
             <div className={"h-[45px] w-[250px] relative"}>
                 <Image
-                    src={`/images/features/${feature.image_url}`}
+                    src={feature.image_url}
                     alt={`${feature.name}`}
-                    height={45}
-                    width={150}
                     style={{
-                        height: "100%",
                         width: "fit-content",
                         left: 0,
                         objectFit: "contain"

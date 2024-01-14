@@ -1,20 +1,19 @@
 "use client";
 
 import {useFormState, useFormStatus} from 'react-dom';
-import {authenticate} from '@/app/lib/actions';
+import {signup} from '@/app/lib/actions';
 import {Lato} from 'next/font/google'
 import {MdEmail} from "react-icons/md";
-import {FaLock} from "react-icons/fa";
-import {useRef} from "react";
+import {FaLock, FaUser} from "react-icons/fa";
 import Divider from "@/app/ui/divider";
 import Link from "next/link";
+import AuthButton from "@/app/ui/auth_button";
+import {useRef} from "react";
 
 const lato = Lato({weight: ["300", "400", "700", "900"], subsets: ['latin']})
 
 export default function Signup() {
-    const [errorMessage, dispatch] = useFormState(authenticate, undefined);
-    const {pending} = useFormStatus();
-    const emailIcon = useRef<HTMLElement>(null)
+    const [errorMessage, dispatch] = useFormState(signup, undefined);
 
     return <div className={`w-full h-full py-12 ${lato.className}`}>
         <form
@@ -31,6 +30,23 @@ export default function Signup() {
                 <div className={"relative text-gray-400 focus-within:text-gray-800"}>
                     <input
                         className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                        id="name"
+                        type="text"
+                        name="name"
+                        placeholder="Name"
+                        required
+                    />
+
+                    <FaUser
+                        className={"absolute text-lg left-3 top-1/2"}
+                        style={{
+                            transform: "translateY(-50%)"
+                        }}
+                    />
+                </div>
+                <div className={"relative text-gray-400 focus-within:text-gray-800 mt-4"}>
+                    <input
+                        className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                         id="email"
                         type="email"
                         name="email"
@@ -39,7 +55,6 @@ export default function Signup() {
                     />
 
                     <MdEmail
-                        ref={emailIcon}
                         className={"absolute text-lg left-3 top-1/2"}
                         style={{
                             transform: "translateY(-50%)"
@@ -58,7 +73,6 @@ export default function Signup() {
                     />
 
                     <FaLock
-                        ref={emailIcon}
                         className={"absolute text-lg left-3 top-1/2"}
                         style={{
                             transform: "translateY(-50%)"
@@ -70,7 +84,6 @@ export default function Signup() {
                         <input
                             id="terms_agreement"
                             type="checkbox"
-                            name="terms_agreement"
                             required
                         />
                         <span className={"text-sm"}>
@@ -80,20 +93,15 @@ export default function Signup() {
                     </label>
                 </div>
             </div>
-            <button
-                type={"submit"}
-                className="mt-4 bg-main-green rounded-md py-2 px-6 text-white cursor-pointer"
-                aria-disabled={pending}
-                disabled={!pending}
-            >
-                Sign up
-            </button>
-            {errorMessage && (<div
-                className="flex h-8 items-end space-x-1"
+
+            <AuthButton text={"Sign up"}/>
+
+            {errorMessage && typeof errorMessage == "string" && (<div
+                className="flex flex-col items-start gap-y-0 mt-2"
                 aria-live="polite"
                 aria-atomic="true"
             >
-                <p className="text-sm text-red-500">{errorMessage}</p>
+                {errorMessage.split("\n").map((message, i) => <p key={`message-${i}`} className="text-sm text-red-500">{message.trim()}</p>)}
             </div>)}
 
             <Divider height={1} heightUnits={"px"} margin={1.5} marginUnits={"rem"} color={"#f2f7fb"}/>
