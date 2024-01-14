@@ -10,14 +10,14 @@ export default function AuthenticatedButtons({user}: { user: User }) {
 
     return <div className={"flex items-center justify-center gap-2 h-full pt-3"}>
         <Link
-            href={"/"}
+            href={"/dashboard?tab=0"}
             className={"group flex items-center h-full text-black font-bold text-sm hover:bg-gray-50 px-3 rounded-md"}
         >
             <span className={"group-hover:text-sky-500"}>Recipes</span>
         </Link>
 
         <Link
-            href={"/"}
+            href={"/dashboard?tab=1"}
             className={"group flex items-center h-full text-black font-bold text-sm hover:bg-gray-50 px-3 rounded-md"}
         >
             <span className={"group-hover:text-sky-500"}>Inventory</span>
