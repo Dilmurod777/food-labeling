@@ -35,7 +35,7 @@ export default function TopHero() {
             >
                 <FaRegPlayCircle size={18}/>
                 <span className={"ml-2"}>
-                    How does ReciPal work?
+                    How does Foodplanet work?
                 </span>
             </Link>
         </div>

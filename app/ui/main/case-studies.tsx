@@ -14,25 +14,25 @@ export default function CaseStudies() {
         {
             img_url: "slant-shack.svg",
             url: "/",
-            feedback: "We couldn't find an affordable labeling option for all our flavors and ReciPal was the solution.",
+            feedback: "We couldn't find an affordable labeling option for all our flavors and Foodplanet was the solution.",
             name: "SlantShack"
         },
         {
             img_url: "frost-bites.png",
             url: "/",
-            feedback: "ReciPal took the fear factor out of getting intimidating nutrition facts done. It made sense and simplified the technical aspects.",
+            feedback: "Foodplanet took the fear factor out of getting intimidating nutrition facts done. It made sense and simplified the technical aspects.",
             name: "Frost Bites"
         },
         {
             img_url: "yumtum.png",
             url: "/",
-            feedback: "ReciPal customer service went above and beyond to create a custom label and triangulated tricky ingredient data for us.",
+            feedback: "Foodplanet customer service went above and beyond to create a custom label and triangulated tricky ingredient data for us.",
             name: "YumTum"
         },
         {
             img_url: "mason-jar.png",
             url: "/",
-            feedback: "Other software wasn't user friendly. If Apple were to make nutrition label software it would look like ReciPal.",
+            feedback: "Other software wasn't user friendly. If Apple were to make nutrition label software it would look like Foodplanet.",
             name: "The Mason Jar CookieCo"
         }
     ]

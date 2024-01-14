@@ -39,7 +39,7 @@ export default function NutritionAnalysisMadeEasy() {
             <blockquote className={"border-l-main-green border-l-[5px] py-5 px-6"}>
                 <p className={"mb-4 text-lg font-normal"}>
                     &quot;Food analysis was not a task I wanted to take on, but it turned out to be straightforward with
-                    ReciPal.&quot;
+                    Foodplanet.&quot;
                 </p>
                 <p className={"font-bold text-lg"}>Mary Mentzer</p>
                 <span className={"bold-thin text-sm"}>Owner, Eat Drink & Meet Mary</span>

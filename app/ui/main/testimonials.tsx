@@ -27,7 +27,7 @@ export default function Testimonials() {
             job: "OPERATIONS, CAROLINA FARMIN’"
         },
         {
-            text: "ReciPal is a brilliant product. I've gone through a number of alternatives and I really appreciate how much this has simplified my life.",
+            text: "Foodplanet is a brilliant product. I've gone through a number of alternatives and I really appreciate how much this has simplified my life.",
             author: "Kevin",
             job: "CO-FOUNDER, IMMI"
         },

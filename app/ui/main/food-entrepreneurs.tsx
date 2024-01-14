@@ -38,7 +38,7 @@ export default function FoodEntrepreneurs() {
 
     return <div className={"w-[90%] mx-auto my-0 py-24 text-black flex flex-col items-center text-center"}>
         <h2 className={"font-bold text-4xl"}>
-            Food entrepreneurs large and small rely on ReciPal!
+            Food entrepreneurs large and small rely on Foodplanet!
         </h2>
         <p className={"text-xl font-bold my-14"}>
             Click on an industry to learn more.

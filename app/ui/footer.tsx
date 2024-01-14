@@ -17,23 +17,23 @@ export default function Footer() {
             url: "/"
         },
         {
-            text: "@recipalco",
+            text: "@Foodplanetco",
             icon: <FaInstagram/>,
             url: "/"
         },
         {
-            text: "@recipal",
+            text: "@Foodplanet",
             icon: <FaTwitter/>,
             url: "/"
         },
         {
-            text: "facebook.com/recipal",
+            text: "facebook.com/Foodplanet",
             icon: <FaFacebook/>,
             url: "/"
         }
     ]
 
-    return <div className={"flex flex-col gap-12 py-12 px-24"}>
+    return <div className={"flex flex-col gap-12 py-12 px-24 bg-[#f9fafa]"}>
         <div className={"flex justify-between items-stretch"}>
             <div className={"flex flex-col items-start justify-center basis-1/4"}>
                 <Image
@@ -115,7 +115,7 @@ export default function Footer() {
         </div>
         <div className={"flex items-center justify-end"}>
             <p className={"text-sm text-[#6c6f7c] font-normal"}>
-                Copyright © 2011-2024 ReciPal, LLC. All rights reserved.
+                Copyright © 2011-2024 Foodplanet, LLC. All rights reserved.
             </p>
         </div>
     </div>
