@@ -29,12 +29,12 @@ const items: MenuItem[] = [
             {
                 mainText: "Nutrition Label Software",
                 secondaryText: "FDA and CFIA compliant nutrition labels.",
-                url: "/dashboard?tab=0",
+                url: "/nutrition-label-software",
             },
             {
                 mainText: "Inventory",
                 secondaryText: "Lot tracing, inventory management, and production planning.",
-                url: "/dashboard?tab=1",
+                url: "/inventory",
             }
         ]
     },

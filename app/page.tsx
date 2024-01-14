@@ -1,5 +1,5 @@
 import Header from "@/app/ui/header";
-import TopHero from "@/app/ui/main/top_hero";
+import TopHero from "@/app/ui/main/top-hero";
 import TrustedBusinesses from "@/app/ui/main/trusted_businesses";
 import FeaturesFirst from "@/app/ui/main/features-first";
 import Divider from "@/app/ui/divider";
