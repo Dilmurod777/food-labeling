@@ -38,7 +38,7 @@ export default function MenuItems() {
         {items.map(item => <Link
             key={item.text.toLowerCase()}
             href={item.url}
-            className={"group flex items-center h-full text-black font-bold text-lg hover:bg-gray-50 px-3 rounded-md"}
+            className={"group flex items-center h-full text-black font-bold text-sm hover:bg-gray-50 px-3 rounded-md"}
         >
             <span className={"group-hover:text-sky-500"}>{item.text}</span>
             {item.rightIcon && <span className={"ml-2"}>{item.rightIcon}</span>}

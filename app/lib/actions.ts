@@ -1,6 +1,6 @@
 'use server';
 
-import {signIn} from '@/auth';
+import {signIn, signOut} from '@/auth';
 import {AuthError} from 'next-auth';
 import type {User} from "@/app/lib/models";
 import {sql} from "@vercel/postgres";
@@ -100,6 +100,25 @@ export async function signup(
         if (error instanceof AuthError) {
             switch (error.type) {
                 case 'EmailSignInError':
+                    return 'Invalid credentials.';
+                default:
+                    return 'Something went wrong.';
+            }
+        }
+        throw error;
+    }
+}
+
+export async function logout(
+    prevState: string | undefined,
+    formData: FormData,
+) {
+    try {
+        await signOut();
+    } catch (error) {
+        if (error instanceof AuthError) {
+            switch (error.type) {
+                case 'CredentialsSignin':
                     return 'Invalid credentials.';
                 default:
                     return 'Something went wrong.';

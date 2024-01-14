@@ -1,6 +1,6 @@
 "use client";
 
-import {useFormState, useFormStatus} from 'react-dom';
+import {useFormState} from 'react-dom';
 import {signup} from '@/app/lib/actions';
 import {Lato} from 'next/font/google'
 import {MdEmail} from "react-icons/md";
@@ -8,7 +8,6 @@ import {FaLock, FaUser} from "react-icons/fa";
 import Divider from "@/app/ui/divider";
 import Link from "next/link";
 import AuthButton from "@/app/ui/auth_button";
-import {useRef} from "react";
 
 const lato = Lato({weight: ["300", "400", "700", "900"], subsets: ['latin']})
 
