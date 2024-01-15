@@ -47,7 +47,7 @@ export default function Testimonials() {
                 className={"w-[33%] h-auto"}
             >
                 <div className={"border-l-main-green border-l-[3px] py-5 px-6"}>
-                    <p className={"mb-6 text-lg font-normal italic text-[#6c6f7c]"}>
+                    <p className={"mb-6 text-sm font-normal italic text-[#6c6f7c]"}>
                         &quot;{item.text}&quot;
                     </p>
                     <p className={"font-bold text-sm"}>{item.author}</p>

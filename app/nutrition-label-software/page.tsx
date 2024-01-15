@@ -1,27 +1,76 @@
 "use client";
 
-import {useState} from "react";
+import {ReactNode, useEffect, useState} from "react";
 import TopHero from "@/app/ui/nutrition-label-software/top-hero";
 import AllFeatures from "@/app/ui/nutrition-label-software/tab_content/all_features";
 import Tabs from "@/app/ui/nutrition-label-software/tabs";
+import Testimonials from "@/app/ui/main/testimonials";
+import FAQ from "@/app/ui/main/faq";
+import SimpleSoftwareForFoodBusinesses from "@/app/ui/nutrition-label-software/simple-software-for-food-businesses";
+import {useSearchParams} from "next/navigation";
+
+interface TabContent {
+    page: ReactNode,
+    mainText: string,
+    secondaryText: string
+}
 
 export default function NutritionLabelSoftware() {
-    const [tabIndex, setTabIndex] = useState(0)
-    const tabs = {
-        "All Features": <AllFeatures/>,
-        "Nutrition Analysis": <div></div>,
-        "Labeling": <div></div>,
-        "Costing": <div></div>,
-        "Ingredient Lists": <div></div>,
-        "Recipe Management": <div></div>,
+    const params = useSearchParams();
+    const paramTabIndex = params.get("page");
+
+    const [tabIndex, setTabIndex] = useState(parseInt(paramTabIndex || "0"))
+    const tabs: { [key: string]: TabContent } = {
+        "All Features": {
+            page: <AllFeatures/>,
+            mainText: "Nutrition Label Software",
+            secondaryText: "With Foodplanet, you can use our nutrition labeling software to create nutrition labels for your products to comply with food regulations and grow your business." +
+                "<br/></br>" +
+                "Foodplanet&apos;s team of labeling experts can review your nutrition labels to ensure key components are correct."
+        },
+        "Nutrition Analysis": {
+            page: <div/>,
+            mainText: "Nutrition Analysis Software",
+            secondaryText: "With the best nutrition analysis software, you can accurately break down the nutritional contents of the food you’re producing, and better understand it. Foodplanet's user-friendly software allows you to conveniently analyze recipes and increase transparency with customers."
+        },
+        "Labeling": {
+            page: <div/>,
+            mainText: "Nutrition Label Templates",
+            secondaryText: "Are you a food business owner in need of a high-quality nutrition label for your products? It’s simple and fast to create your very own custom nutrition label with Foodplanet’s nutrition label templates."
+        },
+        "Costing": {
+            page: <div/>,
+            mainText: "Ingredient Cost Calculator for Better Business Decisions",
+            secondaryText: "With Foodplanet’s ingredient cost calculator, you can get a detailed breakdown that provides you with the cost of food products by batch and by package. This allows you to come up with an effective pricing strategy for your food products and optimize profits for your business."
+        },
+        "Ingredient Lists": {
+            page: <div/>,
+            mainText: "Customizable Ingredients List Templates",
+            secondaryText: "With Foodplanet’s free ingredients list template, you can quickly create your own custom ingredients list and automatically generate nutrition labels that follow FDA guidelines."
+        },
+        "Recipe Management": {
+            page: <div/>,
+            mainText: "Cloud-Based Recipe Management System",
+            secondaryText: "With Foodplanet’s secure cloud-based recipe management software, you can be completely flexible in how you manage recipes and ingredients. Access recipes from any device, at any time, from any location."
+        },
     };
 
+    useEffect(() => {
+        setTabIndex(parseInt(paramTabIndex || '0'))
+    }, [paramTabIndex])
+
+    const tabContent = tabs[Object.keys(tabs)[tabIndex]]
     return <div className={"flex flex-col"}>
-        <TopHero/>
+        <TopHero mainText={tabContent.mainText} secondaryText={tabContent.secondaryText}/>
         <Tabs
             activeTabIndex={tabIndex}
             tabs={Object.keys(tabs)}
             onTabClick={(i) => setTabIndex(i)}
         />
+        {tabContent.page}
+
+        <FAQ/>
+        <Testimonials/>
+        <SimpleSoftwareForFoodBusinesses/>
     </div>
 }

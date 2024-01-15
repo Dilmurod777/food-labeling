@@ -72,7 +72,7 @@ export default function MenuItems() {
             </Link>
 
             {item.subItems && activeMenuItemIndex == i && (<div
-                className={"absolute top-[100%] left-0 bg-white border-[1px] border-[#e7ecef] rounded-md"}
+                className={"absolute top-[100%] left-0 bg-white border-[1px] border-main-gray rounded-md"}
                 style={{
                     width: "275%",
                     height: 'fit-content',

@@ -40,16 +40,16 @@ export default function CaseStudies() {
     return <div className={"flex flex-col items-center text-black px-12 py-16"}>
         <h2 className={"font-bold text-4xl"}>Read our case studies</h2>
         <div className={"mt-12 w-full grid grid-cols-2 grid-rows-2 h-[400px]"}>
-            <div className={"border-r-[1px] border-b-[1px] border-[#e7ecef]"}>
+            <div className={"border-r-[1px] border-b-[1px] border-main-gray"}>
                 <CaseStudyBlock caseStudy={caseStudies[0]}/>
             </div>
-            <div className={"border-l-[1px] border-b-[1px] border-[#e7ecef]"}>
+            <div className={"border-l-[1px] border-b-[1px] border-main-gray"}>
                 <CaseStudyBlock caseStudy={caseStudies[1]}/>
             </div>
-            <div className={"border-t-[1px] border-r-[1px] border-[#e7ecef]"}>
+            <div className={"border-t-[1px] border-r-[1px] border-main-gray"}>
                 <CaseStudyBlock caseStudy={caseStudies[2]}/>
             </div>
-            <div className={"border-t-[1px] border-l-[1px] border-[#e7ecef]"}>
+            <div className={"border-t-[1px] border-l-[1px] border-main-gray"}>
                 <CaseStudyBlock caseStudy={caseStudies[3]}/>
             </div>
         </div>
