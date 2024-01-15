@@ -14,7 +14,7 @@ export default function TopHero() {
                 src={InventoryIllustration}
                 alt={"Inventory Illustration"}
                 style={{
-                    width: "50%",
+                    width: "35%",
                     objectFit: 'contain'
                 }}
             />

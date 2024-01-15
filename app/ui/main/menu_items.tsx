@@ -22,7 +22,7 @@ interface MenuSubItem {
 const items: MenuItem[] = [
     {
         text: "Products",
-        url: "/",
+        url: "#",
         enabled: true,
         rightIcon: <IoIosArrowDown/>,
         subItems: [
