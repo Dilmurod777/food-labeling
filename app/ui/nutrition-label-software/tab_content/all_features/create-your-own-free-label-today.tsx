@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export default function CreateYourOwnFreeLabelToday(){
-    return <div className={"flex justify-between items-center bg-main-green px-12 py-12"}>
+    return <div className={"flex justify-between items-center bg-main-green px-28 py-12"}>
         <h2 className={"text-4xl font-bold text-white"}>Create your own free label today!</h2>
 
         <Link

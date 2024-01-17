@@ -29,7 +29,7 @@ export default function NutritionLabelSoftware() {
                 "Foodplanet&apos;s team of labeling experts can review your nutrition labels to ensure key components are correct."
         },
         "Nutrition Analysis": {
-            page: <div/>,
+            page: <div>Nutrition Analysis</div>,
             mainText: "Nutrition Analysis Software",
             secondaryText: "With the best nutrition analysis software, you can accurately break down the nutritional contents of the food you’re producing, and better understand it. Foodplanet's user-friendly software allows you to conveniently analyze recipes and increase transparency with customers."
         },
@@ -67,7 +67,12 @@ export default function NutritionLabelSoftware() {
             tabs={Object.keys(tabs)}
             onTabClick={(i) => setTabIndex(i)}
         />
-        {tabContent.page}
+        {Object.keys(tabs).map((tab, i) => <div
+            key={`tab-content-${i}`}
+            className={`${i == tabIndex ? 'block' : 'hidden'} w-full h-full`}
+        >
+            {tabs[tab].page}
+        </div>)}
 
         <FAQ/>
         <Testimonials/>
