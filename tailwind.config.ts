@@ -20,7 +20,8 @@ const config: Config = {
                 "hover-main-green": "#00982f",
                 "main-blue": "#408abf",
                 "hover-main-blue": "#336e99",
-                "main-gray": "#e7ecef"
+                "main-gray": "#e7ecef",
+                "secondary-gray": "#3f4a56"
             }
         },
     },

@@ -6,14 +6,14 @@ import IngredientLabeling from "@/public/images/ingredient-labeling.png";
 import Image from "next/image";
 
 export default function NutritionLabelingThatIsFun() {
-    return <div className={"flex gap-8 items-center justify-between py-16 px-16 bg-main-gray"}>
+    return <div className={"flex items-center justify-center gap-24 py-16 px-28 bg-main-gray"}>
         <Image
             src={IngredientLabeling}
             alt={"Ingredient List"}
             className={"w-2/5"}
         />
 
-        <div className={"flex flex-col items-start gap-6 w-1/2"}>
+        <div className={"flex flex-col items-start gap-6 w-2/5"}>
             <Link
                 href={'/nutrition-label-software?page=2'}
                 className={"font-normal text-4xl mb-8"}

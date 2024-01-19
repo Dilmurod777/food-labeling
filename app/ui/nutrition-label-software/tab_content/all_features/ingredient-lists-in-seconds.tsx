@@ -4,11 +4,11 @@ import Image from "next/image";
 import LabelSamples from "@/public/images/label-samples.svg";
 
 export default function IngredientListsInSeconds() {
-    return <div className={"flex items-center justify-center gap-16 py-8 px-12"}>
-        <div className={"flex flex-col items-start w-2/5"}>
+    return <div className={"flex items-center justify-center gap-16 py-8 px-28 bg-main-gray text-secondary-gray"}>
+        <div className={"flex flex-col items-start w-3/5"}>
             <Link
                 href={"/nutrition-label-software?page=4"}
-                className={"text-4xl font-normal"}
+                className={"text-5xl font-normal"}
             >Ingredient lists <strong>in seconds</strong></Link>
 
             <Divider height={8} heightUnits={"px"} width={100} widthUnits={"px"} color={"#00a734"} margin={2.5} marginUnits={"rem"}/>
@@ -28,6 +28,5 @@ export default function IngredientListsInSeconds() {
                 objectFit: "scale-down"
             }}
         />
-
     </div>
 }
