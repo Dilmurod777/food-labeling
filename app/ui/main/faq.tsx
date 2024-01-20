@@ -1,12 +1,8 @@
-import items from "@/public/faq.json";
+import defaultItems from "@/public/faq/default-faq.json";
+import {FAQItem} from "@/app/lib/models";
 
 
-interface FAQItem {
-    question: string,
-    answer: string
-}
-
-export default function FAQ() {
+export default function FAQ({items = defaultItems}: { items?: FAQItem[] }) {
     return <div className={"flex flex-col items-center text-black bg-main-gray py-24 px-24"}>
         <h2 className={"font-bold text-4xl"}>Frequently asked questions</h2>
 
@@ -22,7 +18,7 @@ export default function FAQ() {
             >
                 <h3 className={"text-main-blue font-normal text-lg mb-3"}>{item.question}</h3>
 
-                <p className={"font-normal text-sm text-[#6c6f7c]"}>{item.answer}</p>
+                <p className={"font-normal text-sm text-[#6c6f7c]"} dangerouslySetInnerHTML={{__html: item.answer}}/>
             </div>)}
         </div>
     </div>

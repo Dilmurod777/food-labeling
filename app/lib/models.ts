@@ -4,3 +4,8 @@ export type User = {
     email: string;
     password: string;
 }
+
+export interface FAQItem {
+    question: string,
+    answer: string
+}

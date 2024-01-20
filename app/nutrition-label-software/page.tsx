@@ -10,10 +10,15 @@ import SimpleSoftwareForFoodBusinesses from "@/app/ui/nutrition-label-software/s
 import {useSearchParams} from "next/navigation";
 import NutritionAnalysis from "@/app/ui/nutrition-label-software/tab_content/nutrition-analysis";
 
+import AllFeaturesFaq from "@/public/faq/all-features-faq.json"
+import NutritionAnalysisFaq from "@/public/faq/nutrition-analysis-faq.json"
+import {FAQItem} from "@/app/lib/models";
+
 interface TabContent {
     page: ReactNode,
     mainText: string,
-    secondaryText: string
+    secondaryText: string,
+    faq?: FAQItem[]
 }
 
 export default function NutritionLabelSoftware() {
@@ -27,12 +32,14 @@ export default function NutritionLabelSoftware() {
             mainText: "Nutrition Label Software",
             secondaryText: "With Foodplanet, you can use our nutrition labeling software to create nutrition labels for your products to comply with food regulations and grow your business." +
                 "<br/></br>" +
-                "Foodplanet&apos;s team of labeling experts can review your nutrition labels to ensure key components are correct."
+                "Foodplanet&apos;s team of labeling experts can review your nutrition labels to ensure key components are correct.",
+            faq: AllFeaturesFaq
         },
         "Nutrition Analysis": {
             page: <NutritionAnalysis/>,
             mainText: "Nutrition Analysis Software",
-            secondaryText: "With the best nutrition analysis software, you can accurately break down the nutritional contents of the food you’re producing, and better understand it. Foodplanet's user-friendly software allows you to conveniently analyze recipes and increase transparency with customers."
+            secondaryText: "With the best nutrition analysis software, you can accurately break down the nutritional contents of the food you’re producing, and better understand it. Foodplanet's user-friendly software allows you to conveniently analyze recipes and increase transparency with customers.",
+            faq: NutritionAnalysisFaq
         },
         "Labeling": {
             page: <div>Labeling</div>,
@@ -72,10 +79,10 @@ export default function NutritionLabelSoftware() {
             key={`tab-content-${i}`}
             className={`${i == tabIndex ? 'block' : 'hidden'} w-full h-full`}
         >
-            {tabs[tab].page}
+            {tabContent.page}
         </div>)}
 
-        <FAQ/>
+        <FAQ items={tabContent.faq}/>
         <Testimonials/>
         <SimpleSoftwareForFoodBusinesses/>
     </div>
