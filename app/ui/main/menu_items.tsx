@@ -84,7 +84,7 @@ export default function MenuItems() {
                     key={`subItem-${si}`}
                     className={"flex flex-col gap-0 items-start py-2 px-4 text-sm hover:bg-[#f2f7fb]"}
                 >
-                    <span className={"text-main-blue"}>{subItem.mainText}</span>
+                    <span className={"text-main-blue font-bold"}>{subItem.mainText}</span>
                     {subItem.secondaryText && <span className={"text-[#6c6f7c] text-[0.6rem]"}>{subItem.secondaryText}</span>}
                 </Link>)}
             </div>)}

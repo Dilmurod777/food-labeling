@@ -4,7 +4,7 @@ import Link from "next/link";
 import {GoVideo} from "react-icons/go";
 
 export default function TopHero() {
-    return <div className={"flex flex-col items-center px-24"}>
+    return <div className={"flex flex-col items-center px-24 pb-12"}>
         <h2 className={"text-4xl text-black font-bold mb-3"}>Simple Lot Tracing and Inventory Tracking</h2>
         <p className={"text-lg text-black font-bold"}>Automated FIFO lot tracing, inventory management, and production planning to run your
             business</p>
