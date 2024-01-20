@@ -10,13 +10,15 @@ import SimpleSoftwareForFoodBusinesses from "@/app/ui/nutrition-label-software/s
 import {useSearchParams} from "next/navigation";
 import NutritionAnalysis from "@/app/ui/nutrition-label-software/tab_content/nutrition-analysis";
 
-import AllFeaturesFaq from "@/public/faq/all-features-faq.json"
-import NutritionAnalysisFaq from "@/public/faq/nutrition-analysis-faq.json"
-import LabelingFaq from "@/public/faq/labeling-faq.json"
-import CostingFaq from "@/public/faq/costing-faq.json"
+import AllFeaturesFaq from "@/public/faq/all-features-faq.json";
+import NutritionAnalysisFaq from "@/public/faq/nutrition-analysis-faq.json";
+import LabelingFaq from "@/public/faq/labeling-faq.json";
+import CostingFaq from "@/public/faq/costing-faq.json";
+import IngredientListFaq from "@/public/faq/ingredient-list-faq.json";
 import {FAQItem} from "@/app/lib/models";
 import Labeling from "@/app/ui/nutrition-label-software/tab_content/labeling";
 import Costing from "@/app/ui/nutrition-label-software/tab_content/costing";
+import IngredientList from "@/app/ui/nutrition-label-software/tab_content/ingredient-list";
 
 interface TabContent {
     page: ReactNode,
@@ -58,9 +60,10 @@ export default function NutritionLabelSoftware() {
             faq: CostingFaq
         },
         "Ingredient Lists": {
-            page: <div>Ingredient Lists</div>,
+            page: <IngredientList/>,
             mainText: "Customizable Ingredients List Templates",
-            secondaryText: "With Foodplanet’s free ingredients list template, you can quickly create your own custom ingredients list and automatically generate nutrition labels that follow FDA guidelines."
+            secondaryText: "With Foodplanet’s free ingredients list template, you can quickly create your own custom ingredients list and automatically generate nutrition labels that follow FDA guidelines.",
+            faq: IngredientListFaq
         },
         "Recipe Management": {
             page: <div>Recipe Management</div>,
