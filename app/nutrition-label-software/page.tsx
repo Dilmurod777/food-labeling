@@ -12,7 +12,9 @@ import NutritionAnalysis from "@/app/ui/nutrition-label-software/tab_content/nut
 
 import AllFeaturesFaq from "@/public/faq/all-features-faq.json"
 import NutritionAnalysisFaq from "@/public/faq/nutrition-analysis-faq.json"
+import LabelingFaq from "@/public/faq/labeling-faq.json"
 import {FAQItem} from "@/app/lib/models";
+import Labeling from "@/app/ui/nutrition-label-software/tab_content/labeling";
 
 interface TabContent {
     page: ReactNode,
@@ -42,9 +44,10 @@ export default function NutritionLabelSoftware() {
             faq: NutritionAnalysisFaq
         },
         "Labeling": {
-            page: <div>Labeling</div>,
+            page: <Labeling/>,
             mainText: "Nutrition Label Templates",
-            secondaryText: "Are you a food business owner in need of a high-quality nutrition label for your products? It’s simple and fast to create your very own custom nutrition label with Foodplanet’s nutrition label templates."
+            secondaryText: "Are you a food business owner in need of a high-quality nutrition label for your products? It’s simple and fast to create your very own custom nutrition label with Foodplanet’s nutrition label templates.",
+            faq: LabelingFaq
         },
         "Costing": {
             page: <div>Costing</div>,
