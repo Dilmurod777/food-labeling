@@ -15,10 +15,12 @@ import NutritionAnalysisFaq from "@/public/faq/nutrition-analysis-faq.json";
 import LabelingFaq from "@/public/faq/labeling-faq.json";
 import CostingFaq from "@/public/faq/costing-faq.json";
 import IngredientListFaq from "@/public/faq/ingredient-list-faq.json";
+import RecipeManagementFaq from "@/public/faq/recipe-management-faq.json";
 import {FAQItem} from "@/app/lib/models";
 import Labeling from "@/app/ui/nutrition-label-software/tab_content/labeling";
 import Costing from "@/app/ui/nutrition-label-software/tab_content/costing";
 import IngredientList from "@/app/ui/nutrition-label-software/tab_content/ingredient-list";
+import RecipeManagement from "@/app/ui/nutrition-label-software/tab_content/recipe-management";
 
 interface TabContent {
     page: ReactNode,
@@ -66,9 +68,10 @@ export default function NutritionLabelSoftware() {
             faq: IngredientListFaq
         },
         "Recipe Management": {
-            page: <div>Recipe Management</div>,
+            page: <RecipeManagement/>,
             mainText: "Cloud-Based Recipe Management System",
-            secondaryText: "With Foodplanet’s secure cloud-based recipe management software, you can be completely flexible in how you manage recipes and ingredients. Access recipes from any device, at any time, from any location."
+            secondaryText: "With Foodplanet’s secure cloud-based recipe management software, you can be completely flexible in how you manage recipes and ingredients. Access recipes from any device, at any time, from any location.",
+            faq: RecipeManagementFaq
         },
     };
 
