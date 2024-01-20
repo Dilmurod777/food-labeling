@@ -2,12 +2,13 @@
 
 import {ReactNode, useEffect, useState} from "react";
 import TopHero from "@/app/ui/nutrition-label-software/top-hero";
-import AllFeatures from "@/app/ui/nutrition-label-software/tab_content/all_features";
+import AllFeatures from "@/app/ui/nutrition-label-software/tab_content/all-features";
 import Tabs from "@/app/ui/nutrition-label-software/tabs";
 import Testimonials from "@/app/ui/main/testimonials";
 import FAQ from "@/app/ui/main/faq";
 import SimpleSoftwareForFoodBusinesses from "@/app/ui/nutrition-label-software/simple-software-for-food-businesses";
 import {useSearchParams} from "next/navigation";
+import NutritionAnalysis from "@/app/ui/nutrition-label-software/tab_content/nutrition-analysis";
 
 interface TabContent {
     page: ReactNode,
@@ -29,27 +30,27 @@ export default function NutritionLabelSoftware() {
                 "Foodplanet&apos;s team of labeling experts can review your nutrition labels to ensure key components are correct."
         },
         "Nutrition Analysis": {
-            page: <div>Nutrition Analysis</div>,
+            page: <NutritionAnalysis/>,
             mainText: "Nutrition Analysis Software",
             secondaryText: "With the best nutrition analysis software, you can accurately break down the nutritional contents of the food you’re producing, and better understand it. Foodplanet's user-friendly software allows you to conveniently analyze recipes and increase transparency with customers."
         },
         "Labeling": {
-            page: <div/>,
+            page: <div>Labeling</div>,
             mainText: "Nutrition Label Templates",
             secondaryText: "Are you a food business owner in need of a high-quality nutrition label for your products? It’s simple and fast to create your very own custom nutrition label with Foodplanet’s nutrition label templates."
         },
         "Costing": {
-            page: <div/>,
+            page: <div>Costing</div>,
             mainText: "Ingredient Cost Calculator for Better Business Decisions",
             secondaryText: "With Foodplanet’s ingredient cost calculator, you can get a detailed breakdown that provides you with the cost of food products by batch and by package. This allows you to come up with an effective pricing strategy for your food products and optimize profits for your business."
         },
         "Ingredient Lists": {
-            page: <div/>,
+            page: <div>Ingredient Lists</div>,
             mainText: "Customizable Ingredients List Templates",
             secondaryText: "With Foodplanet’s free ingredients list template, you can quickly create your own custom ingredients list and automatically generate nutrition labels that follow FDA guidelines."
         },
         "Recipe Management": {
-            page: <div/>,
+            page: <div>Recipe Management</div>,
             mainText: "Cloud-Based Recipe Management System",
             secondaryText: "With Foodplanet’s secure cloud-based recipe management software, you can be completely flexible in how you manage recipes and ingredients. Access recipes from any device, at any time, from any location."
         },
