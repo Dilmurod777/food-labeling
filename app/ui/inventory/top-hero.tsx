@@ -9,7 +9,7 @@ export default function TopHero() {
         <p className={"text-lg text-black font-bold"}>Automated FIFO lot tracing, inventory management, and production planning to run your
             business</p>
 
-        <div className={"flex justify-center gap-16 my-16"}>
+        <div className={"flex justify-center gap-16 mt-16"}>
             <Image
                 src={InventoryIllustration}
                 alt={"Inventory Illustration"}
@@ -19,7 +19,7 @@ export default function TopHero() {
                 }}
             />
 
-            <div className={"flex flex-col items-start w-1/2 text-xl items-center"}>
+            <div className={"flex flex-col w-1/2 text-xl items-center"}>
                 <p className={"mb-3"}>If you&apos;re not doing lot tracing, you&apos;ve got problems. Food safety is serious business and <strong>you
                     need the ability to quickly execute a recall.</strong> Foodplanet&apos;s inventory software helps you do just that, scaling
                     with your
