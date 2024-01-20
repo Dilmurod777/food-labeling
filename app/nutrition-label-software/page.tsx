@@ -13,8 +13,10 @@ import NutritionAnalysis from "@/app/ui/nutrition-label-software/tab_content/nut
 import AllFeaturesFaq from "@/public/faq/all-features-faq.json"
 import NutritionAnalysisFaq from "@/public/faq/nutrition-analysis-faq.json"
 import LabelingFaq from "@/public/faq/labeling-faq.json"
+import CostingFaq from "@/public/faq/costing-faq.json"
 import {FAQItem} from "@/app/lib/models";
 import Labeling from "@/app/ui/nutrition-label-software/tab_content/labeling";
+import Costing from "@/app/ui/nutrition-label-software/tab_content/costing";
 
 interface TabContent {
     page: ReactNode,
@@ -50,9 +52,10 @@ export default function NutritionLabelSoftware() {
             faq: LabelingFaq
         },
         "Costing": {
-            page: <div>Costing</div>,
+            page: <Costing/>,
             mainText: "Ingredient Cost Calculator for Better Business Decisions",
-            secondaryText: "With Foodplanet’s ingredient cost calculator, you can get a detailed breakdown that provides you with the cost of food products by batch and by package. This allows you to come up with an effective pricing strategy for your food products and optimize profits for your business."
+            secondaryText: "With Foodplanet’s ingredient cost calculator, you can get a detailed breakdown that provides you with the cost of food products by batch and by package. This allows you to come up with an effective pricing strategy for your food products and optimize profits for your business.",
+            faq: CostingFaq
         },
         "Ingredient Lists": {
             page: <div>Ingredient Lists</div>,
