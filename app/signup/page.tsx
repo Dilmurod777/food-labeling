@@ -1,7 +1,7 @@
 "use client";
 
 import {useFormState} from 'react-dom';
-import {signup} from '@/app/lib/actions';
+import {signup} from '@/app/lib/actions-user';
 import {Lato} from 'next/font/google'
 import {MdEmail} from "react-icons/md";
 import {FaLock, FaUser} from "react-icons/fa";

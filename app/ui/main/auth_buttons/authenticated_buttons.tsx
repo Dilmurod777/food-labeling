@@ -3,7 +3,7 @@
 import Link from "next/link";
 import {User} from "@/app/lib/models";
 import {useFormState} from "react-dom";
-import {logout} from "@/app/lib/actions";
+import {logout} from "@/app/lib/actions-user";
 
 export default function AuthenticatedButtons({user}: { user: User }) {
     const [errorMessage, dispatch] = useFormState(logout, undefined);

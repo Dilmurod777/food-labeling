@@ -2,7 +2,7 @@ import Link from "next/link";
 import {FaPlus} from "react-icons/fa";
 import { GoVideo } from "react-icons/go";
 
-export default function RecipeTab() {
+export default function Inventory(){
     return <div className={"flex flex-col items-center"}>
         <h2 className={"text-black font-bold text-xl"}>Welcome to Foodplanet!</h2>
 
@@ -12,7 +12,7 @@ export default function RecipeTab() {
                 className={"flex gap-2 items-center justify-center text-sm text-white font-normal px-4 py-2 rounded-md bg-main-green hover:bg-hover-main-green"}
             >
                 <FaPlus className={"text-lg"}/>
-                <span>Create a recipe</span>
+                <span>Add ingredient to inventory</span>
             </Link>
             <Link
                 href={"#"}

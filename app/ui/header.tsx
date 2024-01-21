@@ -4,8 +4,11 @@ import Link from "next/link";
 import {User} from "@/app/lib/models";
 import NotAuthenticatedButtons from "@/app/ui/main/auth_buttons/not_authenticated_buttons";
 import AuthenticatedButtons from "@/app/ui/main/auth_buttons/authenticated_buttons";
+import {getCurrentUser} from "@/app/lib/actions-user";
 
-export default function Header({user}: { user: User | undefined }) {
+export default async function Header() {
+    const user = await getCurrentUser();
+
     return <nav className={"my-0 mx-auto w-3/4 h-20 flex justify-between"}>
         <div className={"flex justify-start gap-3 h-full"}>
             <Link

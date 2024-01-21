@@ -1,15 +1,20 @@
 'use server';
 
-import {signIn, signOut} from '@/auth';
+import {auth, signIn, signOut} from '@/auth';
 import {AuthError} from 'next-auth';
 import type {User} from "@/app/lib/models";
 import {sql} from "@vercel/postgres";
 import {z} from "zod";
 import bcrypt from "bcrypt";
 import {randomUUID} from "crypto";
-import {random} from "nanoid";
+import {cache} from 'react'
 
-export async function getUser(email: string): Promise<User | undefined> {
+export const getCurrentUser = cache(async (): Promise<User | undefined> => {
+    const session = await auth();
+    return await getUserFromDB(session?.user?.email || "");
+})
+
+export async function getUserFromDB(email: string): Promise<User | undefined> {
     try {
         const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
         return user.rows[0];
@@ -70,7 +75,7 @@ export async function signup(prevState: string | undefined, formData: FormData) 
         if (parsedCredentials.success) {
             const {email, password, name} = parsedCredentials.data;
 
-            const user = await getUser(email);
+            const user = await getUserFromDB(email);
             if (!user) {
                 await insertUser({
                     id: randomUUID(),

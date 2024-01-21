@@ -1,8 +1,8 @@
 "use client";
 
 import {useEffect, useState} from "react";
-import RecipeTab from "@/app/ui/dashboard/recipe_tab";
-import InventoryTab from "@/app/ui/dashboard/inventory_tab";
+import Recipes from "@/app/ui/dashboard/recipes";
+import Inventory from "@/app/ui/dashboard/inventory";
 import {useSearchParams} from "next/navigation";
 
 export default function Dashboard() {
@@ -38,8 +38,8 @@ export default function Dashboard() {
         </div>
 
         <div className={"h-full py-6"}>
-            {tabIndex == 0 && <RecipeTab/>}
-            {tabIndex == 1 && <InventoryTab/>}
+            {tabIndex == 0 && <Recipes/>}
+            {tabIndex == 1 && <Inventory/>}
         </div>
     </div>
 }
