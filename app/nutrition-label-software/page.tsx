@@ -16,7 +16,7 @@ import LabelingFaq from "@/public/faq/labeling-faq.json";
 import CostingFaq from "@/public/faq/costing-faq.json";
 import IngredientListFaq from "@/public/faq/ingredient-list-faq.json";
 import RecipeManagementFaq from "@/public/faq/recipe-management-faq.json";
-import {FAQItem} from "@/app/lib/models";
+import {FAQItem} from "@/app/lib/interfaces";
 import Labeling from "@/app/ui/nutrition-label-software/tab_content/labeling";
 import Costing from "@/app/ui/nutrition-label-software/tab_content/costing";
 import IngredientList from "@/app/ui/nutrition-label-software/tab_content/ingredient-list";

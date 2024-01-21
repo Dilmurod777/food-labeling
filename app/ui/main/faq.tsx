@@ -1,5 +1,5 @@
 import defaultItems from "@/public/faq/default-faq.json";
-import {FAQItem} from "@/app/lib/models";
+import {FAQItem} from "@/app/lib/interfaces";
 
 
 export default function FAQ({items = defaultItems}: { items?: FAQItem[] }) {
