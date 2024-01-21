@@ -1,5 +1,6 @@
 import {getRecipesFromLS} from "@/app/lib/actions-localstorage";
 import {FaPlus} from "react-icons/fa";
+import Link from "next/link";
 
 export default function RecipeList({onCreateNewRecipe}: { onCreateNewRecipe: () => void }) {
     const recipes = getRecipesFromLS();
@@ -20,7 +21,10 @@ export default function RecipeList({onCreateNewRecipe}: { onCreateNewRecipe: () 
                 key={`recipe-${i}`}
                 className={"flex gap-2"}
             >
-                <p>{recipe.id} : {recipe.name}</p>
+                <Link
+                    href={`/recipes/${recipe.id}/edit`}
+                    className={"text-lg text-main-blue hover:text-hover-main-blue"}
+                >{recipe.id} : {recipe.name}</Link>
             </div>)}
         </div>
     </div>
