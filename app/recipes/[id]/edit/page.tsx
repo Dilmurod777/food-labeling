@@ -57,10 +57,10 @@ export default function Page({params}: { params: { id: string } }) {
 
         <div className={"h-full py-6"}>
             {!recipe && <div className={"flex items-center justify-center text-lg font-bold text-black"}>No recipe with such ID found.</div>}
-            {recipe && tabIndex == 1 && <RecipeEditPage recipe={{...recipe}}/>}
-            {recipe && tabIndex == 2 && <IngredientStatementPage recipe={{...recipe}}/>}
-            {recipe && tabIndex == 3 && <LabelPage recipe={{...recipe}}/>}
-            {recipe && tabIndex == 4 && <CostPage recipe={{...recipe}}/>}
+            {recipe && tabIndex == 1 && <RecipeEditPage recipe={recipe}/>}
+            {recipe && tabIndex == 2 && <IngredientStatementPage recipe={recipe}/>}
+            {recipe && tabIndex == 3 && <LabelPage recipe={recipe}/>}
+            {recipe && tabIndex == 4 && <CostPage recipe={recipe}/>}
         </div>
     </div>
 }

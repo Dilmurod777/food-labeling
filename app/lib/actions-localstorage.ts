@@ -1,7 +1,8 @@
-import {Recipe, Tag} from "@/app/lib/models";
+import {Ingredient, Recipe, Tag} from "@/app/lib/models";
 
 const RECIPE_KEY: string = "recipes";
 const TAG_KEY: string = "recipes";
+const INGREDIENT_KEY: string = "recipes";
 
 export function getRecipesFromLS(): Recipe[] {
     if (typeof window === 'undefined') return [];
@@ -34,7 +35,8 @@ export function updateRecipeInLS(recipe: Recipe) {
     for (let i = 0; i < recipes.length; i++) {
         if (recipes[i].id == recipe.id) {
             recipes[i] = {
-                ...recipe
+                ...recipe,
+                updated_at: Date.now().toString()
             };
         }
     }
@@ -46,4 +48,10 @@ export function getTagsFromLS(): Tag[] {
     if (typeof window === 'undefined') return [];
 
     return JSON.parse(localStorage.getItem(TAG_KEY) || "[]");
+}
+
+export function getIngredientsFromLS(): Ingredient[] {
+    if (typeof window === 'undefined') return [];
+
+    return JSON.parse(localStorage.getItem(INGREDIENT_KEY) || "[]");
 }

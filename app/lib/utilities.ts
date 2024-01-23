@@ -11,27 +11,27 @@ export function convertToHumanReadableTime(time: number): string {
 
     if (time > 60) {
         time = time / 60;
-        unit = "minutes";
+        unit = "minute(s)";
     }
 
     if (time > 60) {
         time = time / 60;
-        unit = "hours";
+        unit = "hour(s)";
     }
 
     if (time > 24) {
         time = time / 24;
-        unit = "days";
+        unit = "day(s)";
     }
 
     if (time > 30) {
         time = time / 30;
-        unit = "months";
+        unit = "month(s)";
     }
 
     if (time > 12) {
         time = time / 12;
-        unit = "years";
+        unit = "year(s)";
     }
 
     return `${Math.round(time)} ${unit}`;
