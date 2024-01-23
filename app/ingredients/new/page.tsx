@@ -7,6 +7,8 @@ import {create} from "@/app/lib/actions-ingredients";
 import IngredientType from "@/app/ui/ingredients/create/ingredient-type";
 import IngredientName from "@/app/ui/ingredients/create/ingredient-name";
 import IngredientBrand from "@/app/ui/ingredients/create/ingredient-brand";
+import IngredientList from "@/app/ui/ingredients/create/ingredient-list";
+import IngredientDataSource from "@/app/ui/ingredients/create/ingredient-data-source";
 
 export default function Page() {
     const [_, dispatch] = useFormState(create, undefined);
@@ -47,6 +49,11 @@ export default function Page() {
                 <IngredientType/>
                 <IngredientName/>
                 <IngredientBrand/>
+
+                <div className={"w-full hidden peer peer-has-[.ingredient-type-0:checked]:flex flex-col gap-2 items-start"}>
+                    <IngredientList/>
+                    <IngredientDataSource/>
+                </div>
 
                 <button
                     type={"submit"}

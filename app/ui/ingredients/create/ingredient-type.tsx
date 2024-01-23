@@ -69,10 +69,10 @@ export default function IngredientType() {
     return <InputWrapper title={"Ingredient Type"} htmlFor={"ingredient-type"} required>
         {inputs.map((input, i) => <div
             key={`input-${i}`}
-            className={"flex flex-col gap-1"}
+            className={`flex flex-col gap-1`}
         >
-            <div className={"flex gap-2 items-center justify-start peer relative z-0 hover:z-10"}>
-                <input type={input.type} id={`${input.key}-${input.value}`} name={input.key} value={input.value}/>
+            <div className={`flex gap-2 items-center justify-start peer relative z-0 hover:z-10`}>
+                <input type={input.type} id={`${input.key}-${input.value}`} name={input.key} value={input.value} className={`${input.key}-${input.value}`}/>
                 <label htmlFor={`${input.key}-${input.value}`} className={"text-xs text-black font-normal"}>{input.text}</label>
                 {input.tooltip_enabled && <Tooltip title={input.tooltip_title} content={input.tooltip_content}/>}
             </div>
