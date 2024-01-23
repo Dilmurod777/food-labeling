@@ -1,5 +1,6 @@
 import Tooltip from "@/app/ui/ingredients/tooltip";
 import {Input} from "@/app/lib/interfaces";
+import InputWrapper from "@/app/ui/ingredients/input-wrapper";
 
 const inputs: Input[] = [
     {
@@ -65,16 +66,14 @@ const inputs: Input[] = [
 ]
 
 export default function IngredientType() {
-    return <div className={"flex flex-col gap-1"}>
-        <p className={"text-lg font-thin text-black my-2"}>Ingredient Type</p>
-
+    return <InputWrapper title={"Ingredient Type"} htmlFor={"ingredient-type"} required>
         {inputs.map((input, i) => <div
             key={`input-${i}`}
             className={"flex flex-col gap-1"}
         >
             <div className={"flex gap-2 items-center justify-start peer relative z-0 hover:z-10"}>
                 <input type={input.type} id={`${input.key}-${input.value}`} name={input.key} value={input.value}/>
-                <label htmlFor={`${input.key}-${input.value}`} className={"text-sm text-black font-normal"}>{input.text}</label>
+                <label htmlFor={`${input.key}-${input.value}`} className={"text-xs text-black font-normal"}>{input.text}</label>
                 {input.tooltip_enabled && <Tooltip title={input.tooltip_title} content={input.tooltip_content}/>}
             </div>
 
@@ -93,11 +92,11 @@ export default function IngredientType() {
                         className={"flex fit gap-2 items-center justify-start ml-6 relative z-0 hover:z-10"}
                     >
                         <input type={child.type} id={`${child.key}-${child.value}`} name={child.key} value={child.value}/>
-                        <label htmlFor={`${child.key}-${child.value}`} className={"text-sm text-black font-normal"}>{child.text}</label>
+                        <label htmlFor={`${child.key}-${child.value}`} className={"text-xs text-black font-normal"}>{child.text}</label>
                         {child.tooltip_enabled && <Tooltip title={child.tooltip_title} content={child.tooltip_content}/>}
                     </div>
                 })}
             </div>
         </div>)}
-    </div>
+    </InputWrapper>
 }

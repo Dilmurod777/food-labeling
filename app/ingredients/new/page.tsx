@@ -5,6 +5,8 @@ import {LuFileVideo} from "react-icons/lu";
 import {useFormState} from "react-dom";
 import {create} from "@/app/lib/actions-ingredients";
 import IngredientType from "@/app/ui/ingredients/create/ingredient-type";
+import IngredientName from "@/app/ui/ingredients/create/ingredient-name";
+import IngredientBrand from "@/app/ui/ingredients/create/ingredient-brand";
 
 export default function Page() {
     const [_, dispatch] = useFormState(create, undefined);
@@ -43,6 +45,8 @@ export default function Page() {
 
             <form className={"flex flex-col gap-2 items-start"} action={dispatch}>
                 <IngredientType/>
+                <IngredientName/>
+                <IngredientBrand/>
 
                 <button
                     type={"submit"}
