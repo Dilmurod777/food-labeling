@@ -1,5 +1,5 @@
 import {ReactNode} from "react";
-import Tooltip from "@/app/ui/ingredients/tooltip";
+import Tooltip from "@/app/ui/tooltip";
 
 interface Props {
     title: string,

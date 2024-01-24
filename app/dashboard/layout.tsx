@@ -2,6 +2,7 @@
 
 import React, {Suspense} from "react";
 import {usePathname, useRouter} from "next/navigation";
+import Loading from "@/app/ui/loading";
 
 export default function RootLayout({children}: { children: React.ReactNode }) {
     const pathname = usePathname()
@@ -33,7 +34,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
             })}
         </div>
 
-        <Suspense>
+        <Suspense fallback={<Loading/>}>
             {children}
         </Suspense>
     </div>

@@ -11,7 +11,7 @@ interface Props {
 export default function FormButton({
                                        text,
                                        loading_text = "Loading...",
-                                       classes = "mt-4 bg-main-green rounded-md py-2 px-6 text-white cursor-pointer hover:bg-hover-main-green "
+                                       classes = "mt-4 bg-main-green rounded-md py-2 px-6 text-white cursor-pointer hover:bg-hover-main-green"
                                    }: Props) {
     const {pending} = useFormStatus()
 

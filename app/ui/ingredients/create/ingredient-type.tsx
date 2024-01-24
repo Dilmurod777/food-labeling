@@ -1,4 +1,4 @@
-import Tooltip from "@/app/ui/ingredients/tooltip";
+import Tooltip from "@/app/ui/tooltip";
 import {Input} from "@/app/lib/interfaces";
 import InputWrapper from "@/app/ui/ingredients/input-wrapper";
 
