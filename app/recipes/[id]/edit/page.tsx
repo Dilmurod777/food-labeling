@@ -22,10 +22,6 @@ export default function Page({params}: { params: { id: string } }) {
         setTabIndex(parseInt(paramTabIndex || '1'))
     }, [paramTabIndex])
 
-    useEffect(() => {
-        setRecipe(getRecipeByIdFromLS(params.id));
-    }, []);
-
     return <div className={"flex flex-col w-[75%] h-full mt-6 mx-auto"}>
         <div className={"flex items-center h-[45px] border-b-[1px] border-b-[#dbdbdb] mb-8"}>
             {tabs.map((tab, ti) => {

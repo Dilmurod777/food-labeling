@@ -5,7 +5,6 @@ import {Ingredient} from "@/app/lib/models";
 import {useFormState} from "react-dom";
 import {update} from "@/app/lib/actions-ingredients";
 import {useRouter} from "next/navigation";
-import {revalidatePath} from "next/cache";
 
 interface Props {
     ingredient: Ingredient
@@ -56,7 +55,7 @@ export default function PartialForm({ingredient}: Props) {
                 <span className={"font-bold"}>DataSource: </span><span>{ingredient.data_source || "none specified"}</span>
             </p>
             <p>
-                <span className={"font-bold"}>Ingredient list: </span><span>{ingredient.ingredient_list_name || "none specified"}</span>
+                <span className={"font-bold"}>Ingredient list: </span><span>{ingredient.list_name || "none specified"}</span>
             </p>
         </div>
 
