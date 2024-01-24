@@ -11,6 +11,7 @@ import IngredientList from "@/app/ui/ingredients/create/ingredient-list";
 import IngredientDataSource from "@/app/ui/ingredients/create/ingredient-data-source";
 import IngredientVisibility from "@/app/ui/ingredients/create/ingredient-visibility";
 import IngredientServingSize from "@/app/ui/ingredients/create/ingredient-serving-size";
+import IngredientNutrients from "@/app/ui/ingredients/create/ingredient-nutrients";
 
 export default function Page() {
     const [_, dispatch] = useFormState(create, undefined);
@@ -57,6 +58,7 @@ export default function Page() {
                     <IngredientDataSource/>
                     <IngredientVisibility/>
                     <IngredientServingSize/>
+                    <IngredientNutrients/>
                 </div>
 
                 <button

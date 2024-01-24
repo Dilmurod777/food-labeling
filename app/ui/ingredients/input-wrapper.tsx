@@ -16,7 +16,7 @@ export default function InputWrapper({children, title, htmlFor, required, toolti
         <div className={"flex gap-2 items-center"}>
             <label
                 htmlFor={htmlFor}
-                className={`text-lg font-thin text-black my-1 ${required && `after:content-['*'] after:ml-0.5 after:text-red-500`}`}
+                className={`text-sm font-thin text-black my-0.5 ${required && `after:content-['*'] after:ml-0.5 after:text-red-500`}`}
             >
                 {title}
             </label>
