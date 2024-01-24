@@ -50,7 +50,7 @@ async function seedIngredients(client) {
         subtype VARCHAR(255) NOT NULL,
        	updated_at TEXT NOT NULL,
         brand VARCHAR(255),
-        ingredient_list_name VARCHAR(255),
+        list_name VARCHAR(255),
         data_source VARCHAR(255),
         visibility VARCHAR(255),
         serving_size VARCHAR(255),

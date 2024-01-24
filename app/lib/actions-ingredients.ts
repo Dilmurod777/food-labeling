@@ -24,12 +24,10 @@ export async function create(prevState: Ingredient | undefined, formData: FormDa
         data["updated_at"] = `'${Date.now()}'`;
         const query = `INSERT INTO ingredients (${Object.keys(data).join(", ")}) VALUES (${Object.values(data).join(", ")})`;
         await sql.query<Ingredient>(query)
-
+        redirect("/dashboard/inventory")
     } catch (error) {
         console.log("error: ", error)
-        return undefined;
-    } finally {
-        redirect("/dashboard/inventory")
+        throw error
     }
 }
 
@@ -58,10 +56,11 @@ export async function update(prevState: Ingredient | undefined, formData: FormDa
 
         const query = `UPDATE ingredients SET ${pairs.join(", ")} WHERE user_id='${user.id}' AND id='${id}'`;
         await sql.query<Ingredient>(query)
-        revalidatePath(`/ingredients/${id}/view`);
+        revalidatePath(`/ingredients/${id}/view`, "page");
+        redirect(`/ingredients/${id}/view`);
     } catch (error) {
         console.log("error: ", error)
-        return undefined;
+        throw error
     }
 }
 
@@ -84,6 +83,8 @@ export async function getById(id: string): Promise<Ingredient | undefined> {
     try {
         const user = await getCurrentUser();
         if (!user) return undefined;
+
+        if(id == "") return undefined;
 
         const query = `SELECT * FROM ingredients WHERE user_id='${user.id}' AND id='${id}'`;
         const result = await sql.query<Ingredient>(query)

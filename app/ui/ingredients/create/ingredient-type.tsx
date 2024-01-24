@@ -1,6 +1,7 @@
 import Tooltip from "@/app/ui/tooltip";
 import {Input} from "@/app/lib/interfaces";
 import InputWrapper from "@/app/ui/ingredients/input-wrapper";
+import {Ingredient} from "@/app/lib/models";
 
 const inputs: Input[] = [
     {
@@ -67,7 +68,11 @@ const inputs: Input[] = [
     }
 ]
 
-export default function IngredientType() {
+interface Props{
+    ingredient?: Ingredient;
+}
+
+export default async function IngredientType({ingredient}: Props) {
     return <InputWrapper title={"Ingredient Type"} htmlFor={"ingredient-type"} required>
         {inputs.map((input, i) => <div
             key={`input-${i}`}
@@ -80,7 +85,7 @@ export default function IngredientType() {
                     name={input.key}
                     value={input.value}
                     className={`${input.key}-${input.value}`}
-                    defaultChecked={input.checked}
+                    defaultChecked={ingredient ? ingredient.type == input.value : input.checked}
                 />
                 <label htmlFor={`${input.key}-${input.value}`} className={"text-xs text-black font-normal"}>{input.text}</label>
                 {input.tooltip_enabled && <Tooltip title={input.tooltip_title} content={input.tooltip_content}/>}
@@ -106,7 +111,7 @@ export default function IngredientType() {
                             id={`${child.key}-${child.value}`}
                             name={child.key}
                             value={child.value}
-                            defaultChecked={child.checked}
+                            defaultChecked={ingredient ? ingredient.subtype == child.value : child.checked}
                         />
                         <label htmlFor={`${child.key}-${child.value}`} className={"text-xs text-black font-normal"}>{child.text}</label>
                         {child.tooltip_enabled && <Tooltip title={child.tooltip_title} content={child.tooltip_content}/>}

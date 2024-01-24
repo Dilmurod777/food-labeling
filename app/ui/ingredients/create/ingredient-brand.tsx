@@ -1,6 +1,11 @@
 import InputWrapper from "@/app/ui/ingredients/input-wrapper";
+import {Ingredient} from "@/app/lib/models";
 
-export default function IngredientBrand(){
+interface Props{
+    ingredient?: Ingredient;
+}
+
+export default function IngredientBrand({ingredient}: Props){
     return <InputWrapper title={"Ingredient Brand"} htmlFor={"ingredient-brand"}>
         <input
             type="text"
@@ -8,6 +13,7 @@ export default function IngredientBrand(){
             placeholder={"Bob's Red Mill"}
             name={"ingredient-brand"}
             id={"ingredient-brand"}
+            defaultValue={ingredient ? ingredient.brand : ""}
         />
     </InputWrapper>
 }

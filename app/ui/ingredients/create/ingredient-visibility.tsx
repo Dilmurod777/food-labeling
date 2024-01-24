@@ -1,6 +1,7 @@
 import Tooltip from "@/app/ui/tooltip";
 import {Input} from "@/app/lib/interfaces";
 import InputWrapper from "@/app/ui/ingredients/input-wrapper";
+import {Ingredient} from "@/app/lib/models";
 
 const inputs: Input[] = [
     {
@@ -24,7 +25,11 @@ const inputs: Input[] = [
     }
 ]
 
-export default function IngredientVisibility() {
+interface Props {
+    ingredient?: Ingredient;
+}
+
+export default function IngredientVisibility({ingredient}: Props) {
     return <InputWrapper title={"Sharing Settings"} htmlFor={"ingredient-visibility"} required>
         {inputs.map((input, i) => <div
             key={`input-${i}`}
@@ -37,7 +42,7 @@ export default function IngredientVisibility() {
                     name={input.key}
                     value={input.value}
                     className={`${input.key}-${input.value}`}
-                    defaultChecked={input.checked}
+                    defaultChecked={ingredient ? ingredient.visibility == input.value : input.checked}
                 />
                 <label htmlFor={`${input.key}-${input.value}`} className={"text-xs text-black font-normal"}>{input.text}</label>
                 {input.tooltip_enabled && <Tooltip title={input.tooltip_title} content={input.tooltip_content}/>}

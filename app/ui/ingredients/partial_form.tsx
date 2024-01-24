@@ -11,7 +11,7 @@ interface Props {
     ingredient: Ingredient
 }
 
-export default function Form({ingredient}: Props) {
+export default function PartialForm({ingredient}: Props) {
     const [_, dispatch] = useFormState(update, undefined);
     const router = useRouter();
 
@@ -27,7 +27,7 @@ export default function Form({ingredient}: Props) {
                 defaultValue={parseInt(ingredient.serving_size || "1")}
                 name={"ingredient-serving-size"}
                 id={"ingredient-serving-size"}
-                className={"px-2 py-2 text-right border-main-gray border-2 rounded-md w-1/2"}
+                className={"px-2 py-1 text-sm text-right border-main-gray border-2 rounded-md w-1/2"}
             />
         </div>
 
@@ -37,7 +37,7 @@ export default function Form({ingredient}: Props) {
                 defaultValue={parseInt(ingredient.serving_size_description || "0")}
                 name={"ingredient-serving-size-description"}
                 id={"ingredient-serving-size-description"}
-                className={"px-2 py-2 text-right border-main-gray border-2 rounded-md *:text-sm w-1/2"}
+                className={"px-2 py-1 text-sm text-right border-main-gray border-2 rounded-md *:text-sm w-1/2"}
             >
                 <option value={0}>100 grams</option>
                 <option value={1}>1 tbsdds</option>
@@ -48,7 +48,7 @@ export default function Form({ingredient}: Props) {
             </select>
         </div>
 
-        <div className={"flex flex-col gap-1 *:text-lg text-black"}>
+        <div className={"flex flex-col gap-1 *:text-sm text-black"}>
             <p>
                 <span className={"font-bold"}>Brand: </span><span>{ingredient.brand}</span>
             </p>

@@ -1,6 +1,7 @@
 import {Input} from "@/app/lib/interfaces";
 import Tooltip from "@/app/ui/tooltip";
 import InputWrapper from "@/app/ui/ingredients/input-wrapper";
+import {Ingredient, IngredientGetProperty} from "@/app/lib/models";
 
 const inputs: Input[] = [
     {
@@ -35,7 +36,11 @@ const inputs: Input[] = [
     }
 ]
 
-export default function IngredientVitaminsMinerals() {
+interface Props {
+    ingredient?: Ingredient;
+}
+
+export default function IngredientVitaminsMinerals({ingredient}: Props) {
     return <div className={"flex flex-col gap-2 w-full"}>
         <p className={"text-sm font-bold text-black mt-4"}>
             To finish your ingredient, enter vitamins/minerals:
@@ -54,6 +59,10 @@ export default function IngredientVitaminsMinerals() {
                     className={"outline-0 w-1/2 text-xs rounded-md border-2 px-2 py-2 border-main-gray focus:border-main-blue"}
                     name={input.key || `ingredient-nutrient-${i}`}
                     id={input.key || `ingredient-nutrient-${i}`}
+                    defaultValue={parseInt(
+                        IngredientGetProperty(ingredient, input.key.replace("ingredient-", "").replace('-', "_"))
+                        || "0")
+                    }
                 />
             </div>
         </InputWrapper>)}

@@ -13,7 +13,7 @@ export default function Empty() {
 
         <div className={"flex gap-4 mt-8"}>
             <div
-                onClick={() => router.push("/ingredients/new")}
+                onClick={() => router.push("/ingredients/create")}
                 className={"flex gap-2 items-center justify-center text-sm text-white font-normal px-4 py-2 rounded-md bg-main-green hover:bg-hover-main-green cursor-pointer"}
             >
                 <FaPlus className={"text-lg"}/>

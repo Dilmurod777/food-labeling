@@ -1,6 +1,11 @@
 import InputWrapper from "@/app/ui/ingredients/input-wrapper";
+import {Ingredient} from "@/app/lib/models";
 
-export default function IngredientName(){
+interface Props{
+    ingredient?: Ingredient;
+}
+
+export default async function IngredientName({ingredient}: Props){
     return <InputWrapper title={"Ingredient Name"} htmlFor={"ingredient-name"} required>
         <input
             type="text"
@@ -9,6 +14,7 @@ export default function IngredientName(){
             name={"ingredient-name"}
             id={"ingredient-name"}
             required
+            defaultValue={ingredient ? ingredient.name : ""}
         />
     </InputWrapper>
 }

@@ -1,6 +1,6 @@
 import {getById} from "@/app/lib/actions-ingredients";
 import Link from "next/link";
-import Form from "@/app/ui/ingredients/view/form";
+import PartialForm from "@/app/ui/ingredients/partial_form";
 
 export default async function View({params}: { params: { id: string } }) {
     const ingredient = await getById(params.id);
@@ -27,7 +27,7 @@ export default async function View({params}: { params: { id: string } }) {
 
         <div className={"flex gap-12"}>
             <div className={"w-[300px] h-[500px] bg-main-gray"}></div>
-            <Form ingredient={ingredient}/>
+            <PartialForm ingredient={ingredient}/>
         </div>
     </div>
 }

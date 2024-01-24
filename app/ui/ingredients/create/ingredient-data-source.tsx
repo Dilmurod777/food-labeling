@@ -1,6 +1,11 @@
 import InputWrapper from "@/app/ui/ingredients/input-wrapper";
+import {Ingredient} from "@/app/lib/models";
 
-export default function IngredientDataSource(){
+interface Props {
+    ingredient?: Ingredient;
+}
+
+export default function IngredientDataSource({ingredient}: Props) {
     return <InputWrapper title={"Data Source (e.g. URL, if applicable)"} htmlFor={"ingredient-data-source"} required>
         <input
             type="text"
@@ -8,6 +13,7 @@ export default function IngredientDataSource(){
             placeholder={"http://www.bobsredmill.com/organic-white-rice-flour.html"}
             name={"ingredient-data-source"}
             id={"ingredient-data-source"}
+            defaultValue={ingredient ? ingredient.data_source : ""}
         />
     </InputWrapper>
 }

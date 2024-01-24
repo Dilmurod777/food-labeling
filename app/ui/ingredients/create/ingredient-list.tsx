@@ -1,6 +1,11 @@
 import InputWrapper from "@/app/ui/ingredients/input-wrapper";
+import {Ingredient} from "@/app/lib/models";
 
-export default function IngredientList() {
+interface Props {
+    ingredient?: Ingredient;
+}
+
+export default function IngredientList({ingredient}: Props) {
     return <InputWrapper
         title={"Ingredient List"}
         htmlFor={"ingredient-list-name"}
@@ -14,6 +19,7 @@ export default function IngredientList() {
             placeholder={"Rice Flour (Brown Rice, White Rice)"}
             name={"ingredient-list-name"}
             id={"ingredient-list-name"}
+            defaultValue={ingredient ? ingredient.list_name : ""}
         />
     </InputWrapper>
 }

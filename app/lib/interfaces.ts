@@ -6,7 +6,7 @@ export interface FAQItem {
 export interface Input {
     type: "radio" | "paragraph" | "number",
     value?: string,
-    key?: string,
+    key: string,
     text: string,
     checked?: boolean,
     required?: boolean,

@@ -50,18 +50,19 @@ export type Label = {
     business_name_address: string,
 }
 
-export type Ingredient = {
+export interface Ingredient {
     id: string,
     type: string,
+    subtype: string,
     name: string,
     updated_at: string,
     brand?: string,
-    ingredient_list_name?: string,
+    list_name?: string,
     data_source?: string,
-    public?: boolean,
+    visibility?: string,
     serving_size_description: string,
     serving_size: string,
-    calories: number,
+    calories: string,
     fat: string,
     saturated_fat: string,
     trans_fat: string,
@@ -97,4 +98,103 @@ export type Ingredient = {
     sugar_alcohol?: string,
     monounsaturated_fat?: string,
     polyunsaturated_fat?: string
+}
+
+export function IngredientGetProperty(ingredient: Ingredient | undefined, key: string): string | undefined {
+    if (!ingredient) return undefined;
+
+    switch (key) {
+        case "id":
+            return ingredient.id;
+        case "type":
+            return ingredient.type;
+        case "subtype":
+            return ingredient.subtype;
+        case "name":
+            return ingredient.name;
+        case "updated_at":
+            return ingredient.updated_at;
+        case "brand":
+            return ingredient.brand;
+        case "list_name":
+            return ingredient.list_name;
+        case "data_source":
+            return ingredient.data_source;
+        case "visibility":
+            return ingredient.visibility;
+        case "serving_size_description":
+            return ingredient.serving_size_description;
+        case "serving_size":
+            return ingredient.serving_size;
+        case "calories":
+            return ingredient.calories;
+        case "fat":
+            return ingredient.fat;
+        case "saturated_fat":
+            return ingredient.saturated_fat;
+        case "trans_fat":
+            return ingredient.trans_fat;
+        case "cholesterol":
+            return ingredient.cholesterol;
+        case "sodium":
+            return ingredient.sodium;
+        case "carbohydrate":
+            return ingredient.carbohydrate;
+        case "dietary_fiber":
+            return ingredient.dietary_fiber;
+        case "sugar":
+            return ingredient.sugar;
+        case "added_sugar":
+            return ingredient.added_sugar;
+        case "protein":
+            return ingredient.protein;
+        case "vitamin_d":
+            return ingredient.vitamin_d;
+        case "calcium":
+            return ingredient.calcium;
+        case "iron":
+            return ingredient.iron;
+        case "potassium":
+            return ingredient.potassium;
+        case "vitamin_a":
+            return ingredient.vitamin_a;
+        case "vitamin_c":
+            return ingredient.vitamin_c;
+        case "magnesium":
+            return ingredient.magnesium;
+        case "phosphorus":
+            return ingredient.phosphorus;
+        case "copper":
+            return ingredient.copper;
+        case "manganese":
+            return ingredient.manganese;
+        case "selenium":
+            return ingredient.selenium;
+        case "thiamin":
+            return ingredient.thiamin;
+        case "riboflavin":
+            return ingredient.riboflavin;
+        case "niacin":
+            return ingredient.niacin;
+        case "pantothenic_acid":
+            return ingredient.pantothenic_acid;
+        case "vitamin_b6":
+            return ingredient.vitamin_b6;
+        case "folate":
+            return ingredient.folate;
+        case "vitamin_b12":
+            return ingredient.vitamin_b12;
+        case "vitamin_e":
+            return ingredient.vitamin_e;
+        case "vitamin_k":
+            return ingredient.vitamin_k;
+        case "uncounted_fiber":
+            return ingredient.uncounted_fiber;
+        case "sugar_alcohol":
+            return ingredient.sugar_alcohol;
+        case "monounsaturated_fat":
+            return ingredient.monounsaturated_fat;
+        case "polyunsaturated_fat":
+            return ingredient.polyunsaturated_fat;
+    }
 }
