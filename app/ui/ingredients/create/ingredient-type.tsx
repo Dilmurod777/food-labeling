@@ -62,6 +62,7 @@ const inputs: Input[] = [
             },
             {
                 type: "paragraph",
+                key: "note",
                 text: "(Non-Food Ingredients will always be private.)"
             }
         ]
