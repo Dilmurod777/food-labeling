@@ -7,6 +7,7 @@ const inputs: Input[] = [
         type: "radio",
         key: "ingredient-type",
         value: "0",
+        checked: true,
         text: "Food Ingredient",
         tooltip_enabled: true,
         tooltip_title: "What's a Food Ingredient?",
@@ -25,6 +26,7 @@ const inputs: Input[] = [
                 type: 'radio',
                 key: "ingredient-subtype",
                 value: "1-0",
+                checked: true,
                 text: "Labor (hourly)",
                 tooltip_enabled: true,
                 tooltip_title: "What are Hourly Ingredients?",
@@ -72,12 +74,20 @@ export default function IngredientType() {
             className={`flex flex-col gap-1`}
         >
             <div className={`flex gap-2 items-center justify-start peer relative z-0 hover:z-10`}>
-                <input type={input.type} id={`${input.key}-${input.value}`} name={input.key} value={input.value} className={`${input.key}-${input.value}`}/>
+                <input
+                    type={input.type}
+                    id={`${input.key}-${input.value}`}
+                    name={input.key}
+                    value={input.value}
+                    className={`${input.key}-${input.value}`}
+                    defaultChecked={input.checked}
+                />
                 <label htmlFor={`${input.key}-${input.value}`} className={"text-xs text-black font-normal"}>{input.text}</label>
                 {input.tooltip_enabled && <Tooltip title={input.tooltip_title} content={input.tooltip_content}/>}
             </div>
 
-            <div className={"opacity-0 h-0 overflow-hidden peer-has-[:checked]:opacity-100 peer-has-[:checked]:h-full"}>
+            <div
+                className={"flex flex-col gap-1 opacity-0 h-0 overflow-hidden peer-has-[:checked]:opacity-100 peer-has-[:checked]:h-full peer-has-[:checked]:overflow-visible"}>
                 {input.children?.map((child, j) => {
                     if (child.type == "paragraph") {
                         return <p
@@ -91,7 +101,13 @@ export default function IngredientType() {
                         key={`input-${i}-child-${j}`}
                         className={"flex fit gap-2 items-center justify-start ml-6 relative z-0 hover:z-10"}
                     >
-                        <input type={child.type} id={`${child.key}-${child.value}`} name={child.key} value={child.value}/>
+                        <input
+                            type={child.type}
+                            id={`${child.key}-${child.value}`}
+                            name={child.key}
+                            value={child.value}
+                            defaultChecked={child.checked}
+                        />
                         <label htmlFor={`${child.key}-${child.value}`} className={"text-xs text-black font-normal"}>{child.text}</label>
                         {child.tooltip_enabled && <Tooltip title={child.tooltip_title} content={child.tooltip_content}/>}
                     </div>

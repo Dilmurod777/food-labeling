@@ -14,7 +14,6 @@ export default function IngredientList() {
             placeholder={"Rice Flour (Brown Rice, White Rice)"}
             name={"ingredient-list"}
             id={"ingredient-list"}
-            required
         />
     </InputWrapper>
 }
