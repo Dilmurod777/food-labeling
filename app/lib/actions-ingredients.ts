@@ -24,10 +24,12 @@ export async function create(prevState: Ingredient | undefined, formData: FormDa
         data["updated_at"] = `'${Date.now()}'`;
         const query = `INSERT INTO ingredients (${Object.keys(data).join(", ")}) VALUES (${Object.values(data).join(", ")})`;
         await sql.query<Ingredient>(query)
-        redirect("/dashboard/inventory")
+
     } catch (error) {
         console.log("error: ", error)
         return undefined;
+    } finally {
+        redirect("/dashboard/inventory")
     }
 }
 
@@ -84,8 +86,27 @@ export async function getById(id: string): Promise<Ingredient | undefined> {
         if (!user) return undefined;
 
         const query = `SELECT * FROM ingredients WHERE user_id='${user.id}' AND id='${id}'`;
-        console.log(query)
         const result = await sql.query<Ingredient>(query)
+
+        if (result.rowCount == 0) return undefined;
+        return result.rows[0];
+    } catch (error) {
+        console.log("error: ", error)
+        return undefined;
+    }
+}
+
+export async function deleteById(prevState: Ingredient | undefined, formData: FormData): Promise<Ingredient | undefined> {
+    try {
+        const user = await getCurrentUser();
+        if (!user) return undefined;
+
+        let id = formData.get("ingredient-id");
+        if (!id) return;
+
+        const query = `DELETE FROM ingredients WHERE user_id='${user.id}' AND id='${id.toString()}'`;
+        const result = await sql.query<Ingredient>(query)
+        revalidatePath("/dashboard/inventory");
 
         if (result.rowCount == 0) return undefined;
         return result.rows[0];

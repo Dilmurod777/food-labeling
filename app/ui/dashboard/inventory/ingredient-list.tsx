@@ -1,10 +1,13 @@
 "use client";
 
 import {FaPlus} from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
+import {MdDelete} from "react-icons/md";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import {Ingredient, User} from "@/app/lib/models";
+import {useFormState} from "react-dom";
+import {deleteById} from "@/app/lib/actions-ingredients";
+import DeleteButton from "@/app/ui/ingredients/delete-button";
 
 interface Props {
     ingredients: Ingredient[],
@@ -13,6 +16,7 @@ interface Props {
 
 export default function IngredientList({ingredients, user}: Props) {
     const router = useRouter();
+    const [_, dispatch] = useFormState(deleteById, undefined);
 
     return <div className={"flex flex-col gap-4 py-12"}>
         <div className={"flex gap-4"}>
@@ -34,9 +38,9 @@ export default function IngredientList({ingredients, user}: Props) {
             <table>
                 <thead className={"text-left border-b-[1px] border-main-gray"}>
                 <tr className={"*:py-1 *:px-2"}>
-                    <th>Name</th>
-                    <th>Modified at</th>
-                    <th></th>
+                    <th className={"w-2/4"}>Name</th>
+                    <th className={"w-1/4"}>Modified at</th>
+                    <th className={"w-1/4"}></th>
                 </tr>
                 </thead>
                 <tbody className={"text-left"}>
@@ -57,25 +61,15 @@ export default function IngredientList({ingredients, user}: Props) {
                             {new Date(parseInt(item.updated_at)).toDateString()}
                         </td>
                         <td>
-                            <MdDelete className={"text-red-500 text-lg"}/>
+                            <form action={dispatch}>
+                                <input type="hidden" name={"ingredient-id"} value={item.id}/>
+                                <DeleteButton/>
+                            </form>
                         </td>
                     </tr>
                 })}
                 </tbody>
             </table>
-            {/*{ingredients.map((item, i) => (*/}
-            {/*    <div*/}
-            {/*        key={`recipe-${i}`}*/}
-            {/*        className={"flex gap-2"}*/}
-            {/*    >*/}
-            {/*        <Link*/}
-            {/*            href={`/ingredients/${item.id}/edit`}*/}
-            {/*            className={"text-lg text-main-blue hover:text-hover-main-blue"}*/}
-            {/*        >*/}
-            {/*            {item.id} : {item.name}*/}
-            {/*        </Link>*/}
-            {/*    </div>*/}
-            {/*))}*/}
         </div>
     </div>
 }
