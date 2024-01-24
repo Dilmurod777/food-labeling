@@ -14,6 +14,7 @@ import IngredientServingSize from "@/app/ui/ingredients/create/ingredient-servin
 import IngredientNutrients from "@/app/ui/ingredients/create/ingredient-nutrients";
 import IngredientVitaminsMinerals from "@/app/ui/ingredients/create/ingredient-vitamins-minerals";
 import IngredientOptional from "@/app/ui/ingredients/create/ingredient-optional";
+import FormButton from "@/app/ui/auth_button";
 
 export default function Page() {
     const [_, dispatch] = useFormState(create, undefined);
@@ -73,12 +74,10 @@ export default function Page() {
                     <IngredientOptional/>
                 </div>
 
-                <button
-                    type={"submit"}
-                    className={"flex items-center justify-center gap-2 py-2 px-2 text-white text-xs font-thin bg-main-green hover:bg-hover-main-green rounded-md mt-4"}
-                >
-                    Create Ingredient
-                </button>
+                <FormButton
+                    text={"Create Ingredient"}
+                    classes={"flex items-center justify-center gap-2 py-2 px-2 text-white text-xs font-thin bg-main-green hover:bg-hover-main-green rounded-md mt-4"}
+                />
             </form>
         </div>
     </div>

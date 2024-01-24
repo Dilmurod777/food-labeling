@@ -12,7 +12,7 @@ const inputs: Input[] = [
     {
         type: "number",
         text: "Fat (grams)",
-        key: "ingredient-fats",
+        key: "ingredient-fat",
         required: true,
     },
     {
@@ -90,7 +90,6 @@ export default function IngredientNutrients() {
                     className={"outline-0 w-1/2 text-xs rounded-md border-2 px-2 py-2 border-main-gray focus:border-main-blue"}
                     name={input.key || `ingredient-nutrient-${i}`}
                     id={input.key || `ingredient-nutrient-${i}`}
-                    required
                 />
             </div>
         </InputWrapper>)}

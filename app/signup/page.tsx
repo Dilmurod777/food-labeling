@@ -7,7 +7,7 @@ import {MdEmail} from "react-icons/md";
 import {FaLock, FaUser} from "react-icons/fa";
 import Divider from "@/app/ui/divider";
 import Link from "next/link";
-import AuthButton from "@/app/ui/auth_button";
+import FormButton from "@/app/ui/auth_button";
 
 const lato = Lato({weight: ["300", "400", "700", "900"], subsets: ['latin']})
 
@@ -93,7 +93,7 @@ export default function Signup() {
                 </div>
             </div>
 
-            <AuthButton text={"Sign up"}/>
+            <FormButton text={"Sign up"}/>
 
             {errorMessage && typeof errorMessage == "string" && (<div
                 className="flex flex-col items-start gap-y-0 mt-2"

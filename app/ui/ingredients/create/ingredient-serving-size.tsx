@@ -11,13 +11,11 @@ export default function IngredientServingSize() {
             tooltip_content={"The (descriptive) serving size that the nutrition info is based on. Sometimes it's per 100 grams, other times it's per 2 tbsp, or 1 oz. The nutrition label or spec sheet will list the serving size that the nutrition information is based on, and that's what you enter here."}
         >
             <input
-                type="number"
-                min={0}
+                type="text"
                 className={"outline-0 w-1/2 text-xs rounded-md border-2 px-2 py-2 border-main-gray focus:border-main-blue"}
                 placeholder={"e.g. 1 tbsp, 1 tsp"}
                 name={"ingredient-serving-size-description"}
                 id={"ingredient-serving-size-description"}
-                required
             />
         </InputWrapper>
 
@@ -34,9 +32,8 @@ export default function IngredientServingSize() {
                 min={0}
                 className={"outline-0 w-1/2 text-xs rounded-md border-2 px-2 py-2 border-main-gray focus:border-main-blue"}
                 placeholder={"e.g. 40"}
-                name={"ingredient-serving-size-weight"}
-                id={"ingredient-serving-size-weight"}
-                required
+                name={"ingredient-serving-size"}
+                id={"ingredient-serving-size"}
             />
         </InputWrapper>
     </div>

@@ -2,13 +2,23 @@
 
 import {useFormStatus} from "react-dom";
 
-export default function AuthButton({text}: { text: string }) {
+interface Props {
+    text: string,
+    loading_text?: string,
+    classes?: string
+}
+
+export default function FormButton({
+                                       text,
+                                       loading_text = "Loading...",
+                                       classes = "mt-4 bg-main-green rounded-md py-2 px-6 text-white cursor-pointer hover:bg-hover-main-green "
+                                   }: Props) {
     const {pending} = useFormStatus()
 
     return <button
-        className="mt-4 bg-main-green rounded-md py-2 px-6 text-white cursor-pointer hover:bg-hover-main-green"
+        className={classes}
         aria-disabled={pending}
     >
-        {pending ? "Loading... " : text}
+        {pending ? loading_text : text}
     </button>
 }

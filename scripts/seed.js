@@ -16,12 +16,12 @@ async function seedUsers(client) {
 
 		console.log(`Created "users" table`);
 
-		// Insert data into the "users" table
+		// Insert data VARCHAR(255)o the "users" table
 		// const insertedUsers = await Promise.all(
 		// 	users.map(async (user) => {
 		// 		const hashedPassword = await bcrypt.hash(user.password, 10);
 		// 		return client.sql`
-		//     INSERT INTO users (id, name, email, password)
+		//     INSERT VARCHAR(255)O users (id, name, email, password)
 		//     VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
 		//     ON CONFLICT (id) DO NOTHING;
 		//   `;
@@ -37,10 +37,79 @@ async function seedUsers(client) {
 	}
 }
 
+async function seedIngredients(client) {
+	try {
+		await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+		// Create the "users" table if it doesn't exist
+		const createTable = await client.sql`
+      CREATE TABLE IF NOT EXISTS ingredients (
+        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        user_id VARCHAR(255) NOT NULL,
+        name VARCHAR(255) NOT NULL,
+        type VARCHAR(255) NOT NULL,
+        subtype VARCHAR(255) NOT NULL,
+       	updated_at TEXT NOT NULL,
+        brand VARCHAR(255),
+        ingredient_list_name VARCHAR(255),
+        data_source VARCHAR(255),
+        visibility VARCHAR(255),
+        serving_size VARCHAR(255),
+        serving_size_description VARCHAR(255),
+        calories VARCHAR(255),
+        fat VARCHAR(255),
+        saturated_fat VARCHAR(255),
+        trans_fat VARCHAR(255),
+        cholesterol VARCHAR(255),
+        sodium VARCHAR(255),
+        carbohydrate VARCHAR(255),
+        dietary_fiber VARCHAR(255),
+        sugar VARCHAR(255),
+        added_sugar VARCHAR(255),
+        protein VARCHAR(255),
+        vitamin_d VARCHAR(255),
+        calcium VARCHAR(255),
+        iron VARCHAR(255),
+        potassium VARCHAR(255),
+        vitamin_a VARCHAR(255),
+        vitamin_c VARCHAR(255),
+        magnesium VARCHAR(255),
+        phosphorus VARCHAR(255),
+        zinc VARCHAR(255),
+        copper VARCHAR(255),
+        manganese VARCHAR(255),
+        selenium VARCHAR(255),
+        thiamin VARCHAR(255),
+        riboflavin VARCHAR(255),
+        niacin VARCHAR(255),
+        pantothenic_acid VARCHAR(255),
+        vitamin_b6 VARCHAR(255),
+        folate VARCHAR(255),
+        vitamin_b12 VARCHAR(255),
+        vitamin_e VARCHAR(255),
+        vitamin_k VARCHAR(255),
+        uncounted_fiber VARCHAR(255),
+        sugar_alcohol VARCHAR(255),
+        monounsaturated_fat VARCHAR(255),
+        polyunsaturated_fat VARCHAR(255)
+      );
+    `;
+
+		console.log(`Created "ingredients" table`);
+
+		return {
+			createTable
+		};
+	} catch (error) {
+		console.error('Error seeding ingredients:', error);
+		throw error;
+	}
+}
+
 async function main() {
 	const client = await db.connect();
 
 	await seedUsers(client);
+	await seedIngredients(client);
 
 	await client.end();
 }

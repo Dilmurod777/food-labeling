@@ -33,7 +33,7 @@ export default function Recipes() {
         // };
         // addRecipeToLS(newRecipe);
         // router.push(`/recipes/${newRecipe.id}/edit`)
-        router.push(`/ingredients/new`)
+        // router.push(`/ingredients/new`)
     }
 
     if (recipes.length == 0) return <Empty onCreateNewRecipe={onCreateNewRecipe}/>

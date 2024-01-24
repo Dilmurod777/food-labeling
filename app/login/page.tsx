@@ -7,7 +7,7 @@ import {MdEmail} from "react-icons/md";
 import {FaLock} from "react-icons/fa";
 import Divider from "@/app/ui/divider";
 import Link from "next/link";
-import AuthButton from "@/app/ui/auth_button";
+import FormButton from "@/app/ui/auth_button";
 
 const lato = Lato({weight: ["300", "400", "700", "900"], subsets: ['latin']})
 
@@ -63,7 +63,7 @@ export default function Login() {
                 </div>
             </div>
 
-            <AuthButton text={"Log in"}/>
+            <FormButton text={"Log in"}/>
 
             {errorMessage && (<div
                 className="flex h-8 items-end space-x-1"

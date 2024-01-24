@@ -3,7 +3,7 @@ import {FaPlus} from "react-icons/fa";
 import {GoVideo} from "react-icons/go";
 
 export default function Empty({onCreateNewRecipe}: { onCreateNewRecipe: () => void }) {
-    return <div className={"flex flex-col items-center"}>
+    return <div className={"flex flex-col items-center py-12"}>
         <h2 className={"text-black font-bold text-xl"}>Welcome to Foodplanet!</h2>
 
         <div className={"flex gap-4 mt-8"}>
