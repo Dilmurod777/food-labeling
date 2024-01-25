@@ -4,7 +4,7 @@ import Image from "next/image";
 import LabelSamples from "@/public/images/label-samples.svg";
 
 export default function IngredientListsInSeconds() {
-    return <div className={"flex items-center justify-center gap-16 py-8 px-28 bg-main-gray text-secondary-gray"}>
+    return <div className={"flex items-center justify-center gap-16 py-8 w-full px-12 bg-main-gray text-secondary-gray"}>
         <div className={"flex flex-col items-start w-3/5"}>
             <Link
                 href={"/nutrition-label-software?page=4"}

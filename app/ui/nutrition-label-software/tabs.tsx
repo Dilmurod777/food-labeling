@@ -1,5 +1,5 @@
 export default function Tabs({activeTabIndex, tabs, onTabClick}: { activeTabIndex: number, tabs: string[], onTabClick: (index: number) => void }) {
-    return <div className={"flex items-center justify-center h-[45px] border-b-[1px] border-b-[#dbdbdb] mt-[1rem] mx-12 mb-6"}>
+    return <div className={"flex items-center justify-center w-full h-[45px] border-b-[1px] border-b-[#dbdbdb] mt-[1rem] mx-12 mb-6"}>
         {tabs.map((tab, ti) => {
             const isActive = ti == activeTabIndex;
             const extraStyles: { [key: string]: string } = {}

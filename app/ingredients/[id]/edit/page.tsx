@@ -12,7 +12,7 @@ export default async function Page({params}: { params: { id: string } }) {
         </div>
     }
 
-    return <div className={"flex flex-col w-3/4 mx-auto my-10 gap-6"}>
+    return <div className={"flex flex-col w-full px-12 mx-auto my-10 gap-6"}>
         <div className={"flex flex-col gap-4"}>
             <h2 className={"text-3xl font-bold text-black"}>Editing ingredient</h2>
             <p className={"text-sm font-thin text-black"}>

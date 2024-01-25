@@ -55,7 +55,7 @@ export default function Features() {
         }
     ]
 
-    return <div className={"flex flex-col px-28 py-8"}>
+    return <div className={"flex flex-col w-full px-12 py-8"}>
         {features.map((feature, i) => <div
             key={`feature-${i}`}
             className={"flex flex-col px-12"}

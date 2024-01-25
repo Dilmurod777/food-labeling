@@ -1,13 +1,19 @@
 "use client";
 
-import {Recipe} from "@/app/lib/models";
+import {Recipe, User} from "@/app/lib/models";
 import {convertToHumanReadableTime} from "@/app/lib/utilities";
 import {useState} from "react";
-import Title from "@/app/ui/recipes/recipe-edit-page/title";
-import Tags from "@/app/ui/recipes/recipe-edit-page/tags";
-import SearchBarIngredients from "@/app/ui/recipes/recipe-edit-page/searchbar-ingrediens";
+import Title from "@/app/ui/recipes/recipe-page/title";
+import Tags from "@/app/ui/recipes/recipe-page/tags";
+import SearchBarIngredients from "@/app/ui/recipes/recipe-page/searchbar-ingrediens";
+import RecipeItems from "@/app/ui/recipes/recipe-page/recipe-items";
 
-export default function RecipeEditPage({recipe}: { recipe: Recipe }) {
+interface Props {
+    recipe: Recipe,
+    user: User
+}
+
+export default function RecipePage({recipe, user}: Props) {
     const defaultInputs = {
         name: false,
         tags: false
@@ -15,9 +21,16 @@ export default function RecipeEditPage({recipe}: { recipe: Recipe }) {
     const [editingInput, setEditingInput] = useState({
         ...defaultInputs
     })
+    const [items, setItems] = useState(recipe.recipe_items || []);
+
+    const onSearchChanged = (query: string) => {
+        if (recipe.recipe_items) {
+            setItems(recipe.recipe_items.filter(item => item.ingredient?.name.includes(query)))
+        }
+    }
 
     return <div className={"flex flex-col items-start"}>
-        <div className={"flex justify-between items-end w-full"}>
+        <div className={"flex justify-between items-end w-full flex-grow gap-8"}>
             <div className={"flex flex-col items-start"}>
                 <Title
                     recipe={recipe}
@@ -27,6 +40,7 @@ export default function RecipeEditPage({recipe}: { recipe: Recipe }) {
 
                 <Tags
                     recipe={recipe}
+                    user={user}
                     setEditing={(value) => setEditingInput({...defaultInputs, tags: value})}
                     editing={editingInput.tags}
                 />
@@ -34,8 +48,11 @@ export default function RecipeEditPage({recipe}: { recipe: Recipe }) {
 
             <p className={"text-xs text-main-blue font-thin"}>Updated {convertToHumanReadableTime(Date.now() - parseInt(recipe.updated_at))} ago</p>
         </div>
-        <div className={"relative"}>
-            <SearchBarIngredients/>
+
+        <SearchBarIngredients onSearchChanged={onSearchChanged}/>
+        <div className={"flex gap-8 w-full mt-8"}>
+            <RecipeItems items={items}/>
+            <div className={"w-[300px] h-[500px] bg-main-gray"}></div>
         </div>
     </div>
 }

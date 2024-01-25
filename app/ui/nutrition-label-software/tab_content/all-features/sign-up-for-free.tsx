@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export default function SignUpForFree() {
-    return <div className={"flex justify-center items-center bg-main-blue gap-16 px-28 py-20"}>
+    return <div className={"flex justify-center items-center bg-main-blue gap-16 w-full px-12 py-12"}>
         <div className={"flex flex-col gap-8 w-2/5"}>
             <h2 className={"text-5xl font-bold text-white"}>Sign up for free!</h2>
             <p className={"text-lg font-normal text-white"}>
@@ -9,7 +9,7 @@ export default function SignUpForFree() {
             </p>
         </div>
 
-        <div className={"flex flex-start gap-4 w-1/2"}>
+        <div className={"flex flex-start gap-4"}>
             <Link
                 href={"/"}
                 className={"flex items-center justify-center text-[1rem] text-main-blue font-bold px-12 py-4 rounded-md bg-white hover:bg-gray-100"}

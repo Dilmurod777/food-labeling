@@ -9,7 +9,7 @@ import FullForm from "@/app/ui/ingredients/full_form";
 export default function Page() {
     const [_, dispatch] = useFormState(create, undefined);
 
-    return <div className={"flex flex-col w-3/4 mx-auto my-10 gap-6"}>
+    return <div className={"flex flex-col w-full px-12 mx-auto my-10 gap-6"}>
         <div className={"flex flex-col gap-4"}>
             <h2 className={"text-3xl font-bold text-black"}>New ingredient</h2>
             <p className={"text-sm font-thin text-black"}>

@@ -6,7 +6,7 @@ import IngredientLabeling from "@/public/images/ingredient-labeling.png";
 import Image from "next/image";
 
 export default function NutritionLabelingThatIsFun() {
-    return <div className={"flex items-center justify-center gap-24 py-16 px-28 bg-main-gray"}>
+    return <div className={"flex items-center justify-center gap-24 py-12 w-full px-12 bg-main-gray"}>
         <Image
             src={IngredientLabeling}
             alt={"Ingredient List"}

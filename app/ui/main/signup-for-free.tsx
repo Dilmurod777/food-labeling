@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export default function SignUpForFree() {
-    return <div className={"flex p-16 bg-main-blue text-white items-center justify-center gap-10"}>
+    return <div className={"flex w-full px-12 py-12 bg-main-blue text-white items-center justify-center gap-10"}>
         <div className={"w-2/5 flex flex-col items-start"}>
             <h2 className={"text-4xl font-bold"}>
                 Sign up for free!

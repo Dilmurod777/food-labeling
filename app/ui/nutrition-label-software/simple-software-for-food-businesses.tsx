@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function SimpleSoftwareForFoodBusinesses() {
     return <div className={"flex flex-col py-16 px-16 bg-main-green text-white items-center justify-center"}>
-        <div className={"w-3/4 flex flex-col items-start justify-center text-center"}>
+        <div className={"w-full px-12 flex flex-col items-start justify-center text-center"}>
             <h2 className={"text-5xl font-bold"}>
                 Foodplanete: Simple Software for Food Businesses
             </h2>

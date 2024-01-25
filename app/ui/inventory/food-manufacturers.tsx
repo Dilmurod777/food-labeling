@@ -61,7 +61,7 @@ export default function FoodManufacturers() {
         }
     ]
 
-    return <div className={"flex flex-wrap justify-between items-center py-12 px-24 bg-main-blue gap-2"}>
+    return <div className={"flex flex-wrap justify-between items-center py-12 w-full px-12 bg-main-blue gap-2"}>
         {items.map((item, i) => <div
             key={`manufacturer-${i}`}
             className={"flex flex-col items-center gap-4 w-[30%] text-center"}

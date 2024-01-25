@@ -36,7 +36,7 @@ export default function FoodEntrepreneurs() {
         }
     ]
 
-    return <div className={"w-[90%] mx-auto my-0 py-24 text-black flex flex-col items-center text-center"}>
+    return <div className={"w-full px-12 mx-auto my-0 py-24 text-black flex flex-col items-center text-center"}>
         <h2 className={"font-bold text-4xl"}>
             Food entrepreneurs large and small rely on Foodplanet!
         </h2>

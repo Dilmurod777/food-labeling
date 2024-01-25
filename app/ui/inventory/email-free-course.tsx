@@ -2,7 +2,7 @@ import {MdEmail} from "react-icons/md";
 import Link from "next/link";
 
 export default function EmailFreeCourse() {
-    return <div className={"flex flex-col items-center gap-8 py-12"}>
+    return <div className={"flex flex-col items-center gap-8 py-12 w-full px-12"}>
         <div className={"flex flex-col items-center text-center gap-4"}>
             <p className={"text-lg font-bold text-black"}>
                 Want to learn more about inventory management? Join our free 5 email course!

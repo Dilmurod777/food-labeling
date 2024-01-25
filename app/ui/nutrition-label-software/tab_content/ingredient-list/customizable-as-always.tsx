@@ -3,7 +3,7 @@ import Image from "next/image";
 import CustomIngredientList from "@/public/images/nutrition-label-software/custom-ingredient-list.png";
 
 export default function CustomizableAsAlways() {
-    return <div className={"flex gap-24 items-center justify-center py-12 px-12"}>
+    return <div className={"flex gap-24 items-center justify-center py-12 w-full px-12"}>
         <Image
             src={CustomIngredientList}
             alt={"Custom Ingredient List"}

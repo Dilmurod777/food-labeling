@@ -35,7 +35,7 @@ export default function FeaturesSecond() {
         },
     ]
 
-    return <div className={"flex justify-between gap-16 w-[90%] mx-auto my-0 py-12"}>
+    return <div className={"flex justify-between gap-16 w-full px-12 mx-auto my-0 py-12"}>
         {features.map((feature, i) => <div
             key={`${feature.name.toLowerCase()}_${i}`}
             className={"flex flex-col justify-start"}

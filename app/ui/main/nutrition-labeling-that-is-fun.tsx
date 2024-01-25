@@ -5,7 +5,7 @@ import {GrLinkNext} from "react-icons/gr";
 import Divider from "@/app/ui/divider";
 
 export default function NutritionLabelingThatIsFun() {
-    return <div className={"bg-white text-black py-32 px-16 flex items-center justify-between"}>
+    return <div className={"bg-white text-black py-32 w-full px-12 flex items-center justify-between"}>
         <div className={"flex flex-col items-start justify-center px-12 py-3 w-1/2"}>
             <h2 className={"text-5xl mb-6 font-bold"}>
                 Nutrition labeling that&apos;s flexible

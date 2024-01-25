@@ -3,7 +3,7 @@ import {FAQItem} from "@/app/lib/interfaces";
 
 
 export default function FAQ({items = defaultItems}: { items?: FAQItem[] }) {
-    return <div className={"flex flex-col items-center text-black bg-main-gray py-24 px-24"}>
+    return <div className={"flex flex-col items-center text-black bg-main-gray py-16 w-full px-12"}>
         <h2 className={"font-bold text-4xl"}>Frequently asked questions</h2>
 
         <div className={"h-[8px] w-[85px] mt-6 mb-12 bg-main-green"}/>

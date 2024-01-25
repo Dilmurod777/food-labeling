@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export default function CustomerServiceThatDelivers() {
-    return <div className={"flex flex-col py-8 px-28 items-center gap-4"}>
+    return <div className={"flex flex-col pb-8 w-full px-12 items-center gap-4"}>
         <h2 className={"text-4xl font-bold text-black"}>Customer service that delivers</h2>
         <p className={"text-lg font-normal text-black text-center"}>
             Advice from production and operations experts<br/>

@@ -1,7 +1,7 @@
-export function overflowText(text: string, max_length = 20): string {
-    if (text.length < max_length) return text;
+export function overflowText(text: string, max_length = 30): string {
+    if (text.length <= max_length) return text;
 
-    return text.substring(max_length) + "...";
+    return text.substring(0, max_length) + "...";
 }
 
 export function convertToHumanReadableTime(time: number): string {
@@ -35,4 +35,13 @@ export function convertToHumanReadableTime(time: number): string {
     }
 
     return `${Math.round(time)} ${unit}`;
+}
+
+export function debounce<T extends Function>(cb: T, wait = 20) {
+    let h: NodeJS.Timeout;
+    let callable = (...args: any) => {
+        clearTimeout(h);
+        h = setTimeout(() => cb(...args), wait);
+    };
+    return <T>(<any>callable);
 }

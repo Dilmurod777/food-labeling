@@ -13,7 +13,7 @@ export type Recipe = {
     ingredient_list: string, // json of RecipeItem ids
     recipe_items?: RecipeItem[],
     tag_ids: string, // json of Tag ids
-    tags: Tag[],
+    tags?: Tag[],
     waste?: string,
     net_weight?: string,
     net_weight_unit?: string,

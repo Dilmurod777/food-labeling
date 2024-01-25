@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export default function TopHero({mainText, secondaryText}: { mainText: string, secondaryText: string }) {
-    return <div className={"flex flex-col py-16 px-16 bg-main-blue text-white items-center justify-center text-center"}>
+    return <div className={"flex flex-col py-16 w-full px-12 bg-main-blue text-white items-center justify-center text-center"}>
         <div className={"flex flex-col items-center justify-center"}>
             <h2 className={"text-5xl font-bold w-full"}>
                 {mainText}

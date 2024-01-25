@@ -3,7 +3,7 @@ import CostDecisions from "@/public/images/nutrition-label-software/cost-decisio
 import {FaCheck} from "react-icons/fa";
 
 export default function MakeBetterBusinessDecisions() {
-    return <div className={"flex gap-24 items-center justify-center py-12 px-12"}>
+    return <div className={"flex gap-24 items-center justify-center py-12 w-full px-12"}>
         <Image
             src={CostDecisions}
             alt={"Cost Decisions"}

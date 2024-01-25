@@ -46,7 +46,7 @@ export default function TrustedBusinesses() {
     const rowHeight = 200;
 
     return <div
-        className={"flex flex-col items-center"}
+        className={"flex flex-col items-center w-full px-12"}
     >
         <p
             className={"text-main-blue font-bold text-2xl"}

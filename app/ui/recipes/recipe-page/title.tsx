@@ -1,6 +1,5 @@
 import {overflowText} from "@/app/lib/utilities";
 import {FaRegEdit} from "react-icons/fa";
-import {updateRecipeInLS} from "@/app/lib/actions-localstorage";
 import {Recipe} from "@/app/lib/models";
 
 interface Props {
@@ -13,7 +12,6 @@ export default function Title({editing, recipe, setEditing}: Props) {
     const updateRecipeName = (name: string) => {
         if (name.trim() !== "") {
             recipe.name = name;
-            updateRecipeInLS(recipe);
         }
 
         setEditing(false);
@@ -34,7 +32,7 @@ export default function Title({editing, recipe, setEditing}: Props) {
         />
         : <div className={"flex gap-4 items-center h-[35px]"}>
             <h2 className={"text-2xl text-black font-bold"}>{overflowText(recipe.name)}</h2>
-            <FaRegEdit className={"text-main-blue text-3xl cursor-pointer"}
+            <FaRegEdit className={"text-main-blue text-2xl cursor-pointer"}
                        onClick={() => setEditing(true)}/>
         </div>
 

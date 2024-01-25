@@ -4,10 +4,10 @@ import { PiDevices } from "react-icons/pi";
 import { MdGroups } from "react-icons/md";
 
 export default function RecipeManagementInTheCloud() {
-    return <div className={"flex flex-col items-center w-full gap-16 py-12 px-32 text-secondary-gray"}>
+    return <div className={"flex flex-col items-center w-full gap-16 py-12 w-full px-12 text-secondary-gray"}>
         <Link
             href={"nutrition-label-software?page=5"}
-            className={"text-5xl text-normal"}
+            className={"text-4xl text-normal"}
         >
             Recipe management <strong>in the cloud</strong>
         </Link>

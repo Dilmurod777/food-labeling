@@ -4,7 +4,7 @@ import Link from "next/link";
 import {FaRegPlayCircle} from "react-icons/fa";
 
 export default function TopHero() {
-    return <div className={"flex items-center h-[650px] w-4/5 mx-auto my-0"}>
+    return <div className={"flex items-center h-[650px] w-full px-12 mx-auto my-0"}>
         <div className={"flex flex-1 flex-col justify-center"}>
             <p className={"text-4xl text-black font-bold mb-6"}>
                 Create Your Own <br/>Nutrition Fact Labels

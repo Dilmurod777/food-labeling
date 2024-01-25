@@ -12,7 +12,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
         "Inventory Dashboard": "/dashboard/inventory"
     }
 
-    return <div className={"flex flex-col w-[75%] h-full my-6 mx-auto"}>
+    return <div className={"flex flex-col w-full px-12 h-full my-6 mx-auto"}>
         <div className={"flex items-center h-[45px] border-b-[1px] border-b-[#dbdbdb] mb-2"}>
             {Object.keys(tabs).map((tab, ti) => {
                 const isActive = pathname == tabs[tab];

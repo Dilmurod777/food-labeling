@@ -3,7 +3,7 @@ import Image from "next/image";
 import IntuitiveInterface from "@/public/images/nutrition-label-software/intuitive-nutrition-interface.png";
 
 export default function IntuitiveInterfaceToEditRecipes() {
-    return <div className={"flex gap-24 items-center justify-center py-12 px-12"}>
+    return <div className={"flex gap-24 items-center justify-center py-12 w-full px-12"}>
         <Image
             src={IntuitiveInterface}
             alt={"Intuitive Interface"}

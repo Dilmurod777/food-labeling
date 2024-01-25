@@ -3,7 +3,7 @@ import CustomLabel from "@/public/images/nutrition-label-software/custom-label.p
 import {FaCheck} from "react-icons/fa";
 
 export default function CustomizeForYourProduct(){
-    return <div className={"flex gap-24 items-center justify-center py-12 px-12"}>
+    return <div className={"flex gap-24 items-center justify-center py-12 w-full px-12"}>
         <Image
             src={CustomLabel}
             alt={"Custom Label"}

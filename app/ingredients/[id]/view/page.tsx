@@ -11,7 +11,7 @@ export default async function View({params}: { params: { id: string } }) {
         </div>
     )
 
-    return <div className={"w-3/4 flex flex-col gap-6 items-start mx-auto my-0 py-6"}>
+    return <div className={"w-full px-12 flex flex-col gap-6 items-start mx-auto my-0 py-6"}>
         <div className={"flex flex-col gap-2"}>
             <h2 className={"text-2xl font-bold text-black"}>
                 {ingredient.name} - Nutrition facts

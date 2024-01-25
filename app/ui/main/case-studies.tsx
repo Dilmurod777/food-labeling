@@ -37,7 +37,7 @@ export default function CaseStudies() {
         }
     ]
 
-    return <div className={"flex flex-col items-center text-black px-12 py-16"}>
+    return <div className={"flex flex-col items-center text-black w-full px-12 py-16"}>
         <h2 className={"font-bold text-4xl"}>Read our case studies</h2>
         <div className={"mt-12 w-full grid grid-cols-2 grid-rows-2 h-[400px]"}>
             <div className={"border-r-[1px] border-b-[1px] border-main-gray"}>

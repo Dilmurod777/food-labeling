@@ -5,7 +5,7 @@ import {GrLinkNext} from "react-icons/gr";
 import Divider from "@/app/ui/divider";
 
 export default function RecipeCostingToMakeDecisions() {
-    return <div className={"bg-[#f3f7fb] text-black py-32 px-16 flex items-center justify-between"}>
+    return <div className={"bg-[#f3f7fb] text-black py-32 w-full px-12 flex items-center justify-between"}>
         <div className={"px-12 py-6 w-1/2 h-full"}>
             <Image
                 src={CostAnalysis}

@@ -3,7 +3,7 @@ import Image from "next/image";
 import MultipleDevices from "@/public/images/nutrition-label-software/multiple-devices.jpg";
 
 export default function TotalAccessForYou() {
-    return <div className={"flex gap-24 items-center justify-center py-12 px-12"}>
+    return <div className={"flex gap-24 items-center justify-center py-12 w-full px-12"}>
         <Image
             src={MultipleDevices}
             alt={"Multiple Devices"}

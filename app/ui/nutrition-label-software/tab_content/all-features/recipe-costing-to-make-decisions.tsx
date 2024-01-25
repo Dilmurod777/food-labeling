@@ -4,7 +4,7 @@ import CostAnalysis from "@/public/images/cost-analysis.svg";
 import Image from "next/image";
 
 export default function RecipeCostingToMakeDecisions() {
-    return <div className={"flex gap-8 items-center justify-center py-16 px-12"}>
+    return <div className={"flex gap-8 items-center justify-center py-12 w-full px-12"}>
         <div className={"flex flex-col items-start gap-4 w-2/5"}>
             <Link
                 href={'/nutrition-label-software?page=3'}

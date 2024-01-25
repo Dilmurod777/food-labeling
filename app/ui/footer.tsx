@@ -33,7 +33,7 @@ export default function Footer() {
         }
     ]
 
-    return <div className={"flex flex-col gap-12 py-12 px-24 bg-[#f9fafa]"}>
+    return <div className={"flex flex-col gap-12 py-12 w-full px-12 bg-main-gray"}>
         <div className={"flex justify-between items-stretch"}>
             <div className={"flex flex-col items-start justify-center basis-1/4"}>
                 <Image

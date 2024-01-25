@@ -3,7 +3,7 @@ import InventoryIllustration from "@/public/images/inventory-illustration.svg";
 import Link from "next/link";
 import { FaCheck } from "react-icons/fa";
 export default function MainInventory() {
-    return <div className={"flex items-center justify-center gap-24 py-16 px-28 bg-main-gray"}>
+    return <div className={"flex items-center justify-center gap-24 py-12 w-full px-12 bg-main-gray"}>
         <Image
             src={InventoryIllustration}
             alt={"Ingredient List"}

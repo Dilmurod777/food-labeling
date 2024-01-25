@@ -4,7 +4,7 @@ import Image from "next/image";
 import FlexibleDatabase from "@/public/images/nutrition-label-software/flexible-database.png";
 
 export default function FlexibleDatabaseOfIngredients() {
-    return <div className={"flex gap-24 items-center justify-center py-12 px-12"}>
+    return <div className={"flex gap-24 items-center justify-center py-12 w-full px-12"}>
         <div className={"flex flex-col items-start gap-4 w-2/5"}>
             <h2
                 className={"font-normal text-4xl mb-8"}

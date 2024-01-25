@@ -38,7 +38,7 @@ export default function Testimonials() {
         }
     ]
 
-    return <div className={"flex flex-col items-center w-[90%] mx-auto my-12"}>
+    return <div className={"flex flex-col items-center w-full px-12 mx-auto my-12"}>
         <h2 className={"font-bold text-4xl"}>See what our customers are saying</h2>
 
         <div className={"w-full mt-12 flex flex-wrap justify-between gap-y-6"}>
