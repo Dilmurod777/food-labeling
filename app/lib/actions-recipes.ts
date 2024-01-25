@@ -5,7 +5,7 @@ import {sql} from "@vercel/postgres";
 import {getCurrentUser} from "@/app/lib/actions-user";
 
 
-export async function getAllRecipes(email: string): Promise<Recipe[] | undefined> {
+export async function getAll(): Promise<Recipe[]> {
     try {
         const user = await getCurrentUser();
         if (!user) return [];

@@ -2,27 +2,36 @@ export type User = {
     id: string,
     name: string,
     email: string,
-    password: string,
-    recipes?: string, // json of Recipe ids
+    password: string
 }
 
 export type Recipe = {
     id: string,
+    user_id: string,
     name: string,
     updated_at: string
-    ingredient_list: string, // json of IngredientItem ids
-    tags: string, // json of Tag ids
-    waste: string,
-    net_weight: string,
-    net_weight_unit: string,
-    packages: string,
-    serving_size: string,
-    serving_size_fr: string,
-    serving_per_package: string,
+    ingredient_list: string, // json of RecipeItem ids
+    recipe_items?: RecipeItem[],
+    tag_ids: string, // json of Tag ids
+    tags: Tag[],
+    waste?: string,
+    net_weight?: string,
+    net_weight_unit?: string,
+    packages?: string,
+    serving_size?: string,
+    serving_size_fr?: string,
+    serving_per_package?: string,
     label_id: string,
     description_ddf: string,
     sku: string,
-    preparation_instructions: string
+    preparation_instructions: string,
+    unit_packaging_cost: string,
+    batch_labor_cost: string,
+    batch_overhead_cost: string,
+    margin: string,
+    distributor_margin: string,
+    broker_margin: string,
+    retailer_margin: string
 }
 
 export type Tag = {
@@ -33,10 +42,13 @@ export type Tag = {
 
 export type RecipeItem = {
     id: string,
+    recipe_id: string,
     ingredient_id: string,
-    ingredient_name: string,
+    ingredient?: Ingredient,
+    price: string,
     quantity: string,
     unit: string,
+    shipping: string,
     waste: string,
     label_text: string,
     spice_flavor: string
@@ -48,6 +60,7 @@ export type Label = {
     type: string,
     allergens: string, // json of allergen ids
     business_name_address: string,
+    options: string // dictionary of possible options
 }
 
 export interface Ingredient {

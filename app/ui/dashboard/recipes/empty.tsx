@@ -1,14 +1,20 @@
+"use client";
+
 import Link from "next/link";
 import {FaPlus} from "react-icons/fa";
 import {GoVideo} from "react-icons/go";
+import {useRouter} from "next/navigation";
 
-export default function Empty({onCreateNewRecipe}: { onCreateNewRecipe: () => void }) {
+
+export default function Empty() {
+    const router = useRouter();
+
     return <div className={"flex flex-col items-center py-12"}>
         <h2 className={"text-black font-bold text-xl"}>Welcome to Foodplanet!</h2>
 
         <div className={"flex gap-4 mt-8"}>
             <div
-                onClick={onCreateNewRecipe}
+                onClick={() => router.push("/recipes/create")}
                 className={"flex gap-2 items-center justify-center text-sm text-white font-normal px-4 py-2 rounded-md bg-main-green hover:bg-hover-main-green cursor-pointer"}
             >
                 <FaPlus className={"text-lg"}/>
