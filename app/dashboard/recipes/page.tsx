@@ -1,4 +1,3 @@
-import {Recipe} from "@/app/lib/models";
 import Empty from "@/app/ui/dashboard/recipes/empty";
 import RecipeList from "@/app/ui/dashboard/recipes/recipe-list";
 import {getAll} from "@/app/lib/actions-recipes";

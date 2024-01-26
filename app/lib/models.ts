@@ -5,7 +5,11 @@ export type User = {
     password: string
 }
 
-export type Recipe = {
+interface IRecipe {
+    [key: string]: string | RecipeItem[] | Tag[] | undefined;
+}
+
+export interface Recipe extends IRecipe {
     id: string,
     user_id: string,
     name: string,
@@ -111,6 +115,63 @@ export interface Ingredient {
     sugar_alcohol?: string,
     monounsaturated_fat?: string,
     polyunsaturated_fat?: string
+}
+
+export function RecipeGetProperty(recipe: Recipe | undefined, key: string): string | undefined | RecipeItem[] | Tag[] {
+    if (!recipe) return undefined;
+
+    switch (key) {
+        case "id":
+            return recipe.id;
+        case "user_id":
+            return recipe.user_id;
+        case "name":
+            return recipe.name;
+        case "updated_at":
+            return recipe.updated_at;
+        case "ingredient_list":
+            return recipe.ingredient_list;
+        case "recipe_items":
+            return recipe.recipe_items;
+        case "tag_ids":
+            return recipe.tag_ids;
+        case "tags":
+            return recipe.tags;
+        case "waste":
+            return recipe.waste;
+        case "net_weight":
+            return recipe.net_weight;
+        case "net_weight_unit":
+            return recipe.net_weight_unit;
+        case "packages":
+            return recipe.packages;
+        case "serving_size":
+            return recipe.serving_size;
+        case "serving_per_package":
+            return recipe.serving_per_package;
+        case "label_id":
+            return recipe.label_id;
+        case "description_ddf":
+            return recipe.description_ddf;
+        case "sku":
+            return recipe.sku;
+        case "preparation_instructions":
+            return recipe.preparation_instructions;
+        case "unit_packaging_cost":
+            return recipe.unit_packaging_cost;
+        case "batch_labor_cost":
+            return recipe.batch_labor_cost;
+        case "batch_overhead_cost":
+            return recipe.batch_overhead_cost;
+        case "margin":
+            return recipe.margin;
+        case "distributor_margin":
+            return recipe.distributor_margin;
+        case "broker_margin":
+            return recipe.broker_margin;
+        case "retailer_margin":
+            return recipe.retailer_margin;
+    }
 }
 
 export function IngredientGetProperty(ingredient: Ingredient | undefined, key: string): string | undefined {

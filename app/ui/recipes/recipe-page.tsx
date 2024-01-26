@@ -2,7 +2,7 @@
 
 import {Recipe, User} from "@/app/lib/models";
 import {convertToHumanReadableTime} from "@/app/lib/utilities";
-import {useState} from "react";
+import {memo, useState} from "react";
 import Title from "@/app/ui/recipes/recipe-page/title";
 import Tags from "@/app/ui/recipes/recipe-page/tags";
 import SearchBarIngredients from "@/app/ui/recipes/recipe-page/searchbar-ingrediens";
@@ -46,7 +46,7 @@ export default function RecipePage({recipe, user}: Props) {
                 />
             </div>
 
-            <p className={"text-xs text-main-blue font-thin"}>Updated {convertToHumanReadableTime(Date.now() - parseInt(recipe.updated_at))} ago</p>
+            <UpdatedDate updated_at={recipe.updated_at}/>
         </div>
 
         <SearchBarIngredients onSearchChanged={onSearchChanged}/>
@@ -56,3 +56,9 @@ export default function RecipePage({recipe, user}: Props) {
         </div>
     </div>
 }
+
+const UpdatedDate = memo(function UpdatedDate({updated_at}: { updated_at: string }) {
+    return <p className={"text-xs text-main-blue font-thin"}>
+        Updated {convertToHumanReadableTime(Date.now() - parseInt(updated_at))}
+    </p>
+})

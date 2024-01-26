@@ -34,7 +34,10 @@ export function convertToHumanReadableTime(time: number): string {
         unit = "year(s)";
     }
 
-    return `${Math.round(time)} ${unit}`;
+    time = Math.round(time);
+    if (time == 0) return "now";
+
+    return `${time} ${unit} ago`;
 }
 
 export function debounce<T extends Function>(cb: T, wait = 20) {
