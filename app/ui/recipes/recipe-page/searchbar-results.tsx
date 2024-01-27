@@ -12,7 +12,6 @@ export default function SearchbarResults({searchQuery, handleRecipeItemClick}: P
 
     useEffect(() => {
         if (searchQuery.trim() != "") {
-            console.log("searchQuery", searchQuery);
             fetch(`/api/ingredients?query=${searchQuery}`)
                 .then(result => result.json())
                 .then(data => {

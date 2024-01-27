@@ -7,11 +7,12 @@ import RecipeItems from "@/app/ui/recipes/recipe-page/recipe-items";
 import Link from "next/link";
 import {FaPlus} from "react-icons/fa"
 import {useEffect, useState} from "react";
+import RecipeSettings from "@/app/ui/recipes/recipe-page/recipe-settings";
 
 interface Props {
     recipe: Recipe,
     user: User,
-    updateRecipe: (data: { [key: string]: string | RecipeItem[] | Tag[] }) => void
+    updateRecipe: (data: { [key: string]: string | number | RecipeItem[] | Tag[] }) => void
 }
 
 export default function RecipePage({recipe, user, updateRecipe}: Props) {
@@ -51,8 +52,11 @@ export default function RecipePage({recipe, user, updateRecipe}: Props) {
                 <span>Create your own ingredient</span>
             </Link>
         </div>
-        <div className={"items-start gap-8 w-full mt-8"} style={{display: items.length == 0 ? "none" : "flex"}}>
-            <RecipeItems recipe={recipe} updateRecipe={updateRecipe}/>
+        <div className={"items-start gap-8 w-full my-8"} style={{display: items.length == 0 ? "none" : "flex"}}>
+            <div className={"flex flex-col gap-8 flex-grow"}>
+                <RecipeItems recipe={recipe} updateRecipe={updateRecipe}/>
+                {recipe.recipe_items?.length && <RecipeSettings recipe={recipe} updateRecipe={updateRecipe}/>}
+            </div>
             <div className={"w-[300px] h-[500px] bg-main-gray"}></div>
         </div>
     </div>

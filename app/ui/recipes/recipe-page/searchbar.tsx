@@ -34,7 +34,7 @@ export default function SearchBar({recipe, updateRecipe}: Props) {
                     canada_sugar: false,
                     label_text: ingredient.name,
                     price: 0,
-                    quantity: 0,
+                    quantity: 1,
                     shipping: 0,
                     spice_flavor: 0,
                     unit: 0,

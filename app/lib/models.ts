@@ -6,7 +6,7 @@ export type User = {
 }
 
 interface IRecipe {
-    [key: string]: string | RecipeItem[] | Tag[] | undefined;
+    [key: string]: string | number | RecipeItem[] | Tag[] | undefined;
 }
 
 export interface Recipe extends IRecipe {
@@ -18,24 +18,24 @@ export interface Recipe extends IRecipe {
     recipe_items?: RecipeItem[],
     tag_ids: string, // json of Tag ids
     tags?: Tag[],
-    waste?: string,
-    net_weight?: string,
-    net_weight_unit?: string,
-    packages?: string,
-    serving_size?: string,
-    serving_size_fr?: string,
-    serving_per_package?: string,
+    waste?: number,
+    net_weight?: number,
+    net_weight_unit?: number,
+    packages?: number,
+    serving_size_description?: string,
+    serving_size_description_fr?: string,
+    serving_per_package?: number,
     label_id: string,
     description_ddf: string,
     sku: string,
     preparation_instructions: string,
-    unit_packaging_cost: string,
-    batch_labor_cost: string,
-    batch_overhead_cost: string,
-    margin: string,
-    distributor_margin: string,
-    broker_margin: string,
-    retailer_margin: string
+    unit_packaging_cost: number,
+    batch_labor_cost: number,
+    batch_overhead_cost: number,
+    margin: number,
+    distributor_margin: number,
+    broker_margin: number,
+    retailer_margin: number
 }
 
 export type Tag = {
@@ -118,7 +118,7 @@ export interface Ingredient {
     polyunsaturated_fat?: string
 }
 
-export function RecipeGetProperty(recipe: Recipe | undefined, key: string): string | undefined | RecipeItem[] | Tag[] {
+export function RecipeGetProperty(recipe: Recipe | undefined, key: string): string | number | undefined | RecipeItem[] | Tag[] {
     if (!recipe) return undefined;
 
     switch (key) {
@@ -146,8 +146,10 @@ export function RecipeGetProperty(recipe: Recipe | undefined, key: string): stri
             return recipe.net_weight_unit;
         case "packages":
             return recipe.packages;
-        case "serving_size":
-            return recipe.serving_size;
+        case "serving_size_description":
+            return recipe.serving_size_description;
+        case "serving_size_description_fr":
+            return recipe.serving_size_description_fr;
         case "serving_per_package":
             return recipe.serving_per_package;
         case "label_id":

@@ -20,7 +20,7 @@ export default function Form({recipe, user}: Props) {
     const [saved, setSaved] = useState(false);
     const [_recipe, setRecipe] = useState<Recipe>({...recipe})
 
-    const updateRecipe = (data: { [key: string]: string | RecipeItem[] | Tag[] }) => {
+    const updateRecipe = (data: { [key: string]: string | number | RecipeItem[] | Tag[] }) => {
         setRecipe({
             ..._recipe,
             ...data,

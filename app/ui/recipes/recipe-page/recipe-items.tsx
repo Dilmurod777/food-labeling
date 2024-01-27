@@ -1,4 +1,4 @@
-import {Ingredient, Recipe, RecipeItem, Tag} from "@/app/lib/models";
+import {Recipe, RecipeItem, Tag} from "@/app/lib/models";
 import Link from "next/link";
 import {MdDelete} from "react-icons/md";
 import {useEffect, useState} from "react";
@@ -14,7 +14,7 @@ export default function RecipeItems({recipe, updateRecipe}: Props) {
 
     useEffect(() => {
         if (recipe.recipe_items) {
-            setTotalGrams(recipe.recipe_items.map(item => getTotalGrams(item.quantity, 1000, item.waste)));
+            setTotalGrams(recipe.recipe_items.map(item => getTotalGrams(item.quantity, 1000, item.waste, recipe)));
         }
     }, [recipe]);
 
@@ -47,9 +47,9 @@ export default function RecipeItems({recipe, updateRecipe}: Props) {
         })
     }
 
-    return <table className={"w-full flex-grow"}>
+    return <table className={"w-full"}>
         <thead>
-        <tr className={"text-left border-b-[1px] border-secondary-gray *:text-sm *:text-secondary-gray *:py-1 *:px-2"}>
+        <tr className={"text-left border-b-[1px] border-main-gray *:text-sm *:text-secondary-gray *:py-1 *:px-2"}>
             <th>
                 Ingredient
             </th>
@@ -71,7 +71,7 @@ export default function RecipeItems({recipe, updateRecipe}: Props) {
         <tbody>
         {recipe.recipe_items?.map((item, i) => <tr
             key={`recipe-items-${i}`}
-            className={"text-left border-b-[1px] border-secondary-gray *:text-sm *:text-secondary-gray *:py-1 *:px-2 even:bg-main-gray"}
+            className={"text-left border-b-[1px] border-main-gray *:text-sm *:text-secondary-gray *:py-1 *:px-2 even:bg-main-gray"}
         >
             <td>
                 <Link
@@ -86,9 +86,14 @@ export default function RecipeItems({recipe, updateRecipe}: Props) {
                 <input
                     type="number"
                     min={0}
-                    value={item.quantity}
+                    defaultValue={item.quantity}
                     className={"border-[1px] border-main-gray rounded-md px-2 py-1 w-full"}
-                    onChange={(e) => updateItemsData("quantity", e.target.value, i)}
+                    onBlur={(e) => updateItemsData("quantity", e.target.value, i)}
+                    onKeyDown={(e) => {
+                        if (e.key == "Enter") {
+                            updateItemsData("quantity", e.currentTarget.value, i)
+                        }
+                    }}
                 />
             </td>
             <td>
@@ -98,9 +103,14 @@ export default function RecipeItems({recipe, updateRecipe}: Props) {
                 <input
                     type="number"
                     min={0}
-                    value={item.waste}
+                    defaultValue={item.waste}
                     className={"border-[1px] border-main-gray rounded-md px-2 py-1 w-full"}
-                    onChange={(e) => updateItemsData("waste", e.target.value, i)}
+                    onBlur={(e) => updateItemsData("waste", e.target.value, i)}
+                    onKeyDown={(e) => {
+                        if (e.key == "Enter") {
+                            updateItemsData("waste", e.currentTarget.value, i)
+                        }
+                    }}
                 />
             </td>
             <td>
@@ -122,7 +132,7 @@ export default function RecipeItems({recipe, updateRecipe}: Props) {
             <td>
                 Total:
             </td>
-            <td>{(recipe.recipe_items || []).reduce((sum, item) => sum + getTotalGrams(item.quantity, 1000, item.waste), 0)}</td>
+            <td>{(recipe.recipe_items || []).reduce((sum, item) => sum + getTotalGrams(item.quantity, 1000, item.waste, recipe), 0)}</td>
             <td></td>
         </tr>
         </tfoot>

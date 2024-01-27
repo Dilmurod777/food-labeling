@@ -23,13 +23,13 @@ export default async function Page() {
         description_ddf: "",
         preparation_instructions: "",
         sku: "",
-        unit_packaging_cost: "0",
-        batch_labor_cost: "0",
-        batch_overhead_cost: "0",
-        margin: "0",
-        retailer_margin: "0",
-        broker_margin: "0",
-        distributor_margin: "0"
+        unit_packaging_cost: 0,
+        batch_labor_cost: 0,
+        batch_overhead_cost: 0,
+        margin: 0,
+        retailer_margin: 0,
+        broker_margin: 0,
+        distributor_margin: 0
     };
 
     return <Suspense fallback={<Loading/>}>

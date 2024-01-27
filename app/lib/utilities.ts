@@ -1,3 +1,5 @@
+import {Recipe} from "@/app/lib/models";
+
 export function overflowText(text: string, max_length = 30): string {
     if (text.length <= max_length) return text;
 
@@ -40,6 +42,6 @@ export function convertToHumanReadableTime(time: number): string {
     return `${time} ${unit} ago`;
 }
 
-export function getTotalGrams(quantity: number, unit: number, waste: number){
-    return parseFloat((quantity * unit * (100 - waste) / 100).toFixed(1))
+export function getTotalGrams(quantity: number, unit: number, waste: number, recipe: Recipe){
+    return parseFloat((quantity * unit * (100 - waste) / 100 * (100 - (recipe.waste || 0)) / 100).toFixed(1))
 }
