@@ -84,7 +84,7 @@ export async function getById(id: string): Promise<Ingredient | undefined> {
         const user = await getCurrentUser();
         if (!user) return undefined;
 
-        if(id == "") return undefined;
+        if (id == "") return undefined;
 
         const query = `SELECT * FROM ingredients WHERE user_id='${user.id}' AND id='${id}'`;
         const result = await sql.query<Ingredient>(query)
@@ -94,6 +94,24 @@ export async function getById(id: string): Promise<Ingredient | undefined> {
     } catch (error) {
         console.log("error: ", error)
         return undefined;
+    }
+}
+
+export async function getByQuery(searchQuery: string, columns: string[]): Promise<Ingredient[]> {
+    try {
+        const user = await getCurrentUser();
+        if (!user) return [];
+
+        if (searchQuery == "") return [];
+
+        const columns_to_get = columns.length == 0 ? "*" : columns.join(", ");
+        const query = `SELECT ${columns_to_get} FROM ingredients WHERE user_id='${user.id}' AND name LIKE '%${searchQuery}%'`;
+        const result = await sql.query<Ingredient>(query)
+
+        return result.rows;
+    } catch (error) {
+        console.log("error: ", error)
+        return [];
     }
 }
 

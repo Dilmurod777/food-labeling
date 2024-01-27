@@ -1,16 +1,17 @@
 "use client";
 
 import FormButton from "@/app/ui/auth_button";
-import {Ingredient} from "@/app/lib/models";
+import {Ingredient, User} from "@/app/lib/models";
 import {useFormState} from "react-dom";
 import {update} from "@/app/lib/actions-ingredients";
 import {useRouter} from "next/navigation";
 
 interface Props {
-    ingredient: Ingredient
+    ingredient: Ingredient,
+    user: User | undefined
 }
 
-export default function PartialForm({ingredient}: Props) {
+export default function PartialForm({ingredient, user}: Props) {
     const [_, dispatch] = useFormState(update, undefined);
     const router = useRouter();
 
@@ -60,7 +61,7 @@ export default function PartialForm({ingredient}: Props) {
         </div>
 
         <div className={"flex flex-col gap-1 items-start *:w-full"}>
-            <FormButton text={"Update Ingredient"} loading_text={"Updating..."}/>
+            {user && user.id == ingredient.user_id && <FormButton text={"Update Ingredient"} loading_text={"Updating..."}/>}
             <div
                 onClick={() => router.push("/dashboard/inventory")}
                 className={"bg-main-blue rounded-md py-2 px-6 text-white cursor-pointer hover:bg-hover-main-blue"}

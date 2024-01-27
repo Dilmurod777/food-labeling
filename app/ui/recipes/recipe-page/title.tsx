@@ -1,17 +1,21 @@
 import {overflowText} from "@/app/lib/utilities";
 import {FaRegEdit} from "react-icons/fa";
-import {Recipe} from "@/app/lib/models";
+import {Recipe, RecipeItem, Tag} from "@/app/lib/models";
+import {useState} from "react";
 
 interface Props {
     recipe: Recipe,
-    editing: boolean,
-    setEditing: (value: boolean) => void
+    updateRecipe: (data: {[key: string]: string|RecipeItem[]|Tag[]}) => void
 }
 
-export default function Title({editing, recipe, setEditing}: Props) {
+export default function Title({recipe, updateRecipe}: Props) {
+    const [editing, setEditing] = useState(false)
+
     const updateRecipeName = (name: string) => {
-        if (name.trim() !== "") {
-            recipe.name = name;
+        if (name.trim() !== "" && name != recipe.name) {
+           updateRecipe({
+               name: name
+           })
         }
 
         setEditing(false);

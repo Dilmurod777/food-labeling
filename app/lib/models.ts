@@ -48,14 +48,14 @@ export type RecipeItem = {
     id: string,
     recipe_id: string,
     ingredient_id: string,
-    ingredient?: Ingredient,
-    price: string,
-    quantity: string,
-    unit: string,
-    shipping: string,
-    waste: string,
+    ingredient: Ingredient,
+    price: number,
+    quantity: number,
+    unit: number,
+    shipping: number,
+    waste: number,
     label_text: string,
-    spice_flavor: string
+    spice_flavor: number,
     canada_sugar: boolean
 }
 
@@ -69,6 +69,7 @@ export type Label = {
 
 export interface Ingredient {
     id: string,
+    user_id: string,
     type: string,
     subtype: string,
     name: string,

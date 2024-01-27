@@ -1,8 +1,8 @@
 "use client";
 
-import {Recipe, User} from "@/app/lib/models";
+import {Recipe, RecipeItem, Tag, User} from "@/app/lib/models";
 import {useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import RecipePage from "@/app/ui/recipes/recipe-page";
 import IngredientStatementPage from "@/app/ui/recipes/ingredient-statement-page";
 import LabelPage from "@/app/ui/recipes/label-page";
@@ -14,26 +14,19 @@ interface Props {
 }
 
 export default function Form({recipe, user}: Props) {
-    const recipeUpdateHandler = {
-        get(target: Recipe, key: string): object {
-            if (typeof target[key] === 'object' && target[key] !== null) {
-                return new Proxy(target[key] as object, recipeUpdateHandler);
-            }
-            return target[key] as object;
-        },
-        set(target: Recipe, prop: string, value: string) {
-            target[prop] = value;
-            target.updated_at = Date.now().toString();
-            setSaved(false);
-            return true;
-        },
-    }
-    const proxyRecipe = new Proxy(recipe, recipeUpdateHandler);
-
     const router = useRouter();
     const [tabIndex, setTabIndex] = useState(1);
     const tabs = ["Dashboard", "Recipe", "Ingredient Statement", "Label", "Cost"];
     const [saved, setSaved] = useState(false);
+    const [_recipe, setRecipe] = useState<Recipe>({...recipe})
+
+    const updateRecipe = (data: { [key: string]: string | RecipeItem[] | Tag[] }) => {
+        setRecipe({
+            ..._recipe,
+            ...data,
+            updated_at: Date.now().toString()
+        })
+    }
 
     return <div className={"flex flex-col w-full px-12 h-full mt-6 mx-auto"}>
         <div className={"flex justify-between items-center h-[45px] border-b-[1px] border-b-[#dbdbdb] mb-8"}>
@@ -74,11 +67,11 @@ export default function Form({recipe, user}: Props) {
         </div>
 
         <div className={"w-full h-full py-6"}>
-            {!proxyRecipe && <div className={"flex items-center justify-center text-lg font-bold text-black"}>No recipe with such ID found.</div>}
-            {proxyRecipe && tabIndex == 1 && <RecipePage recipe={proxyRecipe} user={user}/>}
-            {proxyRecipe && tabIndex == 2 && <IngredientStatementPage recipe={proxyRecipe}/>}
-            {proxyRecipe && tabIndex == 3 && <LabelPage recipe={proxyRecipe}/>}
-            {proxyRecipe && tabIndex == 4 && <CostPage recipe={proxyRecipe}/>}
+            {!_recipe && <div className={"flex items-center justify-center text-lg font-bold text-black"}>No recipe with such ID found.</div>}
+            {_recipe && tabIndex == 1 && <RecipePage recipe={_recipe} user={user} updateRecipe={updateRecipe}/>}
+            {_recipe && tabIndex == 2 && <IngredientStatementPage recipe={_recipe}/>}
+            {_recipe && tabIndex == 3 && <LabelPage recipe={_recipe}/>}
+            {_recipe && tabIndex == 4 && <CostPage recipe={_recipe}/>}
         </div>
     </div>
 }

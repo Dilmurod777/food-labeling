@@ -1,57 +1,60 @@
 import {IoCloseCircleSharp} from "react-icons/io5";
 import {FaPlus, FaTags} from "react-icons/fa";
 import {useState} from "react";
-import {Recipe, Tag, User} from "@/app/lib/models";
+import {Recipe, RecipeItem, Tag, User} from "@/app/lib/models";
 import {v4 as uuidV4} from "uuid";
 
 interface Props {
     recipe: Recipe,
     user: User,
-    editing: boolean,
-    setEditing: (value: boolean) => void
+    updateRecipe: (data: { [key: string]: string | Tag[] | RecipeItem[] }) => void
 }
 
 const TAG_COLORS = ["#D04848", "#F3B95F", "#FDE767", "#6895D2", "#FE7A36", "#3652AD", "#280274", "#E9F6FF"];
 
-export default function Tags({recipe, editing, setEditing, user}: Props) {
-    const [tags, setTags] = useState<Tag[]>(recipe.tags || [])
+export default function Tags({recipe, user, updateRecipe}: Props) {
+    const [editing, setEditing] = useState(false);
 
     const updateTags = (newTagName: string) => {
-
-        if (newTagName !== "" && tags.filter(t => t.name == newTagName).length == 0) {
+        if (newTagName !== "" && recipe.tags?.filter(t => t.name == newTagName).length == 0) {
             const newTag: Tag = {
                 id: uuidV4(),
                 name: newTagName.trim().toLowerCase(),
                 user_id: user.id
             };
-
-            recipe.tags = [
-                ...tags,
-                newTag
-            ]
-            setTags([...tags, newTag]);
+            updateRecipe({
+                tags: [
+                    ...recipe.tags,
+                    newTag
+                ]
+            });
         }
 
-        setEditing(false)
+        setEditing(false);
     }
 
     const removeTags = (id: string) => {
-        const newTags = tags.filter(tag => tag.id != id);
-        recipe.tags = newTags;
-        setTags([...newTags]);
+        if (recipe.tags) {
+            const newTags = recipe.tags?.filter(tag => tag.id != id);
+            updateRecipe({
+                tags: newTags
+            });
+        }
     }
 
     return <div className={"flex gap-2 mt-2 items-center"}>
-        <div className={"flex gap-1"}>
-            {tags.map((tag, i) => <div
-                key={`tag-${i}`}
-                className={`rounded-lg py-1 px-1 flex gap-1 h-[25px] items-center justify-center`}
-                style={{backgroundColor: TAG_COLORS[i % TAG_COLORS.length]}}
-            >
-                <span className={"text-white text-xs font-thin"}>{tag.name}</span>
-                <IoCloseCircleSharp className={"text-white text-sm cursor-pointer"} onClick={() => removeTags(tag.id)}/>
-            </div>)}
-        </div>
+        {
+            recipe.tags && <div className={"flex gap-1"}>
+                {recipe.tags.map((tag, i) => <div
+                    key={`tag-${i}`}
+                    className={`rounded-lg py-1 px-1 flex gap-1 h-[25px] items-center justify-center`}
+                    style={{backgroundColor: TAG_COLORS[i % TAG_COLORS.length]}}
+                >
+                    <span className={"text-white text-xs font-thin"}>{tag.name}</span>
+                    <IoCloseCircleSharp className={"text-white text-sm cursor-pointer"} onClick={() => removeTags(tag.id)}/>
+                </div>)}
+					</div>
+        }
         {
             editing
                 ? <div className={"relative h-[25px]"}>
@@ -69,7 +72,7 @@ export default function Tags({recipe, editing, setEditing, user}: Props) {
                     />
                     <FaTags className={"absolute text-sm text-main-blue left-2 top-1/2 mt-[2px]"} style={{transform: "translateY(-50%)"}}/>
                 </div>
-                : tags.length
+                : recipe.tags?.length
                     ? <FaPlus className={"text-lg text-main-blue cursor-pointer"}
                               onClick={() => setEditing(true)}/>
                     : <div className={"flex gap-2 items-center mt-2 cursor-pointer"}

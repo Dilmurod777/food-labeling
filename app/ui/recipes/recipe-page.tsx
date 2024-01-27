@@ -1,32 +1,36 @@
-"use client";
-
-import {Recipe, User} from "@/app/lib/models";
+import {Recipe, RecipeItem, Tag, User} from "@/app/lib/models";
 import {convertToHumanReadableTime} from "@/app/lib/utilities";
-import {memo, useState} from "react";
 import Title from "@/app/ui/recipes/recipe-page/title";
 import Tags from "@/app/ui/recipes/recipe-page/tags";
-import SearchBarIngredients from "@/app/ui/recipes/recipe-page/searchbar-ingrediens";
+import SearchBar from "@/app/ui/recipes/recipe-page/searchbar";
 import RecipeItems from "@/app/ui/recipes/recipe-page/recipe-items";
+import Link from "next/link";
+import {FaPlus} from "react-icons/fa"
+import {useEffect, useState} from "react";
 
 interface Props {
     recipe: Recipe,
-    user: User
+    user: User,
+    updateRecipe: (data: { [key: string]: string | RecipeItem[] | Tag[] }) => void
 }
 
-export default function RecipePage({recipe, user}: Props) {
-    const defaultInputs = {
-        name: false,
-        tags: false
-    }
-    const [editingInput, setEditingInput] = useState({
-        ...defaultInputs
-    })
-    const [items, setItems] = useState(recipe.recipe_items || []);
+export default function RecipePage({recipe, user, updateRecipe}: Props) {
+    const items = recipe.recipe_items || [];
+    const [lastUpdatedTime, setLastUpdatedTime] = useState("")
 
-    const onSearchChanged = (query: string) => {
-        if (recipe.recipe_items) {
-            setItems(recipe.recipe_items.filter(item => item.ingredient?.name.includes(query)))
-        }
+    useEffect(() => {
+        setLastUpdatedTime(`Updated ${convertToHumanReadableTime(Date.now() - parseInt(recipe.updated_at))}`)
+    }, [recipe.updated_at])
+
+    const removeRecipeItem = (id: string) => {
+        const newRecipeItems = (recipe.recipe_items || []).filter(item => item.id != id);
+
+        updateRecipe({
+            ingredient_list: JSON.stringify((newRecipeItems.map(item => item.id))),
+            recipe_items: newRecipeItems
+        })
+        
+        console.log(`remove recipe item: ${id}`)
     }
 
     return <div className={"flex flex-col items-start"}>
@@ -34,31 +38,33 @@ export default function RecipePage({recipe, user}: Props) {
             <div className={"flex flex-col items-start"}>
                 <Title
                     recipe={recipe}
-                    editing={editingInput.name}
-                    setEditing={(value) => setEditingInput({...defaultInputs, name: value})}
+                    updateRecipe={updateRecipe}
                 />
 
                 <Tags
                     recipe={recipe}
+                    updateRecipe={updateRecipe}
                     user={user}
-                    setEditing={(value) => setEditingInput({...defaultInputs, tags: value})}
-                    editing={editingInput.tags}
                 />
             </div>
 
-            <UpdatedDate updated_at={recipe.updated_at}/>
+            <p className={"text-xs text-main-blue font-thin"}>{lastUpdatedTime}</p>
         </div>
 
-        <SearchBarIngredients onSearchChanged={onSearchChanged}/>
-        <div className={"flex gap-8 w-full mt-8"}>
-            <RecipeItems items={items}/>
+        <div className={"w-full flex gap-4 items-stretch justify-between *:flex-grow mt-6"}>
+            <SearchBar recipe={recipe} updateRecipe={updateRecipe}/>
+
+            <Link
+                href={"/ingredients/create"}
+                className={"w-[275px] px-4 py-2 flex gap-2 items-center justify-start bg-main-blue hover:bg-hover-main-blue cursor-pointer text-white rounded-xl text-xs font-normal"}
+            >
+                <FaPlus/>
+                <span>Create your own ingredient</span>
+            </Link>
+        </div>
+        <div className={"items-start gap-8 w-full mt-8"} style={{display: items.length == 0 ? "none" : "flex"}}>
+            <RecipeItems items={items} removeRecipeItem={removeRecipeItem}/>
             <div className={"w-[300px] h-[500px] bg-main-gray"}></div>
         </div>
     </div>
 }
-
-const UpdatedDate = memo(function UpdatedDate({updated_at}: { updated_at: string }) {
-    return <p className={"text-xs text-main-blue font-thin"}>
-        Updated {convertToHumanReadableTime(Date.now() - parseInt(updated_at))}
-    </p>
-})

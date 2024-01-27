@@ -1,9 +1,11 @@
 import {getById} from "@/app/lib/actions-ingredients";
 import Link from "next/link";
 import PartialForm from "@/app/ui/ingredients/partial_form";
+import {getCurrentUser} from "@/app/lib/actions-user";
 
 export default async function View({params}: { params: { id: string } }) {
     const ingredient = await getById(params.id);
+    const user = await getCurrentUser();
 
     if (!ingredient) return (
         <div className={"w-full h-full flex items-center justify-center text-lg font-bold text-black"}>
@@ -27,7 +29,7 @@ export default async function View({params}: { params: { id: string } }) {
 
         <div className={"flex gap-12"}>
             <div className={"w-[300px] h-[500px] bg-main-gray"}></div>
-            <PartialForm ingredient={ingredient}/>
+            <PartialForm ingredient={ingredient} user={user}/>
         </div>
     </div>
 }
