@@ -39,3 +39,7 @@ export function convertToHumanReadableTime(time: number): string {
 
     return `${time} ${unit} ago`;
 }
+
+export function getTotalGrams(quantity: number, unit: number, waste: number){
+    return parseFloat((quantity * unit * (100 - waste) / 100).toFixed(1))
+}

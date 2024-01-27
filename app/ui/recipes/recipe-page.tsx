@@ -22,17 +22,6 @@ export default function RecipePage({recipe, user, updateRecipe}: Props) {
         setLastUpdatedTime(`Updated ${convertToHumanReadableTime(Date.now() - parseInt(recipe.updated_at))}`)
     }, [recipe.updated_at])
 
-    const removeRecipeItem = (id: string) => {
-        const newRecipeItems = (recipe.recipe_items || []).filter(item => item.id != id);
-
-        updateRecipe({
-            ingredient_list: JSON.stringify((newRecipeItems.map(item => item.id))),
-            recipe_items: newRecipeItems
-        })
-        
-        console.log(`remove recipe item: ${id}`)
-    }
-
     return <div className={"flex flex-col items-start"}>
         <div className={"flex justify-between items-end w-full flex-grow gap-8"}>
             <div className={"flex flex-col items-start"}>
@@ -63,7 +52,7 @@ export default function RecipePage({recipe, user, updateRecipe}: Props) {
             </Link>
         </div>
         <div className={"items-start gap-8 w-full mt-8"} style={{display: items.length == 0 ? "none" : "flex"}}>
-            <RecipeItems items={items} removeRecipeItem={removeRecipeItem}/>
+            <RecipeItems recipe={recipe} updateRecipe={updateRecipe}/>
             <div className={"w-[300px] h-[500px] bg-main-gray"}></div>
         </div>
     </div>

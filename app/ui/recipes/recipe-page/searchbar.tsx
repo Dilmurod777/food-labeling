@@ -20,10 +20,10 @@ export default function SearchBar({recipe, updateRecipe}: Props) {
     }, 300);
 
     const handleRecipeItemAdd = (ingredient: Ingredient) => {
-        const index = (recipe.recipe_items || []).filter(item => item.ingredient.id == ingredient.id).map((_, i) => i);
+        const index = (recipe.recipe_items || []).findIndex(item => item.ingredient_id == ingredient.id);
         let newRecipeItems: RecipeItem[] = [];
 
-        if (index.length == 0) {
+        if (index == -1) {
             newRecipeItems = [
                 ...(recipe.recipe_items || []),
                 {
@@ -43,7 +43,7 @@ export default function SearchBar({recipe, updateRecipe}: Props) {
             ]
         } else {
             newRecipeItems = [...(recipe.recipe_items || [])]
-            newRecipeItems[index[0]].quantity += 1;
+            newRecipeItems[index].quantity += 1;
         }
 
 
