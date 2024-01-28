@@ -27,7 +27,7 @@ export default function SearchbarResults({searchQuery, handleRecipeItemClick}: P
     return <div
         className={'flex-col absolute top-12 rounded-md h-full max-h-[300px] w-full bg-white border-2'}
         style={{
-            display: ingredients.length == 0 ? "none" : "flex"
+            display: ingredients.length == 0 || searchQuery.trim() == "" ? "none" : "flex"
         }}
     >
         {ingredients.map((item, i) => <div

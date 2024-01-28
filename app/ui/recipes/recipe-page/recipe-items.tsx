@@ -125,11 +125,11 @@ export default function RecipeItems({recipe, updateRecipe}: Props) {
         </tr>)}
         </tbody>
         <tfoot>
-        <tr className={"py-1"}>
+        <tr className={"text-sm *:py-1 *:px-2"}>
             <td></td>
             <td></td>
             <td></td>
-            <td>
+            <td className={"text-right"}>
                 Total:
             </td>
             <td>{(recipe.recipe_items || []).reduce((sum, item) => sum + getTotalGrams(item.quantity, 1000, item.waste, recipe), 0)}</td>

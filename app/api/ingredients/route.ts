@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
 
     let data: Ingredient[] = [];
     if (query && query.trim() != "") {
-        data = await ingredientActions.getByQuery(query, ["id", "name"])
+        data = await ingredientActions.getByQuery(query, [])
     }
 
     return Response.json(data)

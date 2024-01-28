@@ -8,6 +8,7 @@ import Link from "next/link";
 import {FaPlus} from "react-icons/fa"
 import {useEffect, useState} from "react";
 import RecipeSettings from "@/app/ui/recipes/recipe-page/recipe-settings";
+import RecipeLabel from "@/app/ui/labels/recipe-label";
 
 interface Props {
     recipe: Recipe,
@@ -57,7 +58,7 @@ export default function RecipePage({recipe, user, updateRecipe}: Props) {
                 <RecipeItems recipe={recipe} updateRecipe={updateRecipe}/>
                 {recipe.recipe_items?.length && <RecipeSettings recipe={recipe} updateRecipe={updateRecipe}/>}
             </div>
-            <div className={"w-[300px] h-[500px] bg-main-gray"}></div>
+            <RecipeLabel recipe={recipe}/>
         </div>
     </div>
 }

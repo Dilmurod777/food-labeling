@@ -19,12 +19,12 @@ export interface Recipe extends IRecipe {
     tag_ids: string, // json of Tag ids
     tags?: Tag[],
     waste?: number,
-    net_weight?: number,
+    net_weight: number,
     net_weight_unit?: number,
-    packages?: number,
+    packages: number,
     serving_size_description?: string,
     serving_size_description_fr?: string,
-    serving_per_package?: number,
+    serving_per_package: number,
     label_id: string,
     description_ddf: string,
     sku: string,
@@ -91,31 +91,31 @@ export interface Ingredient {
     sugar: string,
     added_sugar: string,
     protein: string,
-    vitamin_d?: string,
-    calcium?: string,
-    iron?: string,
-    potassium?: string,
-    vitamin_a?: string,
-    vitamin_c?: string,
-    magnesium?: string,
-    phosphorus?: string,
-    zinc?: string,
-    copper?: string,
-    manganese?: string,
-    selenium?: string,
-    thiamin?: string,
-    riboflavin?: string,
-    niacin?: string,
-    pantothenic_acid?: string,
-    vitamin_b6?: string,
-    folate?: string,
-    vitamin_b12?: string,
-    vitamin_e?: string,
-    vitamin_k?: string,
-    uncounted_fiber?: string,
-    sugar_alcohol?: string,
-    monounsaturated_fat?: string,
-    polyunsaturated_fat?: string
+    vitamin_d: string,
+    calcium: string,
+    iron: string,
+    potassium: string,
+    vitamin_a: string,
+    vitamin_c: string,
+    magnesium: string,
+    phosphorus: string,
+    zinc: string,
+    copper: string,
+    manganese: string,
+    selenium: string,
+    thiamin: string,
+    riboflavin: string,
+    niacin: string,
+    pantothenic_acid: string,
+    vitamin_b6: string,
+    folate: string,
+    vitamin_b12: string,
+    vitamin_e: string,
+    vitamin_k: string,
+    uncounted_fiber: string,
+    sugar_alcohol: string,
+    monounsaturated_fat: string,
+    polyunsaturated_fat: string
 }
 
 export function RecipeGetProperty(recipe: Recipe | undefined, key: string): string | number | undefined | RecipeItem[] | Tag[] {
@@ -177,7 +177,7 @@ export function RecipeGetProperty(recipe: Recipe | undefined, key: string): stri
     }
 }
 
-export function IngredientGetProperty(ingredient: Ingredient | undefined, key: string): string | undefined {
+export function IngredientGetProperty(ingredient: Ingredient | undefined, key: string): string | number | undefined {
     if (!ingredient) return undefined;
 
     switch (key) {

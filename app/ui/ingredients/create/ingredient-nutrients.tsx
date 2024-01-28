@@ -95,10 +95,7 @@ export default function IngredientNutrients({ingredient}: Props) {
                     className={"outline-0 w-1/2 text-xs rounded-md border-2 px-2 py-2 border-main-gray focus:border-main-blue"}
                     name={input.key || `ingredient-nutrient-${i}`}
                     id={input.key || `ingredient-nutrient-${i}`}
-                    defaultValue={parseInt(
-                        IngredientGetProperty(ingredient, input.key.replace("ingredient-", "").replace('-', "_"))
-                        || "0")
-                    }
+                    defaultValue={IngredientGetProperty(ingredient, input.key.replace("ingredient-", "").replace('-', "_"))}
                 />
             </div>
         </InputWrapper>)}

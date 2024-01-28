@@ -29,7 +29,12 @@ export default async function Page() {
         margin: 0,
         retailer_margin: 0,
         broker_margin: 0,
-        distributor_margin: 0
+        distributor_margin: 0,
+        serving_per_package: 1,
+        waste: 0,
+        net_weight: 0,
+        packages: 1,
+        net_weight_unit: 0
     };
 
     return <Suspense fallback={<Loading/>}>
