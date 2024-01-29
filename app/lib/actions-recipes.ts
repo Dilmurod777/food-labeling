@@ -40,3 +40,30 @@ export async function getById(id: string): Promise<Recipe | undefined> {
         return undefined;
     }
 }
+
+
+export async function create(data: Recipe): Promise<Recipe | undefined> {
+    try {
+        const user = await getCurrentUser();
+        if (!user) return undefined;
+
+        const recipe = {...data};
+
+        const existingRecipe = await getById(recipe.id);
+        if (!existingRecipe) {
+            delete recipe.recipe_items;
+            delete recipe.tags;
+            delete recipe.net_weight_unit;
+            const columns = Object.keys(recipe);
+            const values = Object.values(recipe).map(item => `'${item}'`);
+            const query = `INSERT INTO recipes (${columns.join(",")}) VALUES (${values.join(",")})`
+            const createdRecipe = await sql.query(query);
+            return createdRecipe.rows[0];
+        }
+
+        return undefined;
+    } catch (error) {
+        console.error('Failed to fetch recipes:', error);
+        return undefined;
+    }
+}

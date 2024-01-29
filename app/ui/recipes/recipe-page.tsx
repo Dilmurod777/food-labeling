@@ -58,7 +58,19 @@ export default function RecipePage({recipe, user, updateRecipe}: Props) {
                 <RecipeItems recipe={recipe} updateRecipe={updateRecipe}/>
                 {recipe.recipe_items?.length && <RecipeSettings recipe={recipe} updateRecipe={updateRecipe}/>}
             </div>
-            <RecipeLabel recipe={recipe}/>
+            <div className={"w-fit flex flex-col gap-4 h-full bg-[#fafafa] border-main-gray border-[1px] rounded-md py-4 px-3"}>
+                <div className={'flex flex-col gap-0'}>
+                    <h2 className={"text-lg font-bold text-black"}>Label Preview</h2>
+                    <Link
+                        href={"#"}
+                        className={"text-sm text-main-blue hover:text-hover-main-blue text-thin"}
+                    >
+                        Customize it
+                    </Link>
+                </div>
+
+                <RecipeLabel recipe={recipe}/>
+            </div>
         </div>
     </div>
 }

@@ -70,7 +70,7 @@ export default function Form({recipe, user}: Props) {
             {!_recipe && <div className={"flex items-center justify-center text-lg font-bold text-black"}>No recipe with such ID found.</div>}
             {_recipe && tabIndex == 1 && <RecipePage recipe={_recipe} user={user} updateRecipe={updateRecipe}/>}
             {_recipe && tabIndex == 2 && <IngredientStatementPage recipe={_recipe}/>}
-            {_recipe && tabIndex == 3 && <LabelPage recipe={_recipe}/>}
+            {_recipe && tabIndex == 3 && <LabelPage recipe={_recipe} updateRecipe={updateRecipe}/>}
             {_recipe && tabIndex == 4 && <CostPage recipe={_recipe}/>}
         </div>
     </div>

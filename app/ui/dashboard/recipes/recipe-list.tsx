@@ -1,3 +1,5 @@
+"use client";
+
 import {FaPlus} from "react-icons/fa";
 import Link from "next/link";
 import {Recipe, User} from "@/app/lib/models";

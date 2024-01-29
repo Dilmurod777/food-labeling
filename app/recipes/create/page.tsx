@@ -2,6 +2,7 @@ import {randomUUID, randomBytes} from "crypto";
 import {Recipe, RecipeGetProperty, RecipeItem, Tag} from "@/app/lib/models";
 import Form from "@/app/ui/recipes/form";
 import {getCurrentUser} from "@/app/lib/actions-user";
+import * as recipeActions from "@/app/lib/actions-recipes";
 import {redirect} from "next/navigation";
 import {Suspense} from "react";
 import Loading from "@/app/ui/loading";
@@ -36,6 +37,8 @@ export default async function Page() {
         packages: 1,
         net_weight_unit: 0
     };
+
+    await recipeActions.create(recipe);
 
     return <Suspense fallback={<Loading/>}>
         <Form recipe={recipe} user={user}/>
