@@ -1,9 +1,11 @@
 import type {NextRequest} from "next/server";
 import {Recipe} from "@/app/lib/models";
 import {sql} from "@vercel/postgres";
+import {revalidatePath} from "next/cache";
+import {randomBytes} from "crypto";
 
 export const dynamic = 'force-dynamic' // defaults to auto
-export async function POST(request: NextRequest) {
+export async function PUT(request: NextRequest) {
     const data: { id: string, user_id: string, recipe: Recipe } = await request.json()
     console.log(data)
 
@@ -16,3 +18,21 @@ export async function POST(request: NextRequest) {
 
     return Response.json(updateRecipe)
 }
+
+export async function POST(request: NextRequest) {
+    const {id, ...data}: Recipe = await request.json()
+    data.name = "Recipe " + randomBytes(10).toString('hex');
+
+    const query = `INSERT INTO recipes (${Object.keys(data).join(',')}) VALUES (${Object.values(data).map(item => `'${item}'`).join(',')}) RETURNING id`;
+    const recipe = await sql.query<Recipe>(query);
+    if (recipe.rowCount == 0) return Response.json(-1);
+
+    revalidatePath("/dashboard/recipes");
+    revalidatePath("/dashboard");
+
+    return Response.json({
+        id: recipe.rows[0]?.id || -1
+    })
+}
+
+

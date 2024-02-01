@@ -34,10 +34,10 @@ export default function Form({recipe, user}: Props) {
     const saveRecipeToDB = async () => {
         setSavingState(SavingState.Saving);
 
-        const {id, user_id, tags, recipe_items, ...filteredRecipe} = _recipe;
+        const {id, user_id, ...filteredRecipe} = _recipe;
 
         await fetch("/api/recipes", {
-            method: "POST",
+            method: "PUT",
             body: JSON.stringify({
                 id: _recipe.id,
                 user_id: _recipe.user_id,
@@ -78,19 +78,26 @@ export default function Form({recipe, user}: Props) {
                 })}
             </div>
 
-            <div
-                className={`flex justify-center items-center text-sm text-white font-thin rounded-md px-6 py-2 cursor-pointer ${SavingState.Saved ? "bg-gray-500 hover:bg-gray-600" : "bg-main-blue hover:bg-hover-main-blue"}`}
-                onClick={saveRecipeToDB}
-            >
-                {savingState == SavingState.Saving && "Saving..."}
-                {savingState == SavingState.Saved && "Saved"}
-                {savingState == SavingState.NotSaved && "Not Saved"}
-            </div>
+            <SaveButton savingState={savingState} saveRecipeToDB={saveRecipeToDB}/>
         </div>
 
         <FormPages recipe={_recipe} tabIndex={tabIndex} user={user} updateRecipe={updateRecipe}/>
     </div>
 }
+
+const SaveButton = React.memo(function SaveButton({savingState, saveRecipeToDB}: { savingState: SavingState, saveRecipeToDB: () => void }) {
+    return <div
+        className={`flex justify-center items-center text-sm text-white font-thin rounded-md px-6 py-2 cursor-pointer ${savingState == SavingState.Saved ? "bg-gray-500 cursor-default" : "bg-main-blue hover:bg-hover-main-blue"}`}
+        onClick={() => {
+            if (savingState == SavingState.Saved) return;
+            saveRecipeToDB();
+        }}
+    >
+        {savingState == SavingState.Saving && "Saving..."}
+        {savingState == SavingState.Saved && "Saved"}
+        {savingState == SavingState.NotSaved && "Not Saved"}
+    </div>
+})
 
 const FormPages = React.memo(function FormPages({recipe, tabIndex, user, updateRecipe}: {
     recipe: Recipe,
@@ -100,8 +107,8 @@ const FormPages = React.memo(function FormPages({recipe, tabIndex, user, updateR
 }) {
     return <div className={"w-full h-full py-6"}>
         {!recipe &&
-            <div className={"flex items-center justify-center text-lg font-bold text-black"}>No recipe with such ID
-                found.</div>}
+					<div className={"flex items-center justify-center text-lg font-bold text-black"}>No recipe with such ID
+						found.</div>}
         {recipe && tabIndex == 1 && <RecipePage recipe={recipe} user={user} updateRecipe={updateRecipe}/>}
         {recipe && tabIndex == 2 && <IngredientStatementPage recipe={recipe}/>}
         {recipe && tabIndex == 3 && <LabelPage recipe={recipe} updateRecipe={updateRecipe}/>}

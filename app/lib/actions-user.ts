@@ -8,6 +8,7 @@ import {z} from "zod";
 import bcrypt from "bcrypt";
 import {randomUUID} from "crypto";
 import {cache} from 'react'
+import {redirect} from "next/navigation";
 
 export const getCurrentUser = cache(async (): Promise<User | undefined> => {
     const session = await auth();
@@ -37,6 +38,7 @@ export async function insertUser({email, name, password}: User): Promise<User | 
 export async function login(prevState: string | undefined, formData: FormData) {
     try {
         await signIn('credentials', formData);
+        redirect("/dashboard")
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
@@ -86,7 +88,7 @@ export async function signup(prevState: string | undefined, formData: FormData) 
 
                 await signIn("credentials", formData);
 
-                return;
+                redirect("/dashboard")
             }
 
             return 'User with such email already exists.';

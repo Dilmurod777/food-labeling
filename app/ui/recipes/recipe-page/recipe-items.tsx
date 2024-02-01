@@ -10,16 +10,16 @@ interface Props {
 }
 
 export default function RecipeItems({recipe, updateRecipe}: Props) {
-    const [totalGrams, setTotalGrams] = useState<number[]>([])
+    const [items, setItems] = useState<RecipeItem[]>(JSON.parse(recipe.recipe_items || "[]"))
 
     useEffect(() => {
         if (recipe.recipe_items) {
-            setTotalGrams(recipe.recipe_items.map(item => getTotalGrams(item.quantity, 1000, item.waste, recipe)));
+            setItems(JSON.parse(recipe.recipe_items || "[]"))
         }
-    }, [recipe]);
+    }, [recipe.recipe_items]);
 
     const removeRecipeItem = (id: string) => {
-        const newRecipeItems = (recipe.recipe_items || []).filter(item => item.id != id);
+        const newRecipeItems = items.filter(item => item.id != id);
 
         updateRecipe({
             ingredient_list: JSON.stringify((newRecipeItems.map(item => item.id))),
@@ -30,7 +30,7 @@ export default function RecipeItems({recipe, updateRecipe}: Props) {
     }
 
     const updateItemsData = (param: string, value: string, index: number) => {
-        const newRecipeItems = [...(recipe.recipe_items || [])]
+        const newRecipeItems = [...items]
         let newValue = parseFloat(value);
         if (newValue < 0) newValue = 0;
 
@@ -69,7 +69,7 @@ export default function RecipeItems({recipe, updateRecipe}: Props) {
         </tr>
         </thead>
         <tbody>
-        {recipe.recipe_items?.map((item, i) => <tr
+        {items.map((item, i) => <tr
             key={`recipe-items-${i}`}
             className={"text-left border-b-[1px] border-main-gray *:text-sm *:text-secondary-gray *:py-1 *:px-2 even:bg-main-gray"}
         >
@@ -114,7 +114,7 @@ export default function RecipeItems({recipe, updateRecipe}: Props) {
                 />
             </td>
             <td>
-                {totalGrams[i]}
+                {getTotalGrams(item.quantity, 1000, item.waste, recipe)}
             </td>
             <td>
                 <MdDelete
@@ -132,7 +132,7 @@ export default function RecipeItems({recipe, updateRecipe}: Props) {
             <td className={"text-right"}>
                 Total:
             </td>
-            <td>{(recipe.recipe_items || []).reduce((sum, item) => sum + getTotalGrams(item.quantity, 1000, item.waste, recipe), 0)}</td>
+            <td>{items.reduce((sum, item) => sum + getTotalGrams(item.quantity, 1000, item.waste, recipe), 0)}</td>
             <td></td>
         </tr>
         </tfoot>

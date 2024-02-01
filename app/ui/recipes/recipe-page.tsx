@@ -17,16 +17,16 @@ interface Props {
 }
 
 export default function RecipePage({recipe, user, updateRecipe}: Props) {
-    const items = recipe.recipe_items || [];
+    const items: RecipeItem[] = JSON.parse(recipe.recipe_items || "[]");
     const [lastUpdatedTime, setLastUpdatedTime] = useState("")
 
     useEffect(() => {
         setLastUpdatedTime(`Updated ${convertToHumanReadableTime(Date.now() - parseInt(recipe.updated_at))}`)
     }, [recipe.updated_at])
 
-    return <div className={"flex flex-col items-start"}>
-        <div className={"flex justify-between items-end w-full flex-grow gap-8"}>
-            <div className={"flex flex-col items-start"}>
+    return <div className={"w-full flex flex-col items-start"}>
+        <div className={"w-full flex justify-between items-end flex-grow gap-8"}>
+            <div className={"w-full flex flex-col items-start"}>
                 <Title
                     recipe={recipe}
                     updateRecipe={updateRecipe}
@@ -35,11 +35,10 @@ export default function RecipePage({recipe, user, updateRecipe}: Props) {
                 <Tags
                     recipe={recipe}
                     updateRecipe={updateRecipe}
-                    user={user}
                 />
             </div>
 
-            <p className={"text-xs text-main-blue font-thin"}>{lastUpdatedTime}</p>
+            <p className={"w-fit text-xs text-main-blue font-thin"}>{lastUpdatedTime}</p>
         </div>
 
         <div className={"w-full flex gap-4 items-stretch justify-between *:flex-grow mt-6"}>
@@ -56,7 +55,7 @@ export default function RecipePage({recipe, user, updateRecipe}: Props) {
         <div className={"items-start gap-8 w-full my-8"} style={{display: items.length == 0 ? "none" : "flex"}}>
             <div className={"flex flex-col gap-8 flex-grow"}>
                 <RecipeItems recipe={recipe} updateRecipe={updateRecipe}/>
-                {recipe.recipe_items?.length && <RecipeSettings recipe={recipe} updateRecipe={updateRecipe}/>}
+                {items.length && <RecipeSettings recipe={recipe} updateRecipe={updateRecipe}/>}
             </div>
             <div className={"w-fit flex flex-col gap-4 h-full bg-[#fafafa] border-main-gray border-[1px] rounded-md py-4 px-3"}>
                 <div className={'flex flex-col gap-0'}>

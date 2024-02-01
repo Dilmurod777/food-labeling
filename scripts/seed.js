@@ -105,85 +105,6 @@ async function seedIngredients(client) {
 	}
 }
 
-async function seedTags(client) {
-	try {
-		await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-		// Create the "users" table if it doesn't exist
-		const createTable = await client.sql`
-      CREATE TABLE IF NOT EXISTS tags (
-        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        user_id VARCHAR(255) NOT NULL,
-        name VARCHAR(255) NOT NULL
-      );
-    `;
-
-		console.log(`Created "tags" table`);
-
-		return {
-			createTable
-		};
-	} catch (error) {
-		console.error('Error seeding tags:', error);
-		throw error;
-	}
-}
-
-async function seedRecipeItems(client) {
-	try {
-		await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-		// Create the "users" table if it doesn't exist
-		const createTable = await client.sql`
-      CREATE TABLE IF NOT EXISTS recipe_items (
-        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        recipe_id VARCHAR(255) NOT NULL,
-        ingredient_id VARCHAR(255) NOT NULL,
-        price VARCHAR(255) NOT NULL,
-        unit VARCHAR(255) NOT NULL,
-        quantity VARCHAR(255) NOT NULL,
-        shipping VARCHAR(255) NOT NULL,
-        waste VARCHAR(255) NOT NULL,
-        label_text VARCHAR(255) NOT NULL,
-        spice_flavor VARCHAR(255),
-        canada_sugar VARCHAR(255)
-      );
-    `;
-
-		console.log(`Created "recipe_items" table`);
-
-		return {
-			createTable
-		};
-	} catch (error) {
-		console.error('Error seeding recipe_items:', error);
-		throw error;
-	}
-}
-
-async function seedLabels(client) {
-	try {
-		await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-		// Create the "users" table if it doesn't exist
-		const createTable = await client.sql`
-      CREATE TABLE IF NOT EXISTS labels (
-        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        type VARCHAR(255) NOT NULL,
-        allergens VARCHAR(255) NOT NULL,
-        business_name_address VARCHAR(255),
-        options TEXT
-      );
-    `;
-
-		console.log(`Created "labels" table`);
-
-		return {
-			createTable
-		};
-	} catch (error) {
-		console.error('Error seeding labels:', error);
-		throw error;
-	}
-}
-
 async function seedRecipes(client) {
 	try {
 		await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
@@ -192,11 +113,11 @@ async function seedRecipes(client) {
       CREATE TABLE IF NOT EXISTS recipes (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         user_id VARCHAR(255) NOT NULL,
-        label_id VARCHAR(255) NOT NULL,
+        label TEXT NOT NULL,
         name VARCHAR(255) NOT NULL,
         updated_at VARCHAR(255) NOT NULL,
-        ingredient_list TEXT NOT NULL,
-        tag_ids TEXT NOT NULL,
+        recipe_items TEXT NOT NULL,
+        tags TEXT NOT NULL,
         waste VARCHAR(255),
         net_weight VARCHAR(255),
         packages VARCHAR(255),
@@ -232,9 +153,6 @@ async function main() {
 
 	await seedUsers(client);
 	await seedIngredients(client);
-	await seedTags(client);
-	await seedRecipeItems(client);
-	await seedLabels(client);
 	await seedRecipes(client);
 
 	await client.end();

@@ -24,7 +24,7 @@ export default function Title({recipe, updateRecipe}: Props) {
     return editing
         ? <input
             type="text"
-            className={"rounded-md border-2 border-main-blue px-2 py-2 w-full outline-0 h-[35px]"}
+            className={"w-[300px] rounded-md border-2 border-main-blue px-2 py-2 outline-0 h-[35px]"}
             onBlur={(e) => updateRecipeName(e.target.value)}
             onKeyDown={(e) => {
                 if (e.key === "Enter") {

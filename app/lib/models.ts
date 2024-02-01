@@ -6,7 +6,7 @@ export type User = {
 }
 
 interface IRecipe {
-    [key: string]: string | number | RecipeItem[] | Tag[] | undefined;
+    [key: string]: string | number | undefined;
 }
 
 export interface Recipe extends IRecipe {
@@ -14,18 +14,15 @@ export interface Recipe extends IRecipe {
     user_id: string,
     name: string,
     updated_at: string
-    ingredient_list: string, // json of RecipeItem ids
-    recipe_items?: RecipeItem[],
-    tag_ids: string, // json of Tag ids
-    tags?: Tag[],
+    recipe_items: string,
+    tags: string,
     waste?: number,
     net_weight: number,
-    net_weight_unit?: number,
     packages: number,
     serving_size_description?: string,
     serving_size_description_fr?: string,
     serving_per_package: number,
-    label_id: string,
+    label: string,
     description_ddf: string,
     sku: string,
     preparation_instructions: string,
@@ -46,7 +43,6 @@ export type Tag = {
 
 export type RecipeItem = {
     id: string,
-    recipe_id: string,
     ingredient_id: string,
     ingredient: Ingredient,
     price: number,
@@ -118,7 +114,7 @@ export interface Ingredient {
     polyunsaturated_fat: string
 }
 
-export function RecipeGetProperty(recipe: Recipe | undefined, key: string): string | number | undefined | RecipeItem[] | Tag[] {
+export function RecipeGetProperty(recipe: Recipe | undefined, key: string): string | number | undefined {
     if (!recipe) return undefined;
 
     switch (key) {
@@ -130,12 +126,8 @@ export function RecipeGetProperty(recipe: Recipe | undefined, key: string): stri
             return recipe.name;
         case "updated_at":
             return recipe.updated_at;
-        case "ingredient_list":
-            return recipe.ingredient_list;
         case "recipe_items":
             return recipe.recipe_items;
-        case "tag_ids":
-            return recipe.tag_ids;
         case "tags":
             return recipe.tags;
         case "waste":
@@ -275,3 +267,27 @@ export function IngredientGetProperty(ingredient: Ingredient | undefined, key: s
             return ingredient.polyunsaturated_fat;
     }
 }
+
+export const DefaultRecipe: Recipe = {
+    id: "",
+    name: "",
+    user_id: "-1",
+    updated_at: Date.now().toString(),
+    tags: "[]",
+    recipe_items: "[]",
+    label: "{}",
+    description_ddf: "",
+    preparation_instructions: "",
+    sku: "",
+    unit_packaging_cost: 0,
+    batch_labor_cost: 0,
+    batch_overhead_cost: 0,
+    margin: 0,
+    retailer_margin: 0,
+    broker_margin: 0,
+    distributor_margin: 0,
+    serving_per_package: 1,
+    waste: 0,
+    net_weight: 0,
+    packages: 1
+};
