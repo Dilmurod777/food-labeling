@@ -13,7 +13,7 @@ interface Props {
 export default function RecipeList({recipes, user}: Props) {
     const router = useRouter();
 
-    return <div className={"flex flex-col gap-4"}>
+    return <div className={"flex flex-col gap-4 py-12"}>
         <div className={"flex gap-4"}>
             <h2 className={"text-2xl font-bold text-black"}>
                 Recipes {user?.email &&

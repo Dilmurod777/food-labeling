@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
-import {z} from 'zod';
+import {z} from "zod";
 import {authConfig} from './auth.config';
 import {getUserFromDB} from "@/app/lib/actions-user";
 

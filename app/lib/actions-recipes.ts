@@ -28,10 +28,10 @@ export async function getById(id: string): Promise<Recipe | undefined> {
         if (recipes.rowCount == 0) return undefined;
 
         const recipe = recipes.rows[0];
-        const tagIds: string[] = JSON.parse(recipe.tag_ids);
+        const tagIds: string[] = JSON.parse(recipe.tag_ids || "[]");
         recipe.tags = await tagActions.getByIds(tagIds);
 
-        const recipeItemIds: string[] = JSON.parse(recipe.ingredient_list);
+        const recipeItemIds: string[] = JSON.parse(recipe.ingredient_list || "[]");
         recipe.recipe_items = await recipeItemActions.getByIds(recipeItemIds);
 
         return recipe;
