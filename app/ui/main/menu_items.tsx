@@ -65,7 +65,7 @@ export default function MenuItems() {
         >
             <Link
                 href={item.url}
-                className={"flex text-black font-bold text-sm"}
+                className={"flex text-black font-bold text-lg"}
             >
                 <span className={"group-hover:text-sky-500"}>{item.text}</span>
                 {item.rightIcon && <span className={"ml-2"}>{item.rightIcon}</span>}
