@@ -5,7 +5,6 @@ import RecipeLabel from "@/app/ui/labels/recipe-label";
 import html2canvas from "html2canvas";
 import JsPDF from "jspdf";
 import {useRef} from "react";
-import {useReactToPrint} from "react-to-print";
 
 
 interface Props {
@@ -14,20 +13,19 @@ interface Props {
 }
 
 export default function LabelPage({recipe, updateRecipe}: Props) {
-    const recipeLabelRef = useRef<HTMLDivElement>(null);
-
     const downloadRecipe = () => {
-        const recipeDiv = document.getElementById('recipe-label');
+        const recipeDiv = document.getElementById("recipe-label");
+        console.log(recipeDiv)
         if (!recipeDiv) return;
 
-        html2canvas(recipeDiv)
+        html2canvas(recipeDiv, {})
             .then((canvas) => {
-                const data = canvas.toDataURL('image/jpg');
+                const data = canvas.toDataURL('image/png');
                 const link = document.createElement('a');
 
                 if (typeof link.download === 'string') {
                     link.href = data;
-                    link.download = `${recipe.name}.jpg`;
+                    link.download = `${recipe.name}.png`;
 
                     document.body.appendChild(link);
                     link.click();
@@ -43,11 +41,6 @@ export default function LabelPage({recipe, updateRecipe}: Props) {
                 // pdf.save(`${recipe.name}.pdf`);
             })
     }
-
-    // const handlePrint = useReactToPrint({
-    //     pageStyle: `@page ${(recipeLabelRef.current?.clientWidth || 1) / 64}in ${(recipeLabelRef.current?.clientHeight || 1) / 64}in`,
-    //     content: () => recipeLabelRef.current,
-    // });
 
     return <div className={"flex flex-col gap-4"}>
         <div className={"flex flex-col items-start"}>
@@ -109,9 +102,7 @@ export default function LabelPage({recipe, updateRecipe}: Props) {
                     <option value="13">Old Child (2-4 yrs) FDA</option>
                 </select>
 
-                <div ref={recipeLabelRef} className={"p-2"}>
-                    <RecipeLabel recipe={recipe}/>
-                </div>
+                <RecipeLabel recipe={recipe}/>
 
                 <div className={"w-fit flex flex-col gap-2 items-start bg-[#fafafa] border-[1px] border-main-gray rounded-md px-2 pt-2 pb-10"}>
                     <p className={"text-sm font-bold text-black"}>File Format</p>

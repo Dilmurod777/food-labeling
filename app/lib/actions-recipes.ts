@@ -23,15 +23,17 @@ export async function getById(id: string): Promise<Recipe | undefined> {
     try {
         const user = await getCurrentUser();
         if (!user) return undefined;
-        const recipes = await sql<Recipe>`SELECT * FROM recipes WHERE user_id=${user.id} AND id=${id}`;
+        const query = `SELECT * FROM recipes WHERE user_id='${user.id}' AND id='${id}'`;
+
+        const recipes = await sql.query<Recipe>(query);
 
         if (recipes.rowCount == 0) return undefined;
 
         const recipe = recipes.rows[0];
-        const tagIds: string[] = JSON.parse(recipe.tag_ids);
+        const tagIds: string[] = JSON.parse(recipe.tag_ids || "[]");
         recipe.tags = await tagActions.getByIds(tagIds);
 
-        const recipeItemIds: string[] = JSON.parse(recipe.ingredient_list);
+        const recipeItemIds: string[] = JSON.parse(recipe.ingredient_list || '[]');
         recipe.recipe_items = await recipeItemActions.getByIds(recipeItemIds);
 
         return recipe;

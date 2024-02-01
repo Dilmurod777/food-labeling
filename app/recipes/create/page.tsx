@@ -38,7 +38,7 @@ export default async function Page() {
         net_weight_unit: 0
     };
 
-    await recipeActions.create(recipe);
+    // await recipeActions.create(recipe);
 
     return <Suspense fallback={<Loading/>}>
         <Form recipe={recipe} user={user}/>
