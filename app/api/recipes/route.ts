@@ -16,6 +16,9 @@ export async function PUT(request: NextRequest) {
     const query = `UPDATE recipes SET ${columnValuePairs.join(',')} WHERE id='${data.id}' AND user_id='${data.user_id}'`;
     const updateRecipe = await sql.query<Recipe>(query);
 
+    revalidatePath("/dashboard/recipes");
+    revalidatePath("/dashboard");
+
     return Response.json(updateRecipe)
 }
 

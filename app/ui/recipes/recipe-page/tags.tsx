@@ -27,7 +27,7 @@ export default function Tags({recipe, updateRecipe}: Props) {
     }
 
     const removeTag = (name: string) => {
-        if (recipe.tags) {
+        if (tags.length) {
             const newTags = tags.filter(tag => tag != name);
             updateRecipe({
                 tags: JSON.stringify(newTags)
@@ -37,20 +37,16 @@ export default function Tags({recipe, updateRecipe}: Props) {
     }
 
     return <div className={"flex gap-2 mt-2 items-center"}>
-        {
-            recipe.tags && (
-                <div className={"flex gap-1"}>
-                    {tags.map((tag, i) => <div
-                        key={`tag-${i}`}
-                        className={`rounded-lg py-1 px-1 flex gap-1 h-[25px] items-center justify-center`}
-                        style={{backgroundColor: TAG_COLORS[i % TAG_COLORS.length]}}
-                    >
-                        <span className={"text-white text-xs font-thin"}>{tag}</span>
-                        <IoCloseCircleSharp className={"text-white text-sm cursor-pointer"} onClick={() => removeTag(tag)}/>
-                    </div>)}
-                </div>
-            )
-        }
+        <div className={"flex gap-1"}>
+            {tags.map((tag, i) => <div
+                key={`tag-${i}`}
+                className={`rounded-lg py-1 px-1 flex gap-1 h-[25px] items-center justify-center`}
+                style={{backgroundColor: TAG_COLORS[i % TAG_COLORS.length]}}
+            >
+                <span className={"text-white text-xs font-thin"}>{tag}</span>
+                <IoCloseCircleSharp className={"text-white text-sm cursor-pointer"} onClick={() => removeTag(tag)}/>
+            </div>)}
+        </div>
         {
             editing
                 ? <div className={"relative h-[25px]"}>
@@ -68,7 +64,7 @@ export default function Tags({recipe, updateRecipe}: Props) {
                     />
                     <FaTags className={"absolute text-sm text-main-blue left-2 top-1/2 mt-[2px]"} style={{transform: "translateY(-50%)"}}/>
                 </div>
-                : recipe.tags?.length
+                : tags.length
                     ? <FaPlus className={"text-lg text-main-blue cursor-pointer"}
                               onClick={() => setEditing(true)}/>
                     : <div className={"flex gap-2 items-center mt-2 cursor-pointer"}

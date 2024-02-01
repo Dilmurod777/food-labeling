@@ -1,13 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import {FaPlus} from "react-icons/fa";
 import {GoVideo} from "react-icons/go";
-import {useRouter} from "next/navigation";
-import {DefaultRecipe, Recipe, User} from "@/app/lib/models";
-import {Fragment, useState} from "react";
-import {v4 as uuidV4} from 'uuid';
-import {getRandomString} from "@/app/lib/utilities";
+import {User} from "@/app/lib/models";
 import CreateRecipesBtn from "@/app/ui/create-recipes-btn";
 
 interface Props {

@@ -31,6 +31,7 @@ export default function Title({recipe, updateRecipe}: Props) {
                     updateRecipeName(e.currentTarget.value)
                 }
             }}
+            maxLength={20}
             autoFocus={true}
             placeholder={recipe.name}
         />

@@ -38,7 +38,7 @@ export default function RecipePage({recipe, user, updateRecipe}: Props) {
                 />
             </div>
 
-            <p className={"w-fit text-xs text-main-blue font-thin"}>{lastUpdatedTime}</p>
+            <p className={"w-full text-right text-xs text-main-blue font-thin"}>{lastUpdatedTime}</p>
         </div>
 
         <div className={"w-full flex gap-4 items-stretch justify-between *:flex-grow mt-6"}>
