@@ -110,7 +110,7 @@ export default function RecipeAdvanced({recipe, updateRecipe}: Props) {
             <textarea
                 rows={10}
                 className={"w-[300px] border-2 border-main-gray rounded-md px-2 py-1 text-sm"}
-                defaultValue={recipe.sku}
+                defaultValue={recipe.preparation_instructions}
                 placeholder={"1. Mix wet ingredients in a bowl\n" +
                     "2. Combine with dry ingredients in pan\n" +
                     "3. Bake at 350 degrees for 25 minutes\n"}
