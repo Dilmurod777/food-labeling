@@ -38,7 +38,7 @@ export default function NutritionLabelSoftware() {
         "All Features": {
             page: <AllFeatures/>,
             mainText: "Nutrition Label Software",
-            secondaryText: "With Foodplanet, you can use our nutrition labeling software to create nutrition labels for your products to comply with food regulations and grow your business." +
+            secondaryText: "With Foodplanet, you can use our nutrition labeling software to full-form nutrition labels for your products to comply with food regulations and grow your business." +
                 "<br/></br>" +
                 "Foodplanet&apos;s team of labeling experts can review your nutrition labels to ensure key components are correct.",
             faq: AllFeaturesFaq
@@ -52,7 +52,7 @@ export default function NutritionLabelSoftware() {
         "Labeling": {
             page: <Labeling/>,
             mainText: "Nutrition Label Templates",
-            secondaryText: "Are you a food business owner in need of a high-quality nutrition label for your products? It’s simple and fast to create your very own custom nutrition label with Foodplanet’s nutrition label templates.",
+            secondaryText: "Are you a food business owner in need of a high-quality nutrition label for your products? It’s simple and fast to full-form your very own custom nutrition label with Foodplanet’s nutrition label templates.",
             faq: LabelingFaq
         },
         "Costing": {
@@ -64,7 +64,7 @@ export default function NutritionLabelSoftware() {
         "Ingredient Lists": {
             page: <IngredientList/>,
             mainText: "Customizable Ingredients List Templates",
-            secondaryText: "With Foodplanet’s free ingredients list template, you can quickly create your own custom ingredients list and automatically generate nutrition labels that follow FDA guidelines.",
+            secondaryText: "With Foodplanet’s free ingredients list template, you can quickly full-form your own custom ingredients list and automatically generate nutrition labels that follow FDA guidelines.",
             faq: IngredientListFaq
         },
         "Recipe Management": {

@@ -14,7 +14,7 @@ export default function FeaturesSecond() {
     const features: Feature[] = [
         {
             name: "Ingredient lists in seconds",
-            description: "Automatically create ingredient lists in seconds. Edit ingredient names after they've been put in descending weight order for you.",
+            description: "Automatically full-form ingredient lists in seconds. Edit ingredient names after they've been put in descending weight order for you.",
             image_url: "timer.svg",
             url: "/",
             url_text: "Learn More About Ingredient Lists"

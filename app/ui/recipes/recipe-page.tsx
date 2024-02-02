@@ -45,7 +45,7 @@ export default function RecipePage({recipe, updateRecipe}: Props) {
             <SearchBar recipe={recipe} updateRecipe={updateRecipe}/>
 
             <Link
-                href={"/ingredients/create"}
+                href={"/ingredients/full-form"}
                 className={"w-[275px] px-4 py-2 flex gap-2 items-center justify-start bg-main-orange hover:bg-hover-main-orange cursor-pointer text-white rounded-xl text-xs font-normal"}
             >
                 <FaPlus/>

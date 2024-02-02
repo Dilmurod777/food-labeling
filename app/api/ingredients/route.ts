@@ -13,3 +13,9 @@ export async function GET(request: NextRequest) {
 
     return Response.json(data)
 }
+
+export async function POST(request: NextRequest) {
+    const id = await ingredientActions.create(await request.json())
+
+    return Response.json({id: id})
+}

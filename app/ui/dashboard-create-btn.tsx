@@ -1,25 +1,30 @@
 import {Fragment, useState} from "react";
-import {DefaultRecipe, User} from "@/app/lib/models";
+import {DefaultRecipe, Ingredient, Recipe, User} from "@/app/lib/models";
 import {useRouter} from "next/navigation";
 import {FaPlus} from "react-icons/fa";
-import {revalidatePath} from "next/cache";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
 
 interface Props {
-    user: User
+    user: User,
+    api_route: string,
+    success_redirect_url: string,
+    error_redirect_url: string,
+    text: string,
+    loading_text: string,
+    data: Ingredient | Recipe;
 }
 
-export default function CreateRecipesBtn({user}: Props) {
+export default function DashboardCreateBtn({user, api_route, success_redirect_url, error_redirect_url, text, loading_text, data}: Props) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
 
-    const createRecipe = () => {
+    const onClickHandler = () => {
         if (!user) return;
 
         setLoading(true);
-        const data = DefaultRecipe;
-        data.user_id = user.id;
 
-        fetch("/api/recipes", {
+        fetch(api_route, {
             body: JSON.stringify(data),
             method: "POST"
         })
@@ -28,9 +33,9 @@ export default function CreateRecipesBtn({user}: Props) {
                 const id: string = data.id;
 
                 if (id) {
-                    router.push(`/recipes/${id}/edit`);
+                    router.push(success_redirect_url.replace("<id>", id));
                 } else {
-                    router.push('/dashboard');
+                    router.push(error_redirect_url);
                 }
             });
     }
@@ -38,15 +43,15 @@ export default function CreateRecipesBtn({user}: Props) {
     return <div
         onClick={() => {
             if (loading) return;
-            createRecipe();
+            onClickHandler();
         }}
         className={"flex gap-2 items-center justify-center text-sm text-white font-normal px-4 py-2 rounded-md bg-main-green hover:bg-hover-main-green cursor-pointer"}
     >
         {loading
-            ? <span>Creating...</span>
+            ? <span>{loading_text}</span>
             : <Fragment>
                 <FaPlus className={"text-lg"}/>
-                <span>Create a recipe</span>
+                <span>{text}</span>
             </Fragment>}
     </div>
 }

@@ -26,7 +26,7 @@ export default function CaseStudies() {
         {
             img_url: "yumtum.png",
             url: "/",
-            feedback: "Foodplanet customer service went above and beyond to create a custom label and triangulated tricky ingredient data for us.",
+            feedback: "Foodplanet customer service went above and beyond to full-form a custom label and triangulated tricky ingredient data for us.",
             name: "YumTum"
         },
         {

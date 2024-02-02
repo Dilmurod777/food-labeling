@@ -1,30 +1,25 @@
 'use server';
 
 import {sql} from "@vercel/postgres";
-import type {Ingredient} from "@/app/lib/models";
+import type {Ingredient, Recipe} from "@/app/lib/models";
 import {getCurrentUser} from "@/app/lib/actions-user";
 import {redirect} from 'next/navigation'
 import {revalidatePath} from "next/cache";
+import {randomBytes} from "crypto";
 
-export async function create(prevState: Ingredient | undefined, formData: FormData) {
+export async function create(data: Ingredient) {
     try {
-        const user = await getCurrentUser();
-        if (!user) return undefined;
+        const {id, ...rest}: Ingredient = data;
+        rest.name = "Ingredient " + randomBytes(10).toString('hex');
 
-        const data: { [key: string]: string } = {};
-        for (const entry of formData.entries()) {
-            if (entry[1].toString().trim() == "") continue;
-            if (!entry[0].startsWith("ingredient-")) continue;
+        const query = `INSERT INTO ingredients (${Object.keys(rest).join(',')}) VALUES (${Object.values(rest).map(item => `'${item}'`).join(',')}) RETURNING id`;
+        const recipe = await sql.query<Ingredient>(query);
+        if (recipe.rowCount == 0) return "-1";
 
-            const key = entry[0].replace("ingredient-", "").replaceAll("-", "_");
-            data[key] = `'${entry[1].toString()}'`;
-        }
+        revalidatePath("/dashboard/ingredients", "page");
+        revalidatePath("/dashboard", "page");
 
-        data["user_id"] = `'${user.id}'`;
-        data["updated_at"] = `'${Date.now()}'`;
-        const query = `INSERT INTO ingredients (${Object.keys(data).join(", ")}) VALUES (${Object.values(data).join(", ")})`;
-        await sql.query<Ingredient>(query)
-        redirect("/dashboard/inventory")
+        return recipe.rows[0].id;
     } catch (error) {
         console.log("error: ", error)
         throw error

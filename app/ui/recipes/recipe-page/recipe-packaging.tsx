@@ -73,7 +73,7 @@ export default function RecipePackaging({recipe, updateRecipe}: Props) {
             htmlFor={"recipe-net-weight-per-package"}
             tooltip_enabled={true}
             tooltip_title={"Warning - advanced usage (ask us if you have questions)!"}
-            tooltip_content={"To create a proper label, we need to know how much product is in each package, either in" +
+            tooltip_content={"To full-form a proper label, we need to know how much product is in each package, either in" +
                 "weight or volume (excluding the packaging)." +
                 "<br><br>" +
                 "If it's 100 grams, enter 100 and select grams. If it's 12 fluid ounces, enter 12 and select" +

@@ -12,7 +12,7 @@ const inputs: Input[] = [
         text: "Food Ingredient",
         tooltip_enabled: true,
         tooltip_title: "What's a Food Ingredient?",
-        tooltip_content: "Most ingredients are 'Food Ingredients'. If you use it in your recipe, it's a food ingredient. Non-food ingredients are mainly used for costing (ingredients like packaging materials, labor), allowing you to create a full bill of materials."
+        tooltip_content: "Most ingredients are 'Food Ingredients'. If you use it in your recipe, it's a food ingredient. Non-food ingredients are mainly used for costing (ingredients like packaging materials, labor), allowing you to full-form a full bill of materials."
     },
     {
         type: 'radio',
@@ -21,7 +21,7 @@ const inputs: Input[] = [
         text: "Non-Food Ingredient (Labor, Packaging, etc.)",
         tooltip_enabled: true,
         tooltip_title: "What's a Non-Food Ingredient?",
-        tooltip_content: "Non-food ingredients are mainly used for costing (ingredients like packaging materials, labor), allowing you to create a full bill of materials. If you create a non-food ingredient, we'll automatically configure certain fields, setting it as a private ingredient, and removing nutrient data.",
+        tooltip_content: "Non-food ingredients are mainly used for costing (ingredients like packaging materials, labor), allowing you to full-form a full bill of materials. If you full-form a non-food ingredient, we'll automatically configure certain fields, setting it as a private ingredient, and removing nutrient data.",
         children: [
             {
                 type: 'radio',

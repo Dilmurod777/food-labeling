@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import {Recipe, User} from "@/app/lib/models";
+import {DefaultRecipe, Recipe, User} from "@/app/lib/models";
 import {redirect, useRouter} from "next/navigation";
 import DeleteButton from "@/app/ui/ingredients/delete-button";
 import {useFormState} from "react-dom";
 import {deleteById} from "@/app/lib/actions-recipes";
 import {TAG_COLORS} from "@/app/lib/constants";
-import CreateRecipesBtn from "@/app/ui/create-recipes-btn";
+import DashboardCreateBtn from "@/app/ui/dashboard-create-btn";
 import {IoMdRefreshCircle} from "react-icons/io";
 import {revalidatePath} from "next/cache";
 
@@ -32,7 +32,18 @@ export default function RecipeList({recipes, user}: Props) {
                 className={"text-4xl font-bold text-main-orange cursor-pointer hover:text-hover-main-orange"}
                 onClick={() => router.refresh()}
             />
-            <CreateRecipesBtn user={user}/>
+            <DashboardCreateBtn
+                user={user}
+                api_route={"/api/recipes"}
+                success_redirect_url={"/recipes/<id>/edit"}
+                error_redirect_url={"/dashboard"}
+                text={"Create a Recipe"}
+                loading_text={"Creating..."}
+                data={{
+                    ...DefaultRecipe,
+                    user_id: user.id
+                }}
+            />
         </div>
         <div className={"flex flex-col mt-4"}>
             <table>
@@ -54,7 +65,7 @@ export default function RecipeList({recipes, user}: Props) {
                     >
                         <td>
                             <Link
-                                href={`/ingredients/${item.id}/view`}
+                                href={`/recipes/${item.id}/edit`}
                                 className={"text-main-blue hover:text-hover-main-blue"}
                             >
                                 {item.name}

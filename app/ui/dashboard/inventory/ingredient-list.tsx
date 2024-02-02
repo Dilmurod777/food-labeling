@@ -1,17 +1,17 @@
 "use client";
 
-import {FaPlus} from "react-icons/fa";
-import {MdDelete} from "react-icons/md";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
-import {Ingredient, User} from "@/app/lib/models";
+import {DefaultIngredient, Ingredient, User} from "@/app/lib/models";
 import {useFormState} from "react-dom";
 import {deleteById} from "@/app/lib/actions-ingredients";
 import DeleteButton from "@/app/ui/ingredients/delete-button";
+import {IoMdRefreshCircle} from "react-icons/io";
+import DashboardCreateBtn from "@/app/ui/dashboard-create-btn";
 
 interface Props {
     ingredients: Ingredient[],
-    user: User | undefined
+    user: User
 }
 
 export default function IngredientList({ingredients, user}: Props) {
@@ -26,13 +26,22 @@ export default function IngredientList({ingredients, user}: Props) {
 								<span className={"font-thin"}>{user.email}</span>
                             </span>}
             </h2>
-            <div
-                onClick={() => router.push("/ingredients/create")}
-                className={"flex gap-2 items-center justify-center text-sm text-white font-normal px-4 py-2 rounded-md bg-main-green hover:bg-hover-main-green cursor-pointer"}
-            >
-                <FaPlus className={"text-lg"}/>
-                <span>New ingredient</span>
-            </div>
+            <IoMdRefreshCircle
+                className={"text-4xl font-bold text-main-orange cursor-pointer hover:text-hover-main-orange"}
+                onClick={() => router.refresh()}
+            />
+            <DashboardCreateBtn
+                user={user}
+                api_route={"/api/ingredients"}
+                success_redirect_url={"/ingredients/<id>/view"}
+                error_redirect_url={"/dashboard/ingredients"}
+                text={"Create an Ingredient"}
+                loading_text={"Creating..."}
+                data={{
+                    ...DefaultIngredient,
+                    user_id: user.id
+                }}
+            />
         </div>
         <div className={"flex flex-col mt-4"}>
             <table>
