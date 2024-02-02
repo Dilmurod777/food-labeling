@@ -18,7 +18,7 @@ export default function Home() {
     return (
         <div className="flex flex-col min-h-screen bg-white">
             <TopHero/>
-            <TrustedBusinesses/>
+            {/*<TrustedBusinesses/>*/}
             <Divider margin={1.5} marginUnits={"rem"} height={2} heightUnits={"px"} color={"#f2f7fb"}/>
             <FeaturesFirst/>
             <NutritionAnalysisMadeEasy/>
@@ -26,9 +26,9 @@ export default function Home() {
             <RecipeCostingToMakeDecisions/>
             <FeaturesSecond/>
             <CustomerServiceToDieFor/>
-            <FoodEntrepreneurs/>
-            <CaseStudies/>
-            <Testimonials/>
+            {/*<FoodEntrepreneurs/>*/}
+            {/*<CaseStudies/>*/}
+            {/*<Testimonials/>*/}
             <FAQ/>
             <SignUpForFree/>
         </div>

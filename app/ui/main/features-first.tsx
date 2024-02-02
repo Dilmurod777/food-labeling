@@ -40,7 +40,7 @@ export default function FeaturesFirst() {
         }
     ]
 
-    return <div className={"flex justify-between gap-24 w-full px-12 mx-auto my-0 py-16"}>
+    return <div className={"flex justify-between gap-24 w-full px-12 mx-auto my-0 py-16 bg-main-gray"}>
         {features.map((feature, i) => <Link
             href={feature.url}
             key={`${feature.name.toLowerCase()}_${i}`}

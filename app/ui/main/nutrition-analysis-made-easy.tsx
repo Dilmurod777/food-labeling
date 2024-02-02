@@ -5,7 +5,7 @@ import IngredientListImage from "@/public/images/ingredient-list.png";
 import Divider from "@/app/ui/divider";
 
 export default function NutritionAnalysisMadeEasy() {
-    return <div className={"bg-main-blue text-white mt-6 py-32 w-full px-12 flex items-center justify-between"}>
+    return <div className={"bg-main-orange text-white py-12 w-full px-12 flex items-center justify-between"}>
         <div className={"px-12 py-6 w-1/2 h-full"}>
             <Image
                 src={IngredientListImage}
@@ -34,16 +34,16 @@ export default function NutritionAnalysisMadeEasy() {
                 <GrLinkNext/>
             </Link>
 
-            <Divider height={2} heightUnits={"px"} margin={3} marginUnits={"rem"} color={"#f2f7fb"}/>
+            <Divider height={2} heightUnits={"px"} margin={1} marginUnits={"rem"} color={"#f2f7fb"}/>
 
-            <blockquote className={"border-l-main-green border-l-[5px] py-5 px-6"}>
-                <p className={"mb-4 text-lg font-normal"}>
-                    &quot;Food analysis was not a task I wanted to take on, but it turned out to be straightforward with
-                    Foodplanet.&quot;
-                </p>
-                <p className={"font-bold text-lg"}>Mary Mentzer</p>
-                <span className={"bold-thin text-sm"}>Owner, Eat Drink & Meet Mary</span>
-            </blockquote>
+            {/*<blockquote className={"border-l-main-green border-l-[5px] py-5 px-6"}>*/}
+            {/*    <p className={"mb-4 text-lg font-normal"}>*/}
+            {/*        &quot;Food analysis was not a task I wanted to take on, but it turned out to be straightforward with*/}
+            {/*        Foodplanet.&quot;*/}
+            {/*    </p>*/}
+            {/*    <p className={"font-bold text-lg"}>Mary Mentzer</p>*/}
+            {/*    <span className={"bold-thin text-sm"}>Owner, Eat Drink & Meet Mary</span>*/}
+            {/*</blockquote>*/}
         </div>
     </div>
 }

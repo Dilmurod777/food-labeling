@@ -60,7 +60,7 @@ export default function FeaturesSecond() {
 
             <Link
                 href={feature.url}
-                className={"group flex items-center text-lg font-normal mt-8 text-main-blue hover:text-hover-main-blue"}
+                className={"group flex items-center text-lg font-normal mt-8 text-main-green hover:text-hover-main-green"}
             >
                 <span className={"mr-2 group-hover:mr-4 transition-all font-bold text-sm"}>{feature.url_text}</span>
                 <GrLinkNext/>

@@ -21,7 +21,9 @@ const config: Config = {
                 "main-blue": "#408abf",
                 "hover-main-blue": "#336e99",
                 "main-gray": "#e7ecef",
-                "secondary-gray": "#3f4a56"
+                "secondary-gray": "#3f4a56",
+                "main-orange": "#fb9e1c",
+                "hover-main-orange": "#e28503"
             }
         },
     },

@@ -95,7 +95,7 @@ export default function NutritionLabelSoftware() {
         </div>)}
 
         <FAQ items={tabContent.faq}/>
-        <Testimonials/>
+        {/*<Testimonials/>*/}
         <SimpleSoftwareForFoodBusinesses/>
     </div>
 }

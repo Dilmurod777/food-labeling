@@ -5,7 +5,7 @@ import {GrLinkNext} from "react-icons/gr";
 import Divider from "@/app/ui/divider";
 
 export default function RecipeCostingToMakeDecisions() {
-    return <div className={"bg-[#f3f7fb] text-black py-32 w-full px-12 flex items-center justify-between"}>
+    return <div className={"bg-[#f3f7fb] text-black py-12 w-full px-12 flex items-center justify-between"}>
         <div className={"px-12 py-6 w-1/2 h-full"}>
             <Image
                 src={CostAnalysis}
@@ -35,13 +35,13 @@ export default function RecipeCostingToMakeDecisions() {
 
             <Divider height={2} heightUnits={"px"} margin={3} marginUnits={"rem"} color={"#f2f7fb"}/>
 
-            <blockquote className={"border-l-main-green border-l-[5px] py-5 px-6"}>
-                <p className={"mb-4 text-lg font-normal"}>
-                    &quot;I simply love the user interface and ability to track an ingredient&apos;s cost to calculate the recipe cost. Doing that myself was always a real headache.&quot;
-                </p>
-                <p className={"font-bold text-lg"}>James Spence</p>
-                <span className={"bold-thin text-sm"}>Owner, Unique Tastes Bakery</span>
-            </blockquote>
+            {/*<blockquote className={"border-l-main-green border-l-[5px] py-5 px-6"}>*/}
+            {/*    <p className={"mb-4 text-lg font-normal"}>*/}
+            {/*        &quot;I simply love the user interface and ability to track an ingredient&apos;s cost to calculate the recipe cost. Doing that myself was always a real headache.&quot;*/}
+            {/*    </p>*/}
+            {/*    <p className={"font-bold text-lg"}>James Spence</p>*/}
+            {/*    <span className={"bold-thin text-sm"}>Owner, Unique Tastes Bakery</span>*/}
+            {/*</blockquote>*/}
         </div>
     </div>
 }

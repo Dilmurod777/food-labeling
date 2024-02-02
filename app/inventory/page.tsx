@@ -11,7 +11,7 @@ export default function Inventory() {
         <TopHero/>
         <Divider height={1} heightUnits={"px"} color={"#e7ecef"}/>
         <EmailFreeCourse/>
-        <FoodManufacturers/>
+        {/*<FoodManufacturers/>*/}
         <Features/>
         <CustomerServiceThatDelivers/>
         <Divider height={1} heightUnits={"px"} color={"#e7ecef"}/>

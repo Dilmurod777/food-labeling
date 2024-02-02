@@ -17,14 +17,14 @@ export default function TopHero() {
             <div className={"flex gap-4 my-12"}>
                 <Link
                     href={"/"}
-                    className={"flex items-center justify-center text-[1rem] text-white font-bold h-16 px-8 rounded-md bg-main-green hover:bg-hover-main-green"}
+                    className={"flex items-center justify-center text-[1rem] text-white font-bold h-16 px-8 rounded-md bg-main-orange hover:bg-hover-main-orange"}
                 >
                     Create a Free Label
                 </Link>
                 <Link
                     href={"/"}
-                    className={"flex items-center justify-center text-[1rem] text-main-green font-bold h-16 px-8 rounded-md bg-white " +
-                        "border-[1px] border-main-green hover:bg-hover-main-green hover:text-white"}
+                    className={"flex items-center justify-center text-[1rem] text-main-orange font-bold h-16 px-8 rounded-md bg-white " +
+                        "border-[1px] border-main-orange hover:bg-hover-main-orange hover:text-white"}
                 >
                     Try Our Sample Label
                 </Link>
