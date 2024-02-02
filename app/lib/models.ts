@@ -65,6 +65,7 @@ export interface Ingredient {
     updated_at: string,
     brand?: string,
     list_name?: string,
+    list_name_fr?: string,
     data_source?: string,
     visibility?: string,
     serving_size_description: string,
@@ -264,7 +265,7 @@ export function IngredientGetProperty(ingredient: Ingredient | undefined, key: s
 export const DefaultRecipe: Recipe = {
     id: "",
     name: "",
-    user_id: "-1",
+    user_id: "",
     updated_at: Date.now().toString(),
     tags: "[]",
     recipe_items: "[]",
@@ -282,7 +283,9 @@ export const DefaultRecipe: Recipe = {
     serving_per_package: 1,
     waste: 0,
     net_weight: 0,
-    packages: 1
+    packages: 1,
+    serving_size_description: "",
+    serving_size_description_fr: ""
 };
 
 export const DefaultIngredient: Ingredient = {

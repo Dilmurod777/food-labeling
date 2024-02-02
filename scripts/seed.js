@@ -51,6 +51,7 @@ async function seedIngredients(client) {
        	updated_at TEXT NOT NULL,
         brand VARCHAR(255),
         list_name VARCHAR(255),
+        list_name_fr VARCHAR(255),
         data_source VARCHAR(255),
         visibility VARCHAR(255),
         serving_size VARCHAR(255),

@@ -104,7 +104,7 @@ const FormPages = React.memo(function FormPages({recipe, tabIndex, user, updateR
 					<div className={"flex items-center justify-center text-lg font-bold text-black"}>No recipe with such ID
 						found.</div>}
         {recipe && tabIndex == 1 && <RecipePage recipe={recipe} user={user} updateRecipe={updateRecipe}/>}
-        {recipe && tabIndex == 2 && <IngredientStatementPage recipe={recipe}/>}
+        {recipe && tabIndex == 2 && <IngredientStatementPage recipe={recipe} updateRecipe={updateRecipe}/>}
         {recipe && tabIndex == 3 && <LabelPage recipe={recipe} updateRecipe={updateRecipe}/>}
         {recipe && tabIndex == 4 && <CostPage recipe={recipe}/>}
     </div>
