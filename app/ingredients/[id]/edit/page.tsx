@@ -44,7 +44,7 @@ export default async function Page({params}: { params: { id: string } }) {
                 </Link>
             </div>
 
-            <FullForm action_type={"edit"} ingredient={ingredient}/>
+            <FullForm ingredient={ingredient}/>
         </div>
     </div>
 }

@@ -12,17 +12,15 @@ import IngredientVitaminsMinerals from "@/app/ui/ingredients/full-form/ingredien
 import IngredientOptional from "@/app/ui/ingredients/full-form/ingredient-optional";
 import FormButton from "@/app/ui/auth_button";
 import {useFormState} from "react-dom";
-import {create, update} from "@/app/lib/actions-ingredients";
-import {Ingredient, IngredientGetProperty} from "@/app/lib/models";
+import {update} from "@/app/lib/actions-ingredients";
+import {Ingredient} from "@/app/lib/models";
 
 interface Props {
-    action_type: "create" | "edit",
     ingredient?: Ingredient;
 }
 
-export default function FullForm({action_type, ingredient}: Props) {
-    const action = action_type == "create" ? create : update;
-    const [_, dispatch] = useFormState(action, undefined);
+export default function FullForm({ingredient}: Props) {
+    const [_, dispatch] = useFormState(update, undefined);
 
     return <form className={"flex flex-col gap-2 items-start"} action={dispatch}>
         {ingredient && <input type="hidden" name={"ingredient-id"} value={ingredient.id}/>}
@@ -39,7 +37,7 @@ export default function FullForm({action_type, ingredient}: Props) {
             <IngredientVitaminsMinerals ingredient={ingredient}/>
 
             <FormButton
-                text={action_type == "create" ? "Create Ingredient" : "Update Ingredient"}
+                text={"Update Ingredient"}
                 classes={"flex items-center justify-center gap-2 py-2 px-2 text-white text-xs font-thin bg-main-green hover:bg-hover-main-green rounded-md mt-4"}
             />
 
@@ -47,7 +45,7 @@ export default function FullForm({action_type, ingredient}: Props) {
         </div>
 
         <FormButton
-            text={action_type == "create" ? "Create Ingredient" : "Update Ingredient"}
+            text={"Update Ingredient"}
             classes={"flex items-center justify-center gap-2 py-2 px-2 text-white text-xs font-thin bg-main-green hover:bg-hover-main-green rounded-md mt-4"}
         />
     </form>
