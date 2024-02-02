@@ -81,7 +81,7 @@ export default function Form({recipe, user}: Props) {
 
 const SaveButton = React.memo(function SaveButton({savingState, saveRecipeToDB}: { savingState: SavingState, saveRecipeToDB: () => void }) {
     return <div
-        className={`flex justify-center items-center text-sm text-white font-thin rounded-md px-6 py-2 cursor-pointer ${savingState == SavingState.Saved ? "bg-gray-500 cursor-default" : "bg-main-blue hover:bg-hover-main-blue"}`}
+        className={`w-[150px] flex justify-center items-center text-sm text-white font-thin rounded-md px-6 py-2 cursor-pointer ${savingState == SavingState.Saved ? "bg-gray-500 cursor-default" : "bg-main-orange hover:bg-hover-main-orange"}`}
         onClick={() => {
             if (savingState == SavingState.Saved) return;
             saveRecipeToDB();

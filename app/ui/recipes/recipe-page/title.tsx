@@ -24,20 +24,21 @@ export default function Title({recipe, updateRecipe}: Props) {
     return editing
         ? <input
             type="text"
-            className={"w-[300px] rounded-md border-2 border-main-blue px-2 py-2 outline-0 h-[35px]"}
+            className={"w-[300px] rounded-md border-2 border-main-orange px-2 py-2 outline-0 h-[35px]"}
             onBlur={(e) => updateRecipeName(e.target.value)}
             onKeyDown={(e) => {
                 if (e.key === "Enter") {
                     updateRecipeName(e.currentTarget.value)
                 }
             }}
-            maxLength={20}
+            maxLength={40}
             autoFocus={true}
             placeholder={recipe.name}
+            defaultValue={recipe.name}
         />
         : <div className={"flex gap-4 items-center h-[35px]"}>
             <h2 className={"text-2xl text-black font-bold"}>{overflowText(recipe.name)}</h2>
-            <FaRegEdit className={"text-main-blue text-2xl cursor-pointer"}
+            <FaRegEdit className={"text-main-orange text-2xl cursor-pointer"}
                        onClick={() => setEditing(true)}/>
         </div>
 

@@ -38,7 +38,7 @@ export default function RecipePage({recipe, updateRecipe}: Props) {
                 />
             </div>
 
-            <p className={"w-full text-right text-xs text-main-blue font-thin"}>{lastUpdatedTime}</p>
+            <p className={"w-full text-right text-xs text-main-orange font-thin"}>{lastUpdatedTime}</p>
         </div>
 
         <div className={"w-full flex gap-4 items-stretch justify-between *:flex-grow mt-6"}>
@@ -46,7 +46,7 @@ export default function RecipePage({recipe, updateRecipe}: Props) {
 
             <Link
                 href={"/ingredients/create"}
-                className={"w-[275px] px-4 py-2 flex gap-2 items-center justify-start bg-main-blue hover:bg-hover-main-blue cursor-pointer text-white rounded-xl text-xs font-normal"}
+                className={"w-[275px] px-4 py-2 flex gap-2 items-center justify-start bg-main-orange hover:bg-hover-main-orange cursor-pointer text-white rounded-xl text-xs font-normal"}
             >
                 <FaPlus/>
                 <span>Create your own ingredient</span>
@@ -62,7 +62,7 @@ export default function RecipePage({recipe, updateRecipe}: Props) {
                     <h2 className={"text-lg font-bold text-black"}>Label Preview</h2>
                     <Link
                         href={"#"}
-                        className={"text-sm text-main-blue hover:text-hover-main-blue text-thin"}
+                        className={"text-sm text-main-orange hover:text-hover-main-orange text-thin"}
                     >
                         Customize it
                     </Link>

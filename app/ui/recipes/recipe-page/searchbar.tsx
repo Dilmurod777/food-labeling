@@ -55,11 +55,11 @@ export default function SearchBar({recipe, updateRecipe}: Props) {
         }
     }
 
-    return <div className={"relative text-main-gray focus-within:text-main-blue w-full"}>
+    return <div className={"relative text-main-gray focus-within:text-main-orange w-full"}>
         <input
             ref={searchInputRef}
             type="text"
-            className={"w-full py-2 pl-10 pr-16 rounded-3xl border-main-gray outline-main-blue border-2 text-sm text-secondary-gray"}
+            className={"w-full py-2 pl-10 pr-16 rounded-3xl border-main-gray outline-main-orange border-2 text-sm text-secondary-gray"}
             name={"search"}
             placeholder={"Search an ingredient to add to your recipe"}
             onChange={(e) => handleSearch(e.target.value)}
@@ -68,7 +68,7 @@ export default function SearchBar({recipe, updateRecipe}: Props) {
         <FaSearch className={"text-lg absolute left-3 top-1/2 -translate-y-1/2"}/>
 
         <div
-            className={"w-12 flex items-center justify-center absolute top-0 bottom-0 right-0 rounded-tr-3xl rounded-br-3xl bg-main-blue hover:bg-hover-main-blue cursor-pointer"}
+            className={"w-12 flex items-center justify-center absolute top-0 bottom-0 right-0 rounded-tr-3xl rounded-br-3xl bg-main-orange hover:bg-hover-main-orange cursor-pointer"}
         >
             <FaSliders className={'text-white text-lg'}/>
         </div>

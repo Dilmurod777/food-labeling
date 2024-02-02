@@ -3,6 +3,8 @@
 import type {Ingredient, Recipe, RecipeItem} from "@/app/lib/models";
 import {sql} from "@vercel/postgres";
 import {getCurrentUser} from "@/app/lib/actions-user";
+import {revalidatePath} from "next/cache";
+import {randomBytes} from "crypto";
 
 
 export async function getAll(): Promise<Recipe[]> {
@@ -53,27 +55,41 @@ export async function getById(id: string): Promise<Recipe | undefined> {
     }
 }
 
+export async function create(data: Recipe): Promise<string> {
+    try {
+        const {id, ...rest}: Recipe = data;
+        rest.name = "Recipe " + randomBytes(10).toString('hex');
 
-export async function create(data: Recipe): Promise<Recipe | undefined> {
+        const query = `INSERT INTO recipes (${Object.keys(rest).join(',')}) VALUES (${Object.values(rest).map(item => `'${item}'`).join(',')}) RETURNING id`;
+        const recipe = await sql.query<Recipe>(query);
+        if (recipe.rowCount == 0) return "-1";
+
+        revalidatePath("/dashboard/recipes", "page");
+        revalidatePath("/dashboard", "page");
+
+        return recipe.rows[0].id;
+    } catch (error) {
+        console.error('Failed to fetch recipes:', error);
+        return "-1";
+    }
+}
+
+export async function deleteById(prevState: Recipe | undefined, formData: FormData): Promise<Recipe | undefined> {
     try {
         const user = await getCurrentUser();
         if (!user) return undefined;
 
-        const recipe = {...data};
+        let id = formData.get("recipe-id");
+        if (!id) return;
 
-        const existingRecipe = await getById(recipe.id);
-        if (!existingRecipe) {
-            delete recipe.net_weight_unit;
-            const columns = Object.keys(recipe);
-            const values = Object.values(recipe).map(item => `'${item}'`);
-            const query = `INSERT INTO recipes (${columns.join(",")}) VALUES (${values.join(",")})`
-            const createdRecipe = await sql.query(query);
-            return createdRecipe.rows[0];
-        }
+        const query = `DELETE FROM recipes WHERE user_id='${user.id}' AND id='${id.toString()}'`;
+        const result = await sql.query<Recipe>(query)
+        revalidatePath("/dashboard/inventory");
 
-        return undefined;
+        if (result.rowCount == 0) return undefined;
+        return result.rows[0];
     } catch (error) {
-        console.error('Failed to fetch recipes:', error);
+        console.log("error: ", error)
         return undefined;
     }
 }

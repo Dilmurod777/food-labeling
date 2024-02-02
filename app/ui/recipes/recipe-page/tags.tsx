@@ -2,13 +2,12 @@ import {IoCloseCircleSharp} from "react-icons/io5";
 import {FaPlus, FaTags} from "react-icons/fa";
 import {useState} from "react";
 import {IRecipe, Recipe} from "@/app/lib/models";
+import {TAG_COLORS} from "@/app/lib/constants";
 
 interface Props {
     recipe: Recipe,
     updateRecipe: (data: IRecipe) => void
 }
-
-const TAG_COLORS = ["#D04848", "#F3B95F", "#FDE767", "#6895D2", "#FE7A36", "#3652AD", "#280274", "#E9F6FF"];
 
 export default function Tags({recipe, updateRecipe}: Props) {
     const [editing, setEditing] = useState(false);
@@ -52,7 +51,7 @@ export default function Tags({recipe, updateRecipe}: Props) {
                 ? <div className={"relative h-[25px]"}>
                     <input
                         type="text"
-                        className={"peer rounded-md border-2 border-main-blue pl-6 pr-1 py-1 w-[200px] outline-0 text-xs"}
+                        className={"peer rounded-md border-2 border-main-orange pl-6 pr-1 py-1 w-[200px] h-full outline-0 text-xs"}
                         onBlur={(e) => addTag(e.target.value)}
                         onKeyDown={(e) => {
                             if (e.key === "Enter") {
@@ -62,15 +61,15 @@ export default function Tags({recipe, updateRecipe}: Props) {
                         autoFocus={true}
                         placeholder={"my tag"}
                     />
-                    <FaTags className={"absolute text-sm text-main-blue left-2 top-1/2 mt-[2px]"} style={{transform: "translateY(-50%)"}}/>
+                    <FaTags className={"absolute text-sm text-main-orange left-2 top-1/2 mt-[2px]"} style={{transform: "translateY(-50%)"}}/>
                 </div>
                 : tags.length
-                    ? <FaPlus className={"text-lg text-main-blue cursor-pointer"}
+                    ? <FaPlus className={"text-lg text-main-orange cursor-pointer"}
                               onClick={() => setEditing(true)}/>
-                    : <div className={"flex gap-2 items-center mt-2 cursor-pointer"}
+                    : <div className={"h-[25px] flex gap-2 items-center cursor-pointer"}
                            onClick={() => setEditing(true)}>
-                        <FaTags className={"text-lg text-main-blue"}/>
-                        <span className={"text-sm text-main-blue"}>Add Tags...</span>
+                        <FaTags className={"text-lg text-main-orange"}/>
+                        <span className={"text-sm text-main-orange"}>Add Tags...</span>
                     </div>
         }
     </div>
