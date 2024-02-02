@@ -18,14 +18,13 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
                 const isActive = pathname == tabs[tab];
                 return <div
                     key={`dashboard-tab-${ti}`}
-                    className={`relative text-sm text-normal text-black py-2 px-6 cursor-pointer mt-[10px] ${isActive && "after:content-[''] after:w-full after:h-2 after:bg-white after:absolute after:bottom-0 after:left-0"}`}
+                    className={`relative text-sm text-normal text-black py-2 px-6 cursor-pointer mt-[10px] ${isActive && "text-main-orange after:content-[''] after:w-full after:h-2 after:bg-white after:absolute after:bottom-0 after:left-0"}`}
                     style={{
                         borderTop: `${isActive ? 1 : 0}px solid #dbdbdb`,
                         borderLeft: `${isActive ? 1 : 0}px solid #dbdbdb`,
                         borderRight: `${isActive ? 1 : 0}px solid #dbdbdb`,
                         borderBottom: `${isActive ? 3 : 0}px solid #fff`,
                         borderRadius: "4px 4px 0 0",
-                        color: isActive ? "#408abf" : "#000"
                     }}
                     onClick={() => router.push(tabs[tab])}
                 >

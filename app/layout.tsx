@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({children}: { children: React.ReactNode }) {
     return (
         <html lang="en">
-        <body className={merriweather.className + " flex flex-col h-screen"}>
+        <body className={merriweather.className + " relative flex flex-col h-screen"}>
         <Header/>
         <main className={"flex-grow"}>
             {children}

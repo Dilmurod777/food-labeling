@@ -67,12 +67,12 @@ export default function MenuItems() {
                 href={item.url}
                 className={"flex text-black font-bold text-lg"}
             >
-                <span className={"group-hover:text-sky-500"}>{item.text}</span>
+                <span className={"group-hover:text-orange"}>{item.text}</span>
                 {item.rightIcon && <span className={"ml-2"}>{item.rightIcon}</span>}
             </Link>
 
             {item.subItems && activeMenuItemIndex == i && (<div
-                className={"absolute top-[100%] left-0 bg-white border-[1px] border-main-gray rounded-md"}
+                className={"absolute top-[100%] left-0 bg-white border-[1px] border-main-gray rounded-md z-10"}
                 style={{
                     width: "275%",
                     height: 'fit-content',
@@ -84,7 +84,7 @@ export default function MenuItems() {
                     key={`subItem-${si}`}
                     className={"flex flex-col gap-0 items-start py-2 px-4 text-sm hover:bg-[#f2f7fb]"}
                 >
-                    <span className={"text-main-blue font-bold"}>{subItem.mainText}</span>
+                    <span className={"text-main-orange font-bold"}>{subItem.mainText}</span>
                     {subItem.secondaryText && <span className={"text-[#6c6f7c] text-[0.6rem]"}>{subItem.secondaryText}</span>}
                 </Link>)}
             </div>)}

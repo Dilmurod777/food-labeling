@@ -13,14 +13,14 @@ export default function AuthenticatedButtons({user}: { user: User }) {
             href={"/dashboard/recipes"}
             className={"group flex items-center h-full hover:bg-gray-50 px-3 rounded-md"}
         >
-            <span className={"group-hover:text-sky-500"}>Recipes</span>
+            <span className={"group-hover:text-main-orange"}>Recipes</span>
         </Link>
 
         <Link
             href={"/dashboard/inventory"}
             className={"group flex items-center h-full hover:bg-gray-50 px-3 rounded-md"}
         >
-            <span className={"group-hover:text-sky-500"}>Inventory</span>
+            <span className={"group-hover:text-main-orange"}>Inventory</span>
         </Link>
 
         <form action={dispatch}>
