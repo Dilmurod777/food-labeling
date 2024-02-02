@@ -5,7 +5,7 @@ export type User = {
     password: string
 }
 
-interface IRecipe {
+export interface IRecipe {
     [key: string]: string | number | undefined;
 }
 
@@ -35,16 +35,9 @@ export interface Recipe extends IRecipe {
     retailer_margin: number
 }
 
-export type Tag = {
-    id: string,
-    name: string,
-    user_id: string
-}
-
 export type RecipeItem = {
-    id: string,
     ingredient_id: string,
-    ingredient: Ingredient,
+    ingredient?: Ingredient,
     price: number,
     quantity: number,
     unit: number,

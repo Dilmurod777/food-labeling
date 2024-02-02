@@ -1,11 +1,11 @@
 import {overflowText} from "@/app/lib/utilities";
 import {FaRegEdit} from "react-icons/fa";
-import {Recipe, RecipeItem, Tag} from "@/app/lib/models";
+import {IRecipe, Recipe} from "@/app/lib/models";
 import {useState} from "react";
 
 interface Props {
     recipe: Recipe,
-    updateRecipe: (data: {[key: string]: string|RecipeItem[]|Tag[]}) => void
+    updateRecipe: (data: IRecipe) => void
 }
 
 export default function Title({recipe, updateRecipe}: Props) {

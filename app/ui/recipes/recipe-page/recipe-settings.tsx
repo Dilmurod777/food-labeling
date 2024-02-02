@@ -1,11 +1,11 @@
 import {useState} from "react";
-import {Recipe, RecipeItem, Tag, User} from "@/app/lib/models";
+import {IRecipe, Recipe} from "@/app/lib/models";
 import RecipePackaging from "@/app/ui/recipes/recipe-page/recipe-packaging";
 import RecipeAdvanced from "@/app/ui/recipes/recipe-page/recipe-advanced";
 
 interface Props {
     recipe: Recipe,
-    updateRecipe: (data: { [key: string]: string | number | RecipeItem[] | Tag[] }) => void
+    updateRecipe: (data: IRecipe) => void
 }
 
 export default function RecipeSettings({recipe, updateRecipe}: Props) {

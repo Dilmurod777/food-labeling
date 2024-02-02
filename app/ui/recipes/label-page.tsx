@@ -1,15 +1,13 @@
-import {Recipe, RecipeItem, Tag} from "@/app/lib/models";
+import {IRecipe, Recipe} from "@/app/lib/models";
 import Title from "@/app/ui/recipes/recipe-page/title";
 import {IoIosArrowForward} from "react-icons/io";
 import RecipeLabel from "@/app/ui/labels/recipe-label";
 import html2canvas from "html2canvas";
-import JsPDF from "jspdf";
-import {useRef} from "react";
 
 
 interface Props {
     recipe: Recipe,
-    updateRecipe: (data: { [key: string]: string | number | RecipeItem[] | Tag[] }) => void
+    updateRecipe: (data: IRecipe) => void
 }
 
 export default function LabelPage({recipe, updateRecipe}: Props) {

@@ -1,6 +1,6 @@
 "use client";
 
-import {Recipe, RecipeItem, Tag, User} from "@/app/lib/models";
+import {IRecipe, Recipe, User} from "@/app/lib/models";
 import {useRouter} from "next/navigation";
 import React, {useState} from "react";
 import RecipePage from "@/app/ui/recipes/recipe-page";
@@ -22,7 +22,7 @@ export default function Form({recipe, user}: Props) {
     const [savingState, setSavingState] = useState<SavingState>(SavingState.Saved);
     const [_recipe, setRecipe] = useState<Recipe>({...recipe})
 
-    const updateRecipe = (data: { [key: string]: string | number | RecipeItem[] | Tag[] }) => {
+    const updateRecipe = (data: IRecipe) => {
         setRecipe({
             ..._recipe,
             ...data,
@@ -34,15 +34,9 @@ export default function Form({recipe, user}: Props) {
     const saveRecipeToDB = async () => {
         setSavingState(SavingState.Saving);
 
-        const {id, user_id, ...filteredRecipe} = _recipe;
-
         await fetch("/api/recipes", {
             method: "PUT",
-            body: JSON.stringify({
-                id: _recipe.id,
-                user_id: _recipe.user_id,
-                recipe: filteredRecipe
-            })
+            body: JSON.stringify(_recipe)
         })
 
         setSavingState(SavingState.Saved);
@@ -103,7 +97,7 @@ const FormPages = React.memo(function FormPages({recipe, tabIndex, user, updateR
     recipe: Recipe,
     tabIndex: number,
     user: User,
-    updateRecipe: (data: { [key: string]: string | number | RecipeItem[] | Tag[] }) => void
+    updateRecipe: (data: IRecipe) => void
 }) {
     return <div className={"w-full h-full py-6"}>
         {!recipe &&

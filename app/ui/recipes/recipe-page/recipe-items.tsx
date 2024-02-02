@@ -1,4 +1,4 @@
-import {Recipe, RecipeItem, Tag} from "@/app/lib/models";
+import {IRecipe, Recipe, RecipeItem} from "@/app/lib/models";
 import Link from "next/link";
 import {MdDelete} from "react-icons/md";
 import {useEffect, useState} from "react";
@@ -6,7 +6,7 @@ import {getTotalGrams} from "@/app/lib/utilities";
 
 interface Props {
     recipe: Recipe,
-    updateRecipe: (data: { [key: string]: string | RecipeItem[] | Tag[] }) => void
+    updateRecipe: (data: IRecipe) => void
 }
 
 export default function RecipeItems({recipe, updateRecipe}: Props) {
@@ -18,15 +18,14 @@ export default function RecipeItems({recipe, updateRecipe}: Props) {
         }
     }, [recipe.recipe_items]);
 
-    const removeRecipeItem = (id: string) => {
-        const newRecipeItems = items.filter(item => item.id != id);
+    const removeRecipeItem = (index: number) => {
+        const newRecipeItems = items.filter((_, i) => i != index);
 
         updateRecipe({
-            ingredient_list: JSON.stringify((newRecipeItems.map(item => item.id))),
-            recipe_items: newRecipeItems
+            recipe_items: JSON.stringify(newRecipeItems)
         })
 
-        console.log(`remove recipe item: ${id}`)
+        console.log(`remove recipe item: ${index}`)
     }
 
     const updateItemsData = (param: string, value: string, index: number) => {
@@ -43,7 +42,7 @@ export default function RecipeItems({recipe, updateRecipe}: Props) {
         }
 
         updateRecipe({
-            recipe_items: newRecipeItems
+            recipe_items: JSON.stringify(newRecipeItems)
         })
     }
 
@@ -79,7 +78,7 @@ export default function RecipeItems({recipe, updateRecipe}: Props) {
                     className={"font-bold text-main-blue hover:text-hover-main-blue"}
                     target={"_blank"}
                 >
-                    {item.ingredient.name}
+                    {item.ingredient?.name || "no-name"}
                 </Link>
             </td>
             <td>
@@ -119,7 +118,7 @@ export default function RecipeItems({recipe, updateRecipe}: Props) {
             <td>
                 <MdDelete
                     className={"text-lg text-red-500 cursor-pointer"}
-                    onClick={() => removeRecipeItem(item.id)}
+                    onClick={() => removeRecipeItem(i)}
                 />
             </td>
         </tr>)}

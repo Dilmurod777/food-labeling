@@ -3,15 +3,15 @@ import {FaSliders} from "react-icons/fa6";
 import SearchbarResults from "@/app/ui/recipes/recipe-page/searchbar-results";
 import {useRef, useState} from "react";
 import {useDebouncedCallback} from 'use-debounce';
-import {Ingredient, Recipe, RecipeItem, Tag} from "@/app/lib/models";
-import {v4 as uuidV4} from "uuid";
+import {Ingredient, Recipe, RecipeItem} from "@/app/lib/models";
 
 interface Props {
     recipe: Recipe;
-    updateRecipe: (data: { [key: string]: string | RecipeItem[] | Tag[] }) => void;
+    updateRecipe: (data: { [key: string]: string | number }) => void;
 }
 
 export default function SearchBar({recipe, updateRecipe}: Props) {
+    const [items, setItems] = useState<RecipeItem[]>(JSON.parse(recipe.recipe_items || '[]'))
     const [searchQuery, setSearchQuery] = useState("");
     const searchInputRef = useRef<HTMLInputElement>(null)
 
@@ -20,15 +20,13 @@ export default function SearchBar({recipe, updateRecipe}: Props) {
     }, 300);
 
     const handleRecipeItemAdd = (ingredient: Ingredient) => {
-        const index = (recipe.recipe_items || []).findIndex(item => item.ingredient_id == ingredient.id);
-        let newRecipeItems: RecipeItem[] = [];
+        const index = items.findIndex(item => item.ingredient_id == ingredient.id);
+        let newRecipeItems: RecipeItem[];
 
         if (index == -1) {
             newRecipeItems = [
-                ...(recipe.recipe_items || []),
+                ...items,
                 {
-                    id: uuidV4(),
-                    recipe_id: recipe.id,
                     ingredient_id: ingredient.id,
                     ingredient: ingredient,
                     canada_sugar: false,
@@ -42,26 +40,26 @@ export default function SearchBar({recipe, updateRecipe}: Props) {
                 }
             ]
         } else {
-            newRecipeItems = [...(recipe.recipe_items || [])]
+            newRecipeItems = [...items]
             newRecipeItems[index].quantity += 1;
         }
 
 
         updateRecipe({
-            ingredient_list: JSON.stringify((newRecipeItems.map(item => item.id))),
-            recipe_items: newRecipeItems
-        })
+            recipe_items: JSON.stringify(newRecipeItems)
+        });
+        setItems(newRecipeItems);
         setSearchQuery("");
         if (searchInputRef.current) {
             searchInputRef.current.value = "";
         }
     }
 
-    return <div className={"relative text-main-gray focus-within:text-secondary-gray w-full"}>
+    return <div className={"relative text-main-gray focus-within:text-main-blue w-full"}>
         <input
             ref={searchInputRef}
             type="text"
-            className={"w-full py-2 pl-10 pr-16 rounded-3xl border-main-gray border-2 text-sm text-secondary-gray"}
+            className={"w-full py-2 pl-10 pr-16 rounded-3xl border-main-gray outline-main-blue border-2 text-sm text-secondary-gray"}
             name={"search"}
             placeholder={"Search an ingredient to add to your recipe"}
             onChange={(e) => handleSearch(e.target.value)}

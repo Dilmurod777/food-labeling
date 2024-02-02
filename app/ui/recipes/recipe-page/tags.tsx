@@ -1,11 +1,11 @@
 import {IoCloseCircleSharp} from "react-icons/io5";
 import {FaPlus, FaTags} from "react-icons/fa";
 import {useState} from "react";
-import {Recipe, RecipeItem, Tag, User} from "@/app/lib/models";
+import {IRecipe, Recipe} from "@/app/lib/models";
 
 interface Props {
     recipe: Recipe,
-    updateRecipe: (data: { [key: string]: string | Tag[] | RecipeItem[] }) => void
+    updateRecipe: (data: IRecipe) => void
 }
 
 const TAG_COLORS = ["#D04848", "#F3B95F", "#FDE767", "#6895D2", "#FE7A36", "#3652AD", "#280274", "#E9F6FF"];

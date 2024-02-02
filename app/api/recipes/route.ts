@@ -1,19 +1,25 @@
 import type {NextRequest} from "next/server";
-import {Recipe} from "@/app/lib/models";
+import {Recipe, RecipeItem} from "@/app/lib/models";
 import {sql} from "@vercel/postgres";
 import {revalidatePath} from "next/cache";
 import {randomBytes} from "crypto";
 
 export const dynamic = 'force-dynamic' // defaults to auto
 export async function PUT(request: NextRequest) {
-    const data: { id: string, user_id: string, recipe: Recipe } = await request.json()
-    console.log(data)
+    const {id, user_id, ...recipe}: Recipe = await request.json()
+
+    let filtered_recipe_items: RecipeItem[] = [];
+    for (let item of JSON.parse(recipe.recipe_items || "[]")) {
+        delete item.ingredient;
+        filtered_recipe_items.push({...item})
+    }
+    recipe.recipe_items = JSON.stringify(filtered_recipe_items);
 
     const columnValuePairs: string[] = [];
-    for (let key of Object.keys(data.recipe)) {
-        columnValuePairs.push(`${key}='${data.recipe[key]}'`)
+    for (let key of Object.keys(recipe)) {
+        columnValuePairs.push(`${key}='${recipe[key]}'`)
     }
-    const query = `UPDATE recipes SET ${columnValuePairs.join(',')} WHERE id='${data.id}' AND user_id='${data.user_id}'`;
+    const query = `UPDATE recipes SET ${columnValuePairs.join(',')} WHERE id='${id}' AND user_id='${user_id}'`;
     const updateRecipe = await sql.query<Recipe>(query);
 
     revalidatePath("/dashboard/recipes");

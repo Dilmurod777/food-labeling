@@ -1,9 +1,9 @@
 import InputWrapper from "@/app/ui/ingredients/input-wrapper";
-import {Recipe, RecipeItem, Tag} from "@/app/lib/models";
+import {IRecipe, Recipe} from "@/app/lib/models";
 
 interface Props {
     recipe: Recipe,
-    updateRecipe: (data: { [key: keyof Recipe]: string | number | RecipeItem[] | Tag[] }) => void
+    updateRecipe: (data: IRecipe) => void
 }
 
 export default function RecipePackaging({recipe, updateRecipe}: Props) {

@@ -1,4 +1,4 @@
-import {Recipe, RecipeItem, Tag, User} from "@/app/lib/models";
+import {IRecipe, Recipe, RecipeItem, User} from "@/app/lib/models";
 import {convertToHumanReadableTime} from "@/app/lib/utilities";
 import Title from "@/app/ui/recipes/recipe-page/title";
 import Tags from "@/app/ui/recipes/recipe-page/tags";
@@ -13,10 +13,10 @@ import RecipeLabel from "@/app/ui/labels/recipe-label";
 interface Props {
     recipe: Recipe,
     user: User,
-    updateRecipe: (data: { [key: string]: string | number | RecipeItem[] | Tag[] }) => void
+    updateRecipe: (data: IRecipe) => void
 }
 
-export default function RecipePage({recipe, user, updateRecipe}: Props) {
+export default function RecipePage({recipe, updateRecipe}: Props) {
     const items: RecipeItem[] = JSON.parse(recipe.recipe_items || "[]");
     const [lastUpdatedTime, setLastUpdatedTime] = useState("")
 
