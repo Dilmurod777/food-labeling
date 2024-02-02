@@ -61,7 +61,7 @@ export default function RecipeList({recipes, user}: Props) {
 
                     return <tr
                         key={`ingredient-row-${i}`}
-                        className={"*:py-2 *:px-2 *:text-sm even:bg-main-gray"}
+                        className={"*:align-middle *:px-2 *:text-sm even:bg-main-gray *:h-[40px]"}
                     >
                         <td>
                             <Link

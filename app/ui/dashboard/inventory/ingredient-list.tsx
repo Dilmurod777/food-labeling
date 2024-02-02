@@ -47,16 +47,16 @@ export default function IngredientList({ingredients, user}: Props) {
             <table>
                 <thead className={"text-left border-b-[1px] border-main-gray"}>
                 <tr className={"*:py-1 *:px-2"}>
-                    <th className={"w-2/4"}>Name</th>
-                    <th className={"w-1/4"}>Modified at</th>
-                    <th className={"w-1/4"}></th>
+                    <th>Name</th>
+                    <th className={"w-2/12"}>Modified at</th>
+                    <th className={"w-1/12"}></th>
                 </tr>
                 </thead>
                 <tbody className={"text-left"}>
                 {ingredients.map((item, i) => {
                     return <tr
                         key={`ingredient-row-${i}`}
-                        className={"*:py-2 *:px-2 *:text-sm even:bg-main-gray"}
+                        className={"*:align-middle *:px-2 *:text-sm even:bg-main-gray *:h-[40px]"}
                     >
                         <td>
                             <Link
