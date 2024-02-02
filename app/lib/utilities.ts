@@ -65,63 +65,63 @@ export function getTotalNutrients(recipe: Recipe, param: string) {
     const value = (items.reduce((sum, item) => {
         let paramValue = 0;
         if (param == "calories") {
-            paramValue = parseFloat(item.ingredient.calories) || 0;
+            paramValue = parseFloat(item.ingredient?.calories || "0");
         }
 
         if (param == "fat") {
-            paramValue = parseFloat(item.ingredient.fat) || 0;
+            paramValue = parseFloat(item.ingredient?.fat || "0");
         }
 
         if (param == "saturated-fat") {
-            paramValue = parseFloat(item.ingredient.saturated_fat) || 0;
+            paramValue = parseFloat(item.ingredient?.saturated_fat || "0");
         }
 
         if (param == "trans-fat") {
-            paramValue = parseFloat(item.ingredient.trans_fat) || 0;
+            paramValue = parseFloat(item.ingredient?.trans_fat || "0");
         }
 
         if (param == "cholesterol") {
-            paramValue = parseFloat(item.ingredient.cholesterol) || 0;
+            paramValue = parseFloat(item.ingredient?.cholesterol || "0");
         }
 
         if (param == "sodium") {
-            paramValue = parseFloat(item.ingredient.sodium) || 0;
+            paramValue = parseFloat(item.ingredient?.sodium || "0");
         }
 
         if (param == "carbohydrate") {
-            paramValue = parseFloat(item.ingredient.carbohydrate) || 0;
+            paramValue = parseFloat(item.ingredient?.carbohydrate ||"0");
         }
 
         if (param == "dietary-fiber") {
-            paramValue = parseFloat(item.ingredient.dietary_fiber) || 0;
+            paramValue = parseFloat(item.ingredient?.dietary_fiber || "0");
         }
 
         if (param == "sugar") {
-            paramValue = parseFloat(item.ingredient.sugar) || 0;
+            paramValue = parseFloat(item.ingredient?.sugar || "0");
         }
 
         if (param == "added-sugar") {
-            paramValue = parseFloat(item.ingredient.added_sugar) || 0;
+            paramValue = parseFloat(item.ingredient?.added_sugar || "0");
         }
 
         if (param == "protein") {
-            paramValue = parseFloat(item.ingredient.protein) || 0;
+            paramValue = parseFloat(item.ingredient?.protein || "0");
         }
 
         if (param == "vitamin-d") {
-            paramValue = parseFloat(item.ingredient.vitamin_d) || 0;
+            paramValue = parseFloat(item.ingredient?.vitamin_d || "0");
         }
 
         if (param == "calcium") {
-            paramValue = parseFloat(item.ingredient.calcium) || 0;
+            paramValue = parseFloat(item.ingredient?.calcium || "0");
         }
 
         if (param == "iron") {
-            paramValue = parseFloat(item.ingredient.iron) || 0;
+            paramValue = parseFloat(item.ingredient?.iron || "0");
         }
 
         if (param == "potassium") {
-            paramValue = parseFloat(item.ingredient.potassium) || 0;
+            paramValue = parseFloat(item.ingredient?.potassium || "0");
         }
 
         return sum + paramValue * item.quantity * (100 - (recipe.waste || 0)) / 100;

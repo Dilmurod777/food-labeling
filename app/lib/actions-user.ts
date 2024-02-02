@@ -35,7 +35,7 @@ export async function insertUser({email, name, password}: User): Promise<User | 
     }
 }
 
-export async function login(prevState: string | undefined, formData: FormData) {
+export async function login(_: string | undefined, formData: FormData) {
     try {
         await signIn('credentials', formData);
         redirect("/dashboard")
@@ -52,7 +52,7 @@ export async function login(prevState: string | undefined, formData: FormData) {
     }
 }
 
-export async function signup(prevState: string | undefined, formData: FormData) {
+export async function signup(_: string | undefined, formData: FormData) {
     try {
         const data: { [key: string]: string } = {};
         for (const entry of formData.entries()) {
@@ -110,7 +110,7 @@ export async function signup(prevState: string | undefined, formData: FormData) 
     }
 }
 
-export async function logout(prevState: string | undefined, formData: FormData) {
+export async function logout() {
     try {
         await signOut();
     } catch (error) {
