@@ -8,30 +8,27 @@ interface Props {
 
 export default function RecipeAdvanced({recipe, updateRecipe}: Props) {
     const updateRecipeData = (param: string, value: string) => {
-        let newValue = parseFloat(value);
-        if (newValue < 0) newValue = 0;
-
         if (param == "serving-size-description-fr") {
             updateRecipe({
-                serving_size_description_fr: newValue
+                serving_size_description_fr: value
             })
         }
 
         if (param == "description-ddf") {
             updateRecipe({
-                description_ddf: newValue
+                description_ddf: value
             })
         }
 
         if (param == "sku") {
             updateRecipe({
-                sku: newValue
+                sku: value
             })
         }
 
         if (param == "preparation-instructions") {
             updateRecipe({
-                preparation_instructions: newValue
+                preparation_instructions: value
             })
         }
     }

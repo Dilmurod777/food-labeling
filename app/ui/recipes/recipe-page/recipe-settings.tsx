@@ -17,14 +17,15 @@ export default function RecipeSettings({recipe, updateRecipe}: Props) {
             <div className={"flex items-center"}>
                 {tabs.map((tab, ti) => {
                     const isActive = ti == tabIndex;
+
                     return <div
                         key={`dashboard-advanced-tab-${ti}`}
-                        className={"text-sm text-normal text-black py-2 px-6 cursor-pointer mt-[10px]"}
+                        className={`relative text-sm text-normal text-black py-2 px-6 cursor-pointer mt-[10px] ${isActive && "after:content-[''] after:w-full after:h-2 after:bg-white after:absolute after:bottom-0 after:left-0"}`}
                         style={{
                             borderTop: `${isActive ? 1 : 0}px solid #dbdbdb`,
                             borderLeft: `${isActive ? 1 : 0}px solid #dbdbdb`,
                             borderRight: `${isActive ? 1 : 0}px solid #dbdbdb`,
-                            borderBottom: `${isActive ? 3 : 0}px solid #fff`,
+                            borderBottom: `${isActive ? 1 : 0}px solid #fff`,
                             borderRadius: "4px 4px 0 0",
                             color: isActive ? "#408abf" : "#000"
                         }}
