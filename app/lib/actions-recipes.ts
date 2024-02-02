@@ -27,21 +27,24 @@ export async function getById(id: string): Promise<Recipe | undefined> {
         if (recipes.rowCount == 0) return undefined;
 
         const recipe = recipes.rows[0];
-        const recipe_items: RecipeItem[] = JSON.parse(recipe.recipe_items);
-        query = `SELECT * FROM ingredients WHERE id IN (${recipe_items.map(item => `'${item.ingredient_id}'`).join(",")})`;
-        const ingredients = (await sql.query<Ingredient>(query)).rows;
-        const filtered_recipe_items: RecipeItem[] = [];
-        for (let item of recipe_items) {
-            const ingredient = ingredients.filter(ingredient => ingredient.id == item.ingredient_id);
-            if (ingredient.length != 0) {
-                filtered_recipe_items.push({
-                    ...item,
-                    ingredient: ingredient[0]
-                })
+        const recipe_items: RecipeItem[] = JSON.parse(recipe.recipe_items || "[]");
+        if (recipe_items.length > 0) {
+            query = `SELECT * FROM ingredients WHERE id IN (${recipe_items.map(item => `'${item.ingredient_id}'`).join(",")})`;
+            const ingredients = (await sql.query<Ingredient>(query)).rows;
+            const filtered_recipe_items: RecipeItem[] = [];
+            for (let item of recipe_items) {
+                const ingredient = ingredients.filter(ingredient => ingredient.id == item.ingredient_id);
+                if (ingredient.length != 0) {
+                    filtered_recipe_items.push({
+                        ...item,
+                        ingredient: ingredient[0]
+                    })
+                }
             }
+
+            recipe.recipe_items = JSON.stringify(filtered_recipe_items);
         }
 
-        recipe.recipe_items = JSON.stringify(filtered_recipe_items);
 
         return recipe;
     } catch (error) {
