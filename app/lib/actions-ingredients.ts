@@ -105,7 +105,7 @@ export async function getByQuery(searchQuery: string, columns: string[]): Promis
         if (searchQuery == "") return [];
 
         const columns_to_get = columns.length == 0 ? "*" : columns.join(", ");
-        const query = `SELECT ${columns_to_get} FROM ingredients WHERE user_id='${user.id}' AND name LIKE '%${searchQuery}%'`;
+        const query = `SELECT ${columns_to_get} FROM ingredients WHERE user_id='${user.id}' AND LOWER(name) LIKE '%${searchQuery.toLowerCase()}%'`;
         const result = await sql.query<Ingredient>(query)
 
         return result.rows;
