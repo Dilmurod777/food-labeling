@@ -45,6 +45,7 @@ export default function LabelPage({recipe, updateRecipe}: Props) {
             <Title
                 recipe={recipe}
                 updateRecipe={updateRecipe}
+                editable={false}
             />
         </div>
 

@@ -5,10 +5,11 @@ import {useState} from "react";
 
 interface Props {
     recipe: Recipe,
-    updateRecipe: (data: IRecipe) => void
+    updateRecipe: (data: IRecipe) => void,
+    editable?: boolean
 }
 
-export default function Title({recipe, updateRecipe}: Props) {
+export default function Title({recipe, updateRecipe, editable = true}: Props) {
     const [editing, setEditing] = useState(false)
 
     const updateRecipeName = (name: string) => {
@@ -21,7 +22,7 @@ export default function Title({recipe, updateRecipe}: Props) {
         setEditing(false);
     }
 
-    return editing
+    return editing && editable
         ? <input
             type="text"
             className={"w-[300px] rounded-md border-2 border-main-orange px-2 py-2 outline-0 h-[35px]"}
@@ -38,8 +39,8 @@ export default function Title({recipe, updateRecipe}: Props) {
         />
         : <div className={"flex gap-4 items-center h-[35px]"}>
             <h2 className={"text-2xl text-black font-bold"}>{overflowText(recipe.name)}</h2>
-            <FaRegEdit className={"text-main-orange text-2xl cursor-pointer"}
-                       onClick={() => setEditing(true)}/>
+            {editable && <FaRegEdit className={"text-main-orange text-2xl cursor-pointer"}
+                        onClick={() => setEditing(true)}/>}
         </div>
 
 }

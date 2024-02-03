@@ -1,7 +1,7 @@
 import {IRecipe, Recipe, RecipeItem} from "@/app/lib/models";
 import Link from "next/link";
 import {MdDelete} from "react-icons/md";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {getTotalGrams} from "@/app/lib/utilities";
 
 interface Props {
@@ -68,60 +68,16 @@ export default function RecipeItems({recipe, updateRecipe}: Props) {
         </tr>
         </thead>
         <tbody>
-        {items.map((item, i) => <tr
-            key={`recipe-items-${i}`}
-            className={"text-left border-b-[1px] border-main-gray *:text-sm *:text-secondary-gray *:py-1 *:px-2 even:bg-main-gray"}
-        >
-            <td>
-                <Link
-                    href={`/ingredients/${item.ingredient?.id}/view`}
-                    className={"font-bold text-main-blue hover:text-hover-main-blue"}
-                    target={"_blank"}
-                >
-                    {item.ingredient?.name || "no-name"}
-                </Link>
-            </td>
-            <td>
-                <input
-                    type="number"
-                    min={0}
-                    defaultValue={item.quantity}
-                    className={"border-[1px] border-main-gray rounded-md px-2 py-1 w-full"}
-                    onBlur={(e) => updateItemsData("quantity", e.target.value, i)}
-                    onKeyDown={(e) => {
-                        if (e.key == "Enter") {
-                            updateItemsData("quantity", e.currentTarget.value, i)
-                        }
-                    }}
-                />
-            </td>
-            <td>
-                1 kg
-            </td>
-            <td>
-                <input
-                    type="number"
-                    min={0}
-                    defaultValue={item.waste}
-                    className={"border-[1px] border-main-gray rounded-md px-2 py-1 w-full"}
-                    onBlur={(e) => updateItemsData("waste", e.target.value, i)}
-                    onKeyDown={(e) => {
-                        if (e.key == "Enter") {
-                            updateItemsData("waste", e.currentTarget.value, i)
-                        }
-                    }}
-                />
-            </td>
-            <td>
-                {getTotalGrams(item.quantity, 1000, item.waste, recipe)}
-            </td>
-            <td>
-                <MdDelete
-                    className={"text-lg text-red-500 cursor-pointer"}
-                    onClick={() => removeRecipeItem(i)}
-                />
-            </td>
-        </tr>)}
+        {items.map((item, i) => {
+            return <RecipeItemRow
+                key={`recipe-item-row-${i}`}
+                item={item}
+                index={i}
+                recipe={recipe}
+                updateItemsData={updateItemsData}
+                removeRecipeItem={removeRecipeItem}
+            />
+        })}
         </tbody>
         <tfoot>
         <tr className={"text-sm *:py-1 *:px-2"}>
@@ -137,3 +93,67 @@ export default function RecipeItems({recipe, updateRecipe}: Props) {
         </tfoot>
     </table>
 }
+
+interface RecipeItemRowProps {
+    item: RecipeItem,
+    index: number,
+    recipe: Recipe,
+    updateItemsData: (type: string, value: string, index: number) => void,
+    removeRecipeItem: (index: number) => void
+}
+
+const RecipeItemRow = React.memo(function RecipeItemRow({item, index, updateItemsData, recipe, removeRecipeItem}: RecipeItemRowProps) {
+    return <tr
+        className={"text-left border-b-[1px] border-main-gray *:text-sm *:text-secondary-gray *:py-1 *:px-2 even:bg-main-gray"}
+    >
+        <td>
+            <Link
+                href={`/ingredients/${item.ingredient?.id}/view`}
+                className={"font-bold text-main-blue hover:text-hover-main-blue"}
+                target={"_blank"}
+            >
+                {item.ingredient?.name || "no-name"}
+            </Link>
+        </td>
+        <td>
+            <input
+                type="number"
+                min={0}
+                defaultValue={item.quantity}
+                className={"border-[1px] border-main-gray rounded-md px-2 py-1 w-full"}
+                onBlur={(e) => updateItemsData("quantity", e.target.value, index)}
+                onKeyDown={(e) => {
+                    if (e.key == "Enter") {
+                        updateItemsData("quantity", e.currentTarget.value, index)
+                    }
+                }}
+            />
+        </td>
+        <td>
+            1 kg
+        </td>
+        <td>
+            <input
+                type="number"
+                min={0}
+                defaultValue={item.waste}
+                className={"border-[1px] border-main-gray rounded-md px-2 py-1 w-full"}
+                onBlur={(e) => updateItemsData("waste", e.target.value, index)}
+                onKeyDown={(e) => {
+                    if (e.key == "Enter") {
+                        updateItemsData("waste", e.currentTarget.value, index)
+                    }
+                }}
+            />
+        </td>
+        <td>
+            {getTotalGrams(item.quantity, 1000, item.waste, recipe)}
+        </td>
+        <td>
+            <MdDelete
+                className={"text-lg text-red-500 cursor-pointer"}
+                onClick={() => removeRecipeItem(index)}
+            />
+        </td>
+    </tr>
+})
