@@ -43,7 +43,7 @@ export default function Form({recipe, user}: Props) {
     }
 
     return <div className={"flex flex-col w-full px-12 h-full mt-6 mx-auto"}>
-        <div className={"flex justify-between items-center h-[45px] border-b-[1px] border-b-[#dbdbdb] mb-8"}>
+        <div className={"flex justify-between items-center h-[45px] border-b-[1px] border-b-[#dbdbdb]"}>
             <div className={"flex items-center"}>
                 {tabs.map((tab, ti) => {
                     const isActive = ti == tabIndex;

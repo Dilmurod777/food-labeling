@@ -16,6 +16,12 @@ export default function IngredientStatementPage({recipe, updateRecipe}: Props) {
     const [labelTextLangType, setLabelTextLangType] = useState(LabelNameType.English)
     const [labelTextPreviewType, setLabelTextPreviewType] = useState(LabelNameType.English)
 
+    if(items.length == 0){
+        return <div className={"w-full h-full flex items-center justify-center text-lg font-bold text-black"}>
+            No ingredients in the recipe.
+        </div>
+    }
+
     return <div className={"flex flex-col gap-4 w-full flex-grow"}>
         <div className={"w-full flex flex-col items-start"}>
             <Title
