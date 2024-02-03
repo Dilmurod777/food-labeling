@@ -1,9 +1,7 @@
-import {Fragment, useState} from "react";
-import {DefaultRecipe, Ingredient, Recipe, User} from "@/app/lib/models";
+import {Fragment, useEffect, useState} from "react";
+import {Ingredient, Recipe, User} from "@/app/lib/models";
 import {useRouter} from "next/navigation";
 import {FaPlus} from "react-icons/fa";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 
 interface Props {
     user: User,
