@@ -170,7 +170,7 @@ export default function IngredientStatementPage({recipe, updateRecipe}: Props) {
             <IngredientListPreview items={items}/>
         </div>
 
-        <div className={"flex gap-4 justify-end items-center py-4"}>
+        <div className={"flex gap-4 justify-end items-center py-6"}>
             <CSVLink
                 data={getDownloadData()}
                 className={'flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm text-main-blue font-normal cursor-pointer border-2 border-main-blue hover:text-white hover:bg-main-blue'}
