@@ -3,7 +3,7 @@
 import FormButton from "@/app/ui/auth_button";
 import {Ingredient, User} from "@/app/lib/models";
 import {useFormState} from "react-dom";
-import {update} from "@/app/lib/actions-ingredients";
+import {updateByForm} from "@/app/lib/actions-ingredients";
 import {useRouter} from "next/navigation";
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function PartialForm({ingredient, user}: Props) {
-    const [_, dispatch] = useFormState(update, undefined);
+    const [_, dispatch] = useFormState(updateByForm, undefined);
     const router = useRouter();
 
     return <form action={dispatch} className={"flex flex-col gap-4 items-start flex-grow"}>

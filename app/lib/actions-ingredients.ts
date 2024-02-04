@@ -26,7 +26,7 @@ export async function create(data: Ingredient) {
     }
 }
 
-export async function update(prevState: Ingredient | undefined, formData: FormData) {
+export async function updateByForm(prevState: Ingredient | undefined, formData: FormData) {
     try {
         const user = await getCurrentUser();
         if (!user) return undefined;
@@ -53,6 +53,28 @@ export async function update(prevState: Ingredient | undefined, formData: FormDa
         await sql.query<Ingredient>(query)
         revalidatePath(`/ingredients/${id}/view`, "page");
         redirect(`/ingredients/${id}/view`);
+    } catch (error) {
+        console.log("error: ", error)
+        throw error
+    }
+}
+
+export async function update(data: Ingredient) {
+    try {
+        const user = await getCurrentUser();
+        if (!user) return undefined;
+
+        const pairs: string[] = [];
+        for (const key of Object.keys(data)) {
+            if(key == "id") continue;
+
+            pairs.push(`${key}='${data[key]?.toString() || ""}'`);
+        }
+
+        const query = `UPDATE ingredients SET ${pairs.join(", ")} WHERE user_id='${user.id}' AND id='${data.id}'`;
+        console.log(query);
+        await sql.query<Ingredient>(query)
+        revalidatePath(`/ingredients/${data.id}/view`, "page");
     } catch (error) {
         console.log("error: ", error)
         throw error

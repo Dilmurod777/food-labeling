@@ -3,20 +3,19 @@ import Title from "@/app/ui/recipes/recipe-page/title";
 import Tags from "@/app/ui/recipes/recipe-page/tags";
 import {useState} from "react";
 import Link from "next/link";
+import IngredientListPreview from "@/app/ui/recipes/ingredient-statement-page/ingredient-list-preview";
+import {IngredientFlavor, IngredientLabelLanguage} from "@/app/lib/constants";
 
 interface Props {
     recipe: Recipe,
     updateRecipe: (data: IRecipe) => void
 }
 
-enum LabelNameType {English, French, Canada}
-
 export default function IngredientStatementPage({recipe, updateRecipe}: Props) {
-    const [items, setItems] = useState<RecipeItem[]>(JSON.parse(recipe.recipe_items || "[]"))
-    const [labelTextLangType, setLabelTextLangType] = useState(LabelNameType.English)
-    const [labelTextPreviewType, setLabelTextPreviewType] = useState(LabelNameType.English)
+    const [items, _] = useState<RecipeItem[]>(JSON.parse(recipe.recipe_items || "[]"))
+    const [labelTextLangType, setLabelTextLangType] = useState(IngredientLabelLanguage.English)
 
-    if(items.length == 0){
+    if (items.length == 0) {
         return <div className={"w-full h-full flex items-center justify-center text-lg font-bold text-black"}>
             No ingredients in the recipe.
         </div>
@@ -27,26 +26,30 @@ export default function IngredientStatementPage({recipe, updateRecipe}: Props) {
             <Title
                 recipe={recipe}
                 updateRecipe={updateRecipe}
+                editable={false}
             />
 
             <Tags
                 recipe={recipe}
                 updateRecipe={updateRecipe}
+                editable={false}
             />
         </div>
 
         <div className={"flex gap-6 items-start"}>
-            <table className={"w-full"}>
+            <table className={"flex-grow"}>
                 <thead>
                 <tr className={"*:text-left *:px-2 *:py-2 border-b-2 border-main-gray"}>
                     <th>Ingredient</th>
-                    <th className={"w-4/12"}>Show on Label as
+                    <th className={"w-5/12"}>Show on Label as
                         <span className={"inline-block w-8"}/>
-                        <span className={"text-main-blue hover:text-hover-main-blue cursor-pointer"}
-                              onClick={() => setLabelTextLangType(LabelNameType.English)}>English</span>
+                        <span
+                            className={`${labelTextLangType == IngredientLabelLanguage.English ? "text-black cursor-default" : "text-main-blue hover:text-hover-main-blue cursor-pointer"}`}
+                            onClick={() => setLabelTextLangType(IngredientLabelLanguage.English)}>English</span>
                         &nbsp;/&nbsp;
-                        <span className={"text-main-blue hover:text-hover-main-blue cursor-pointer"}
-                              onClick={() => setLabelTextLangType(LabelNameType.French)}>French</span>
+                        <span
+                            className={`${labelTextLangType == IngredientLabelLanguage.French ? "text-black cursor-default" : "text-main-blue hover:text-hover-main-blue cursor-pointer"}`}
+                            onClick={() => setLabelTextLangType(IngredientLabelLanguage.French)}>French</span>
                     </th>
                     <th className={"w-1/12"}>Spice/flavor</th>
                     <th className={"w-2/12"}>Canada sugar</th>
@@ -55,7 +58,7 @@ export default function IngredientStatementPage({recipe, updateRecipe}: Props) {
                 <tbody>
                 {items.map((item, i) => <tr
                     key={`ingredient-item-${i}`}
-                    className={"*:text-left *:text-sm *:px-2 *:py-2 even:bg-main-gray *:h-[40px]"}
+                    className={"*:text-left *:text-sm *:px-2 *:py-2 even:bg-main-gray *:h-[40px] *:align-top"}
                 >
                     <td>
                         <Link
@@ -67,20 +70,34 @@ export default function IngredientStatementPage({recipe, updateRecipe}: Props) {
                         </Link>
                     </td>
                     <td>
-                        {labelTextLangType == LabelNameType.English && (
+                        {labelTextLangType == IngredientLabelLanguage.English && (
                             <textarea
                                 defaultValue={item.ingredient?.list_name || ""}
                                 name="show-label-eng"
                                 id={`show-label-eng-${i}`}
-                                className={"w-full h-full border-[1px] min-h-[40px] border-main-gray rounded-md outline-0 px-1 py-1"}
+                                className={"w-full h-[40px] border-[1px] min-h-[40px] border-main-gray rounded-md outline-0 px-1 py-1"}
+                                onBlur={(e) => {
+                                    const newItems = [...items];
+                                    newItems[i].ingredient.list_name = e.target.value;
+                                    updateRecipe({
+                                        recipe_items: JSON.stringify(newItems)
+                                    })
+                                }}
                             />
                         )}
-                        {labelTextLangType == LabelNameType.French && (
+                        {labelTextLangType == IngredientLabelLanguage.French && (
                             <textarea
                                 defaultValue={item.ingredient?.list_name_fr || ""}
                                 name="show-label-fr"
                                 id={`show-label-fr-${i}`}
-                                className={"w-full h-full border-[1px] min-h-[40px] border-main-gray rounded-md outline-0 px-1 py-1"}
+                                className={"w-full h-[40px] border-[1px] min-h-[40px] border-main-gray rounded-md outline-0 px-1 py-1"}
+                                onBlur={(e) => {
+                                    const newItems = [...items];
+                                    newItems[i].ingredient.list_name_fr = e.target.value;
+                                    updateRecipe({
+                                        recipe_items: JSON.stringify(newItems)
+                                    })
+                                }}
                             />
                         )}
                     </td>
@@ -89,14 +106,22 @@ export default function IngredientStatementPage({recipe, updateRecipe}: Props) {
                             name={`spicy-flavor-${i}`}
                             id={`spicy-flavor-${i}`}
                             className={"border-[1px] border-main-gray rounded-md outline-0 px-1 py-1 h-[40px]"}
+                            defaultValue={item.spice_flavor}
+                            onChange={(e) => {
+                                const newItems = [...items];
+                                newItems[i].spice_flavor = e.target.value;
+                                updateRecipe({
+                                    recipe_items: JSON.stringify(newItems)
+                                })
+                            }}
                         >
-                            <option value="0"></option>
-                            <option value="1">Spice</option>
-                            <option value="2">Flavor</option>
-                            <option value="3">Natural Flavor</option>
-                            <option value="4">Artificial Flavor</option>
-                            <option value="5">Artificial Color</option>
-                            <option value="6">Spice & Coloring</option>
+                            <option value={IngredientFlavor.None.toString()}></option>
+                            <option value={IngredientFlavor.Spice.toString()}>Spice</option>
+                            <option value={IngredientFlavor.Flavor.toString()}>Flavor</option>
+                            <option value={IngredientFlavor.NaturalFlavor.toString()}>Natural Flavor</option>
+                            <option value={IngredientFlavor.ArtificialFlavor.toString()}>Artificial Flavor</option>
+                            <option value={IngredientFlavor.ArtificialColor.toString()}>Artificial Color</option>
+                            <option value={IngredientFlavor.SpiceColoring.toString()}>Spice & Coloring</option>
                         </select>
                     </td>
                     <td>
@@ -104,14 +129,25 @@ export default function IngredientStatementPage({recipe, updateRecipe}: Props) {
                             type="checkbox"
                             name={`canada-sugar-${i}`}
                             id={`canada-sugar-${i}`}
+                            defaultChecked={item.canada_sugar}
+                            onChange={(e) => {
+                                const newItems = [...items];
+                                newItems[i].canada_sugar = e.target.checked;
+                                updateRecipe({
+                                    recipe_items: JSON.stringify(newItems)
+                                })
+                            }}
                         />
                     </td>
                 </tr>)}
                 </tbody>
             </table>
-            <div className={"flex flex-col gap-3 border-[1px] border-secondary-gray bg-main-gray py-3 px-3"}>
-                <h2 className={"text-xl text-black font-bold"}>Ingredient List Preview</h2>
-            </div>
+
+            <IngredientListPreview items={items}/>
+        </div>
+
+        <div className={"flex justify-end items-center"}>
+
         </div>
     </div>
 }

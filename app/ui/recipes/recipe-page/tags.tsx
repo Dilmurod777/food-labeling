@@ -6,10 +6,11 @@ import {TAG_COLORS} from "@/app/lib/constants";
 
 interface Props {
     recipe: Recipe,
-    updateRecipe: (data: IRecipe) => void
+    updateRecipe: (data: IRecipe) => void,
+    editable?: boolean
 }
 
-export default function Tags({recipe, updateRecipe}: Props) {
+export default function Tags({recipe, updateRecipe, editable = true}: Props) {
     const [editing, setEditing] = useState(false);
     const [tags, setTags] = useState<string[]>(JSON.parse(recipe.tags || "[]"));
 
@@ -43,10 +44,10 @@ export default function Tags({recipe, updateRecipe}: Props) {
                 style={{backgroundColor: TAG_COLORS[i % TAG_COLORS.length]}}
             >
                 <span className={"text-white text-xs font-thin"}>{tag}</span>
-                <IoCloseCircleSharp className={"text-white text-sm cursor-pointer"} onClick={() => removeTag(tag)}/>
+                {editable && <IoCloseCircleSharp className={"text-white text-sm cursor-pointer"} onClick={() => removeTag(tag)}/>}
             </div>)}
         </div>
-        {
+        {editable && (
             editing
                 ? <div className={"relative h-[25px]"}>
                     <input
@@ -71,6 +72,6 @@ export default function Tags({recipe, updateRecipe}: Props) {
                         <FaTags className={"text-lg text-main-orange"}/>
                         <span className={"text-sm text-main-orange"}>Add Tags...</span>
                     </div>
-        }
+        )}
     </div>
 }

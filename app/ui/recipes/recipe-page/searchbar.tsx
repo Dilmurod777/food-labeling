@@ -34,9 +34,9 @@ export default function SearchBar({recipe, updateRecipe}: Props) {
                     price: 0,
                     quantity: 1,
                     shipping: 0,
-                    spice_flavor: 0,
-                    unit: 0,
-                    waste: 0
+                    spice_flavor: "0",
+                    unit: "0",
+                    waste: 0,
                 }
             ]
         } else {

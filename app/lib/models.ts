@@ -9,6 +9,10 @@ export interface IRecipe {
     [key: string]: string | number | undefined;
 }
 
+export interface IIngredient {
+    [key: string]: string | number | undefined;
+}
+
 export interface Recipe extends IRecipe {
     id: string,
     user_id: string,
@@ -37,14 +41,14 @@ export interface Recipe extends IRecipe {
 
 export type RecipeItem = {
     ingredient_id: string,
-    ingredient?: Ingredient,
+    ingredient: Ingredient,
     price: number,
     quantity: number,
-    unit: number,
+    unit: string,
     shipping: number,
     waste: number,
     label_text: string,
-    spice_flavor: number,
+    spice_flavor: string,
     canada_sugar: boolean
 }
 
@@ -56,7 +60,7 @@ export type Label = {
     options: string // dictionary of possible options
 }
 
-export interface Ingredient {
+export interface Ingredient extends IIngredient{
     id: string,
     user_id: string,
     type: string,

@@ -1,8 +1,9 @@
 import type {NextRequest} from "next/server";
-import {Recipe, RecipeItem} from "@/app/lib/models";
+import {Ingredient, Recipe, RecipeItem} from "@/app/lib/models";
 import {sql} from "@vercel/postgres";
 import {revalidatePath} from "next/cache";
 import * as recipeActions from "@/app/lib/actions-recipes";
+import * as ingredientActions from "@/app/lib/actions-ingredients";
 
 export const dynamic = 'force-dynamic' // defaults to auto
 export async function PUT(request: NextRequest) {
@@ -10,8 +11,15 @@ export async function PUT(request: NextRequest) {
 
     let filtered_recipe_items: RecipeItem[] = [];
     for (let item of JSON.parse(recipe.recipe_items || "[]")) {
+        const ingredient: Ingredient = item.ingredient;
         delete item.ingredient;
-        filtered_recipe_items.push({...item})
+        await ingredientActions.update({
+            id: ingredient.id,
+            list_name: ingredient.list_name || "",
+            list_name_fr: ingredient.list_name_fr || ""
+        } as Ingredient);
+
+        filtered_recipe_items.push({...item});
     }
     recipe.recipe_items = JSON.stringify(filtered_recipe_items);
 

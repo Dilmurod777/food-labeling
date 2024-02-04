@@ -1,5 +1,9 @@
 export const TAG_COLORS = ["#D04848", "#F3B95F", "#FDE767", "#6895D2", "#FE7A36", "#3652AD", "#280274", "#E9F6FF"];
 
+export enum IngredientLabelLanguage {English, French, Canada}
+
+export enum IngredientFlavor {None, Spice, Flavor, NaturalFlavor, ArtificialFlavor, ArtificialColor,SpiceColoring}
+
 export const DAILY_ADDED_SUGAR = 50;
 export const DAILY_BIOTIN = 30;
 export const DAILY_ADDED_CALCIUM = 1300;

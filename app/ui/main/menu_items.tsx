@@ -59,7 +59,7 @@ export default function MenuItems() {
     return <div className={"flex gap-3 items-center pt-3"}>
         {items.map((item, i) => <div
             key={item.text.toLowerCase()}
-            className={"relative flex items-center group h-full hover:bg-gray-50 px-3 rounded-md"}
+            className={"relative flex items-center group hover:bg-gray-50 px-3 py-4 rounded-md"}
             onMouseEnter={() => setActiveMenuItem(i)}
             onMouseLeave={() => setActiveMenuItem(-1)}
         >

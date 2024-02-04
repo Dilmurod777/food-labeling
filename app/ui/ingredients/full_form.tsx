@@ -12,7 +12,7 @@ import IngredientVitaminsMinerals from "@/app/ui/ingredients/full-form/ingredien
 import IngredientOptional from "@/app/ui/ingredients/full-form/ingredient-optional";
 import FormButton from "@/app/ui/auth_button";
 import {useFormState} from "react-dom";
-import {update} from "@/app/lib/actions-ingredients";
+import {updateByForm} from "@/app/lib/actions-ingredients";
 import {Ingredient} from "@/app/lib/models";
 
 interface Props {
@@ -20,7 +20,7 @@ interface Props {
 }
 
 export default function FullForm({ingredient}: Props) {
-    const [_, dispatch] = useFormState(update, undefined);
+    const [_, dispatch] = useFormState(updateByForm, undefined);
 
     return <form className={"flex flex-col gap-2 items-start"} action={dispatch}>
         {ingredient && <input type="hidden" name={"ingredient-id"} value={ingredient.id}/>}

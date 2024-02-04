@@ -2,11 +2,17 @@ import {Recipe, RecipeItem} from "@/app/lib/models";
 import {
     DAILY_ADDED_CALCIUM,
     DAILY_ADDED_CARBOHYDRATE,
-    DAILY_ADDED_CHOLESTEROL, DAILY_ADDED_DIETARY_FIBER,
-    DAILY_ADDED_FAT, DAILY_ADDED_IRON, DAILY_ADDED_POTASSIUM,
+    DAILY_ADDED_CHOLESTEROL,
+    DAILY_ADDED_DIETARY_FIBER,
+    DAILY_ADDED_FAT,
+    DAILY_ADDED_IRON,
+    DAILY_ADDED_POTASSIUM,
     DAILY_ADDED_SATURATED_FAT,
-    DAILY_ADDED_SODIUM, DAILY_ADDED_SUGAR,
-    DAILY_ADDED_VITAMIN_D
+    DAILY_ADDED_SODIUM,
+    DAILY_ADDED_SUGAR,
+    DAILY_ADDED_VITAMIN_D,
+    IngredientFlavor,
+    IngredientLabelLanguage
 } from "@/app/lib/constants";
 
 export function overflowText(text: string, max_length = 30): string {
@@ -89,7 +95,7 @@ export function getTotalNutrients(recipe: Recipe, param: string) {
         }
 
         if (param == "carbohydrate") {
-            paramValue = parseFloat(item.ingredient?.carbohydrate ||"0");
+            paramValue = parseFloat(item.ingredient?.carbohydrate || "0");
         }
 
         if (param == "dietary-fiber") {
@@ -180,4 +186,86 @@ export function getDailyNutrients(recipe: Recipe, param: string) {
     }
 
     return (100 * totalValue / dailyValue).toFixed(1);
+}
+
+export function getFlavor(value: string): IngredientFlavor {
+    value = IngredientFlavor[parseInt(value)];
+    if (value == "None") {
+        return IngredientFlavor.None;
+    }else if (value == "Spice") {
+        return IngredientFlavor.Spice;
+    }else if (value == "Flavor") {
+        return IngredientFlavor.Flavor;
+    }else if (value == "NaturalFlavor") {
+        return IngredientFlavor.NaturalFlavor;
+    }else if (value == "ArtificialFlavor") {
+        return IngredientFlavor.ArtificialFlavor;
+    }else if (value == "ArtificialColor") {
+        return IngredientFlavor.ArtificialColor;
+    }else if (value == "SpiceColoring") {
+        return IngredientFlavor.SpiceColoring;
+    }
+
+    return IngredientFlavor.None;
+}
+
+export function convertSpiceFlavor(value: string, lang: IngredientLabelLanguage): string | undefined {
+    const flavor = getFlavor(value);
+
+    switch (lang) {
+        case IngredientLabelLanguage.English: {
+            if (flavor === IngredientFlavor.None) {
+                return undefined;
+            } else if (flavor === IngredientFlavor.Spice) {
+                return "spice";
+            } else if (flavor === IngredientFlavor.Flavor) {
+                return "flavor";
+            } else if (flavor === IngredientFlavor.NaturalFlavor) {
+                return "natural flavor";
+            } else if (flavor === IngredientFlavor.ArtificialFlavor) {
+                return "artificial flavor";
+            } else if (flavor === IngredientFlavor.ArtificialColor) {
+                return "artificial color";
+            } else if (flavor === IngredientFlavor.SpiceColoring) {
+                return "spice and coloring";
+            }
+            break;
+        }
+        case IngredientLabelLanguage.Canada: {
+            if (flavor === IngredientFlavor.None) {
+                return undefined;
+            } else if (flavor === IngredientFlavor.Spice) {
+                return "spice";
+            } else if (flavor === IngredientFlavor.Flavor) {
+                return "flavor";
+            } else if (flavor === IngredientFlavor.NaturalFlavor) {
+                return "natural flavor";
+            } else if (flavor === IngredientFlavor.ArtificialFlavor) {
+                return "artificial flavor";
+            } else if (flavor === IngredientFlavor.ArtificialColor) {
+                return "artificial color";
+            } else if (flavor === IngredientFlavor.SpiceColoring) {
+                return "spice and coloring";
+            }
+            break;
+        }
+        case IngredientLabelLanguage.French: {
+            if (flavor === IngredientFlavor.None) {
+                return undefined;
+            } else if (flavor === IngredientFlavor.Spice) {
+                return "ÉPICES";
+            } else if (flavor === IngredientFlavor.Flavor) {
+                return "PARFUM";
+            } else if (flavor === IngredientFlavor.NaturalFlavor) {
+                return "PARFUM";
+            } else if (flavor === IngredientFlavor.ArtificialFlavor) {
+                return "PARFUM ARTIFICIEL";
+            } else if (flavor === IngredientFlavor.ArtificialColor) {
+                return "COLORANT";
+            } else if (flavor === IngredientFlavor.SpiceColoring) {
+                return "COLORANT";
+            }
+            break;
+        }
+    }
 }

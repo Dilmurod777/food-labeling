@@ -9,7 +9,7 @@ import {getCurrentUser} from "@/app/lib/actions-user";
 export default async function Header() {
     const user = await getCurrentUser();
 
-    return <nav className={"my-0 mx-auto px-12 w-full h-20 flex justify-between"}>
+    return <nav className={"my-0 mx-auto px-12 py-2 w-full  flex justify-between"}>
         <div className={"flex justify-start gap-3 h-full"}>
             <Link
                 href={"/"}
