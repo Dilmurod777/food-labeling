@@ -192,17 +192,17 @@ export function getFlavor(value: string): IngredientFlavor {
     value = IngredientFlavor[parseInt(value)];
     if (value == "None") {
         return IngredientFlavor.None;
-    }else if (value == "Spice") {
+    } else if (value == "Spice") {
         return IngredientFlavor.Spice;
-    }else if (value == "Flavor") {
+    } else if (value == "Flavor") {
         return IngredientFlavor.Flavor;
-    }else if (value == "NaturalFlavor") {
+    } else if (value == "NaturalFlavor") {
         return IngredientFlavor.NaturalFlavor;
-    }else if (value == "ArtificialFlavor") {
+    } else if (value == "ArtificialFlavor") {
         return IngredientFlavor.ArtificialFlavor;
-    }else if (value == "ArtificialColor") {
+    } else if (value == "ArtificialColor") {
         return IngredientFlavor.ArtificialColor;
-    }else if (value == "SpiceColoring") {
+    } else if (value == "SpiceColoring") {
         return IngredientFlavor.SpiceColoring;
     }
 
@@ -268,4 +268,83 @@ export function convertSpiceFlavor(value: string, lang: IngredientLabelLanguage)
             break;
         }
     }
+}
+
+export function getIngredientListPreviewItemValue(item: RecipeItem, currentLabelPreviewType: IngredientLabelLanguage, spiceFlavorEnabled: boolean): string {
+    switch (currentLabelPreviewType) {
+        case IngredientLabelLanguage.English: {
+            let value = item.ingredient?.list_name || item.ingredient?.name || "";
+            if (spiceFlavorEnabled) {
+                return convertSpiceFlavor(item.spice_flavor, currentLabelPreviewType) || value;
+            }
+
+            return value;
+        }
+        case IngredientLabelLanguage.Canada: {
+            let value = item.ingredient?.list_name || item.ingredient?.name || "";
+            if (spiceFlavorEnabled) {
+                return convertSpiceFlavor(item.spice_flavor, currentLabelPreviewType) || value;
+            }
+
+            return value;
+        }
+        case IngredientLabelLanguage.French: {
+            let value = item.ingredient?.list_name_fr || item.ingredient?.list_name || item.ingredient?.name || "";
+            if (spiceFlavorEnabled) {
+                return convertSpiceFlavor(item.spice_flavor, currentLabelPreviewType) || value;
+            }
+
+            return value;
+        }
+    }
+}
+
+export function getIngredientListPreviewRowValue(items: RecipeItem[], lang: IngredientLabelLanguage) {
+    const sugarItems = items.filter(item => item.canada_sugar);
+    const noSugarItems = items.filter(item => !item.canada_sugar);
+
+    switch (lang) {
+        case IngredientLabelLanguage.English: {
+            return items.map(item => getIngredientListPreviewItemValue(item, lang, true)).join(", ");
+        }
+        case IngredientLabelLanguage.Canada: {
+            let result = "";
+            if (sugarItems.length != 0) {
+                result += "SUGARS (" + sugarItems.map(item => getIngredientListPreviewItemValue(item, lang, false)).join(", ") + ")";
+            }
+
+            if (sugarItems.length != 0 && noSugarItems.length != 0) {
+                result += ", "
+            }
+
+            if (noSugarItems.length != 0) {
+                result += noSugarItems.map(item => getIngredientListPreviewItemValue(item, lang, true)).join(", ");
+            }
+
+            return result;
+        }
+        case IngredientLabelLanguage.French: {
+            let result = "";
+            if (sugarItems.length != 0) {
+                result += "SUCRES (" + sugarItems.map(item => getIngredientListPreviewItemValue(item, lang, false)).join(", ") + ")";
+            }
+
+            if (sugarItems.length != 0 && noSugarItems.length != 0) {
+                result += ", "
+            }
+
+            if (noSugarItems.length != 0) {
+                result += noSugarItems.map(item => getIngredientListPreviewItemValue(item, lang, true)).join(", ");
+            }
+            return result;
+        }
+    }
+}
+
+export function capitalize(value: string) {
+    return value
+        .split(',')
+        .map(item => item.trim().toLowerCase())
+        .map(item => item.charAt(0).toUpperCase() + item.slice(1))
+        .join(", ")
 }

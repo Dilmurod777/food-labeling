@@ -5,6 +5,9 @@ import {useState} from "react";
 import Link from "next/link";
 import IngredientListPreview from "@/app/ui/recipes/ingredient-statement-page/ingredient-list-preview";
 import {IngredientFlavor, IngredientLabelLanguage} from "@/app/lib/constants";
+import {LuFileVideo} from "react-icons/lu";
+import {CSVLink} from "react-csv";
+import {capitalize, getIngredientListPreviewRowValue} from "@/app/lib/utilities";
 
 interface Props {
     recipe: Recipe,
@@ -21,7 +24,28 @@ export default function IngredientStatementPage({recipe, updateRecipe}: Props) {
         </div>
     }
 
-    return <div className={"flex flex-col gap-4 w-full flex-grow"}>
+    const getDownloadData = () => {
+        const rows = items.map(item => [
+            item.ingredient.name,
+            item.ingredient.list_name,
+            IngredientFlavor[parseInt(item.spice_flavor)],
+            item.canada_sugar ? "TRUE" : "FALSE",
+            item.ingredient.list_name_fr
+        ])
+
+        return [
+            [recipe.name],
+            [],
+            ["Ingredient", "Displayed As", "Spice/Flavor", "Canada Sugar", "Displayed As French"],
+            ...rows,
+            [],
+            ["FDA Ingredient List", capitalize(getIngredientListPreviewRowValue(items, IngredientLabelLanguage.English))],
+            ["Canada Ingredient List", capitalize(getIngredientListPreviewRowValue(items, IngredientLabelLanguage.Canada))],
+            ["Canada French Ingredient List", capitalize(getIngredientListPreviewRowValue(items, IngredientLabelLanguage.French))],
+        ]
+    }
+
+    return <div className={"flex flex-col gap-6 w-full flex-grow"}>
         <div className={"w-full flex flex-col items-start"}>
             <Title
                 recipe={recipe}
@@ -146,8 +170,21 @@ export default function IngredientStatementPage({recipe, updateRecipe}: Props) {
             <IngredientListPreview items={items}/>
         </div>
 
-        <div className={"flex justify-end items-center"}>
+        <div className={"flex gap-4 justify-end items-center py-4"}>
+            <CSVLink
+                data={getDownloadData()}
+                className={'flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm text-main-blue font-normal cursor-pointer border-2 border-main-blue hover:text-white hover:bg-main-blue'}
+                filename={`${recipe.name} ingredient list.csv`}
+            >Download me</CSVLink>
 
+            <div
+                className={'flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm text-main-blue font-normal cursor-pointer border-2 border-main-blue hover:text-white hover:bg-main-blue'}
+                onClick={() => {
+                }}
+            >
+                <LuFileVideo/>
+                <span>Tutorial</span>
+            </div>
         </div>
     </div>
 }

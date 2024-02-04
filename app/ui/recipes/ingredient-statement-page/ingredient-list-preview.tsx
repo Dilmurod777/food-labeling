@@ -1,7 +1,7 @@
 import {RecipeItem} from "@/app/lib/models";
 import {useState} from "react";
 import {IngredientLabelLanguage} from "@/app/lib/constants";
-import {convertSpiceFlavor} from "@/app/lib/utilities";
+import {getIngredientListPreviewRowValue} from "@/app/lib/utilities";
 
 interface Props {
     items: RecipeItem[]
@@ -15,77 +15,21 @@ export default function IngredientListPreview({items}: Props) {
         "French": IngredientLabelLanguage.French
     }
 
-    const sugarItems = items.filter(item => item.canada_sugar);
-    const noSugarItems = items.filter(item => !item.canada_sugar);
-
-    const getItemValue = (item: RecipeItem, spiceFlavorEnabled: boolean): string => {
-        switch (currentLabelPreviewType) {
-            case IngredientLabelLanguage.English: {
-                let value = item.ingredient?.list_name || item.ingredient?.name || "";
-                if (spiceFlavorEnabled) {
-                    return convertSpiceFlavor(item.spice_flavor, currentLabelPreviewType) || value;
-                }
-
-                return value;
-            }
-            case IngredientLabelLanguage.Canada: {
-                let value = item.ingredient?.list_name || item.ingredient?.name || "";
-                if (spiceFlavorEnabled) {
-                    return convertSpiceFlavor(item.spice_flavor, currentLabelPreviewType) || value;
-                }
-
-                return value;
-            }
-            case IngredientLabelLanguage.French: {
-                let value = item.ingredient?.list_name_fr || item.ingredient?.list_name || item.ingredient?.name || "";
-                if (spiceFlavorEnabled) {
-                    return convertSpiceFlavor(item.spice_flavor, currentLabelPreviewType) || value;
-                }
-
-                return value;
-            }
-        }
-    }
-
     const getItems = (): string => {
         let result = "";
 
         switch (currentLabelPreviewType) {
             case IngredientLabelLanguage.English:
                 result += "INGREDIENTS: ";
-                result += items.map(item => getItemValue(item, true)).join(", ");
+                result += getIngredientListPreviewRowValue(items, IngredientLabelLanguage.English);
                 break;
             case IngredientLabelLanguage.Canada:
                 result += "INGREDIENTS: ";
-
-                if (sugarItems.length != 0) {
-                    result += "SUGARS (" + sugarItems.map(item => getItemValue(item, false)).join(", ") + ")";
-                }
-
-                if (sugarItems.length != 0 && noSugarItems.length != 0) {
-                    result += ", "
-                }
-
-                if (noSugarItems.length != 0) {
-                    result += noSugarItems.map(item => getItemValue(item, true)).join(", ");
-                }
-
+                result += getIngredientListPreviewRowValue(items, IngredientLabelLanguage.Canada);
                 break;
             case IngredientLabelLanguage.French:
                 result += "INGRÉDIENTS: ";
-
-                if (sugarItems.length != 0) {
-                    result += "SUCRES (" + sugarItems.map(item => getItemValue(item, false)).join(", ") + ")";
-                }
-
-                if (sugarItems.length != 0 && noSugarItems.length != 0) {
-                    result += ", "
-                }
-
-                if (noSugarItems.length != 0) {
-                    result += noSugarItems.map(item => getItemValue(item, true)).join(", ");
-                }
-
+                result += getIngredientListPreviewRowValue(items, IngredientLabelLanguage.French);
                 break;
         }
 
