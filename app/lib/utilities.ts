@@ -1,350 +1,380 @@
-import {Recipe, RecipeItem} from "@/app/lib/models";
-import {
-    DAILY_ADDED_CALCIUM,
-    DAILY_ADDED_CARBOHYDRATE,
-    DAILY_ADDED_CHOLESTEROL,
-    DAILY_ADDED_DIETARY_FIBER,
-    DAILY_ADDED_FAT,
-    DAILY_ADDED_IRON,
-    DAILY_ADDED_POTASSIUM,
-    DAILY_ADDED_SATURATED_FAT,
-    DAILY_ADDED_SODIUM,
-    DAILY_ADDED_SUGAR,
-    DAILY_ADDED_VITAMIN_D,
-    IngredientFlavor,
-    IngredientLabelLanguage
-} from "@/app/lib/constants";
+import { Product } from "@/app/lib/models";
+import { getDVByName } from "@/app/lib/constants/daily-value";
+import { NET_WEIGHT_UNIT } from "@/app/lib/constants/product";
 
 export function overflowText(text: string, max_length = 30): string {
-    if (text.length <= max_length) return text;
+  if (text.length <= max_length) return text;
 
-    return text.substring(0, max_length) + "...";
+  return text.substring(0, max_length) + "...";
 }
 
 export function convertToHumanReadableTime(time: number): string {
-    let unit = "seconds";
+  let unit = "seconds";
 
-    time = time / 1000;
+  time = time / 1000;
 
-    if (time > 60) {
-        time = time / 60;
-        unit = "minute(s)";
-    }
+  if (time > 60) {
+    time = time / 60;
+    unit = "minute(s)";
+  }
 
-    if (time > 60) {
-        time = time / 60;
-        unit = "hour(s)";
-    }
+  if (time > 60) {
+    time = time / 60;
+    unit = "hour(s)";
+  }
 
-    if (time > 24) {
-        time = time / 24;
-        unit = "day(s)";
-    }
+  if (time > 24) {
+    time = time / 24;
+    unit = "day(s)";
+  }
 
-    if (time > 30) {
-        time = time / 30;
-        unit = "month(s)";
-    }
+  if (time > 30) {
+    time = time / 30;
+    unit = "month(s)";
+  }
 
-    if (time > 12) {
-        time = time / 12;
-        unit = "year(s)";
-    }
+  if (time > 12) {
+    time = time / 12;
+    unit = "year(s)";
+  }
 
-    time = Math.round(time);
-    if (time == 0) return "now";
+  time = Math.round(time);
+  if (time == 0) return "now";
 
-    return `${time} ${unit} ago`;
+  return `${time} ${unit} ago`;
 }
 
-export function getTotalGrams(quantity: number, unit: number, waste: number, recipe: Recipe) {
-    return parseFloat((quantity * unit * (100 - waste) / 100 * (100 - (recipe.waste || 0)) / 100).toFixed(1))
+export function getTotalGrams(
+  quantity: number,
+  unit: number,
+  waste: number,
+  recipe: Product,
+) {
+  return parseFloat(
+    (
+      (((quantity * unit * (100 - waste)) / 100) *
+        (100 - (recipe.waste || 0))) /
+      100
+    ).toFixed(1),
+  );
 }
 
-export function getTotalNutrients(recipe: Recipe, param: string) {
-    const items: RecipeItem[] = JSON.parse(recipe.recipe_items || "[]");
+export function getTotalNutrients(
+  product: Product,
+  param: string,
+  perServing = true,
+  type: string = "",
+  alwaysReturnValue = false,
+  round = true,
+): string {
+  param = param.replace("-", "_");
 
-    if (!recipe.recipe_items || items.length == 0) return "0";
-
-    const ssp = recipe.serving_per_package || 1;
-    const packages = recipe.packages || 1;
-    const value = (items.reduce((sum, item) => {
-        let paramValue = 0;
-        if (param == "calories") {
-            paramValue = parseFloat(item.ingredient?.calories || "0");
-        }
-
-        if (param == "fat") {
-            paramValue = parseFloat(item.ingredient?.fat || "0");
-        }
-
-        if (param == "saturated-fat") {
-            paramValue = parseFloat(item.ingredient?.saturated_fat || "0");
-        }
-
-        if (param == "trans-fat") {
-            paramValue = parseFloat(item.ingredient?.trans_fat || "0");
-        }
-
-        if (param == "cholesterol") {
-            paramValue = parseFloat(item.ingredient?.cholesterol || "0");
-        }
-
-        if (param == "sodium") {
-            paramValue = parseFloat(item.ingredient?.sodium || "0");
-        }
-
-        if (param == "carbohydrate") {
-            paramValue = parseFloat(item.ingredient?.carbohydrate || "0");
-        }
-
-        if (param == "dietary-fiber") {
-            paramValue = parseFloat(item.ingredient?.dietary_fiber || "0");
-        }
-
-        if (param == "sugar") {
-            paramValue = parseFloat(item.ingredient?.sugar || "0");
-        }
-
-        if (param == "added-sugar") {
-            paramValue = parseFloat(item.ingredient?.added_sugar || "0");
-        }
-
-        if (param == "protein") {
-            paramValue = parseFloat(item.ingredient?.protein || "0");
-        }
-
-        if (param == "vitamin-d") {
-            paramValue = parseFloat(item.ingredient?.vitamin_d || "0");
-        }
-
-        if (param == "calcium") {
-            paramValue = parseFloat(item.ingredient?.calcium || "0");
-        }
-
-        if (param == "iron") {
-            paramValue = parseFloat(item.ingredient?.iron || "0");
-        }
-
-        if (param == "potassium") {
-            paramValue = parseFloat(item.ingredient?.potassium || "0");
-        }
-
-        return sum + paramValue * item.quantity * (100 - (recipe.waste || 0)) / 100;
-    }, 0) || 0) / (ssp * packages)
-
-    return value.toFixed(1)
+  const value =
+    typeof product[param] == "number"
+      ? (product[param] as number)
+      : parseFloat(product[param].toString());
+  const packages = product.serving_per_package;
+  return round
+    ? roundByRule(
+        perServing ? value : value * packages,
+        param,
+        type,
+        alwaysReturnValue,
+      )
+    : (perServing ? value : value * packages).toString();
 }
 
-export function getDailyNutrients(recipe: Recipe, param: string) {
-    const totalValue = parseFloat(getTotalNutrients(recipe, param));
-    let dailyValue = 1;
+export function getDailyNutrients(
+  product: Product,
+  param: string,
+  perServing = true,
+  type: string = "",
+) {
+  const totalValue = parseFloat(
+    getTotalNutrients(product, param, perServing, type, true, false),
+  );
+  let dailyValue = parseFloat(getDVByName(param, type));
+  let value = (100 * totalValue) / dailyValue;
 
-    if (param == "fat") {
-        dailyValue = DAILY_ADDED_FAT;
+  if (
+    [
+      "calories",
+      "fat",
+      "saturated-fat",
+      "trans-fat",
+      "polyunsaturated-fat",
+      "monounsaturated-fat",
+      "cholesterol",
+      "sodium",
+      "carbohydrate",
+      "dietary-fiber",
+      "sugar",
+      "added-sugar",
+      "sugar-alcohol",
+      "protein",
+    ].includes(param)
+  ) {
+    value = getRoundedValue(value, 1);
+  } else {
+    if (value <= 10) {
+      value = getRoundedValue(value, 2);
+    } else if (value <= 50) {
+      value = getRoundedValue(value, 5);
+    } else {
+      value = getRoundedValue(value, 10);
     }
+  }
 
-    if (param == "saturated-fat") {
-        dailyValue = DAILY_ADDED_SATURATED_FAT;
-    }
-
-    if (param == "cholesterol") {
-        dailyValue = DAILY_ADDED_CHOLESTEROL;
-    }
-
-    if (param == "sodium") {
-        dailyValue = DAILY_ADDED_SODIUM;
-    }
-
-    if (param == "carbohydrate") {
-        dailyValue = DAILY_ADDED_CARBOHYDRATE;
-    }
-
-    if (param == "dietary-fiber") {
-        dailyValue = DAILY_ADDED_DIETARY_FIBER;
-    }
-
-    if (param == "added-sugar") {
-        dailyValue = DAILY_ADDED_SUGAR;
-    }
-
-    if (param == "vitamin-d") {
-        dailyValue = DAILY_ADDED_VITAMIN_D;
-    }
-
-    if (param == "calcium") {
-        dailyValue = DAILY_ADDED_CALCIUM;
-    }
-
-    if (param == "iron") {
-        dailyValue = DAILY_ADDED_IRON;
-    }
-
-
-    if (param == "potassium") {
-        dailyValue = DAILY_ADDED_POTASSIUM;
-    }
-
-    return (100 * totalValue / dailyValue).toFixed(1);
+  return value;
 }
 
-export function getFlavor(value: string): IngredientFlavor {
-    value = IngredientFlavor[parseInt(value)];
-    if (value == "None") {
-        return IngredientFlavor.None;
-    } else if (value == "Spice") {
-        return IngredientFlavor.Spice;
-    } else if (value == "Flavor") {
-        return IngredientFlavor.Flavor;
-    } else if (value == "NaturalFlavor") {
-        return IngredientFlavor.NaturalFlavor;
-    } else if (value == "ArtificialFlavor") {
-        return IngredientFlavor.ArtificialFlavor;
-    } else if (value == "ArtificialColor") {
-        return IngredientFlavor.ArtificialColor;
-    } else if (value == "SpiceColoring") {
-        return IngredientFlavor.SpiceColoring;
-    }
-
-    return IngredientFlavor.None;
+export function getRoundedValue(value: number, increment: number): number {
+  const y = Math.floor(value / increment);
+  const z = value - y * increment;
+  return z < increment / 2 ? y * increment : (y + 1) * increment;
 }
 
-export function convertSpiceFlavor(value: string, lang: IngredientLabelLanguage): string | undefined {
-    const flavor = getFlavor(value);
+export function roundByRule(
+  v: number,
+  param: string,
+  type: string = "default",
+  alwaysReturnValue = false,
+): string {
+  let value: number | string = v;
 
-    switch (lang) {
-        case IngredientLabelLanguage.English: {
-            if (flavor === IngredientFlavor.None) {
-                return undefined;
-            } else if (flavor === IngredientFlavor.Spice) {
-                return "spice";
-            } else if (flavor === IngredientFlavor.Flavor) {
-                return "flavor";
-            } else if (flavor === IngredientFlavor.NaturalFlavor) {
-                return "natural flavor";
-            } else if (flavor === IngredientFlavor.ArtificialFlavor) {
-                return "artificial flavor";
-            } else if (flavor === IngredientFlavor.ArtificialColor) {
-                return "artificial color";
-            } else if (flavor === IngredientFlavor.SpiceColoring) {
-                return "spice and coloring";
-            }
-            break;
-        }
-        case IngredientLabelLanguage.Canada: {
-            if (flavor === IngredientFlavor.None) {
-                return undefined;
-            } else if (flavor === IngredientFlavor.Spice) {
-                return "spice";
-            } else if (flavor === IngredientFlavor.Flavor) {
-                return "flavor";
-            } else if (flavor === IngredientFlavor.NaturalFlavor) {
-                return "natural flavor";
-            } else if (flavor === IngredientFlavor.ArtificialFlavor) {
-                return "artificial flavor";
-            } else if (flavor === IngredientFlavor.ArtificialColor) {
-                return "artificial color";
-            } else if (flavor === IngredientFlavor.SpiceColoring) {
-                return "spice and coloring";
-            }
-            break;
-        }
-        case IngredientLabelLanguage.French: {
-            if (flavor === IngredientFlavor.None) {
-                return undefined;
-            } else if (flavor === IngredientFlavor.Spice) {
-                return "ÉPICES";
-            } else if (flavor === IngredientFlavor.Flavor) {
-                return "PARFUM";
-            } else if (flavor === IngredientFlavor.NaturalFlavor) {
-                return "PARFUM";
-            } else if (flavor === IngredientFlavor.ArtificialFlavor) {
-                return "PARFUM ARTIFICIEL";
-            } else if (flavor === IngredientFlavor.ArtificialColor) {
-                return "COLORANT";
-            } else if (flavor === IngredientFlavor.SpiceColoring) {
-                return "COLORANT";
-            }
-            break;
-        }
+  if (typeof value == "string") {
+    value = parseFloat(value);
+  }
+
+  if (param == "serving_per_package") {
+    if (value < 2) {
+      value = 1;
+    } else if (value >= 2 && value < 5) {
+      value = getRoundedValue(value, 0.5);
+    } else if (value >= 5) {
+      value = getRoundedValue(value, 1);
     }
+  } else if (param == "calories") {
+    if (value < 5) {
+      value = 0;
+    } else if (value <= 50) {
+      value = getRoundedValue(value, 5);
+    } else if (value > 50) {
+      value = getRoundedValue(value, 10);
+    }
+  } else if (
+    param == "fat" ||
+    param == "saturated_fat" ||
+    param == "trans_fat" ||
+    param == "polyunsaturated_fat" ||
+    param == "monounsaturated_fat"
+  ) {
+    if (value < 0.5) {
+      value = 0;
+    } else if (value < 5) {
+      value = getRoundedValue(value, 0.5);
+    } else {
+      value = getRoundedValue(value, 1);
+    }
+  } else if (param == "cholesterol") {
+    if (value < 2) {
+      value = 0;
+    } else if (value < 5) {
+      value = alwaysReturnValue ? value : "less than 5";
+    } else {
+      value = getRoundedValue(value, 5);
+    }
+  } else if (param == "sodium") {
+    if (value < 5) {
+      value = 0;
+    } else if (value <= 140) {
+      value = getRoundedValue(value, 5);
+    } else {
+      value = getRoundedValue(value, 10);
+    }
+  } else if (param == "potassium") {
+    if (value < 5) {
+      value = 0;
+    }
+  } else if (
+    param == "carbohydrate" ||
+    param == "dietary_fiber" ||
+    param == "sugars" ||
+    param == "added_sugar" ||
+    param == "sugar_alcohol"
+  ) {
+    if (value < 0.5) {
+      value = 0;
+    } else if (value < 1) {
+      value = alwaysReturnValue ? value : "less than 1";
+    } else {
+      value = getRoundedValue(value, 1);
+    }
+  } else if (param == "protein") {
+    if (value < 0.5) {
+      value = 0;
+    } else if (value < 1) {
+      value = alwaysReturnValue ? value : "less than 1";
+    } else {
+      value = getRoundedValue(value, 1);
+    }
+  } else if (param == "calcium") {
+    // value = getRoundedValue(value, 10);
+  } else if (param == "iron") {
+    // value = getRoundedValue(value, 0.1);
+  } else if (param == "vitamin-d") {
+    // value = getRoundedValue(value, 0.1);
+  } else if (param == "potassium") {
+    // value = getRoundedValue(value, 10);
+  } else if (
+    [
+      "thiamin",
+      "riboflavin",
+      "vitamin-b6",
+      "vitamin-b12",
+      "copper",
+      "manganese",
+    ].includes(param)
+  ) {
+    // value = getRoundedValue(value, 0.01);
+  } else if (
+    [
+      "vitamin-e",
+      "niacin",
+      "biotin",
+      "pantothenic-acid",
+      "zinc",
+      "copper",
+      "chromium",
+      "molybdenum",
+    ].includes(param)
+  ) {
+    // value = getRoundedValue(value, 0.1);
+  } else if (["vitamin-c", "vitamin-k", "iodine", "selenium"].includes(param)) {
+    // value = getRoundedValue(value, 1);
+  } else if (["folate", "magnesium"].includes(param)) {
+    // value = getRoundedValue(value, 5);
+  } else if (
+    ["vitamin-a", "phosphorus", "chloride", "choline"].includes(param)
+  ) {
+    // value = getRoundedValue(value, 10);
+  }
+
+  if (typeof value == "number") {
+    return parseFloat(value.toFixed(2)).toString();
+  } else {
+    return value.toString();
+  }
 }
 
-export function getIngredientListPreviewItemValue(item: RecipeItem, currentLabelPreviewType: IngredientLabelLanguage, spiceFlavorEnabled: boolean): string {
-    switch (currentLabelPreviewType) {
-        case IngredientLabelLanguage.English: {
-            let value = item.ingredient?.list_name || item.ingredient?.name || "";
-            if (spiceFlavorEnabled) {
-                return convertSpiceFlavor(item.spice_flavor, currentLabelPreviewType) || value;
-            }
-
-            return value;
-        }
-        case IngredientLabelLanguage.Canada: {
-            let value = item.ingredient?.list_name || item.ingredient?.name || "";
-            if (spiceFlavorEnabled) {
-                return convertSpiceFlavor(item.spice_flavor, currentLabelPreviewType) || value;
-            }
-
-            return value;
-        }
-        case IngredientLabelLanguage.French: {
-            let value = item.ingredient?.list_name_fr || item.ingredient?.list_name || item.ingredient?.name || "";
-            if (spiceFlavorEnabled) {
-                return convertSpiceFlavor(item.spice_flavor, currentLabelPreviewType) || value;
-            }
-
-            return value;
-        }
-    }
+export function capitalize(value: string, separator = ",") {
+  if (!value) return "";
+  return value
+    .split(separator)
+    .map((item) => item.trim().toLowerCase())
+    .map((item) => item.charAt(0).toUpperCase() + item.slice(1))
+    .join(separator.trim() + " ");
 }
 
-export function getIngredientListPreviewRowValue(items: RecipeItem[], lang: IngredientLabelLanguage) {
-    const sugarItems = items.filter(item => item.canada_sugar);
-    const noSugarItems = items.filter(item => !item.canada_sugar);
+export function convertNetWeightToOz(product: Product, perServing = true) {
+  let delta = 1;
+  let unit = convertStringToNetWeight(product.net_weight_unit);
+  switch (unit) {
+    case NET_WEIGHT_UNIT.G:
+      delta = 0.035274;
+      break;
+    case NET_WEIGHT_UNIT.ML:
+      delta = 0.033814;
+      break;
+    case NET_WEIGHT_UNIT.KG:
+      delta = 35.274;
+      break;
+    case NET_WEIGHT_UNIT.L:
+      delta = 33.814;
+      break;
+  }
 
-    switch (lang) {
-        case IngredientLabelLanguage.English: {
-            return items.map(item => getIngredientListPreviewItemValue(item, lang, true)).join(", ");
-        }
-        case IngredientLabelLanguage.Canada: {
-            let result = "";
-            if (sugarItems.length != 0) {
-                result += "SUGARS (" + sugarItems.map(item => getIngredientListPreviewItemValue(item, lang, false)).join(", ") + ")";
-            }
+  const value = product.net_weight * delta;
 
-            if (sugarItems.length != 0 && noSugarItems.length != 0) {
-                result += ", "
-            }
-
-            if (noSugarItems.length != 0) {
-                result += noSugarItems.map(item => getIngredientListPreviewItemValue(item, lang, true)).join(", ");
-            }
-
-            return result;
-        }
-        case IngredientLabelLanguage.French: {
-            let result = "";
-            if (sugarItems.length != 0) {
-                result += "SUCRES (" + sugarItems.map(item => getIngredientListPreviewItemValue(item, lang, false)).join(", ") + ")";
-            }
-
-            if (sugarItems.length != 0 && noSugarItems.length != 0) {
-                result += ", "
-            }
-
-            if (noSugarItems.length != 0) {
-                result += noSugarItems.map(item => getIngredientListPreviewItemValue(item, lang, true)).join(", ");
-            }
-            return result;
-        }
-    }
+  return parseFloat(
+    (perServing ? value / product.serving_per_package : value).toFixed(2),
+  );
 }
 
-export function capitalize(value: string) {
-    return value
-        .split(',')
-        .map(item => item.trim().toLowerCase())
-        .map(item => item.charAt(0).toUpperCase() + item.slice(1))
-        .join(", ")
+export function getFormattedFormInputTitle(
+  text: string,
+  capitalize_all: boolean = false,
+) {
+  return text
+    .replace("_", " ")
+    .split(" ")
+    .map((word, i) => {
+      if (capitalize_all) {
+        return word[0].toUpperCase() + word.slice(1);
+      }
+
+      return i == 0 ? word[0].toUpperCase() + word.slice(1) : word;
+    })
+    .join(" ");
+}
+
+export function convertParamToTitle(param: string, short = false) {
+  let title = param;
+  param = param.replaceAll("_", "-");
+  if (param == "fat") {
+    title = "Total Fat";
+  } else if (param == "saturated-fat") {
+    title = short ? "Sat. Fat" : "Saturated Fat";
+  } else if (param == "trans-fat") {
+    title = "<i>Trans</i> Fat";
+  } else if (param == "monounsaturated-fat") {
+    title = short ? "Monounsat. Fat" : "Monounsaturated Fat";
+  } else if (param == "polyunsaturated-fat") {
+    title = short ? "Polyunsat. Fat" : "Polyunsaturated Fat";
+  } else if (param == "cholesterol") {
+    title = "Cholesterol";
+  } else if (param == "sodium") {
+    title = "Sodium";
+  } else if (param == "carbohydrate") {
+    title = "Total Carb.";
+  } else if (param == "dietary-fiber") {
+    title = "Dietary Fiber";
+  } else if (param == "sugar") {
+    title = "Total Sugars";
+  } else if (param == "added-sugar") {
+    title = "Incl. Added Sugars";
+  } else if (param == "protein") {
+    title = "Protein";
+  } else if (param == "vitamin-d") {
+    title = "Vitamin D";
+  } else if (param == "calcium") {
+    title = "Calcium";
+  } else if (param == "iron") {
+    title = "Iron";
+  } else if (param == "potassium") {
+    title = "Potassium";
+  } else if (param == "vitamin-b6") {
+    title = "Vitamin B<sub>6</sub>";
+  } else if (param == "vitamin-b12") {
+    title = "Vitamin B<sub>12</sub>";
+  } else {
+    title = capitalize(param.replace("-", " "), " ");
+  }
+
+  return title;
+}
+
+export function convertStringToNetWeight(value: string): NET_WEIGHT_UNIT {
+  switch (value.toLowerCase()) {
+    case "g":
+      return NET_WEIGHT_UNIT.G;
+    case "ml":
+      return NET_WEIGHT_UNIT.ML;
+    case "kg":
+      return NET_WEIGHT_UNIT.KG;
+    case "l":
+      return NET_WEIGHT_UNIT.L;
+    default:
+      return NET_WEIGHT_UNIT.G;
+  }
 }

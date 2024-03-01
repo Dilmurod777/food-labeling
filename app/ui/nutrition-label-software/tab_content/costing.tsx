@@ -3,10 +3,18 @@ import UnderstandYourCosts from "@/app/ui/nutrition-label-software/tab_content/c
 import MakeBetterBusinessDecisions from "@/app/ui/nutrition-label-software/tab_content/costing/make-better-business-decisions";
 
 export default function Costing() {
-    return <div className={"flex flex-col"}>
-        <UnderstandYourCosts/>
-        <Divider height={1} heightUnits={"px"} color={"#e7ecef"}/>
-        <MakeBetterBusinessDecisions/>
-        <Divider height={1} heightUnits={"px"} color={"#e7ecef"} margin={1.5} marginUnits={"rem"}/>
+  return (
+    <div className={"flex flex-col"}>
+      <UnderstandYourCosts />
+      <Divider height={1} heightUnits={"px"} color={"#e7ecef"} />
+      <MakeBetterBusinessDecisions />
+      <Divider
+        height={1}
+        heightUnits={"px"}
+        color={"#e7ecef"}
+        margin={1.5}
+        marginUnits={"rem"}
+      />
     </div>
+  );
 }

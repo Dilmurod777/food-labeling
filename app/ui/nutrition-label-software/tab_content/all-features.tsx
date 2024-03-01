@@ -9,15 +9,17 @@ import SignUpForFree from "@/app/ui/nutrition-label-software/tab_content/all-fea
 import CustomerServiceThatListens from "@/app/ui/nutrition-label-software/tab_content/all-features/customer-service-that-listens";
 
 export default function AllFeatures() {
-    return <div className={"flex flex-col"}>
-        <NutritionAnalysisMadeEasy/>
-        <NutritionLabelingThatIsFun/>
-        <RecipeCostingToMakeDecisions/>
-        <CreateYourOwnFreeLabelToday/>
-        <IngredientListsInSeconds/>
-        <RecipeManagementInTheCloud/>
-        <MainInventory/>
-        <SignUpForFree/>
-        <CustomerServiceThatListens/>
+  return (
+    <div className={"flex flex-col"}>
+      <NutritionAnalysisMadeEasy />
+      <NutritionLabelingThatIsFun />
+      <RecipeCostingToMakeDecisions />
+      <CreateYourOwnFreeLabelToday />
+      <IngredientListsInSeconds />
+      <RecipeManagementInTheCloud />
+      <MainInventory />
+      <SignUpForFree />
+      <CustomerServiceThatListens />
     </div>
+  );
 }

@@ -1,17 +1,20 @@
-import {getAll} from "@/app/lib/actions-ingredients";
-import IngredientList from "@/app/ui/dashboard/recipes/ingredient-list";
-import IngredientEmpty from "@/app/ui/dashboard/recipes/ingredient-empty";
-import {getCurrentUser} from "@/app/lib/actions-user";
-import {redirect} from "next/navigation";
+import { getCurrentUser } from "@/app/lib/actions-user";
+import { redirect } from "next/navigation";
 
 export default async function Inventory() {
-    const user = await getCurrentUser();
+  const user = await getCurrentUser();
 
-    if (!user) {
-        redirect("/login");
-    }
+  if (!user) {
+    redirect("/login");
+  }
 
-    return <div className={"w-full h-full flex items-center justify-center text-lg font-bold text-black"}>
-        Inventory empty.
+  return (
+    <div
+      className={
+        "flex h-full w-full items-center justify-center text-lg font-bold text-black"
+      }
+    >
+      Inventory empty.
     </div>
+  );
 }

@@ -1,34 +1,40 @@
-import {FaCheck} from "react-icons/fa";
+import { FaCheck } from "react-icons/fa";
 import Image from "next/image";
 import LabelSamples from "@/public/images/label-samples.svg";
 
-export default function SmartDefaults(){
-    return <div className={"flex gap-24 items-center justify-center py-12 w-full px-12"}>
-        <div className={"flex flex-col items-start gap-4 w-2/5"}>
-            <h2
-                className={"font-normal text-4xl mb-8"}
-            ><strong>Smart defaults</strong> simplify your day</h2>
+export default function SmartDefaults() {
+  return (
+    <div
+      className={"flex w-full items-center justify-center gap-24 px-12 py-12"}
+    >
+      <div className={"flex w-2/5 flex-col items-start gap-4"}>
+        <h2 className={"mb-8 text-4xl font-normal"}>
+          <strong>Smart defaults</strong> simplify your day
+        </h2>
 
-            <p className={"flex gap-4 items-center"}>
-                <FaCheck className={"text-2xl text-main-green"}/>
-                <span className={"text-lg font-thin text-black"}>All the major label styles</span>
-            </p>
+        <p className={"flex items-center gap-4"}>
+          <FaCheck className={"text-2xl text-main-green"} />
+          <span className={"text-lg font-thin text-black"}>
+            All the major label styles
+          </span>
+        </p>
 
-            <p className={"flex gap-4 items-center"}>
-                <FaCheck className={"text-2xl text-main-green"}/>
-                <span className={"text-lg font-thin text-black"}>All the right fonts, colors and spacing</span>
-            </p>
+        <p className={"flex items-center gap-4"}>
+          <FaCheck className={"text-2xl text-main-green"} />
+          <span className={"text-lg font-thin text-black"}>
+            All the right fonts, colors and spacing
+          </span>
+        </p>
 
-            <p className={"flex gap-4 items-center"}>
-                <FaCheck className={"text-2xl text-main-green"}/>
-                <span className={"text-lg font-thin text-black"}>Designer and user-friendly formats</span>
-            </p>
-        </div>
+        <p className={"flex items-center gap-4"}>
+          <FaCheck className={"text-2xl text-main-green"} />
+          <span className={"text-lg font-thin text-black"}>
+            Designer and user-friendly formats
+          </span>
+        </p>
+      </div>
 
-        <Image
-            src={LabelSamples}
-            alt={"Label Samples"}
-            className={"w-1/5"}
-        />
+      <Image src={LabelSamples} alt={"Label Samples"} className={"w-1/5"} />
     </div>
+  );
 }
