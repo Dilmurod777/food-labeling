@@ -170,7 +170,7 @@ export default function ProductEditPage({ product, user }: Props) {
       ],
     },
     {
-      name: "Project Info sections",
+      name: "Product Info sections",
       type: "wrapper",
       visible: true,
       children: [

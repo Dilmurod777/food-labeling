@@ -512,7 +512,7 @@ export default function RoundingRulesBlock({ product }: Props) {
             const value = product[item] as number;
 
             return (
-              <>
+              <div key={`rounding-block-${item}`}>
                 <hr className={"my-1 border-main-gray"} />
                 <div key={`vitamin-mineral-block-${i}`}>
                   <span
@@ -545,7 +545,7 @@ export default function RoundingRulesBlock({ product }: Props) {
                     {getDailyNutrients(product, item)}%
                   </div>
                 </div>
-              </>
+              </div>
             );
           })}
         </div>
