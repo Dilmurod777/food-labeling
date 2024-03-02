@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, Suspense, useEffect, useState } from "react";
 import TopHero from "@/app/ui/nutrition-label-software/top-hero";
 import AllFeatures from "@/app/ui/nutrition-label-software/tab_content/all-features";
 import Tabs from "@/app/ui/nutrition-label-software/tabs";
@@ -21,6 +21,7 @@ import Labeling from "@/app/ui/nutrition-label-software/tab_content/labeling";
 import Costing from "@/app/ui/nutrition-label-software/tab_content/costing";
 import IngredientList from "@/app/ui/nutrition-label-software/tab_content/ingredient-list";
 import RecipeManagement from "@/app/ui/nutrition-label-software/tab_content/recipe-management";
+import Loading from "@/app/ui/loading";
 
 interface TabContent {
   page: ReactNode;
@@ -97,14 +98,16 @@ export default function NutritionLabelSoftware() {
         tabs={Object.keys(tabs)}
         onTabClick={(i) => setTabIndex(i)}
       />
-      {Object.keys(tabs).map((tab, i) => (
-        <div
-          key={`tab-content-${i}`}
-          className={`${i == tabIndex ? "block" : "hidden"} h-full w-full`}
-        >
-          {tabContent.page}
-        </div>
-      ))}
+      <Suspense fallback={<Loading />}>
+        {Object.keys(tabs).map((tab, i) => (
+          <div
+            key={`tab-content-${i}`}
+            className={`${i == tabIndex ? "block" : "hidden"} h-full w-full`}
+          >
+            {tabContent.page}
+          </div>
+        ))}
+      </Suspense>
 
       <FAQ items={tabContent.faq} />
       {/*<Testimonials/>*/}

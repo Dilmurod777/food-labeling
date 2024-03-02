@@ -44,7 +44,7 @@ export default function RootLayout({
       </div>
 
       <div className={"flex h-full w-full flex-grow"}>
-        <Suspense>{children}</Suspense>
+        <Suspense fallback={<Loading />}>{children}</Suspense>
       </div>
     </div>
   );

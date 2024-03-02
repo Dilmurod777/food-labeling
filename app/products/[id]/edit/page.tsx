@@ -3,7 +3,7 @@ import * as productActions from "@/app/lib/actions-products";
 import { getCurrentUser } from "@/app/lib/actions-user";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
-import { Label } from "@/app/lib/models";
+import Loading from "@/app/ui/loading";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const user = await getCurrentUser();
@@ -23,7 +23,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   }
 
   return (
-    <Suspense>
+    <Suspense fallback={<Loading />}>
       <ProductEditPage product={product} user={user} />
     </Suspense>
   );

@@ -1,3 +1,5 @@
+"use client";
+
 import Header from "@/app/ui/header";
 import TopHero from "@/app/ui/main/top-hero";
 import TrustedBusinesses from "@/app/ui/main/trusted_businesses";
