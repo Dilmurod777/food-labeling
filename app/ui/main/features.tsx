@@ -33,7 +33,7 @@ export default function Features() {
   return (
     <div
       className={
-        "mx-auto my-0 flex w-full flex-wrap justify-center gap-4 border-y-2 border-main-gray bg-white px-12 py-4 text-center"
+        "mx-auto my-0 flex w-full flex-wrap justify-center gap-x-8 border-y-2 border-main-gray bg-white px-12 py-8 text-center"
       }
     >
       {features.map((feature, i) => (
