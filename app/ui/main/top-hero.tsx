@@ -39,37 +39,37 @@ export default function TopHero() {
 
       <Image
         src={VerticalDualLanguageES}
-        alt={"vertical-standard"}
-        width={400}
+        alt={"vertical-dual-language-es"}
+        width={500}
         className={
-          "-rotate-4 absolute -bottom-6 -right-4 z-0 -rotate-6 hover:-bottom-2"
+          "-rotate-4 absolute -bottom-6 right-6 z-0 -rotate-6 transition-all hover:-bottom-2"
         }
       />
 
       <Image
         src={VerticalDualLanguageKR}
-        alt={"vertical-standard"}
-        width={400}
+        alt={"vertical-dual-language-kr"}
+        width={500}
         className={
-          "-rotate-4 absolute -bottom-12 -right-14 z-0 -rotate-6 hover:-bottom-8"
+          "-rotate-4 absolute -bottom-12 -right-2 z-0 -rotate-6 transition-all hover:-bottom-8"
         }
       />
 
       <Image
         src={LinearStandard}
-        alt={"vertical-standard"}
+        alt={"linear-standard"}
         width={500}
         className={
-          "-rotate-4 absolute -bottom-12 right-1/2 z-0 -rotate-6 hover:-bottom-8"
+          "-rotate-4 absolute -bottom-12 right-1/2 z-0 -rotate-6 transition-all hover:-bottom-8"
         }
       />
 
       <Image
         src={TabularStandard}
-        alt={"vertical-standard"}
+        alt={"tabular-standard"}
         width={500}
         className={
-          "-rotate-4 absolute -bottom-0 right-1/2 z-0 translate-x-2/3 rotate-6 hover:bottom-2"
+          "-rotate-4 absolute -bottom-6 right-1/2 z-0 translate-x-2/3 rotate-6 transition-all hover:-bottom-4"
         }
       />
     </div>
