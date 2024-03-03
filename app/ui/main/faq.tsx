@@ -5,7 +5,7 @@ export default function FAQ({ items = defaultItems }: { items?: FAQItem[] }) {
   return (
     <div
       className={
-        "flex w-full flex-col items-center bg-main-gray px-12 py-16 text-black"
+        "flex w-full flex-col items-center bg-main-gray px-12 py-12 pb-4 text-black"
       }
     >
       <h2 className={"text-4xl font-bold"}>Frequently asked questions</h2>

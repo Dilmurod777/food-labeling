@@ -10,7 +10,7 @@ export default async function Header() {
   const user = await getCurrentUser();
 
   return (
-    <nav className={"mx-auto my-0 flex w-full justify-between  px-12 py-2"}>
+    <nav className={"mx-auto my-0 flex w-full justify-between px-12 py-0"}>
       <div className={"flex h-full justify-start gap-3"}>
         <Link href={"/"} className={"mr-3 flex items-center justify-center"}>
           <Image

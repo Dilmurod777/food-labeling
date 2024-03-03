@@ -20,25 +20,8 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
       <TopHero />
-      {/*<TrustedBusinesses/>*/}
-      <Divider
-        margin={1.5}
-        marginUnits={"rem"}
-        height={2}
-        heightUnits={"px"}
-        color={"#f2f7fb"}
-      />
       <FeaturesFirst />
-      <NutritionAnalysisMadeEasy />
-      <NutritionLabelingThatIsFun />
-      <RecipeCostingToMakeDecisions />
-      <FeaturesSecond />
-      <CustomerServiceToDieFor />
-      {/*<FoodEntrepreneurs/>*/}
-      {/*<CaseStudies/>*/}
-      {/*<Testimonials/>*/}
       <FAQ />
-      <SignUpForFree />
     </div>
   );
 }
