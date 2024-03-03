@@ -11,7 +11,7 @@ export default function TopHero() {
   return (
     <div
       className={
-        "relative mx-auto my-0 flex h-[650px] w-full flex-col items-center justify-start overflow-hidden bg-main-orange px-12 py-6"
+        "relative mx-auto my-0 flex h-[650px] w-full flex-col items-center justify-start overflow-hidden bg-main-orange px-12 pb-6 pt-12"
       }
     >
       <h2 className={"text-center text-6xl/none font-bold text-white"}>

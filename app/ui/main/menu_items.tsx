@@ -28,13 +28,8 @@ const items: MenuItem[] = [
       {
         mainText: "Label Maker",
         secondaryText: "FDA and CFIA compliant nutrition labels.",
-        url: "/label-maker",
+        url: "/dashboard",
       },
-      // {
-      //   mainText: "OCR Label maker",
-      //   secondaryText: "Upload label and customize it.",
-      //   url: "/ocr-label-maker",
-      // },
     ],
   },
 ];
