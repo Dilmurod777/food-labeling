@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   convertParamToTitle,
@@ -14,16 +16,16 @@ import {
   DV_SATURATED_FAT,
   DV_SODIUM,
   DV_SUGAR,
-  DV_VITAMIN_D,
   getDVByName,
 } from "@/app/lib/constants/daily-value";
 import { getUnitByName } from "@/app/lib/constants/nutrients-units";
+import React from "react";
 
 interface Props {
   product: Product;
 }
 
-export default function RoundingRulesBlock({ product }: Props) {
+export const RoundingRulesBlock = ({ product }: Props) => {
   return (
     <div className={"flex flex-col gap-2"}>
       <h2 className={"text-center text-sm/none font-bold"}>
@@ -552,4 +554,6 @@ export default function RoundingRulesBlock({ product }: Props) {
       </div>
     </div>
   );
-}
+};
+
+export default React.memo(RoundingRulesBlock);
