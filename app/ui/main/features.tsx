@@ -39,14 +39,12 @@ export default function Features() {
       {features.map((feature, i) => (
         <div
           key={`feature-${i}`}
-          className={"flex w-[40%] flex-col gap-2 py-2"}
+          className={`flex w-[45%] flex-col gap-2 py-4 ${i < features.length / 2 ? "border-b-2 border-b-main-gray" : ""}`}
         >
           <p className={"text-xl/none font-bold text-black"}>{feature.name}</p>
           <p className={"text-base/none font-light text-black"}>
             {feature.description}
           </p>
-
-          {i != features.length - 1 && <hr className={"border-b-main-gray"} />}
         </div>
       ))}
     </div>
