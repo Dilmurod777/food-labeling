@@ -90,6 +90,7 @@ export function getDailyNutrients(
   perServing = true,
   type: string = "",
 ) {
+  param = param.replaceAll("_", "-");
   const totalValue = parseFloat(
     getTotalNutrients(product, param, perServing, type, true, false),
   );
