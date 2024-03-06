@@ -90,7 +90,6 @@ export async function update(data: Product): Promise<string> {
           .replaceAll("'", "''")
           .replaceAll("`", "``")
           .replaceAll('""', '""');
-        if (value == "") continue;
       }
 
       columnValuePairs.push(`${key.trim()}='${value}'`);
