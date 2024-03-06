@@ -1,7 +1,7 @@
 "use client";
 
 import { DefaultProduct, User } from "@/app/lib/models";
-import ProductCreateBtn from "@/app/ui/product-create-btn";
+import FormSubmitBtn from "@/app/ui/form-submit-btn";
 
 interface Props {
   user: User;
@@ -17,7 +17,7 @@ export default function ProductsEmpty({ user }: Props) {
       <h2 className={"text-xl font-bold text-black"}>Welcome to Foodplanet!</h2>
 
       <div className={"mt-8 flex gap-4"}>
-        <ProductCreateBtn
+        <FormSubmitBtn
           user={user}
           api_route={"/api/products"}
           success_redirect_url={"/products/<id>/edit"}

@@ -30,6 +30,11 @@ const items: MenuItem[] = [
         secondaryText: "FDA and CFIA compliant nutrition labels.",
         url: "/dashboard",
       },
+      {
+        mainText: "OCR Label Maker",
+        secondaryText: "Upload your label and customize it further.",
+        url: "/ocr-label-maker",
+      },
     ],
   },
 ];

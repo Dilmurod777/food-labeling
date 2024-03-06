@@ -379,3 +379,14 @@ export function convertStringToNetWeight(value: string): NET_WEIGHT_UNIT {
       return NET_WEIGHT_UNIT.G;
   }
 }
+
+export function calculateHammingDistance(str1: string, str2: string) {
+  if (str1.length !== str2.length) {
+    throw new Error("Strings must be of the same length");
+  }
+  let distance = 0;
+  for (let i = 0; i < str1.length; i += 1) {
+    if (str1[i] !== str2[i]) distance += 1;
+  }
+  return distance;
+}

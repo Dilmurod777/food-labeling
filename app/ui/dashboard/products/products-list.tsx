@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useFormState } from "react-dom";
 import { deleteById, copyById } from "@/app/lib/actions-products";
 import { TAG_COLORS } from "@/app/lib/constants/colors";
-import ProductCreateBtn from "@/app/ui/product-create-btn";
+import FormSubmitBtn from "@/app/ui/form-submit-btn";
 import { IoMdRefreshCircle } from "react-icons/io";
 import { useState } from "react";
 import Pagination from "@/app/ui/pagination";
@@ -44,7 +44,7 @@ export default function RecipeList({ items, user }: Props) {
           }
           onClick={() => router.refresh()}
         />
-        <ProductCreateBtn
+        <FormSubmitBtn
           user={user}
           api_route={"/api/products"}
           success_redirect_url={"/products/<id>/edit"}

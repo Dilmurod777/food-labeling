@@ -10,10 +10,10 @@ interface Props {
   error_redirect_url: string;
   text: string;
   loading_text: string;
-  data: Ingredient | Product;
+  data: Product | File;
 }
 
-export default function ProductCreateBtn({
+export default function FormSubmitBtn({
   user,
   api_route,
   success_redirect_url,
