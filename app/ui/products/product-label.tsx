@@ -431,19 +431,19 @@ export default function ProductLabel({
             className={`${textAlign} ${textDecoration} leading-[1.1]`}
           >
             {labelState?.show_brand && (
-              <p>
+              <p className={`${textAlign} ${textDecoration}`}>
                 <strong>Brand Name: </strong>
                 {brand || "None"}
               </p>
             )}
             {labelState?.show_product_name && (
-              <p>
+              <p className={`${textAlign} ${textDecoration}`}>
                 <strong>Product Name: </strong>
                 {product.name || "None"}
               </p>
             )}
             {labelState?.show_net_weight && (
-              <p>
+              <p className={`${textAlign} ${textDecoration}`}>
                 <strong>Net Weight: </strong>
                 {product.net_weight}
                 {product.net_weight_unit || NET_WEIGHT_UNIT.G}&nbsp;
@@ -453,7 +453,7 @@ export default function ProductLabel({
               </p>
             )}
             {labelState?.show_best_before && (
-              <p>
+              <p className={`${textAlign} ${textDecoration}`}>
                 <strong>Best Before: </strong>
                 {best_before || "None"}
               </p>
@@ -467,7 +467,7 @@ export default function ProductLabel({
             className={`${textAlign} ${textDecoration} leading-[1.1]`}
           >
             {labelState?.show_ingredient_list && (
-              <p>
+              <p className={`${textAlign} ${textDecoration}`}>
                 <strong>Ingredients: </strong>
                 {items
                   .sort((a, b) => b.weight - a.weight)
@@ -479,7 +479,7 @@ export default function ProductLabel({
             )}
 
             {labelState?.show_allergens && (
-              <p>
+              <p className={`${textAlign} ${textDecoration}`}>
                 <strong>Contains: </strong>
                 {allergens
                   .map((item) => {
@@ -506,7 +506,7 @@ export default function ProductLabel({
             )}
 
             {labelState?.show_cross_contamination && (
-              <p className={"normal-case"}>
+              <p className={`normal-case ${textAlign}`}>
                 <span>Manufactured in the facility that also processes </span>
                 {facilityAllergens
                   .map((item) => {
@@ -533,7 +533,7 @@ export default function ProductLabel({
             )}
 
             {labelState?.show_prepare_instructions && (
-              <p className={"normal-case"}>
+              <p className={`normal-case ${textAlign}`}>
                 {prepareInstructions
                   ? prepareInstructions[0].toUpperCase() +
                     prepareInstructions.slice(1).toLowerCase()
@@ -542,7 +542,7 @@ export default function ProductLabel({
             )}
 
             {labelState?.show_storage_instructions && (
-              <p className={"normal-case"}>
+              <p className={`normal-case ${textAlign}`}>
                 {storageInstructions
                   ? storageInstructions[0].toUpperCase() +
                     storageInstructions.slice(1).toLowerCase()
@@ -551,7 +551,7 @@ export default function ProductLabel({
             )}
 
             {labelState?.show_company && (
-              <p className={"normal-case"}>
+              <p className={`normal-case ${textAlign}`}>
                 <span>Manufactured for </span>
                 {company
                   ? company[0].toUpperCase() + company.slice(1).toLowerCase()
@@ -565,13 +565,13 @@ export default function ProductLabel({
             )}
 
             {labelState?.show_country && (
-              <p className={"normal-case"}>
+              <p className={`normal-case ${textAlign}`}>
                 Product of {country ? country.toLowerCase() : "unknown"}
               </p>
             )}
 
             {labelState?.show_address && (
-              <p className={"normal-case"}>
+              <p className={`normal-case ${textAlign}`}>
                 {address
                   ? address[0].toUpperCase() + address.slice(1).toLowerCase()
                   : "No address"}
