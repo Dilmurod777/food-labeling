@@ -5,6 +5,10 @@ import { User } from "@/app/lib/models";
 import FormSubmitBtn from "@/app/ui/form-submit-btn";
 import Image from "next/image";
 import { createWorker } from "tesseract.js";
+import { calculateHammingDistance } from "@/app/lib/utilities";
+import levenshtein from "js-levenshtein";
+import { getUnitByName } from "@/app/lib/constants/nutrients-units";
+import { getDVByName } from "@/app/lib/constants/daily-value";
 
 interface Props {
   user: User;
@@ -28,8 +32,70 @@ export default function SubmitForm({ user }: Props) {
     if (!file) return;
 
     const worker = await createWorker("eng");
-    const ret = await worker.recognize(URL.createObjectURL(file));
-    console.log(ret.data.text);
+    const result = await worker.recognize(URL.createObjectURL(file));
+
+    const lines = result.data.lines;
+    const searchWords: { [key: string]: number } = {
+      calories: 0,
+      total_fat: 0,
+      saturated_fat: 0,
+      cholesterol: 0,
+      sodium: 0,
+      total_carbohydrates: 0,
+      dietary_fiber: 0,
+      sugar: 0,
+      protein: 0,
+      vitamin_a: 0,
+      vitamin_c: 0,
+      calcium: 0,
+      iron: 0,
+    };
+
+    lines.forEach((line) => {
+      for (let searchWord of Object.keys(searchWords)) {
+        const formattedSearchWord = searchWord
+          .toLowerCase()
+          .replaceAll("_", " ");
+        const count = formattedSearchWord.split(" ").length;
+        const indexes = line.words.reduce<number[]>((acc, word, i) => {
+          const currentWord = line.words
+            .slice(i, i + count)
+            .map((w) => w.text)
+            .join(" ");
+          const maxLength = Math.max(
+            currentWord.length,
+            formattedSearchWord.length,
+          );
+          const distance = levenshtein(
+            currentWord.padEnd(maxLength, "-"),
+            formattedSearchWord.padEnd(maxLength, "-"),
+          );
+          if (distance < formattedSearchWord.length * 0.3) {
+            acc.push(i);
+          }
+
+          return acc;
+        }, []);
+
+        if (indexes.length > 0) {
+          const value = line.words[indexes[0] + count].text.replaceAll(
+            getUnitByName(searchWord),
+            "",
+          );
+          console.log(searchWord, value);
+          if ("0123456789".includes(value[0])) {
+            searchWords[searchWord] = value.endsWith("%")
+              ? (parseFloat(getDVByName(searchWord, "default")) *
+                  parseFloat(value)) /
+                100
+              : parseFloat(value);
+          }
+        }
+      }
+    });
+
+    console.log(searchWords);
+
     await worker.terminate();
   };
 
@@ -101,7 +167,7 @@ export default function SubmitForm({ user }: Props) {
           <div
             onClick={() => ocrHandler()}
             className={
-              "cursor-pointer rounded-md bg-main-orange px-12 py-2 text-white hover:bg-hover-main-orange"
+              "cursor-pointer rounded-md bg-main-orange px-12 py-3 text-base font-bold text-white hover:bg-hover-main-orange"
             }
           >
             Extract
