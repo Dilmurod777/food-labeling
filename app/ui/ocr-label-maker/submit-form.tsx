@@ -43,7 +43,7 @@ export default function SubmitForm({ user }: Props) {
       sodium: 0,
       total_carbohydrates: 0,
       dietary_fiber: 0,
-      sugar: 0,
+      total_sugars: 0,
       protein: 0,
       vitamin_a: 0,
       vitamin_c: 0,
@@ -77,7 +77,7 @@ export default function SubmitForm({ user }: Props) {
           return acc;
         }, []);
 
-        if (indexes.length > 0) {
+        if (indexes.length > 0 && line.words.length > indexes[0] + count) {
           const value = line.words[indexes[0] + count].text.replaceAll(
             getUnitByName(searchWord),
             "",
