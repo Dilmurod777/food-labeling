@@ -31,7 +31,7 @@ export default async function RootLayout({
         style={{ lineHeight: "0.5" }}
       >
         <Header />
-        <main className={"flex-grow bg-[#fafafa]"}>
+        <main className={"flex flex-grow bg-[#fafafa]"}>
           <Suspense fallback={<Loading />}>{children}</Suspense>
         </main>
         <Footer />

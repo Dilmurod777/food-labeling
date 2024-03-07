@@ -23,3 +23,11 @@ export enum LabelLanguage {
   Hindi = "hi",
   Russian = "ru",
 }
+
+export enum OCRLanguage {
+  English = "eng",
+  Korean = "kor",
+  Spanish = "spa",
+  French = "fra",
+  Russian = "rus",
+}
