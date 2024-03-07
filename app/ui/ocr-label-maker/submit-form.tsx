@@ -46,6 +46,7 @@ export default function SubmitForm({ user }: Props) {
       const worker = await createWorker(language);
       const result = await worker.recognize(URL.createObjectURL(file));
 
+      console.log(result.data.text);
       const lines = result.data.lines;
       const searchWords: SearchKeyword[] = [
         {
