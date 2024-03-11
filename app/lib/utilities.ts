@@ -1,6 +1,7 @@
 import { Product } from "@/app/lib/models";
 import { getDVByName } from "@/app/lib/constants/daily-value";
 import { NET_WEIGHT_UNIT } from "@/app/lib/constants/product";
+import { LabelLanguage, OCRLanguage } from "@/app/lib/constants/label";
 
 export function overflowText(text: string, max_length = 30): string {
   if (text.length <= max_length) return text;
@@ -389,4 +390,19 @@ export function calculateHammingDistance(str1: string, str2: string) {
     if (str1[i] !== str2[i]) distance += 1;
   }
   return distance;
+}
+
+export function convertOCRLangToLabelLang(from: OCRLanguage) {
+  switch (from) {
+    case OCRLanguage.Korean:
+      return LabelLanguage.Korean;
+    case OCRLanguage.French:
+      return LabelLanguage.French;
+    case OCRLanguage.English:
+      return LabelLanguage.English;
+    case OCRLanguage.Russian:
+      return LabelLanguage.Russian;
+    case OCRLanguage.Spanish:
+      return LabelLanguage.Spanish;
+  }
 }
