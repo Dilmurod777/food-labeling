@@ -6,8 +6,11 @@ const translate = new Translate({
 });
 
 export async function POST(req: NextRequest) {
-  const { text, target } = await req.json();
-  let [translations] = await translate.translate(text, target);
+  const { text, target, source } = await req.json();
+  let [translations] = await translate.translate(text, {
+    to: target,
+    from: source || "ko",
+  });
   translations = Array.isArray(translations) ? translations : [translations];
   return Response.json(translations[0]);
 }

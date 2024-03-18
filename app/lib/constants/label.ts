@@ -22,4 +22,23 @@ export enum LabelLanguage {
   Japanese = "ja",
   Hindi = "hi",
   Russian = "ru",
+  English = "en",
+}
+
+export enum OCRLanguage {
+  English = "eng",
+  Korean = "kor",
+  Spanish = "spa",
+  French = "fra",
+  Russian = "rus",
+}
+
+export function GetOCRLanguage(text: string) {
+  if (text == "eng") return OCRLanguage.English;
+  if (text == "kor") return OCRLanguage.Korean;
+  if (text == "spa") return OCRLanguage.Spanish;
+  if (text == "fra") return OCRLanguage.French;
+  if (text == "rus") return OCRLanguage.Russian;
+
+  return OCRLanguage.English;
 }
