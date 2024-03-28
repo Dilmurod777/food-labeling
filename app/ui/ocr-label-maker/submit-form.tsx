@@ -265,6 +265,8 @@ export default function SubmitForm({ user }: Props) {
         .map((line) => line.words.map((w) => w.text).join(" "))
         .join("\n");
 
+      // console.log(result.data.words.map((w) => w.text).join("\n"));
+
       if (language != OCRLanguage.English) {
         const translation = await fetch("/api/translate", {
           method: "POST",
@@ -277,6 +279,8 @@ export default function SubmitForm({ user }: Props) {
 
         text = await translation.json();
       }
+
+      console.log(text);
 
       const lines = text.split("\n");
 
@@ -347,14 +351,16 @@ export default function SubmitForm({ user }: Props) {
       data.user_id = user.id;
       data.updated_at = Date.now().toString();
 
-      await worker.terminate();
-      const id = await actionsProducts.create(data);
+      console.log(data);
 
-      if (id == "-1") {
-        router.push("/dashboard");
-      } else {
-        router.push(`/products/${id}/edit`);
-      }
+      await worker.terminate();
+      // const id = await actionsProducts.create(data);
+      //
+      // if (id == "-1") {
+      //   router.push("/dashboard");
+      // } else {
+      //   router.push(`/products/${id}/edit`);
+      // }
     } finally {
       setExtracting(false);
     }
