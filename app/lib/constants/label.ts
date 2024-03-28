@@ -13,15 +13,15 @@ export enum LabelType {
   LinearStandard = "linear-standard",
 }
 
-export enum LabelLanguage {
+export enum Language {
   Korean = "ko",
-  Spanish = "es",
-  Portuguese = "pt",
-  French = "fr",
-  Italian = "it",
-  Japanese = "ja",
-  Hindi = "hi",
-  Russian = "ru",
+  // Spanish = "es",
+  // Portuguese = "pt",
+  // French = "fr",
+  // Italian = "it",
+  // Japanese = "ja",
+  // Hindi = "hi",
+  // Russian = "ru",
   English = "en",
 }
 

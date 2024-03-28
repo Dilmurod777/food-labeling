@@ -9,7 +9,7 @@ import Pagination from "@/app/ui/pagination";
 import { NET_WEIGHT_UNIT } from "@/app/lib/constants/product";
 import { convertStringToNetWeight } from "@/app/lib/utilities";
 import { MdGTranslate, MdOutlineRotateRight } from "react-icons/md";
-import { LabelLanguage } from "@/app/lib/constants/label";
+import { Language } from "@/app/lib/constants/label";
 
 interface Props {
   product: Product;
@@ -27,6 +27,7 @@ export default function GeneralPage({
     JSON.parse(product.items || "[]"),
   );
   const inputRef = useRef<HTMLInputElement>(null);
+  const valueKrRef = useRef("");
   const [page, setPage] = useState(0);
   const [translating, setTranslating] = useState(false);
   const perPage = 10;
@@ -40,6 +41,7 @@ export default function GeneralPage({
       ...JSON.parse(JSON.stringify(DefaultIngredient)),
       name: inputRef.current?.value.trim() || "no-name",
       label_name: inputRef.current?.value.trim() || "no-name",
+      label_name_kr: valueKrRef.current || "",
     });
 
     setItems(newItems);
@@ -48,6 +50,7 @@ export default function GeneralPage({
     });
 
     inputRef.current.value = "";
+    valueKrRef.current = "";
   };
 
   const removeIngredient = (index: number) => {
@@ -68,12 +71,13 @@ export default function GeneralPage({
       method: "POST",
       body: JSON.stringify({
         text: inputRef.current.value.trim(),
-        source: LabelLanguage.Korean,
-        target: LabelLanguage.English,
+        source: Language.Korean,
+        target: Language.English,
       }),
     });
 
     const text = await response.json();
+    valueKrRef.current = inputRef.current.value.trim();
     inputRef.current.value = text;
 
     setTranslating(false);

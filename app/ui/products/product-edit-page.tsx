@@ -266,6 +266,11 @@ export default function ProductEditPage({ product, user }: Props) {
           type: "checkbox",
           value: false,
         },
+        {
+          key: "show_ingredients_in_english",
+          type: "checkbox",
+          value: true,
+        },
       ],
     },
   ];

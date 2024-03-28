@@ -10,6 +10,7 @@ import {
 import { getUnitByName } from "@/app/lib/constants/nutrients-units";
 import { Fragment, useEffect, useState } from "react";
 import { NET_WEIGHT_UNIT } from "@/app/lib/constants/product";
+import { Language } from "@/app/lib/constants/label";
 
 interface Props {
   product: Product;
@@ -100,6 +101,7 @@ export default function VerticalDualLanguage({
       body: JSON.stringify({
         text: Object.values(keywords).join("; "),
         target: labelLanguage,
+        source: Language.English,
       }),
     })
       .then((response) => response.json())
