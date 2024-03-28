@@ -8,6 +8,8 @@ import { MdDelete } from "react-icons/md";
 import Pagination from "@/app/ui/pagination";
 import { NET_WEIGHT_UNIT } from "@/app/lib/constants/product";
 import { convertStringToNetWeight } from "@/app/lib/utilities";
+import { MdGTranslate, MdOutlineRotateRight } from "react-icons/md";
+import { Language } from "@/app/lib/constants/label";
 
 interface Props {
   product: Product;
@@ -25,7 +27,9 @@ export default function GeneralPage({
     JSON.parse(product.items || "[]"),
   );
   const inputRef = useRef<HTMLInputElement>(null);
+  const valueKrRef = useRef("");
   const [page, setPage] = useState(0);
+  const [translating, setTranslating] = useState(false);
   const perPage = 10;
   const totalPages = Math.ceil(items.length / perPage);
 
@@ -37,6 +41,7 @@ export default function GeneralPage({
       ...JSON.parse(JSON.stringify(DefaultIngredient)),
       name: inputRef.current?.value.trim() || "no-name",
       label_name: inputRef.current?.value.trim() || "no-name",
+      label_name_kr: valueKrRef.current || "",
     });
 
     setItems(newItems);
@@ -45,6 +50,7 @@ export default function GeneralPage({
     });
 
     inputRef.current.value = "";
+    valueKrRef.current = "";
   };
 
   const removeIngredient = (index: number) => {
@@ -54,6 +60,27 @@ export default function GeneralPage({
     updateProduct({
       items: JSON.stringify(newItems),
     });
+  };
+
+  const translateIngredient = async () => {
+    if (!inputRef.current?.value) return;
+    if (translating) return;
+    setTranslating(true);
+
+    const response = await fetch("/api/translate", {
+      method: "POST",
+      body: JSON.stringify({
+        text: inputRef.current.value.trim(),
+        source: Language.Korean,
+        target: Language.English,
+      }),
+    });
+
+    const text = await response.json();
+    valueKrRef.current = inputRef.current.value.trim();
+    inputRef.current.value = text;
+
+    setTranslating(false);
   };
 
   return (
@@ -201,20 +228,37 @@ export default function GeneralPage({
               <span>Add</span>
             </div>
 
-            <input
-              ref={inputRef}
-              type="text"
-              placeholder={"Enter ingredient name..."}
-              className={
-                "flex-grow rounded-md border-2 border-main-gray px-2 py-2 text-sm outline-none placeholder:text-sm placeholder:text-main-gray focus-within:border-main-orange"
-              }
-              onFocus={(e) => e.target.select()}
-              onKeyDown={(e) => {
-                if (e.key == "Enter") {
-                  addIngredient();
+            <div className={"relative flex-grow"}>
+              <input
+                ref={inputRef}
+                type="text"
+                placeholder={"Enter ingredient name..."}
+                className={
+                  "w-full rounded-md border-2 border-main-gray px-2 py-2 pr-12 text-sm outline-none placeholder:text-sm placeholder:text-main-gray focus-within:border-main-orange"
                 }
-              }}
-            />
+                onFocus={(e) => e.target.select()}
+                onKeyDown={(e) => {
+                  if (e.key == "Enter") {
+                    addIngredient();
+                  }
+                }}
+              />
+
+              <div
+                className={
+                  "group absolute right-0 top-0 flex h-full w-10 cursor-pointer items-center justify-center rounded-r-md bg-main-orange text-xl text-white"
+                }
+                onClick={translateIngredient}
+              >
+                {translating ? (
+                  <MdOutlineRotateRight className={"animate-spin"} />
+                ) : (
+                  <MdGTranslate
+                    className={"transition-all group-hover:scale-110"}
+                  />
+                )}
+              </div>
+            </div>
           </div>
 
           <div className={"flex flex-col gap-2"}>

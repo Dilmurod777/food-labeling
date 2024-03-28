@@ -15,7 +15,7 @@ import ProductLabel from "@/app/ui/products/product-label";
 import OptionWrapper from "@/app/ui/products/label-page/option-wrapper";
 import OptionCheckbox from "@/app/ui/products/label-page/option-checkbox";
 import OptionSlider from "@/app/ui/products/label-page/option-slider";
-import { LabelLanguage, LabelType } from "@/app/lib/constants/label";
+import { Language, LabelType } from "@/app/lib/constants/label";
 import jsPDF from "jspdf";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
@@ -60,7 +60,7 @@ export default function LabelPage({
     label.type || LabelType.VerticalStandard.toString(),
   );
   const [labelLanguage, setLabelLanguage] = useState(
-    label.language || LabelLanguage.Korean,
+    label.language || Language.Korean,
   );
   const items: Ingredient[] = JSON.parse(product.items || "[]");
   const [allergens, setAllergens] = useState<Allergens[]>(
@@ -381,16 +381,16 @@ export default function LabelPage({
                 onChange={(e) => setLabelLanguage(e.target.value)}
                 defaultValue={labelType}
               >
-                <option value={LabelLanguage.Korean}>Korean</option>
-                <option value={LabelLanguage.Spanish}>Spanish</option>
-                <option value={LabelLanguage.Portuguese}>
-                  Portuguese (Portugal, Brazil)
-                </option>
-                <option value={LabelLanguage.French}>French</option>
-                <option value={LabelLanguage.Italian}>Italian</option>
-                <option value={LabelLanguage.Japanese}>Japanese</option>
-                <option value={LabelLanguage.Hindi}>Hindi</option>
-                <option value={LabelLanguage.Russian}>Russian</option>
+                <option value={Language.Korean}>Korean</option>
+                {/*<option value={Language.Spanish}>Spanish</option>*/}
+                {/*<option value={Language.Portuguese}>*/}
+                {/*  Portuguese (Portugal, Brazil)*/}
+                {/*</option>*/}
+                {/*<option value={Language.French}>French</option>*/}
+                {/*<option value={Language.Italian}>Italian</option>*/}
+                {/*<option value={Language.Japanese}>Japanese</option>*/}
+                {/*<option value={Language.Hindi}>Hindi</option>*/}
+                {/*<option value={Language.Russian}>Russian</option>*/}
               </select>
             )}
           </div>

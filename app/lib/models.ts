@@ -90,6 +90,7 @@ export type Label = {
 export interface Ingredient extends IIngredient {
   name: string;
   label_name: string;
+  label_name_kr: string;
   weight: number;
 }
 
@@ -154,6 +155,7 @@ export const DefaultProduct: Product = {
 
 export const DefaultIngredient: Ingredient = {
   label_name: "",
+  label_name_kr: "",
   name: "",
   weight: 0,
 };

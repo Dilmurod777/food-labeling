@@ -471,7 +471,15 @@ export default function ProductLabel({
                 <strong>Ingredients: </strong>
                 {items
                   .sort((a, b) => b.weight - a.weight)
-                  .map((item) => capitalize(item.label_name || item.name || ""))
+                  .map((item) =>
+                    capitalize(
+                      (labelState.show_ingredients_in_english
+                        ? item.label_name
+                        : item.label_name_kr) ||
+                        item.name ||
+                        "",
+                    ),
+                  )
                   .filter((item) => item.length)
                   .join(", ")}
                 {items.length == 0 && "None"}.
