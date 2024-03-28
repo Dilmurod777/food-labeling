@@ -396,13 +396,15 @@ export function convertOCRLangToLabelLang(from: OCRLanguage) {
   switch (from) {
     case OCRLanguage.Korean:
       return Language.Korean;
-    case OCRLanguage.French:
-      return Language.French;
+    // case OCRLanguage.French:
+    //   return Language.French;
     case OCRLanguage.English:
       return Language.English;
-    case OCRLanguage.Russian:
-      return Language.Russian;
-    case OCRLanguage.Spanish:
-      return Language.Spanish;
+    // case OCRLanguage.Russian:
+    //   return Language.Russian;
+    // case OCRLanguage.Spanish:
+    //   return Language.Spanish;
+    default:
+      return Language.English;
   }
 }
