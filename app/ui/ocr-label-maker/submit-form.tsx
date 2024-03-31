@@ -263,7 +263,7 @@ export default function SubmitForm({ user }: Props) {
         router.push(`/products/${id}/edit`);
       }
     } finally {
-      setSaving(false);
+      // setSaving(false);
     }
   };
 

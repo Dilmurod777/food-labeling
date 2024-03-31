@@ -24,10 +24,11 @@ export default function OCRNutrientsList({
             }}
           ></h3>
           <input
+            type={"number"}
             className={
               "border border-main-gray px-2 py-2 text-sm outline-none focus-visible:border-main-orange"
             }
-            defaultValue={item.value}
+            value={item.value}
             onChange={(e) => updateValue(i, e.target.valueAsNumber)}
           />
         </div>
