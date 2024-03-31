@@ -9,13 +9,18 @@ import { Ingredient } from "@/app/lib/models";
 
 interface Props {
   language: OCRLanguage;
+  ingredients: Ingredient[];
+  setIngredients: (i: Ingredient[]) => void;
 }
 
-export default function OcrIngredientsForm({ language }: Props) {
+export default function OcrIngredientsForm({
+  language,
+  ingredients,
+  setIngredients,
+}: Props) {
   const [fileUploaded, setFileUploaded] = useState<File>();
   const [extracting, setExtracting] = useState(false);
   const [words, setWords] = useState<Word[]>([]);
-  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
   const imageSize = 500;
   const inputRef = useRef<HTMLInputElement>(null);

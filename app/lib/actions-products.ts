@@ -47,9 +47,9 @@ export async function create(data: Product, name = ""): Promise<string> {
     if (name == "") {
       rest.name = "Product " + randomBytes(10).toString("hex");
     } else {
-      rest.updated_at = Date.now().toString();
       rest.name = name;
     }
+    rest.updated_at = Date.now().toString();
 
     const values = Object.values(rest).map((value) => {
       if (typeof value == "string") {

@@ -1,25 +1,33 @@
 import { useState } from "react";
-import { createWorker, Word } from "tesseract.js";
+import { createWorker, Line, Word } from "tesseract.js";
 import { OCRLanguage } from "@/app/lib/constants/label";
 import { convertOCRLangToLabelLang } from "@/app/lib/utilities";
 import levenshtein from "js-levenshtein";
 import { getUnitByName } from "@/app/lib/constants/nutrients-units";
 import { getDVByName } from "@/app/lib/constants/daily-value";
 import { DefaultProduct, Product, User } from "@/app/lib/models";
-import { searchWords } from "@/app/lib/ocr";
 import OCRImageUploader from "@/app/ui/ocr-label-maker/ocr-image-uploader";
 import OCRImageViewer from "@/app/ui/ocr-label-maker/ocr-image-viewer";
 import OCRExtractButton from "@/app/ui/ocr-label-maker/ocr-extract-button";
+import { SearchKeyword } from "@/app/lib/ocr";
+import OCRNutrientsList from "@/app/ui/ocr-label-maker/ocr-nutrients-list";
 
 interface Props {
   language: OCRLanguage;
   user: User;
+  searchKeywords: SearchKeyword[];
+  setSearchKeywords: (sk: SearchKeyword[]) => void;
 }
 
-export default function OcrNutrientsForm({ language, user }: Props) {
+export default function OcrNutrientsForm({
+  language,
+  user,
+  searchKeywords,
+  setSearchKeywords,
+}: Props) {
   const [fileUploaded, setFileUploaded] = useState<File>();
   const [extracting, setExtracting] = useState(false);
-  const [words, setWords] = useState<Word[]>([]);
+  const [wordBoxes, setWordBoxes] = useState<Word[]>([]);
 
   const imageSize = 500;
 
@@ -53,13 +61,13 @@ export default function OcrNutrientsForm({ language, user }: Props) {
 
       lines.forEach((line) => {
         const words = line.split(" ");
-        for (let i in searchWords) {
-          if (searchWords[i].disabled) continue;
+        for (let i in searchKeywords) {
+          if (searchKeywords[i].disabled) continue;
 
           const formattedSearchWords: string[] =
-            typeof searchWords[i].searchWords == "string"
-              ? [searchWords[i].searchWords as string]
-              : (searchWords[i].searchWords as string[]);
+            typeof searchKeywords[i].searchWords == "string"
+              ? [searchKeywords[i].searchWords as string]
+              : (searchKeywords[i].searchWords as string[]);
 
           formattedSearchWords.forEach((word) => {
             const formattedSearchWord = word.toLowerCase();
@@ -83,40 +91,32 @@ export default function OcrNutrientsForm({ language, user }: Props) {
 
             if (indexes.length > 0) {
               const valueIndex =
-                searchWords[i].searchPosition == "after"
+                searchKeywords[i].searchPosition == "after"
                   ? indexes[0] + count
                   : indexes[0] - 1;
 
               if (valueIndex >= 0 && valueIndex < words.length) {
                 const value = words[valueIndex].replaceAll(
-                  getUnitByName(searchWords[i].dbKey),
+                  getUnitByName(searchKeywords[i].dbKey),
                   "",
                 );
 
                 if ("0123456789".includes(value[0])) {
-                  searchWords[i].value = value.endsWith("%")
+                  searchKeywords[i].value = value.endsWith("%")
                     ? (parseFloat(
-                        getDVByName(searchWords[i].dbKey, "default"),
+                        getDVByName(searchKeywords[i].dbKey, "default"),
                       ) *
                         parseFloat(value)) /
                       100
                     : parseFloat(value);
+
+                  setSearchKeywords(searchKeywords);
                 }
               }
             }
           });
         }
       });
-
-      const data = searchWords.reduce<Product>(
-        (obj, item) => {
-          obj[item.dbKey] = item.value;
-          return obj;
-        },
-        JSON.parse(JSON.stringify(DefaultProduct)),
-      );
-      data.user_id = user.id;
-      data.updated_at = Date.now().toString();
 
       await worker.terminate();
     } finally {
@@ -126,6 +126,10 @@ export default function OcrNutrientsForm({ language, user }: Props) {
 
   const selectBoxHandler = (word: string) => {
     console.log(word);
+  };
+
+  const updateValue = (index: number, value: number) => {
+    console.log(index, value);
   };
 
   return (
@@ -139,14 +143,14 @@ export default function OcrNutrientsForm({ language, user }: Props) {
           <OCRImageUploader
             uploadHandler={(file) => {
               setFileUploaded(file);
-              setWords([]);
+              setWordBoxes([]);
             }}
             size={imageSize}
           />
           {fileUploaded && (
             <OCRImageViewer
               file={fileUploaded}
-              words={words}
+              words={wordBoxes}
               selectBoxHandler={selectBoxHandler}
               size={imageSize}
             />
@@ -156,6 +160,10 @@ export default function OcrNutrientsForm({ language, user }: Props) {
           extracting={extracting}
           fileUploaded={!!fileUploaded}
           clickHandler={ocrHandler}
+        />
+        <OCRNutrientsList
+          searchKeywords={[...searchKeywords]}
+          updateValue={updateValue}
         />
       </div>
     </div>

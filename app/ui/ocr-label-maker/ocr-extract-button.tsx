@@ -11,7 +11,7 @@ export default function OCRExtractButton({
 }: Props) {
   return (
     <div
-      className={`w-36 rounded-md px-4 py-4 text-center ${fileUploaded ? "cursor-pointer bg-main-orange text-white hover:bg-hover-main-orange" : "cursor-not-allowed bg-main-gray text-secondary-gray"}`}
+      className={`min-w-36 rounded-md px-4 py-4 text-center ${fileUploaded ? "cursor-pointer bg-main-orange text-white hover:bg-hover-main-orange" : "cursor-not-allowed bg-main-gray text-secondary-gray"}`}
       onClick={clickHandler}
     >
       {extracting ? "Extracting" : "Extract"}
