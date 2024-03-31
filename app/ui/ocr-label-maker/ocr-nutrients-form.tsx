@@ -129,7 +129,8 @@ export default function OcrNutrientsForm({
   };
 
   const updateValue = (index: number, value: number) => {
-    console.log(index, value);
+    searchKeywords[index].value = value;
+    setSearchKeywords(searchKeywords);
   };
 
   return (
