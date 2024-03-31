@@ -18,8 +18,8 @@ export default function OCRIngredientsList({
   const nameMaxLength = 50;
 
   return (
-    <div className={"flex w-full flex-grow flex-col gap-2"}>
-      <div className={"flex w-full flex-grow gap-4"}>
+    <div className={"flex flex-grow flex-col gap-2"}>
+      <div className={"flex w-full gap-4"}>
         <input
           ref={inputRef}
           className={

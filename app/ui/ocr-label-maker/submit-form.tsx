@@ -11,8 +11,8 @@ import { GetOCRLanguage, OCRLanguage } from "@/app/lib/constants/label";
 import * as actionsProducts from "@/app/lib/actions-products";
 import { useRouter } from "next/navigation";
 import { convertOCRLangToLabelLang } from "@/app/lib/utilities";
-import IngredientsOCRForm from "@/app/ui/ocr-label-maker/ingredients-ocr-form";
-import NutrientsOCRForm from "@/app/ui/ocr-label-maker/nutrients-ocr-form";
+import OcrIngredientsForm from "@/app/ui/ocr-label-maker/ocr-ingredients-form";
+import OcrNutrientsForm from "@/app/ui/ocr-label-maker/ocr-nutrients-form";
 import OCRLanguageSelect from "@/app/ui/ocr-label-maker/ocr-language-select";
 
 interface Props {
@@ -32,8 +32,9 @@ export default function SubmitForm({ user }: Props) {
     >
       <OCRLanguageSelect defaultLanguage={language} onChange={setLanguage} />
       <hr className={"w-full border border-main-orange"} />
-      <IngredientsOCRForm language={language} />
-      <NutrientsOCRForm language={language} user={user} />
+      <OcrIngredientsForm language={language} />
+      <hr className={"w-full border border-main-orange"} />
+      <OcrNutrientsForm language={language} user={user} />
     </div>
   );
 }

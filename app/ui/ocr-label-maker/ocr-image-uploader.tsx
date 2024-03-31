@@ -1,5 +1,6 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { v4 as uuidV4 } from "uuid";
 
 interface Props {
   uploadHandler: (file: File) => void;
@@ -7,10 +8,16 @@ interface Props {
 }
 
 export default function OCRImageUploader({ uploadHandler, size }: Props) {
+  const [id, setId] = useState("0");
+
+  useEffect(() => {
+    setId(uuidV4());
+  }, []);
+
   return (
     <div className={"flex flex-col gap-3"} style={{ width: `${size}px` }}>
       <label
-        htmlFor="dropzone-file"
+        htmlFor={`dropzone-file-${id}`}
         className="flex h-16 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-white hover:bg-main-gray"
       >
         <div className="flex items-center justify-center gap-4 px-6 py-5">
@@ -39,7 +46,7 @@ export default function OCRImageUploader({ uploadHandler, size }: Props) {
             </p>
           </div>
           <input
-            id="dropzone-file"
+            id={`dropzone-file-${id}`}
             type="file"
             className="hidden"
             onChange={(e) => {

@@ -3,6 +3,7 @@ export interface SearchKeyword {
   value: number;
   searchWords: string | string[];
   searchPosition: "before" | "after";
+  disabled?: boolean;
 }
 
 export const searchWords: SearchKeyword[] = [

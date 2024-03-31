@@ -11,11 +11,10 @@ interface Props {
   language: OCRLanguage;
 }
 
-export default function IngredientsOCRForm({ language }: Props) {
+export default function OcrIngredientsForm({ language }: Props) {
   const [fileUploaded, setFileUploaded] = useState<File>();
   const [extracting, setExtracting] = useState(false);
   const [words, setWords] = useState<Word[]>([]);
-  const [selectedWords, setSelectedWords] = useState();
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
   const imageSize = 500;
@@ -75,38 +74,41 @@ export default function IngredientsOCRForm({ language }: Props) {
   };
 
   return (
-    <div className={"flex w-full items-start justify-between gap-4"}>
-      <div
-        className={"flex flex-col gap-2"}
-        style={{ width: `${imageSize}px` }}
-      >
-        <OCRImageUploader
-          uploadHandler={(file) => {
-            setFileUploaded(file);
-            setWords([]);
-          }}
-          size={imageSize}
-        />
-        {fileUploaded && (
-          <OCRImageViewer
-            file={fileUploaded}
-            words={words}
-            selectBoxHandler={selectBoxHandler}
+    <div className={"flex flex-col gap-2"}>
+      <h2 className={"text-2xl font-bold"}>Ingredients</h2>
+      <div className={"flex w-full items-start justify-between gap-4"}>
+        <div
+          className={"flex flex-col gap-2"}
+          style={{ width: `${imageSize}px` }}
+        >
+          <OCRImageUploader
+            uploadHandler={(file) => {
+              setFileUploaded(file);
+              setWords([]);
+            }}
             size={imageSize}
           />
-        )}
+          {fileUploaded && (
+            <OCRImageViewer
+              file={fileUploaded}
+              words={words}
+              selectBoxHandler={selectBoxHandler}
+              size={imageSize}
+            />
+          )}
+        </div>
+        <OCRExtractButton
+          extracting={extracting}
+          fileUploaded={!!fileUploaded}
+          clickHandler={ocrHandler}
+        />
+        <OCRIngredientsList
+          ingredients={ingredients}
+          addIngredient={addIngredient}
+          removeIngredient={removeIngredient}
+          inputRef={inputRef}
+        />
       </div>
-      <OCRExtractButton
-        extracting={extracting}
-        fileUploaded={!!fileUploaded}
-        clickHandler={ocrHandler}
-      />
-      <OCRIngredientsList
-        ingredients={ingredients}
-        addIngredient={addIngredient}
-        removeIngredient={removeIngredient}
-        inputRef={inputRef}
-      />
     </div>
   );
 }
