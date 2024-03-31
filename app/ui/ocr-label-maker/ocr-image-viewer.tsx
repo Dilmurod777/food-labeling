@@ -1,23 +1,70 @@
 import { Bbox, Word } from "tesseract.js";
-import React, { useEffect, useRef } from "react";
-import Image from "next/image";
+import React, { useEffect, useRef, useState } from "react";
+import NextImage from "next/image";
 
 interface Props {
   file: File;
   words: Word[];
+  selectBoxHandler: (word: string) => void;
+  size: number;
 }
 
-export default function OCRImageViewer({ file, words }: Props) {
+interface ImageData {
+  ratio: number;
+  url: string;
+  startX: number;
+  startY: number;
+}
+
+export default function OCRImageViewer({
+  file,
+  words,
+  selectBoxHandler,
+  size,
+}: Props) {
+  const [loading, setLoading] = useState(true);
+  const [imageData, setImageData] = useState<ImageData>({
+    ratio: 1,
+    url: "",
+    startX: 0,
+    startY: 0,
+  });
+
+  useEffect(() => {
+    setLoading(true);
+
+    const image = new Image();
+    image.src = URL.createObjectURL(file);
+
+    image.onload = () => {
+      const maxDimension = Math.max(image.width, image.height);
+      const ratio = size / maxDimension;
+
+      setImageData({
+        ...imageData,
+        url: image.src,
+        ratio: ratio,
+        startX: (size - image.width * ratio) / 2,
+        startY: (size - image.height * ratio) / 2,
+      });
+
+      setLoading(false);
+    };
+  }, [file, words]);
+
+  if (loading) return;
+
   return (
     <div
       className={
-        "relative flex h-96 w-96 items-start justify-start rounded-md border border-main-gray"
+        "relative flex items-start justify-start rounded-md border border-main-gray"
       }
+      style={{ width: `${size}px`, height: `${size}px` }}
     >
       {file && (
         <>
-          <Image
-            src={URL.createObjectURL(file)}
+          <NextImage
+            src={imageData.url}
             alt="Uploaded"
             fill
             style={{ objectFit: "contain" }}
@@ -33,13 +80,14 @@ export default function OCRImageViewer({ file, words }: Props) {
                   key={index}
                   style={{
                     position: "absolute",
-                    left: `${bbox.x0}px`,
-                    top: `${bbox.y0}px`,
-                    width: `${bbox.x1 - bbox.x0}px`,
-                    height: `${bbox.y1 - bbox.y0}px`,
+                    left: `${imageData.startX + bbox.x0 * imageData.ratio}px`,
+                    top: `${imageData.startY + bbox.y0 * imageData.ratio}px`,
+                    width: `${(bbox.x1 - bbox.x0) * imageData.ratio}px`,
+                    height: `${(bbox.y1 - bbox.y0) * imageData.ratio}px`,
                     border: "2px solid red",
                   }}
                   title={`Text: ${text}, Confidence: ${confidence}`}
+                  onClick={() => selectBoxHandler(word.text)}
                 ></div>
               );
             })}

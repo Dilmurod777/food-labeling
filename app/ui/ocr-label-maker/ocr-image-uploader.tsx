@@ -3,11 +3,12 @@ import Image from "next/image";
 
 interface Props {
   uploadHandler: (file: File) => void;
+  size: number;
 }
 
-export default function OCRImageUploader({ uploadHandler }: Props) {
+export default function OCRImageUploader({ uploadHandler, size }: Props) {
   return (
-    <div className={"flex flex-col gap-3"}>
+    <div className={"flex flex-col gap-3"} style={{ width: `${size}px` }}>
       <label
         htmlFor="dropzone-file"
         className="flex h-16 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-white hover:bg-main-gray"
