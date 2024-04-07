@@ -2,6 +2,10 @@ import { Product } from "@/app/lib/models";
 import { getDVByName } from "@/app/lib/constants/daily-value";
 import { NET_WEIGHT_UNIT } from "@/app/lib/constants/product";
 import { Language, OCRLanguage } from "@/app/lib/constants/label";
+import {
+  CommonWords,
+  WordReplacements,
+} from "@/app/lib/constants/common-ingredients";
 
 export function overflowText(text: string, max_length = 30): string {
   if (text.length <= max_length) return text;
@@ -390,6 +394,53 @@ export function calculateHammingDistance(str1: string, str2: string) {
     if (str1[i] !== str2[i]) distance += 1;
   }
   return distance;
+}
+
+export function levenshteinDistance(word1: string, word2: string) {
+  if (word1.length < word2.length) {
+    return levenshteinDistance(word2, word1);
+  }
+
+  if (word2.length === 0) {
+    return word1.length;
+  }
+
+  let previousRow = Array.from({ length: word2.length + 1 }, (_, i) => i);
+
+  for (let i = 0; i < word1.length; i++) {
+    let currentRow = [i + 1];
+
+    for (let j = 0; j < word2.length; j++) {
+      let insertions = previousRow[j + 1] + 1;
+      let deletions = currentRow[j] + 1;
+      let substitutions = previousRow[j] + (word1[i] !== word2[j] ? 1 : 0);
+      currentRow.push(Math.min(insertions, deletions, substitutions));
+    }
+
+    previousRow = currentRow;
+  }
+
+  return previousRow[word2.length];
+}
+
+export function getSuggestions(word: string, threshold = 2) {
+  const suggestions: string[] = [];
+
+  for (const dictWord of Object.keys(WordReplacements)) {
+    const distance = levenshteinDistance(word, dictWord);
+    if (distance <= threshold) {
+      suggestions.push(...WordReplacements[dictWord]);
+    }
+  }
+
+  for (const commonWord of CommonWords) {
+    const distance = levenshteinDistance(word, commonWord);
+    if (distance <= threshold) {
+      suggestions.push(commonWord);
+    }
+  }
+
+  return suggestions;
 }
 
 export function convertOCRLangToLabelLang(from: OCRLanguage) {

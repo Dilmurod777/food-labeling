@@ -7,9 +7,13 @@ import { FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Pagination from "@/app/ui/pagination";
 import { NET_WEIGHT_UNIT } from "@/app/lib/constants/product";
-import { convertStringToNetWeight } from "@/app/lib/utilities";
+import { convertStringToNetWeight, getSuggestions } from "@/app/lib/utilities";
 import { MdGTranslate, MdOutlineRotateRight } from "react-icons/md";
 import { Language } from "@/app/lib/constants/label";
+import { Simulate } from "react-dom/test-utils";
+import input = Simulate.input;
+import { WordReplacements } from "@/app/lib/constants/common-ingredients";
+import { debounce } from "next/dist/server/utils";
 
 interface Props {
   product: Product;
@@ -32,6 +36,7 @@ export default function GeneralPage({
   const [translating, setTranslating] = useState(false);
   const perPage = 10;
   const totalPages = Math.ceil(items.length / perPage);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
 
   const addIngredient = () => {
     if (!inputRef.current?.value) return;
@@ -242,6 +247,21 @@ export default function GeneralPage({
                     addIngredient();
                   }
                 }}
+                onSelectCapture={() => {
+                  if (!inputRef.current) return;
+
+                  let text = inputRef.current.value;
+                  let start = inputRef.current.selectionStart;
+                  let end = inputRef.current.selectionEnd;
+
+                  if (start == end || start == null || end == null) {
+                    setSuggestions([]);
+                    return;
+                  }
+
+                  let suggestions = getSuggestions(text.slice(start, end));
+                  setSuggestions(suggestions);
+                }}
               />
 
               <div
@@ -257,6 +277,37 @@ export default function GeneralPage({
                     className={"transition-all group-hover:scale-110"}
                   />
                 )}
+              </div>
+
+              <div
+                className={
+                  "absolute left-0 right-0 top-full flex flex-col gap-0.5 pt-0.5"
+                }
+              >
+                {suggestions.slice(0, 10).map((item, i) => (
+                  <div
+                    key={`suggestion-${i}`}
+                    className={
+                      "w-full cursor-pointer rounded-md border border-main-orange bg-white px-2 py-0.5 text-xs text-main-orange hover:bg-main-orange hover:text-white"
+                    }
+                    onClick={() => {
+                      if (!inputRef.current) return;
+
+                      let text = inputRef.current.value;
+                      let start = inputRef.current.selectionStart;
+                      let end = inputRef.current.selectionEnd;
+
+                      if (start == end || start == null || end == null) return;
+
+                      inputRef.current.value =
+                        text.slice(0, start) + item + text.slice(end);
+
+                      setSuggestions([]);
+                    }}
+                  >
+                    {item}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
