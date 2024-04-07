@@ -34,7 +34,7 @@ export default function OCRIngredientsList({
           onClick={() => {
             if (!inputRef.current) return;
 
-            addIngredient(inputRef.current?.value ?? "");
+            addIngredient(inputRef.current?.value.trim() ?? "");
             inputRef.current.value = "";
           }}
         >

@@ -1,4 +1,5 @@
 import { type NextRequest } from "next/server";
+
 const { Translate } = require("@google-cloud/translate").v2;
 
 const translate = new Translate({

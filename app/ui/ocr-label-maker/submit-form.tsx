@@ -2,15 +2,12 @@
 
 import { useState } from "react";
 import { DefaultProduct, Ingredient, Product, User } from "@/app/lib/models";
-import Image from "next/image";
-import { createWorker, Lang } from "tesseract.js";
-import levenshtein from "js-levenshtein";
-import { getUnitByName } from "@/app/lib/constants/nutrients-units";
-import { getDVByName } from "@/app/lib/constants/daily-value";
-import { GetOCRLanguage, OCRLanguage } from "@/app/lib/constants/label";
-import * as actionsProducts from "@/app/lib/actions-products";
+import {
+  GetOCRLanguage,
+  Language,
+  OCRLanguage,
+} from "@/app/lib/constants/label";
 import { useRouter } from "next/navigation";
-import { convertOCRLangToLabelLang } from "@/app/lib/utilities";
 import OcrIngredientsForm from "@/app/ui/ocr-label-maker/ocr-ingredients-form";
 import OcrNutrientsForm from "@/app/ui/ocr-label-maker/ocr-nutrients-form";
 import OCRLanguageSelect from "@/app/ui/ocr-label-maker/ocr-language-select";
@@ -244,7 +241,30 @@ export default function SubmitForm({ user }: Props) {
     setSaving(true);
     const product: Product = JSON.parse(JSON.stringify(DefaultProduct));
     product.user_id = user.id;
-    product.items = JSON.stringify(ingredients);
+
+    const translatedIngredients: Ingredient[] = [];
+
+    if (ingredients.length > 0) {
+      const response = await fetch("/api/translate", {
+        method: "POST",
+        body: JSON.stringify({
+          text: ingredients.map((item) => item.name).join("\n"),
+          source: Language.Korean,
+          target: Language.English,
+        }),
+      });
+      const data: string = await response.json();
+      data.split("\n").forEach((item, i) => {
+        translatedIngredients.push({
+          name: item,
+          label_name: item,
+          label_name_kr: ingredients[i].name,
+          weight: 0,
+        });
+      });
+    }
+
+    product.items = JSON.stringify(translatedIngredients);
 
     searchKeywords.forEach((searchKeyword) => {
       product[searchKeyword.dbKey] = searchKeyword.value;

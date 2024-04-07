@@ -17,9 +17,9 @@ export default function OCRLanguageSelect({
     >
       <option value={OCRLanguage.English}>English</option>
       <option value={OCRLanguage.Korean}>Korean</option>
-      <option value={OCRLanguage.Spanish}>Spanish</option>
-      <option value={OCRLanguage.French}>French</option>
-      <option value={OCRLanguage.Russian}>Russian</option>
+      {/*<option value={OCRLanguage.Spanish}>Spanish</option>*/}
+      {/*<option value={OCRLanguage.French}>French</option>*/}
+      {/*<option value={OCRLanguage.Russian}>Russian</option>*/}
     </select>
   );
 }

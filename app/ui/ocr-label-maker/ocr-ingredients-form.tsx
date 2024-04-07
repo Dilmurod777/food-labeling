@@ -55,7 +55,7 @@ export default function OcrIngredientsForm({
   const selectBoxHandler = (word: string) => {
     if (!inputRef.current) return;
 
-    inputRef.current.value += ` ${word}`;
+    inputRef.current.value = (inputRef.current.value + ` ${word}`).trim();
   };
 
   const addIngredient = (text: string) => {
