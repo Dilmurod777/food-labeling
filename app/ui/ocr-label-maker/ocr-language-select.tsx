@@ -15,8 +15,8 @@ export default function OCRLanguageSelect({
       onChange={(e) => onChange(GetOCRLanguage(e.target.value))}
       defaultValue={defaultLanguage}
     >
-      <option value={OCRLanguage.English}>English</option>
       <option value={OCRLanguage.Korean}>Korean</option>
+      <option value={OCRLanguage.English}>English</option>
       {/*<option value={OCRLanguage.Spanish}>Spanish</option>*/}
       {/*<option value={OCRLanguage.French}>French</option>*/}
       {/*<option value={OCRLanguage.Russian}>Russian</option>*/}

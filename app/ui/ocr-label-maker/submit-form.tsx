@@ -22,7 +22,7 @@ export default function SubmitForm({ user }: Props) {
   const [saving, setSaving] = useState(false);
   const [extracting, setExtracting] = useState(false);
   const router = useRouter();
-  const [language, setLanguage] = useState(OCRLanguage.English);
+  const [language, setLanguage] = useState(OCRLanguage.Korean);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [searchKeywords, setSearchKeywords] = useState<SearchKeyword[]>([
     {
