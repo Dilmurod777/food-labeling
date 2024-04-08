@@ -1,6 +1,7 @@
-import { Bbox, Word } from "tesseract.js";
+import { Bbox } from "tesseract.js";
 import React, { useEffect, useRef, useState } from "react";
 import NextImage from "next/image";
+import { Word } from "@/app/lib/constants/label";
 
 interface Props {
   file: File;
@@ -14,6 +15,8 @@ interface ImageData {
   url: string;
   startX: number;
   startY: number;
+  width: number;
+  height: number;
 }
 
 export default function OCRImageViewer({
@@ -28,6 +31,8 @@ export default function OCRImageViewer({
     url: "",
     startX: 0,
     startY: 0,
+    width: 0,
+    height: 0,
   });
 
   useEffect(() => {
@@ -44,6 +49,8 @@ export default function OCRImageViewer({
         ...imageData,
         url: image.src,
         ratio: ratio,
+        width: image.width * ratio,
+        height: image.height * ratio,
         startX: (size - image.width * ratio) / 2,
         startY: (size - image.height * ratio) / 2,
       });
@@ -72,7 +79,7 @@ export default function OCRImageViewer({
           {words
             .filter((w) => w.confidence > 60)
             .map((word, index) => {
-              const bbox = word.bbox;
+              const bbox = word.box;
               const confidence = word.confidence;
               const text = word.text;
               return (
@@ -80,10 +87,10 @@ export default function OCRImageViewer({
                   key={index}
                   style={{
                     position: "absolute",
-                    left: `${imageData.startX + bbox.x0 * imageData.ratio}px`,
-                    top: `${imageData.startY + bbox.y0 * imageData.ratio}px`,
-                    width: `${(bbox.x1 - bbox.x0) * imageData.ratio}px`,
-                    height: `${(bbox.y1 - bbox.y0) * imageData.ratio}px`,
+                    left: `${imageData.startX + bbox[0] * imageData.width}px`,
+                    top: `${imageData.startY + bbox[1] * imageData.height}px`,
+                    width: `${(bbox[4] - bbox[0]) * imageData.width}px`,
+                    height: `${(bbox[5] - bbox[1]) * imageData.height}px`,
                     border: "2px solid red",
                   }}
                   title={`Text: ${text}, Confidence: ${confidence}`}

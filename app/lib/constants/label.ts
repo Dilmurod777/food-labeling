@@ -13,6 +13,12 @@ export enum LabelType {
   LinearStandard = "linear-standard",
 }
 
+export interface Word {
+  text: string;
+  box: number[];
+  confidence: number;
+}
+
 export enum Language {
   Korean = "ko",
   // Spanish = "es",

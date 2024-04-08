@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { createWorker, Line, Word } from "tesseract.js";
-import { OCRLanguage } from "@/app/lib/constants/label";
+import { createWorker } from "tesseract.js";
+import { OCRLanguage, Word } from "@/app/lib/constants/label";
 import { convertOCRLangToLabelLang } from "@/app/lib/utilities";
 import levenshtein from "js-levenshtein";
 import { getUnitByName } from "@/app/lib/constants/nutrients-units";
@@ -28,6 +28,7 @@ export default function OcrNutrientsForm({
   const [fileUploaded, setFileUploaded] = useState<File>();
   const [extracting, setExtracting] = useState(false);
   const [wordBoxes, setWordBoxes] = useState<Word[]>([]);
+  const [selectedNutrient, setSelectedNutrient] = useState(-1);
 
   const imageSize = 500;
 
@@ -36,96 +37,155 @@ export default function OcrNutrientsForm({
 
     setExtracting(true);
 
-    try {
-      const worker = await createWorker(language);
-      const result = await worker.recognize(URL.createObjectURL(fileUploaded));
+    const reader = new FileReader();
+    reader.readAsDataURL(fileUploaded);
 
-      let text = result.data.lines
-        .map((line) => line.words.map((w) => w.text).join(" "))
-        .join("\n");
-
-      if (language != OCRLanguage.English) {
-        const translation = await fetch("/api/translate", {
-          method: "POST",
-          body: JSON.stringify({
-            text: text,
-            target: "en",
-            source: convertOCRLangToLabelLang(language).toString(),
-          }),
-        });
-
-        text = await translation.json();
-      }
-
-      const lines = text.split("\n");
-
-      lines.forEach((line) => {
-        const words = line.split(" ");
-        for (let i in searchKeywords) {
-          if (searchKeywords[i].disabled) continue;
-
-          const formattedSearchWords: string[] =
-            typeof searchKeywords[i].searchWords == "string"
-              ? [searchKeywords[i].searchWords as string]
-              : (searchKeywords[i].searchWords as string[]);
-
-          formattedSearchWords.forEach((word) => {
-            const formattedSearchWord = word.toLowerCase();
-            const count = formattedSearchWord.split(" ").length;
-            const indexes = words.reduce<number[]>((acc, word, i) => {
-              const currentWord = words.slice(i, i + count).join(" ");
-              const maxLength = Math.max(
-                currentWord.length,
-                formattedSearchWord.length,
-              );
-              const distance = levenshtein(
-                currentWord.padEnd(maxLength, "-"),
-                formattedSearchWord.padEnd(maxLength, "-"),
-              );
-              if (distance < formattedSearchWord.length * 0.3) {
-                acc.push(i);
-              }
-
-              return acc;
-            }, []);
-
-            if (indexes.length > 0) {
-              const valueIndex =
-                searchKeywords[i].searchPosition == "after"
-                  ? indexes[0] + count
-                  : indexes[0] - 1;
-
-              if (valueIndex >= 0 && valueIndex < words.length) {
-                const value = words[valueIndex].replaceAll(
-                  getUnitByName(searchKeywords[i].dbKey),
-                  "",
-                );
-
-                if ("0123456789".includes(value[0])) {
-                  searchKeywords[i].value = value.endsWith("%")
-                    ? (parseFloat(
-                        getDVByName(searchKeywords[i].dbKey, "default"),
-                      ) *
-                        parseFloat(value)) /
-                      100
-                    : parseFloat(value);
-
-                  setSearchKeywords(searchKeywords);
-                }
-              }
-            }
-          });
-        }
+    reader.onload = async () => {
+      const response = await fetch("/api/ocr", {
+        method: "POST",
+        body: JSON.stringify({
+          image: reader.result,
+        }),
       });
 
-      await worker.terminate();
-    } finally {
+      let data: Word[] = await response.json();
+      if (data != null && data.length > 0) {
+        let words: Word[] = data.map((w: any) => ({
+          text: w.Text,
+          box: w.Outline,
+          confidence: Math.ceil(w.Confidence * 100),
+        }));
+
+        setWordBoxes(words);
+
+        let text = words.map((w) => w.text).join(" ");
+
+        if (language != OCRLanguage.English) {
+          const translation = await fetch("/api/translate", {
+            method: "POST",
+            body: JSON.stringify({
+              text: text,
+              target: "en",
+              source: convertOCRLangToLabelLang(language).toString(),
+            }),
+          });
+
+          text = await translation.json();
+        }
+
+        const lines = text.split("\n");
+
+        lines.forEach((line) => {
+          const words = line.split(" ");
+          for (let i in searchKeywords) {
+            if (searchKeywords[i].disabled) continue;
+
+            const formattedSearchWords: string[] =
+              typeof searchKeywords[i].searchWords == "string"
+                ? [searchKeywords[i].searchWords as string]
+                : (searchKeywords[i].searchWords as string[]);
+
+            formattedSearchWords.forEach((word) => {
+              const formattedSearchWord = word.toLowerCase();
+              const count = formattedSearchWord.split(" ").length;
+              const indexes = words.reduce<number[]>((acc, word, i) => {
+                const currentWord = words.slice(i, i + count).join(" ");
+                const maxLength = Math.max(
+                  currentWord.length,
+                  formattedSearchWord.length,
+                );
+                const distance = levenshtein(
+                  currentWord.padEnd(maxLength, "-"),
+                  formattedSearchWord.padEnd(maxLength, "-"),
+                );
+                if (distance < formattedSearchWord.length * 0.3) {
+                  acc.push(i);
+                }
+
+                return acc;
+              }, []);
+
+              if (indexes.length > 0) {
+                searchKeywords[i].searchPositions.forEach((position) => {
+                  const valueIndex =
+                    position == "after" ? indexes[0] + count : indexes[0] - 1;
+
+                  if (valueIndex >= 0 && valueIndex < words.length) {
+                    const value = words[valueIndex].replaceAll(
+                      getUnitByName(searchKeywords[i].dbKey),
+                      "",
+                    );
+
+                    if ("0123456789".includes(value[0])) {
+                      searchKeywords[i].value = value.endsWith("%")
+                        ? (parseFloat(
+                            getDVByName(searchKeywords[i].dbKey, "default"),
+                          ) *
+                            parseFloat(value)) /
+                          100
+                        : parseFloat(value);
+
+                      setSearchKeywords(searchKeywords);
+                    }
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+
       setExtracting(false);
-    }
+    };
+
+    // try {
+    // const worker = await createWorker(language);
+    // const result = await worker.recognize(
+    //   URL.createObjectURL(fileUploaded),
+    //   { rotateAuto: true },
+    //   {
+    //     imageColor: true,
+    //     imageGrey: true,
+    //     imageBinary: true,
+    //     box: true,
+    //     blocks: true,
+    //   },
+    // );
+    //
+    // let text = result.data.lines
+    //   .map((line) => line.words.map((w) => w.text).join(" "))
+    //   .join("\n");
+    //
+    // if (language != OCRLanguage.English) {
+    //   const translation = await fetch("/api/translate", {
+    //     method: "POST",
+    //     body: JSON.stringify({
+    //       text: text,
+    //       target: "en",
+    //       source: convertOCRLangToLabelLang(language).toString(),
+    //     }),
+    //   });
+    //
+    //   text = await translation.json();
+    // }
+    //
+    // const lines = text.split("\n");
+    //
+    // await worker.terminate();
+    // } finally {
+    //   setExtracting(false);
+    // }
   };
 
   const selectBoxHandler = (word: string) => {
-    console.log(word);
+    const searchKeyword = searchKeywords[selectedNutrient];
+    searchKeyword.value = Number.parseFloat(word);
+
+    setSearchKeywords([
+      ...searchKeywords.slice(0, selectedNutrient),
+      searchKeyword,
+      ...searchKeywords.slice(selectedNutrient + 1),
+    ]);
   };
 
   const updateValue = (index: number, value: number) => {
@@ -165,6 +225,8 @@ export default function OcrNutrientsForm({
         <OCRNutrientsList
           searchKeywords={[...searchKeywords]}
           updateValue={updateValue}
+          selectedNutrient={selectedNutrient}
+          setSelectedNutrient={(key) => setSelectedNutrient(key)}
         />
       </div>
     </div>
