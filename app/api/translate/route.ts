@@ -1,4 +1,5 @@
 import { type NextRequest } from "next/server";
+import { Metadata } from "@google-cloud/common";
 
 const { Translate } = require("@google-cloud/translate").v2;
 
@@ -8,10 +9,19 @@ const translate = new Translate({
 
 export async function POST(req: NextRequest) {
   const { text, target, source } = await req.json();
-  let [translations] = await translate.translate(text, {
-    to: target,
-    from: source || "ko",
-  });
-  translations = Array.isArray(translations) ? translations : [translations];
-  return Response.json(translations[0]);
+
+  let result = "";
+
+  let promises: Promise<[string, Metadata]>[] = (text as string)
+    .split("###")
+    .map((w) =>
+      translate.translate(w, {
+        to: target,
+        from: source || "ko",
+      }),
+    );
+
+  let translations = await Promise.all(promises);
+
+  return Response.json(translations.map((w) => w[0]).join("###"));
 }

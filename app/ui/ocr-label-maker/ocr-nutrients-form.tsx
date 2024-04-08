@@ -56,9 +56,7 @@ export default function OcrNutrientsForm({
           confidence: Math.ceil(w.Confidence * 100),
         }));
 
-        setWordBoxes(words);
-
-        let text = words.map((w) => w.text).join(" ");
+        let text = words.map((w) => w.text).join("###");
 
         if (language != OCRLanguage.English) {
           const translation = await fetch("/api/translate", {
@@ -71,7 +69,13 @@ export default function OcrNutrientsForm({
           });
 
           text = await translation.json();
+          words = text.split("###").map((w, i) => {
+            words[i].text = w;
+            return words[i];
+          });
         }
+
+        setWordBoxes(words);
 
         const lines = text.split("\n");
 

@@ -81,7 +81,7 @@ export default function SubmitForm({ user }: Props) {
     },
     {
       dbKey: "carbohydrate",
-      searchWords: "total carbohydrate",
+      searchWords: ["total carbohydrate", "carbohydrate"],
       searchPositions: ["after"],
       value: 0,
     },

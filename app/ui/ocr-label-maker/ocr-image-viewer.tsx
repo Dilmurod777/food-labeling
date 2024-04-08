@@ -76,12 +76,20 @@ export default function OCRImageViewer({
             fill
             style={{ objectFit: "contain" }}
           />
+          {/*{words.length > 0 && (*/}
+          {/*  <div*/}
+          {/*    className={*/}
+          {/*      "absolute bottom-0 left-0 right-0 top-0 bg-black opacity-70"*/}
+          {/*    }*/}
+          {/*  ></div>*/}
+          {/*)}*/}
           {words
             .filter((w) => w.confidence > 60)
             .map((word, index) => {
               const bbox = word.box;
               const confidence = word.confidence;
               const text = word.text;
+
               return (
                 <div
                   key={index}
@@ -92,10 +100,29 @@ export default function OCRImageViewer({
                     width: `${(bbox[4] - bbox[0]) * imageData.width}px`,
                     height: `${(bbox[5] - bbox[1]) * imageData.height}px`,
                     border: "2px solid red",
+                    containerType: "size",
                   }}
-                  title={`Text: ${text}, Confidence: ${confidence}`}
+                  title={text}
                   onClick={() => selectBoxHandler(word.text)}
-                ></div>
+                  className={"text-white"}
+                >
+                  {/*<div style={{ fontSize: "30cqwmin", textAlign: "justify" }}>*/}
+                  {/*  {text}*/}
+                  {/*</div>*/}
+                  {/*<svg*/}
+                  {/*  width="100%"*/}
+                  {/*  height="100%"*/}
+                  {/*  viewBox="0 0 500 75"*/}
+                  {/*  preserveAspectRatio="xMinYMid meet"*/}
+                  {/*  // style="background-color:green"*/}
+                  {/*  xmlns="http://www.w3.org/2000/svg"*/}
+                  {/*  // xmlns:xlink="http://www.w3.org/1999/xlink"*/}
+                  {/*>*/}
+                  {/*  <text x="0" y="75" fontSize="75" fill="white">*/}
+                  {/*    {text}*/}
+                  {/*  </text>*/}
+                  {/*</svg>*/}
+                </div>
               );
             })}
         </>
