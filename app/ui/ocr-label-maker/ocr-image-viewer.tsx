@@ -1,5 +1,5 @@
 import { Bbox } from "tesseract.js";
-import React, { useEffect, useRef, useState } from "react";
+import React, { createRef, useEffect, useRef, useState } from "react";
 import NextImage from "next/image";
 import { Word } from "@/app/lib/constants/label";
 
@@ -59,6 +59,51 @@ export default function OCRImageViewer({
     };
   }, [file, words]);
 
+  const isOverflown = ({
+    clientWidth,
+    clientHeight,
+    scrollWidth,
+    scrollHeight,
+  }: {
+    clientWidth: number;
+    clientHeight: number;
+    scrollWidth: number;
+    scrollHeight: number;
+  }) => scrollWidth > clientWidth || scrollHeight > clientHeight;
+
+  const resizeText = ({
+    element,
+    elements,
+    minSize = 10,
+    maxSize = 512,
+    step = 1,
+    unit = "px",
+  }: {
+    element: HTMLElement;
+    elements: HTMLElement[];
+    minSize: number;
+    maxSize: number;
+    step: number;
+    unit: string;
+  }) => {
+    (elements || [element]).forEach((el) => {
+      let i = minSize;
+      let overflow = false;
+
+      const parent = el.parentNode;
+      if (!parent) return;
+
+      while (!overflow && i < maxSize) {
+        el.style.fontSize = `${i}${unit}`;
+        overflow = isOverflown(parent as HTMLElement);
+
+        if (!overflow) i += step;
+      }
+
+      el.style.fontSize = `${i - step}${unit}`;
+    });
+  };
+
   if (loading) return;
 
   return (
@@ -76,15 +121,15 @@ export default function OCRImageViewer({
             fill
             style={{ objectFit: "contain" }}
           />
-          {/*{words.length > 0 && (*/}
-          {/*  <div*/}
-          {/*    className={*/}
-          {/*      "absolute bottom-0 left-0 right-0 top-0 bg-black opacity-70"*/}
-          {/*    }*/}
-          {/*  ></div>*/}
-          {/*)}*/}
+          {words.length > 0 && (
+            <div
+              className={
+                "absolute bottom-0 left-0 right-0 top-0 bg-black opacity-70"
+              }
+            ></div>
+          )}
           {words
-            .filter((w) => w.confidence > 60)
+            .filter((w) => w.confidence > 0.75)
             .map((word, index) => {
               const bbox = word.box;
               const confidence = word.confidence;
@@ -95,33 +140,17 @@ export default function OCRImageViewer({
                   key={index}
                   style={{
                     position: "absolute",
-                    left: `${imageData.startX + bbox[0] * imageData.width}px`,
-                    top: `${imageData.startY + bbox[1] * imageData.height}px`,
-                    width: `${(bbox[4] - bbox[0]) * imageData.width}px`,
-                    height: `${(bbox[5] - bbox[1]) * imageData.height}px`,
+                    left: `${imageData.startX + bbox[0].x * imageData.ratio}px`,
+                    top: `${imageData.startY + bbox[0].y * imageData.ratio}px`,
+                    width: `${(bbox[2].x - bbox[0].x) * imageData.ratio}px`,
+                    height: `${(bbox[2].y - bbox[0].y) * imageData.ratio}px`,
                     border: "2px solid red",
                     containerType: "size",
                   }}
                   title={text}
                   onClick={() => selectBoxHandler(word.text)}
-                  className={"text-white"}
                 >
-                  {/*<div style={{ fontSize: "30cqwmin", textAlign: "justify" }}>*/}
-                  {/*  {text}*/}
-                  {/*</div>*/}
-                  {/*<svg*/}
-                  {/*  width="100%"*/}
-                  {/*  height="100%"*/}
-                  {/*  viewBox="0 0 500 75"*/}
-                  {/*  preserveAspectRatio="xMinYMid meet"*/}
-                  {/*  // style="background-color:green"*/}
-                  {/*  xmlns="http://www.w3.org/2000/svg"*/}
-                  {/*  // xmlns:xlink="http://www.w3.org/1999/xlink"*/}
-                  {/*>*/}
-                  {/*  <text x="0" y="75" fontSize="75" fill="white">*/}
-                  {/*    {text}*/}
-                  {/*  </text>*/}
-                  {/*</svg>*/}
+                  {/*<div className={"box-text text-white"}>{text}</div>*/}
                 </div>
               );
             })}

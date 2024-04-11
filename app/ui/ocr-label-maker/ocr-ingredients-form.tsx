@@ -37,41 +37,18 @@ export default function OcrIngredientsForm({
     reader.readAsDataURL(fileUploaded);
 
     reader.onload = async () => {
-      const token =
-        "SAtJQoRUSafwxl14oYPiZ1XGqXEigdUMAbOp7rUHL4JCxkmK69xnWbKI9Sb5WOV3";
-      const response = await fetch(
-        `https://backend.scandocflow.com/v1/api/documents/extract?access_token=${token}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            type: "ocr",
-            lang: "kor",
-            files: [
-              {
-                title: "test.png",
-                src: reader.result,
-              },
-            ],
-          }),
-        },
-      );
+      if (!reader.result) return;
 
-      const data = await response.json();
-      const words = data?.documents[0]?.textAnnotation?.Pages[0]?.Words;
+      const response = await fetch("/api/ocr", {
+        method: "POST",
+        body: JSON.stringify({
+          image: (reader.result as string).split(",")[1],
+          format: "png",
+        }),
+      });
 
-      if (words) {
-        const result = words.map((w: any) => ({
-          text: w.Text,
-          box: w.Outline,
-          confidence: Math.ceil(w.Confidence * 100),
-        }));
-
-        setWords(result);
-      }
-
+      const words: Word[] = await response.json();
+      setWords(words);
       setExtracting(false);
     };
 

@@ -44,18 +44,12 @@ export default function OcrNutrientsForm({
       const response = await fetch("/api/ocr", {
         method: "POST",
         body: JSON.stringify({
-          image: reader.result,
+          image: (reader.result as string).split(",")[1],
         }),
       });
 
-      let data: Word[] = await response.json();
-      if (data != null && data.length > 0) {
-        let words: Word[] = data.map((w: any) => ({
-          text: w.Text,
-          box: w.Outline,
-          confidence: Math.ceil(w.Confidence * 100),
-        }));
-
+      let words: Word[] = await response.json();
+      if (words != null && words.length > 0) {
         let text = words.map((w) => w.text).join("###");
 
         if (language != OCRLanguage.English) {

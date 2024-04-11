@@ -15,8 +15,13 @@ export enum LabelType {
 
 export interface Word {
   text: string;
-  box: number[];
+  box: BoxPosition[];
   confidence: number;
+}
+
+export interface BoxPosition {
+  x: number;
+  y: number;
 }
 
 export enum Language {

@@ -10,8 +10,6 @@ const translate = new Translate({
 export async function POST(req: NextRequest) {
   const { text, target, source } = await req.json();
 
-  let result = "";
-
   let promises: Promise<[string, Metadata]>[] = (text as string)
     .split("###")
     .map((w) =>

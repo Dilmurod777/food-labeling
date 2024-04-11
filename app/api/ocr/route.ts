@@ -8,30 +8,42 @@ const client = new ImageAnnotatorClient({
 });
 
 export async function POST(req: NextRequest) {
-  const { image } = await req.json();
+  const { image, format } = await req.json();
 
-  const response = await fetch(
-    `https://backend.scandocflow.com/v1/api/documents/extract?access_token=${process.env.OCR_API_KEY}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        type: "ocr",
-        lang: "kor",
-        files: [
-          {
-            title: "test.png",
-            src: image,
-          },
-        ],
-      }),
+  // https://backend.scandocflow.com/v1/api/documents/extract?access_token=${process.env.OCR_API_KEY}
+  let url = process.env.NAVER_OCR_URL;
+  let secret = process.env.NAVER_OCR_SECRET;
+
+  if (!url || !secret) return Response.json([]);
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-OCR-SECRET": secret,
     },
-  );
+    body: JSON.stringify({
+      images: [
+        {
+          format: format || "png",
+          name: "medium",
+          data: image,
+        },
+      ],
+      lang: "ko",
+      requestId: "string",
+      resultType: "string",
+      timestamp: Date.now().toString(),
+      version: "V2",
+    }),
+  });
 
   const data = await response.json();
-  const words: Word[] = data?.documents[0]?.textAnnotation?.Pages[0]?.Words;
+  const words: Word[] = (data?.images[0]?.fields || []).map((item: any) => ({
+    text: item?.inferText || "",
+    box: item?.boundingPoly?.vertices || [],
+    confidence: item?.inferConfidence || 0,
+  }));
 
-  return Response.json(words);
+  return Response.json(words || []);
 }
