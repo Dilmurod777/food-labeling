@@ -423,6 +423,103 @@ export function levenshteinDistance(word1: string, word2: string) {
   return previousRow[word2.length];
 }
 
+export function damerauLevenshteinDistance(str1: string, str2: string) {
+  const matrix = Array.from({ length: str1.length + 1 }, (_, i) =>
+    Array.from({ length: str2.length + 1 }, (_, j) => 0),
+  );
+
+  for (let i = 0; i <= str1.length; i++) {
+    matrix[i][0] = i;
+  }
+
+  for (let j = 0; j <= str2.length; j++) {
+    matrix[0][j] = j;
+  }
+
+  for (let i = 1; i <= str1.length; i++) {
+    for (let j = 1; j <= str2.length; j++) {
+      const cost = str1[i - 1] === str2[j - 1] ? 0 : 1;
+      matrix[i][j] = Math.min(
+        matrix[i - 1][j] + 1, // deletion
+        matrix[i][j - 1] + 1, // insertion
+        matrix[i - 1][j - 1] + cost, // substitution
+      );
+
+      if (
+        i > 1 &&
+        j > 1 &&
+        str1[i - 1] === str2[j - 2] &&
+        str1[i - 2] === str2[j - 1]
+      ) {
+        matrix[i][j] = Math.min(matrix[i][j], matrix[i - 2][j - 2] + cost); // transposition
+      }
+    }
+  }
+
+  return matrix[str1.length][str2.length];
+}
+
+export function jaroWinklerDistance(str1: string, str2: string) {
+  // Jaro Distance
+  const matchingDistance =
+    Math.floor(Math.max(str1.length, str2.length) / 2) - 1;
+  let matches = 0;
+  let transpositions = 0;
+  let matched1 = new Array(str1.length).fill(false);
+  let matched2 = new Array(str2.length).fill(false);
+
+  for (let i = 0; i < str1.length; i++) {
+    const start = Math.max(0, i - matchingDistance);
+    const end = Math.min(i + matchingDistance + 1, str2.length);
+
+    for (let j = start; j < end; j++) {
+      if (!matched2[j] && str1[i] === str2[j]) {
+        matches++;
+        matched1[i] = true;
+        matched2[j] = true;
+        break;
+      }
+    }
+  }
+
+  if (matches === 0) {
+    return 0;
+  }
+
+  // Transpositions
+  let k = 0;
+  for (let i = 0; i < str1.length; i++) {
+    if (matched1[i]) {
+      while (!matched2[k]) k++;
+      if (str1[i] !== str2[k++]) {
+        transpositions++;
+      }
+    }
+  }
+
+  // Jaro Similarity
+  const jaroSimilarity =
+    (matches / str1.length +
+      matches / str2.length +
+      (matches - transpositions / 2) / matches) /
+    3;
+
+  // Jaro-Winkler Distance
+  const prefixLength = Math.min(4, Math.min(str1.length, str2.length));
+  let commonPrefix = 0;
+  while (
+    commonPrefix < prefixLength &&
+    str1[commonPrefix] === str2[commonPrefix]
+  ) {
+    commonPrefix++;
+  }
+
+  const jaroWinklerDistance =
+    jaroSimilarity + commonPrefix * 0.1 * (1 - jaroSimilarity);
+
+  return jaroWinklerDistance;
+}
+
 export function getSuggestions(word: string, threshold = 2) {
   const suggestions: string[] = [];
 

@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { createWorker } from "tesseract.js";
 import { OCRLanguage, Word } from "@/app/lib/constants/label";
-import { convertOCRLangToLabelLang } from "@/app/lib/utilities";
-import levenshtein from "js-levenshtein";
+import {
+  convertOCRLangToLabelLang,
+  levenshteinDistance,
+  damerauLevenshteinDistance,
+  jaroWinklerDistance,
+} from "@/app/lib/utilities";
 import { getUnitByName } from "@/app/lib/constants/nutrients-units";
 import { getDVByName } from "@/app/lib/constants/daily-value";
 import { DefaultProduct, Product, User } from "@/app/lib/models";
@@ -11,6 +15,7 @@ import OCRImageViewer from "@/app/ui/ocr-label-maker/ocr-image-viewer";
 import OCRExtractButton from "@/app/ui/ocr-label-maker/ocr-extract-button";
 import { SearchKeyword } from "@/app/lib/ocr";
 import OCRNutrientsList from "@/app/ui/ocr-label-maker/ocr-nutrients-list";
+import { forEach } from "jszip";
 
 interface Props {
   language: OCRLanguage;
@@ -84,16 +89,19 @@ export default function OcrNutrientsForm({
             const formattedSearchWord = word.toLowerCase();
             const count = formattedSearchWord.split(" ").length;
             const indexes = wordTexts.reduce<number[]>((acc, word, i) => {
-              const currentWord = wordTexts.slice(i, i + count).join(" ");
+              const currentWord = wordTexts
+                .slice(i, i + count)
+                .join(" ")
+                .toLowerCase();
               const maxLength = Math.max(
                 currentWord.length,
                 formattedSearchWord.length,
               );
-              const distance = levenshtein(
-                currentWord.padEnd(maxLength, "-"),
-                formattedSearchWord.padEnd(maxLength, "-"),
+              const distance = jaroWinklerDistance(
+                currentWord,
+                formattedSearchWord,
               );
-              if (distance < formattedSearchWord.length * 0.3) {
+              if (distance > 0.8) {
                 acc.push(i);
               }
 
@@ -111,13 +119,14 @@ export default function OcrNutrientsForm({
                   .join(" ")
                   .split(" ");
 
-                splitWordsThatHaveValue.forEach((w) => {
+                for (let w of splitWordsThatHaveValue) {
                   if ("0123456789".includes(w[0])) {
                     const value = w.split(
                       getUnitByName(searchKeywords[i].dbKey),
                     );
                     if (value.length == 2) {
                       searchKeywords[i].value = parseFloat(value[0]);
+                      break;
                     } else {
                       searchKeywords[i].value = value[0].endsWith("%")
                         ? (parseFloat(
@@ -126,9 +135,10 @@ export default function OcrNutrientsForm({
                             parseFloat(value[0])) /
                           100
                         : parseFloat(value[0]);
+                      break;
                     }
                   }
-                });
+                }
               });
             }
           });
@@ -141,7 +151,12 @@ export default function OcrNutrientsForm({
 
   const selectBoxHandler = (word: string) => {
     const searchKeyword = searchKeywords[selectedNutrient];
-    searchKeyword.value = Number.parseFloat(word);
+
+    word.split(" ").forEach((w) => {
+      if ("0123456789".includes(w[0])) {
+        searchKeyword.value = Number.parseFloat(w);
+      }
+    });
 
     setSearchKeywords([
       ...searchKeywords.slice(0, selectedNutrient),

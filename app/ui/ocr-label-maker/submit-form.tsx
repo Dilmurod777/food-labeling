@@ -81,7 +81,7 @@ export default function SubmitForm({ user }: Props) {
     },
     {
       dbKey: "carbohydrate",
-      searchWords: ["total carbohydrate", "carbohydrate"],
+      searchWords: ["total carbohydrate", "carbohydrate", "carbs"],
       searchPositions: ["after"],
       value: 0,
     },
@@ -93,7 +93,7 @@ export default function SubmitForm({ user }: Props) {
     },
     {
       dbKey: "sugar",
-      searchWords: ["total sugars", "sugars"],
+      searchWords: ["total sugars", "sugars", "sugar"],
       searchPositions: ["after"],
       value: 0,
     },
