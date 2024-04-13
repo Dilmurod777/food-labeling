@@ -102,27 +102,33 @@ export default function OcrNutrientsForm({
 
             if (indexes.length > 0) {
               searchKeywords[i].searchPositions.forEach((position) => {
-                const valueIndex =
-                  position == "after" ? indexes[0] + count : indexes[0] - 1;
+                const wordsThatHaveValue =
+                  position == "after"
+                    ? wordTexts.slice(indexes[0], indexes[0] + count + 1)
+                    : wordTexts.slice(indexes[0] - 1, indexes[0] + 1);
 
-                if (valueIndex >= 0 && valueIndex < wordTexts.length) {
-                  const value = wordTexts[valueIndex].replaceAll(
-                    getUnitByName(searchKeywords[i].dbKey),
-                    "",
-                  );
+                const splitWordsThatHaveValue = wordsThatHaveValue
+                  .join(" ")
+                  .split(" ");
 
-                  if ("0123456789".includes(value[0])) {
-                    searchKeywords[i].value = value.endsWith("%")
-                      ? (parseFloat(
-                          getDVByName(searchKeywords[i].dbKey, "default"),
-                        ) *
-                          parseFloat(value)) /
-                        100
-                      : parseFloat(value);
-
-                    setSearchKeywords(searchKeywords);
+                splitWordsThatHaveValue.forEach((w) => {
+                  if ("0123456789".includes(w[0])) {
+                    const value = w.split(
+                      getUnitByName(searchKeywords[i].dbKey),
+                    );
+                    if (value.length == 2) {
+                      searchKeywords[i].value = parseFloat(value[0]);
+                    } else {
+                      searchKeywords[i].value = value[0].endsWith("%")
+                        ? (parseFloat(
+                            getDVByName(searchKeywords[i].dbKey, "default"),
+                          ) *
+                            parseFloat(value[0])) /
+                          100
+                        : parseFloat(value[0]);
+                    }
                   }
-                }
+                });
               });
             }
           });

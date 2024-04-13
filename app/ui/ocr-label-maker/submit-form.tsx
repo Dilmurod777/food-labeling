@@ -39,7 +39,7 @@ export default function SubmitForm({ user }: Props) {
     },
     {
       dbKey: "fat",
-      searchWords: "total fat",
+      searchWords: ["total fat", "fat"],
       searchPositions: ["after"],
       value: 0,
     },
@@ -75,7 +75,7 @@ export default function SubmitForm({ user }: Props) {
     },
     {
       dbKey: "sodium",
-      searchWords: "sodium",
+      searchWords: ["sodium", "salt"],
       searchPositions: ["after"],
       value: 0,
     },
@@ -87,7 +87,7 @@ export default function SubmitForm({ user }: Props) {
     },
     {
       dbKey: "dietary_fiber",
-      searchWords: "dietary fiber",
+      searchWords: ["dietary fiber"],
       searchPositions: ["after"],
       value: 0,
     },
