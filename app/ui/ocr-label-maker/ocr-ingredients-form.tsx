@@ -7,6 +7,7 @@ import OCRImageViewer from "@/app/ui/ocr-label-maker/ocr-image-viewer";
 import OCRIngredientsList from "@/app/ui/ocr-label-maker/ocr-ingredients-list";
 import { Ingredient } from "@/app/lib/models";
 import { SimpleImage } from "simple-image";
+import { convertOCRLangToLabelLang } from "@/app/lib/utilities";
 
 interface Props {
   language: OCRLanguage;
@@ -21,7 +22,7 @@ export default function OcrIngredientsForm({
 }: Props) {
   const [fileUploaded, setFileUploaded] = useState<File>();
   const [extracting, setExtracting] = useState(false);
-  const [words, setWords] = useState<Word[]>([]);
+  const [wordBoxes, setWordBoxes] = useState<Word[]>([]);
 
   const imageSize = 500;
   const inputRef = useRef<HTMLInputElement>(null);
@@ -47,8 +48,31 @@ export default function OcrIngredientsForm({
         }),
       });
 
-      const words: Word[] = await response.json();
-      setWords(words);
+      let words: Word[] = await response.json();
+
+      if (words != null && words.length > 0) {
+        let text = words.map((w) => w.text).join("###");
+
+        if (language != OCRLanguage.English) {
+          const translation = await fetch("/api/translate", {
+            method: "POST",
+            body: JSON.stringify({
+              text: text,
+              target: "en",
+              source: convertOCRLangToLabelLang(language).toString(),
+            }),
+          });
+
+          text = await translation.json();
+          words = text.split("###").map((w, i) => {
+            words[i].text = w;
+            return words[i];
+          });
+        }
+
+        setWordBoxes(words);
+      }
+
       setExtracting(false);
     };
 
@@ -133,14 +157,14 @@ export default function OcrIngredientsForm({
           <OCRImageUploader
             uploadHandler={(file) => {
               setFileUploaded(file);
-              setWords([]);
+              setWordBoxes([]);
             }}
             size={imageSize}
           />
           {fileUploaded && (
             <OCRImageViewer
               file={fileUploaded}
-              words={words}
+              words={wordBoxes}
               selectBoxHandler={selectBoxHandler}
               size={imageSize}
             />

@@ -1,7 +1,7 @@
-import { Bbox } from "tesseract.js";
 import React, { createRef, useEffect, useRef, useState } from "react";
 import NextImage from "next/image";
 import { Word } from "@/app/lib/constants/label";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 interface Props {
   file: File;
@@ -26,6 +26,7 @@ export default function OCRImageViewer({
   size,
 }: Props) {
   const [loading, setLoading] = useState(true);
+  const [showTextInBoxes, setShowTextInBoxes] = useState(true);
   const [imageData, setImageData] = useState<ImageData>({
     ratio: 1,
     url: "",
@@ -109,7 +110,7 @@ export default function OCRImageViewer({
   return (
     <div
       className={
-        "relative flex items-start justify-start rounded-md border border-main-gray"
+        "relative flex select-none items-start justify-start rounded-md border border-main-gray"
       }
       style={{ width: `${size}px`, height: `${size}px` }}
     >
@@ -121,7 +122,14 @@ export default function OCRImageViewer({
             fill
             style={{ objectFit: "contain" }}
           />
-          {words.length > 0 && (
+          <div
+            className={"absolute right-2 top-2 z-40 cursor-pointer text-2xl"}
+            onClick={() => setShowTextInBoxes(!showTextInBoxes)}
+          >
+            {showTextInBoxes && <FaEyeSlash className={"text-white"} />}
+            {!showTextInBoxes && <FaEye className={"text-black"} />}
+          </div>
+          {words.length > 0 && showTextInBoxes && (
             <div
               className={
                 "absolute bottom-0 left-0 right-0 top-0 bg-black opacity-70"
@@ -149,8 +157,17 @@ export default function OCRImageViewer({
                   }}
                   title={text}
                   onClick={() => selectBoxHandler(word.text)}
+                  className={"flex items-center justify-start"}
                 >
-                  {/*<div className={"box-text text-white"}>{text}</div>*/}
+                  {showTextInBoxes && (
+                    <div
+                      className={
+                        "box-text text-left text-xs/none tracking-tighter text-white"
+                      }
+                    >
+                      {text.toLowerCase()}
+                    </div>
+                  )}
                 </div>
               );
             })}
