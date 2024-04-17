@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
     image: data.data.renderedImage,
   });
 }
-//
+
 // export async function POST2(req: NextRequest) {
 //   const { image, format } = await req.json();
 //
