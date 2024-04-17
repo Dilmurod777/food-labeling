@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import { createWorker } from "tesseract.js";
 import { OCRLanguage } from "@/app/lib/constants/label";
 import { Word } from "@/app/lib/ocr";
 import OCRImageUploader from "@/app/ui/ocr-label-maker/ocr-image-uploader";
@@ -7,11 +6,7 @@ import OCRExtractButton from "@/app/ui/ocr-label-maker/ocr-extract-button";
 import OCRImageViewer from "@/app/ui/ocr-label-maker/ocr-image-viewer";
 import OCRIngredientsList from "@/app/ui/ocr-label-maker/ocr-ingredients-list";
 import { Ingredient } from "@/app/lib/models";
-import { SimpleImage } from "simple-image";
-import {
-  convertOCRLangToLabelLang,
-  ConvertBase64ToFile,
-} from "@/app/lib/utilities";
+import { ConvertBase64ToFile } from "@/app/lib/utilities";
 
 interface Props {
   language: OCRLanguage;
@@ -52,7 +47,6 @@ export default function OcrIngredientsForm({
           body: formData,
         });
 
-        console.log(response);
         let { words, image }: { words: Word[]; image: string } =
           await response.json();
 
