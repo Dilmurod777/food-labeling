@@ -65,47 +65,47 @@ export async function POST(req: NextRequest) {
     image: data.data.renderedImage,
   });
 }
-
-export async function POST2(req: NextRequest) {
-  const { image, format } = await req.json();
-
-  // https://backend.scandocflow.com/v1/api/documents/extract?access_token=${process.env.OCR_API_KEY}
-  const url = process.env.NAVER_OCR_URL;
-  const secret = process.env.NAVER_OCR_SECRET;
-
-  if (!url || !secret) return Response.json([]);
-
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-OCR-SECRET": secret,
-    },
-    body: JSON.stringify({
-      images: [
-        {
-          format: format || "png",
-          name: "medium",
-          data: image,
-        },
-      ],
-      lang: "ko",
-      requestId: "string",
-      resultType: "string",
-      timestamp: Date.now().toString(),
-      version: "V2",
-      enableTableDetection: false,
-    }),
-  });
-
-  const data = await response.json();
-  const words: Word[] = (data?.images[0]?.fields || []).map((item: any) => ({
-    text: item?.inferText || "",
-    box: item?.boundingPoly?.vertices || [],
-    confidence: item?.inferConfidence || 0,
-  }));
-
-  console.dir(data, { depth: null });
-
-  return Response.json(words || []);
-}
+//
+// export async function POST2(req: NextRequest) {
+//   const { image, format } = await req.json();
+//
+//   // https://backend.scandocflow.com/v1/api/documents/extract?access_token=${process.env.OCR_API_KEY}
+//   const url = process.env.NAVER_OCR_URL;
+//   const secret = process.env.NAVER_OCR_SECRET;
+//
+//   if (!url || !secret) return Response.json([]);
+//
+//   const response = await fetch(url, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "X-OCR-SECRET": secret,
+//     },
+//     body: JSON.stringify({
+//       images: [
+//         {
+//           format: format || "png",
+//           name: "medium",
+//           data: image,
+//         },
+//       ],
+//       lang: "ko",
+//       requestId: "string",
+//       resultType: "string",
+//       timestamp: Date.now().toString(),
+//       version: "V2",
+//       enableTableDetection: false,
+//     }),
+//   });
+//
+//   const data = await response.json();
+//   const words: Word[] = (data?.images[0]?.fields || []).map((item: any) => ({
+//     text: item?.inferText || "",
+//     box: item?.boundingPoly?.vertices || [],
+//     confidence: item?.inferConfidence || 0,
+//   }));
+//
+//   console.dir(data, { depth: null });
+//
+//   return Response.json(words || []);
+// }
