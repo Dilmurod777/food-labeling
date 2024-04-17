@@ -1,8 +1,6 @@
-import FloorTile from "@/app/ui/packaging/floor-tile";
 import { useRef } from "react";
-import { useThree } from "@react-three/fiber";
-import { Grid, CameraControls, OrbitControls } from "@react-three/drei";
 import Ground from "@/app/ui/packaging/ground";
+import DefaultPackage from "@/app/ui/packaging/models/default-package";
 
 export default function Content() {
   const meshRef = useRef();
@@ -10,6 +8,7 @@ export default function Content() {
   return (
     <group position-y={-0.75}>
       <Ground />
+      <DefaultPackage />
     </group>
   );
 }

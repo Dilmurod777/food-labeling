@@ -1,7 +1,12 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Sky } from "@react-three/drei";
+import {
+  OrbitControls,
+  PerformanceMonitor,
+  Sky,
+  SoftShadows,
+} from "@react-three/drei";
 import Content from "@/app/ui/packaging/content";
 import { useRef } from "react";
 import Menu from "@/app/ui/packaging/menu";
@@ -21,13 +26,14 @@ export default function View3D() {
         <OrbitControls
           makeDefault
           ref={cameraControlsRef}
-          minDistance={10}
+          minDistance={5}
           maxDistance={20}
           enabled={true}
           minPolarAngle={0}
           maxPolarAngle={Math.PI * 0.5}
           enableZoom={true}
         />
+        <SoftShadows />
         <Content />
       </Canvas>
 
