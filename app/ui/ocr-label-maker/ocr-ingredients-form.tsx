@@ -1,13 +1,17 @@
 import { useRef, useState } from "react";
 import { createWorker } from "tesseract.js";
-import { OCRLanguage, Word } from "@/app/lib/constants/label";
+import { OCRLanguage } from "@/app/lib/constants/label";
+import { Word } from "@/app/lib/ocr";
 import OCRImageUploader from "@/app/ui/ocr-label-maker/ocr-image-uploader";
 import OCRExtractButton from "@/app/ui/ocr-label-maker/ocr-extract-button";
 import OCRImageViewer from "@/app/ui/ocr-label-maker/ocr-image-viewer";
 import OCRIngredientsList from "@/app/ui/ocr-label-maker/ocr-ingredients-list";
 import { Ingredient } from "@/app/lib/models";
 import { SimpleImage } from "simple-image";
-import { convertOCRLangToLabelLang } from "@/app/lib/utilities";
+import {
+  convertOCRLangToLabelLang,
+  ConvertBase64ToFile,
+} from "@/app/lib/utilities";
 
 interface Props {
   language: OCRLanguage;
@@ -40,35 +44,40 @@ export default function OcrIngredientsForm({
     reader.onload = async () => {
       if (!reader.result) return;
 
+      const formData = new FormData();
+      formData.append("image", fileUploaded);
+
       const response = await fetch("/api/ocr", {
         method: "POST",
-        body: JSON.stringify({
-          image: (reader.result as string).split(",")[1],
-          format: "png",
-        }),
+        body: formData,
       });
 
-      let words: Word[] = await response.json();
+      let { words, image }: { words: Word[]; image: string } =
+        await response.json();
+
+      if (image) {
+        setFileUploaded(ConvertBase64ToFile(image));
+      }
 
       if (words != null && words.length > 0) {
-        let text = words.map((w) => w.text).join("###");
+        // let text = words.map((w) => w.text).join("###");
 
-        if (language != OCRLanguage.English) {
-          const translation = await fetch("/api/translate", {
-            method: "POST",
-            body: JSON.stringify({
-              text: text,
-              target: "en",
-              source: convertOCRLangToLabelLang(language).toString(),
-            }),
-          });
-
-          text = await translation.json();
-          words = text.split("###").map((w, i) => {
-            words[i].text = w;
-            return words[i];
-          });
-        }
+        // if (language != OCRLanguage.English) {
+        //   const translation = await fetch("/api/translate", {
+        //     method: "POST",
+        //     body: JSON.stringify({
+        //       text: text,
+        //       target: "en",
+        //       source: convertOCRLangToLabelLang(language).toString(),
+        //     }),
+        //   });
+        //
+        //   text = await translation.json();
+        //   words = text.split("###").map((w, i) => {
+        //     words[i].text = w;
+        //     return words[i];
+        //   });
+        // }
 
         setWordBoxes(words);
       }

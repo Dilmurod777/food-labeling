@@ -1,21 +1,19 @@
 import { useState } from "react";
-import { createWorker } from "tesseract.js";
-import { OCRLanguage, Word } from "@/app/lib/constants/label";
+import { OCRLanguage } from "@/app/lib/constants/label";
+import { Word } from "@/app/lib/ocr";
 import {
+  ConvertBase64ToFile,
   convertOCRLangToLabelLang,
-  levenshteinDistance,
-  damerauLevenshteinDistance,
   jaroWinklerDistance,
 } from "@/app/lib/utilities";
 import { getUnitByName } from "@/app/lib/constants/nutrients-units";
 import { getDVByName } from "@/app/lib/constants/daily-value";
-import { DefaultProduct, Product, User } from "@/app/lib/models";
+import { User } from "@/app/lib/models";
 import OCRImageUploader from "@/app/ui/ocr-label-maker/ocr-image-uploader";
 import OCRImageViewer from "@/app/ui/ocr-label-maker/ocr-image-viewer";
 import OCRExtractButton from "@/app/ui/ocr-label-maker/ocr-extract-button";
 import { SearchKeyword } from "@/app/lib/ocr";
 import OCRNutrientsList from "@/app/ui/ocr-label-maker/ocr-nutrients-list";
-import { forEach } from "jszip";
 
 interface Props {
   language: OCRLanguage;
@@ -26,7 +24,6 @@ interface Props {
 
 export default function OcrNutrientsForm({
   language,
-  user,
   searchKeywords,
   setSearchKeywords,
 }: Props) {
@@ -46,14 +43,23 @@ export default function OcrNutrientsForm({
     reader.readAsDataURL(fileUploaded);
 
     reader.onload = async () => {
+      if (!reader.result) return;
+
+      const formData = new FormData();
+      formData.append("image", fileUploaded);
+
       const response = await fetch("/api/ocr", {
         method: "POST",
-        body: JSON.stringify({
-          image: (reader.result as string).split(",")[1],
-        }),
+        body: formData,
       });
 
-      let words: Word[] = await response.json();
+      let { words, image }: { words: Word[]; image: string } =
+        await response.json();
+
+      if (image) {
+        setFileUploaded(ConvertBase64ToFile(image));
+      }
+
       if (words != null && words.length > 0) {
         let text = words.map((w) => w.text).join("###");
 

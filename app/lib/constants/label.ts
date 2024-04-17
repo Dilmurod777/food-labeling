@@ -13,17 +13,6 @@ export enum LabelType {
   LinearStandard = "linear-standard",
 }
 
-export interface Word {
-  text: string;
-  box: BoxPosition[];
-  confidence: number;
-}
-
-export interface BoxPosition {
-  x: number;
-  y: number;
-}
-
 export enum Language {
   Korean = "ko",
   // Spanish = "es",

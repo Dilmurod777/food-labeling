@@ -556,3 +556,23 @@ export function convertOCRLangToLabelLang(from: OCRLanguage) {
       return Language.English;
   }
 }
+
+export function ConvertBase64ToFile(
+  base64String: string,
+  filename: string = "text.png",
+) {
+  // Decode the base64 string into binary data
+  const binaryString = atob(base64String);
+
+  // Create a Uint8Array to hold the binary data
+  const binaryData = new Uint8Array(binaryString.length);
+  for (let i = 0; i < binaryString.length; i++) {
+    binaryData[i] = binaryString.charCodeAt(i);
+  }
+
+  // Create a Blob from the binary data
+  const blob = new Blob([binaryData], { type: "image/png" }); // Change the type accordingly if it's not a PNG image
+
+  // Create a File from the Blob with the given filename
+  return new File([blob], filename, { type: blob.type });
+}

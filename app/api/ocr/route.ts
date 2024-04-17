@@ -1,18 +1,77 @@
 import { type NextRequest } from "next/server";
-import { Word } from "@/app/lib/constants/label";
-
-const { ImageAnnotatorClient } = require("@google-cloud/vision").v1;
-
-const client = new ImageAnnotatorClient({
-  // key: process.env.GOOGLE_CLOUD_VISION_API_KEY,
-});
+import { PapagoOCRResponse, Word } from "@/app/lib/ocr";
+import { ConvertBase64ToFile } from "@/app/lib/utilities";
 
 export async function POST(req: NextRequest) {
+  const requestFormData = await req.formData();
+
+  const url = process.env.PAPAGO_OCR_URL;
+  const clientID = process.env.PAPAGO_OCR_CLIENT_ID;
+  const clientSecret = process.env.PAPAGO_OCR_CLIENT_SECRET;
+  const image = requestFormData.get("image");
+
+  if (!url || !clientID || !clientSecret || !image) return Response.json([]);
+
+  const formData = new FormData();
+  formData.append("source", "ko");
+  formData.append("target", "en");
+  formData.append("image", image);
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "X-NCP-APIGW-API-KEY-ID": clientID,
+      "X-NCP-APIGW-API-KEY": clientSecret,
+    },
+    body: formData,
+  });
+
+  const data: PapagoOCRResponse = await response.json();
+
+  const formData2 = new FormData();
+  formData2.append("source", "ko");
+  formData2.append("target", "en");
+  formData2.append("image", ConvertBase64ToFile(data.data.renderedImage));
+
+  const response2 = await fetch(url, {
+    method: "POST",
+    headers: {
+      "X-NCP-APIGW-API-KEY-ID": clientID,
+      "X-NCP-APIGW-API-KEY": clientSecret,
+    },
+    body: formData2,
+  });
+
+  const data2: PapagoOCRResponse = await response2.json();
+
+  const words: Word[] = data2.data.blocks.reduce<Word[]>((result, b) => {
+    return result.concat(
+      b.lines.reduce<Word[]>((result, l) => {
+        return result.concat(
+          l.words.map<Word>((w) => {
+            return {
+              text: w.sourceText,
+              box: [w.LT, w.RB],
+              confidence: 0,
+            };
+          }),
+        );
+      }, []),
+    );
+  }, []);
+
+  return Response.json({
+    words: words,
+    image: data.data.renderedImage,
+  });
+}
+
+export async function POST2(req: NextRequest) {
   const { image, format } = await req.json();
 
   // https://backend.scandocflow.com/v1/api/documents/extract?access_token=${process.env.OCR_API_KEY}
-  let url = process.env.NAVER_OCR_URL;
-  let secret = process.env.NAVER_OCR_SECRET;
+  const url = process.env.NAVER_OCR_URL;
+  const secret = process.env.NAVER_OCR_SECRET;
 
   if (!url || !secret) return Response.json([]);
 
