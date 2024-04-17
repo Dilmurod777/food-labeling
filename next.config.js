@@ -1,19 +1,23 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-	async redirects() {
-		return [
-			{
-				source: '/dashboard',
-				destination: '/dashboard/products',
-				permanent: true,
-			},
-			{
-				source: '/dashboard/inventory',
-				destination: '/dashboard/products',
-				permanent: true,
-			},
-		]
-	},
-}
+  async redirects() {
+    return [
+      {
+        source: "/dashboard",
+        destination: "/dashboard/products",
+        permanent: true,
+      },
+      {
+        source: "/dashboard/inventory",
+        destination: "/dashboard/products",
+        permanent: true,
+      },
+    ];
+  },
+  transpilePackages: ["three"],
+  serverRuntimeConfig: {
+    PROJECT_ROOT: __dirname,
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

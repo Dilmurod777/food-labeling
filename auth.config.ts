@@ -12,8 +12,9 @@ export const authConfig = {
       const isOnLogin = nextUrl.pathname.startsWith("/login");
       const isOnSignUp = nextUrl.pathname.startsWith("/signup");
       const isOnOCR = nextUrl.pathname.startsWith("/ocr-label-maker");
+      const isOnPackaging = nextUrl.pathname.startsWith("/packaging");
 
-      if (isOnDashboard || isOnOCR) {
+      if (isOnDashboard || isOnOCR || isOnPackaging) {
         return isLoggedIn;
       }
 
