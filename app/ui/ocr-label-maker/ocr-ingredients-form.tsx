@@ -37,96 +37,57 @@ export default function OcrIngredientsForm({
     // SAtJQoRUSafwxl14oYPiZ1XGqXEigdUMAbOp7rUHL4JCxkmK69xnWbKI9Sb5WOV3
 
     setExtracting(true);
+    try {
+      const reader = new FileReader();
+      reader.readAsDataURL(fileUploaded);
 
-    const reader = new FileReader();
-    reader.readAsDataURL(fileUploaded);
+      reader.onload = async () => {
+        if (!reader.result) return;
 
-    reader.onload = async () => {
-      if (!reader.result) return;
+        const formData = new FormData();
+        formData.append("image", fileUploaded);
 
-      const formData = new FormData();
-      formData.append("image", fileUploaded);
+        const response = await fetch("/api/ocr", {
+          method: "POST",
+          body: formData,
+        });
 
-      const response = await fetch("/api/ocr", {
-        method: "POST",
-        body: formData,
-      });
+        console.log(response);
+        let { words, image }: { words: Word[]; image: string } =
+          await response.json();
 
-      let { words, image }: { words: Word[]; image: string } =
-        await response.json();
+        if (image) {
+          setFileUploaded(ConvertBase64ToFile(image));
+        }
 
-      if (image) {
-        setFileUploaded(ConvertBase64ToFile(image));
-      }
+        if (words != null && words.length > 0) {
+          // let text = words.map((w) => w.text).join("###");
 
-      if (words != null && words.length > 0) {
-        // let text = words.map((w) => w.text).join("###");
+          // if (language != OCRLanguage.English) {
+          //   const translation = await fetch("/api/translate", {
+          //     method: "POST",
+          //     body: JSON.stringify({
+          //       text: text,
+          //       target: "en",
+          //       source: convertOCRLangToLabelLang(language).toString(),
+          //     }),
+          //   });
+          //
+          //   text = await translation.json();
+          //   words = text.split("###").map((w, i) => {
+          //     words[i].text = w;
+          //     return words[i];
+          //   });
+          // }
 
-        // if (language != OCRLanguage.English) {
-        //   const translation = await fetch("/api/translate", {
-        //     method: "POST",
-        //     body: JSON.stringify({
-        //       text: text,
-        //       target: "en",
-        //       source: convertOCRLangToLabelLang(language).toString(),
-        //     }),
-        //   });
-        //
-        //   text = await translation.json();
-        //   words = text.split("###").map((w, i) => {
-        //     words[i].text = w;
-        //     return words[i];
-        //   });
-        // }
+          setWordBoxes(words);
+        }
 
-        setWordBoxes(words);
-      }
-
+        setExtracting(false);
+      };
+    } catch {
       setExtracting(false);
-    };
-
-    // setExtracting(true);
-    //
-    // try {
-    //   const worker = await createWorker(language);
-    //
-    //   const simpleImage = new SimpleImage(fileUploaded);
-    //   await simpleImage.ready;
-    //
-    //   for (let pixel of simpleImage.pixels) {
-    //     // get the pixel's RGB values
-    //     let red = pixel.red;
-    //     let green = pixel.green;
-    //     let blue = pixel.blue;
-    //     // Calculate the average value
-    //     let average = (red + green + blue) / 3;
-    //     // Assign this average vale to the pixel's RGB values
-    //     pixel.red = average;
-    //     pixel.green = average;
-    //     pixel.blue = average;
-    //   }
-    //
-    //   let response = await fetch(simpleImage.toDataURL());
-    //   let blob = await response.blob();
-    //   let file = new File([blob], "File name", { type: "image/png" });
-    //
-    //   const result = await worker.recognize(
-    //     URL.createObjectURL(file),
-    //     { rotateAuto: true },
-    //     {
-    //       text: true,
-    //       blocks: true,
-    //       box: true,
-    //     },
-    //   );
-    //
-    //   const words = result.data.words;
-    //   setWords(words);
-    //
-    //   await worker.terminate();
-    // } finally {
-    //   setExtracting(false);
-    // }
+    }
   };
 
   const selectBoxHandler = (word: string) => {

@@ -33,6 +33,7 @@ export async function POST(req: NextRequest) {
   formData2.append("target", "en");
   formData2.append("image", ConvertBase64ToFile(data.data.renderedImage));
 
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const response2 = await fetch(url, {
     method: "POST",
     headers: {

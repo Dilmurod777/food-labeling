@@ -571,7 +571,7 @@ export function ConvertBase64ToFile(
   }
 
   // Create a Blob from the binary data
-  const blob = new Blob([binaryData], { type: "image/png" }); // Change the type accordingly if it's not a PNG image
+  const blob = new Blob([binaryData], { type: "image/png" });
 
   // Create a File from the Blob with the given filename
   return new File([blob], filename, { type: blob.type });

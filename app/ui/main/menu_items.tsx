@@ -35,11 +35,11 @@ const items: MenuItem[] = [
         secondaryText: "Upload your label and customize it further.",
         url: "/ocr-label-maker",
       },
-      // {
-      //   mainText: "Packaging",
-      //   secondaryText: "Create and customize your package.",
-      //   url: "/packaging",
-      // },
+      {
+        mainText: "Packaging",
+        secondaryText: "Create and customize your package.",
+        url: "/packaging",
+      },
     ],
   },
 ];
