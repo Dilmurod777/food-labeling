@@ -35,6 +35,7 @@ export async function POST(req: NextRequest) {
       resultType: "string",
       timestamp: Date.now().toString(),
       version: "V2",
+      enableTableDetection: false,
     }),
   });
 
@@ -44,6 +45,8 @@ export async function POST(req: NextRequest) {
     box: item?.boundingPoly?.vertices || [],
     confidence: item?.inferConfidence || 0,
   }));
+
+  console.dir(data, { depth: null });
 
   return Response.json(words || []);
 }
