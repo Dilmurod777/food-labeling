@@ -14,5 +14,12 @@ export default function Ground() {
     infiniteGrid: true,
   };
 
-  return <Grid position={[0, -0.01, 0]} args={[10.5, 10.5]} {...gridConfig} />;
+  return (
+    <Grid
+      position={[0, -0.01, 0]}
+      args={[10.5, 10.5]}
+      {...gridConfig}
+      receiveShadow={true}
+    />
+  );
 }

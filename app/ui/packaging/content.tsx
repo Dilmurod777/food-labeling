@@ -6,7 +6,7 @@ export default function Content() {
   const meshRef = useRef();
 
   return (
-    <group position-y={-0.75}>
+    <group position-y={-1}>
       <Ground />
       <DefaultPackage />
     </group>

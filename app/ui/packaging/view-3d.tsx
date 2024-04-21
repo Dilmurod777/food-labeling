@@ -6,6 +6,8 @@ import {
   PerformanceMonitor,
   Sky,
   SoftShadows,
+  GizmoHelper,
+  GizmoViewport,
 } from "@react-three/drei";
 import Content from "@/app/ui/packaging/content";
 import { useRef } from "react";
@@ -16,7 +18,12 @@ export default function View3D() {
 
   return (
     <div className={"relative h-[700px] w-full flex-grow"}>
-      <Canvas>
+      <Canvas shadows>
+        <directionalLight
+          visible={true}
+          position={[3.3, 1.0, 4.4]}
+          castShadow={true}
+        />
         <Sky
           distance={450000}
           sunPosition={[0, 1, 0]}
@@ -33,8 +40,15 @@ export default function View3D() {
           maxPolarAngle={Math.PI * 0.5}
           enableZoom={true}
         />
-        <SoftShadows />
+        <SoftShadows size={10} />
         <Content />
+        <GizmoHelper alignment={"bottom-right"}>
+          <GizmoViewport
+            axisColors={["#FA7070", "#90D26D", "#7AA2E3"]}
+            labelColor="white"
+            hideNegativeAxes={true}
+          />
+        </GizmoHelper>
       </Canvas>
 
       <Menu />

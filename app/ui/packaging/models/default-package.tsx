@@ -7,7 +7,7 @@ interface Props {
   size?: number;
 }
 
-export default function DefaultPackage({ size = 5 }: Props) {
+export default function DefaultPackage({ size = 3 }: Props) {
   const { height, width, meshRefs }: Data3D = {
     height: size,
     width: size,
