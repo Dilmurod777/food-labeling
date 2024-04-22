@@ -54,7 +54,12 @@ export default function Menu() {
 
   const renderMenuItem = (item: MenuItem, index: number) => {
     if (item.type == "divider") {
-      return <div className={"h-1 w-full rounded-md bg-main-gray"}></div>;
+      return (
+        <div
+          className={"h-1 w-full rounded-md bg-main-gray"}
+          key={`3d-menu-item-${index}`}
+        ></div>
+      );
     }
 
     return (

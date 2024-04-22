@@ -41,7 +41,9 @@ export default function View3D() {
           enableZoom={true}
         />
         <SoftShadows size={10} />
+
         <Content />
+
         <GizmoHelper alignment={"bottom-right"}>
           <GizmoViewport
             axisColors={["#FA7070", "#90D26D", "#7AA2E3"]}

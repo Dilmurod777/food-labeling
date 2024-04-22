@@ -1,15 +1,32 @@
 import { Ref } from "react";
-import { Mesh } from "three";
+import { Group, Mesh } from "three";
 
 export interface Data3D {
   meshRefs: {
-    top: Ref<Mesh>[];
-    bottom: Ref<Mesh>[];
-    side1: Ref<Mesh>[];
-    side2: Ref<Mesh>[];
-    side3: Ref<Mesh>[];
-    side4: Ref<Mesh>[];
+    top: Ref<Group>[];
+    bottom: Ref<Group>[];
+    side1: Ref<Group>[];
+    side2: Ref<Group>[];
+    side3: Ref<Group>[];
+    side4: Ref<Group>[];
   };
-  width: number;
-  height: number;
+}
+
+export enum KeyMap {
+  open = "open",
+  close = "close",
+}
+
+export function AddVectors<T>(
+  a: [number, number, number],
+  b: [number, number, number],
+) {
+  return [a[0] + b[0], a[1] + b[1], a[2] + b[2]] as T;
+}
+
+export function SubtractVectors<T>(
+  a: [number, number, number],
+  b: [number, number, number],
+) {
+  return [a[0] - b[0], a[1] - b[1], a[2] - b[2]] as T;
 }
