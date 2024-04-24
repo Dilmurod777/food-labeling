@@ -16,7 +16,7 @@ interface MenuSubItem {
   modelPath: string;
 }
 
-export default function Menu() {
+export default function SideMenu() {
   const menuItems: MenuItem[] = [
     {
       type: "block",
@@ -56,7 +56,7 @@ export default function Menu() {
     if (item.type == "divider") {
       return (
         <div
-          className={"h-1 w-full rounded-md bg-main-gray"}
+          className={"h-0.5 w-full rounded-md bg-main-gray"}
           key={`3d-menu-item-${index}`}
         ></div>
       );
@@ -65,7 +65,7 @@ export default function Menu() {
     return (
       <div
         key={`3d-menu-item-${index}`}
-        className={`flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main-gray p-2 pb-1 ${activeMenuItemIndex == index ? "bg-hover-main-orange text-white" : "bg-white text-main-orange hover:bg-main-orange hover:text-white"}`}
+        className={`flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main-gray p-1.5 pb-0.5 ${activeMenuItemIndex == index ? "bg-hover-main-orange text-white" : "bg-white text-main-orange hover:bg-main-orange hover:text-white"}`}
         onClick={() => setActiveMenuItemIndex(index)}
       >
         <span className={"text-3xl/none"}>{item.icon}</span>
@@ -105,7 +105,7 @@ export default function Menu() {
   return (
     <div
       className={
-        "absolute left-10 top-10 flex min-h-[50%] gap-4 rounded-md border border-main-orange bg-white p-4"
+        "absolute left-5 top-5 flex min-h-[50%] cursor-default gap-2 rounded-md border border-main-orange bg-white p-2"
       }
     >
       <div className={"flex flex-col gap-2"}>

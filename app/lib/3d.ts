@@ -17,6 +17,14 @@ export enum KeyMap {
   close = "close",
 }
 
+export enum Tools {
+  Select = "Select tool",
+  Hand = "Hand tool",
+  Duplicate = "Duplicate",
+  Delete = "Delete",
+  ResetView = "Reset view",
+}
+
 export function AddVectors<T>(
   a: [number, number, number],
   b: [number, number, number],
@@ -30,3 +38,12 @@ export function SubtractVectors<T>(
 ) {
   return [a[0] - b[0], a[1] - b[1], a[2] - b[2]] as T;
 }
+
+export const RestrictedKeyCodes: string[] = [
+  "Delete",
+  "Backspace",
+  "ArrowDown",
+  "ArrowUp",
+  "Alt",
+  "Control",
+];
