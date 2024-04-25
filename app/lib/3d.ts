@@ -15,7 +15,7 @@ export interface Data3D {
 export interface Model {
   type: ModelType;
   path: string;
-  ref: Ref<object>;
+  name: string;
 }
 
 export enum ModelType {

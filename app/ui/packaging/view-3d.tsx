@@ -14,7 +14,8 @@ import { createRef, useEffect, useRef, useState } from "react";
 import SideMenu from "@/app/ui/packaging/side-menu";
 import BottomMenu from "@/app/ui/packaging/bottom-menu";
 import { Model, ModelType, RestrictedKeyCodes, Tools } from "@/app/lib/3d";
-import DefaultPackage from "@/app/ui/packaging/models/default-package";
+import { v4 as uuidV4 } from "uuid";
+import { Object3D } from "three";
 
 export default function View3D() {
   const cameraControlsRef = useRef(null);
@@ -85,9 +86,13 @@ export default function View3D() {
       {
         type: t,
         path: p,
-        ref: null,
+        name: uuidV4(),
       },
     ]);
+  };
+
+  const RemoveModel = (index: number) => {
+    setModels(models.slice(0, index).concat);
   };
 
   return (
