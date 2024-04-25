@@ -16,6 +16,7 @@ export interface Model {
   type: ModelType;
   path: string;
   name: string;
+  animatable: boolean;
 }
 
 export enum ModelType {
@@ -51,6 +52,7 @@ export enum Tools {
   ResetView = "Reset view",
   UploadImage = "Upload",
   ExportRender = "Export",
+  AnimationSlider = "Open/Close",
 }
 
 export function AddVectors<T>(

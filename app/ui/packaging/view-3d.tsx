@@ -1,33 +1,32 @@
 "use client";
 
-import { Canvas, useThree } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import {
-  Environment,
-  GizmoHelper,
-  GizmoViewport,
-  Lightformer,
   MapControls,
   OrbitControls,
   PerspectiveCamera,
-  Sky,
   SoftShadows,
   useTexture,
 } from "@react-three/drei";
 import Content from "@/app/ui/packaging/content";
-import { ChangeEvent, createRef, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SideMenu from "@/app/ui/packaging/side-menu";
 import BottomMenu from "@/app/ui/packaging/bottom-menu";
 import { Model, ModelType, RestrictedKeyCodes, Tools } from "@/app/lib/3d";
 import { v4 as uuidV4 } from "uuid";
-import { Group, Texture, WebGLRenderer } from "three";
+import { Texture } from "three";
 
 export default function View3D() {
   const [currentTool, setCurrentTool] = useState<Tools>(Tools.Select);
   const [models, setModels] = useState<Model[]>([]);
   const [texture, setTexture] = useState<Texture>();
-  const currentModelIndex = useRef(-1);
+  const [currentModelIndex, setCurrentModelIndex] = useState(-1);
   const cameraRef = useRef(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const totalSteps = 15;
+  const step = useRef(0);
+  const [_, setUpdate] = useState(step.current);
 
   useEffect(() => {
     window.document.body.onkeydown = function (event) {
@@ -86,13 +85,14 @@ export default function View3D() {
     }
   };
 
-  const AddModel = (t: ModelType, p: string) => {
+  const AddModel = (t: ModelType, p: string, a: boolean) => {
     setModels([
       ...models,
       {
         type: t,
         path: p,
         name: uuidV4(),
+        animatable: a,
       },
     ]);
   };
@@ -137,7 +137,7 @@ export default function View3D() {
     setCurrentTool(text);
 
     if (text == Tools.Delete) {
-      RemoveModel(currentModelIndex.current);
+      RemoveModel(currentModelIndex);
     } else if (text == Tools.UploadImage) {
       // UploadImage();
     } else if (text == Tools.ExportRender) {
@@ -169,12 +169,28 @@ export default function View3D() {
         <Content
           models={models}
           currentTool={currentTool}
-          setCurrentModelIndex={(idx) => (currentModelIndex.current = idx)}
+          setCurrentModelIndex={setCurrentModelIndex}
+          step={step.current}
+          totalSteps={totalSteps}
+          updateStep={(s) => {
+            step.current = s;
+            setUpdate(s);
+          }}
         />
       </Canvas>
 
       <SideMenu addModel={AddModel} />
-      <BottomMenu updateTool={UpdateTool} currentTool={currentTool} />
+      <BottomMenu
+        updateTool={UpdateTool}
+        currentTool={currentTool}
+        step={step.current}
+        totalSteps={totalSteps}
+        currentModel={models[currentModelIndex]}
+        updateStep={(s) => {
+          step.current = s;
+          setUpdate(s);
+        }}
+      />
     </div>
   );
 }

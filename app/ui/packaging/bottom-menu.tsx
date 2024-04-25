@@ -7,11 +7,11 @@ import { LuTimerReset } from "react-icons/lu";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { FaFileExport } from "react-icons/fa6";
 import { KeyboardControls, KeyboardControlsEntry } from "@react-three/drei";
-import { AnimationKeyMap, Tools } from "@/app/lib/3d";
+import { AnimationKeyMap, Model, Tools } from "@/app/lib/3d";
 import { useThree } from "@react-three/fiber";
 
 interface MenuItem {
-  type: "block" | "divider";
+  type: "block" | "divider" | "slider";
   icon?: ReactNode;
   text?: Tools;
   hotkeys?: string[];
@@ -21,9 +21,20 @@ interface MenuItem {
 interface Props {
   currentTool: string;
   updateTool: (t: Tools) => void;
+  step: number;
+  totalSteps: number;
+  updateStep: (s: number) => void;
+  currentModel: Model | null;
 }
 
-export default function BottomMenu({ currentTool, updateTool }: Props) {
+export default function BottomMenu({
+  currentTool,
+  updateTool,
+  step,
+  totalSteps,
+  updateStep,
+  currentModel,
+}: Props) {
   const menuItems: MenuItem[] = [
     {
       type: "block",
@@ -77,6 +88,11 @@ export default function BottomMenu({ currentTool, updateTool }: Props) {
       hotkeys: ["e"],
       showTooltip: true,
     },
+    { type: "divider" },
+    {
+      type: "slider",
+      text: Tools.AnimationSlider,
+    },
   ];
   const otherKeymaps: KeyboardControlsEntry[] = [];
   const [activeMenuItemIndex, setActiveMenuItemIndex] = useState(0);
@@ -111,33 +127,52 @@ export default function BottomMenu({ currentTool, updateTool }: Props) {
           key={`3d-menu-item-${index}`}
         ></div>
       );
-    }
-
-    return (
-      <div key={`3d-menu-item-${index}`} className={"relative"}>
+    } else if (item.type == "slider" && currentModel?.animatable) {
+      return (
         <div
-          className={`peer flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main-gray p-1 ${activeMenuItemIndex == index ? "bg-hover-main-orange text-white" : "bg-white text-main-orange hover:bg-main-orange hover:text-white"}`}
-          onClick={() => menuItemHandle(index)}
+          className="relative flex h-full items-center"
+          key={`3d-menu-item-${index}`}
         >
-          <span className={"text-xl/none"}>{item.icon}</span>
+          <input
+            id="labels-range-input"
+            type="range"
+            value={step}
+            min="0"
+            max={totalSteps}
+            className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-main-gray accent-main-orange"
+            onChange={(e) => updateStep(e.target.valueAsNumber)}
+          />
         </div>
-
-        {item.showTooltip && (
+      );
+    } else if (item.type == "block") {
+      return (
+        <div key={`3d-menu-item-${index}`} className={"relative"}>
           <div
-            className={
-              "absolute -left-7 -right-7 -top-9 z-10 overflow-visible rounded-md bg-secondary-gray p-1 text-center text-xs text-white opacity-0 transition-opacity peer-hover:opacity-100"
-            }
+            className={`peer flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main-gray p-1 ${activeMenuItemIndex == index ? "bg-hover-main-orange text-white" : "bg-white text-main-orange hover:bg-main-orange hover:text-white"}`}
+            onClick={() => menuItemHandle(index)}
           >
-            {item.text}
-            {/*{item.hotkeys && (*/}
-            {/*  <span className={"text-sm capitalize text-main-gray"}>*/}
-            {/*    {item.hotkeys[0]}*/}
-            {/*  </span>*/}
-            {/*)}*/}
+            <span className={"text-xl/none"}>{item.icon}</span>
           </div>
-        )}
-      </div>
-    );
+
+          {item.showTooltip && (
+            <div
+              className={
+                "absolute -left-7 -right-7 -top-9 z-10 overflow-visible rounded-md bg-secondary-gray p-1 text-center text-xs text-white opacity-0 transition-opacity peer-hover:opacity-100"
+              }
+            >
+              {item.text}
+              {/*{item.hotkeys && (*/}
+              {/*  <span className={"text-sm capitalize text-main-gray"}>*/}
+              {/*    {item.hotkeys[0]}*/}
+              {/*  </span>*/}
+              {/*)}*/}
+            </div>
+          )}
+        </div>
+      );
+    } else {
+      return null;
+    }
   };
 
   const keyboardOnChange = (name: string, pressed: boolean) => {

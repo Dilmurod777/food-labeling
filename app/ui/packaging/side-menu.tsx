@@ -18,10 +18,11 @@ interface MenuSubItem {
   placeholder: string;
   modelPath: string;
   type: ModelType;
+  animatable: boolean;
 }
 
 interface Props {
-  addModel: (t: ModelType, p: string) => void;
+  addModel: (t: ModelType, p: string, a: boolean) => void;
 }
 
 export default function SideMenu({ addModel }: Props) {
@@ -42,12 +43,14 @@ export default function SideMenu({ addModel }: Props) {
           modelPath: "default-package",
           placeholder: "Default Package",
           imgPath: "",
+          animatable: true,
         },
         {
           type: ModelType.Loaded,
           modelPath: "chips-package.glb",
           placeholder: "Chips Package",
           imgPath: "",
+          animatable: false,
         },
       ],
     },
@@ -127,7 +130,9 @@ export default function SideMenu({ addModel }: Props) {
               style={{
                 backgroundColor: RandomColors[i % RandomColors.length],
               }}
-              onClick={() => addModel(item.type, item.modelPath)}
+              onClick={() =>
+                addModel(item.type, item.modelPath, item.animatable)
+              }
             >
               {item.imgPath || item.placeholder}
             </div>

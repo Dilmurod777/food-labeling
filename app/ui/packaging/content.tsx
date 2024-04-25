@@ -22,6 +22,9 @@ interface Props {
   models: Model[];
   setCurrentModelIndex: (i: number) => void;
   currentTool: Tools;
+  step: number;
+  totalSteps: number;
+  updateStep: (s: number) => void;
 }
 
 interface CurrentModel {
@@ -33,12 +36,13 @@ export default function Content({
   models,
   setCurrentModelIndex,
   currentTool,
+  step,
+  totalSteps,
+  updateStep,
 }: Props) {
-  const totalSteps = 30;
-  const step = useRef(0);
-  const [_, setUpdate] = useState(step.current);
   const [currentModel, setCurrentModel] = useState<CurrentModel | null>();
   const texture = useTexture("/uploads/image1.jpg");
+  const [animationValue, setAnimationValue] = useState(0);
 
   const keyMap = useMemo<KeyboardControlsEntry[]>(
     () => [
@@ -62,19 +66,17 @@ export default function Content({
     if (!pressed) return;
 
     switch (name) {
-      case AnimationKeyMap.open:
-        step.current = Math.min(step.current + 1, totalSteps);
-        break;
-      case AnimationKeyMap.close:
-        step.current = Math.max(step.current - 1, 0);
-        break;
+      // case AnimationKeyMap.open:
+      //   updateStep(Math.min(step + 1, totalSteps));
+      //   break;
+      // case AnimationKeyMap.close:
+      //   updateStep(Math.min(step - 1, 0));
+      //   break;
       case Keymaps.escape:
         setCurrentModel(null);
         setCurrentModelIndex(-1);
         break;
     }
-
-    setUpdate(step.current);
   };
 
   const LoadGLTF = (path: string) => {
@@ -84,6 +86,7 @@ export default function Content({
         <mesh
           //@ts-ignore
           geometry={nodes.Dorrito001_Lays_0.geometry}
+          // material={materials.Lays}
           scale={0.05}
         />
         <meshBasicMaterial map={texture} />
@@ -96,9 +99,7 @@ export default function Content({
       case ModelType.Generated:
         switch (model.path) {
           case "default-package":
-            return (
-              <DefaultPackage step={step.current} totalSteps={totalSteps} />
-            );
+            return <DefaultPackage step={step} totalSteps={totalSteps} />;
         }
         break;
       case ModelType.Loaded: {

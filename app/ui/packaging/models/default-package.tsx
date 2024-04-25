@@ -53,7 +53,6 @@ export default function DefaultPackage({
     const obj = meshRefs.top[0];
 
     if (obj) {
-      console.log(step);
       if (step >= 0 && step < 5) {
         // @ts-ignore
         obj.current.position.y = 1.2 + 0.4 * step;
