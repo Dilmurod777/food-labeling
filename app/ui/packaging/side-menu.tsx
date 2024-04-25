@@ -2,8 +2,9 @@ import { BsLayoutWtf } from "react-icons/bs";
 import { PiShapesFill } from "react-icons/pi";
 import { GiCubes } from "react-icons/gi";
 import { FaLightbulb } from "react-icons/fa";
-import { ReactNode, useState } from "react";
-import { Model, ModelType, RandomColors } from "@/app/lib/3d";
+import { ReactNode, useEffect, useState } from "react";
+import { ModelType, RandomColors } from "@/app/lib/3d";
+import { useGLTF } from "@react-three/drei";
 
 interface MenuItem {
   type: "block" | "divider";
@@ -71,6 +72,16 @@ export default function SideMenu({ addModel }: Props) {
     },
   ];
   const [activeMenuItemIndex, setActiveMenuItemIndex] = useState(-1);
+
+  useEffect(() => {
+    menuItems.forEach((item) => {
+      item.items?.forEach((model) => {
+        if (model.type == ModelType.Loaded) {
+          useGLTF.preload(`/models/${model.modelPath}`);
+        }
+      });
+    });
+  }, []);
 
   const renderMenuItem = (item: MenuItem, index: number) => {
     if (item.type == "divider") {

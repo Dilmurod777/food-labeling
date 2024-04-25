@@ -15,12 +15,12 @@ import SideMenu from "@/app/ui/packaging/side-menu";
 import BottomMenu from "@/app/ui/packaging/bottom-menu";
 import { Model, ModelType, RestrictedKeyCodes, Tools } from "@/app/lib/3d";
 import { v4 as uuidV4 } from "uuid";
-import { Object3D } from "three";
 
 export default function View3D() {
   const cameraControlsRef = useRef(null);
-  const [currentTool, setCurrentTool] = useState<string>(Tools.Select);
+  const [currentTool, setCurrentTool] = useState<Tools>(Tools.Select);
   const [models, setModels] = useState<Model[]>([]);
+  const currentModelIndex = useRef(-1);
 
   useEffect(() => {
     window.document.body.onkeydown = function (event) {
@@ -92,7 +92,17 @@ export default function View3D() {
   };
 
   const RemoveModel = (index: number) => {
-    setModels(models.slice(0, index).concat);
+    if (index < 0 || index > models.length) return;
+
+    setModels([...models.slice(0, index), ...models.slice(index + 1)]);
+  };
+
+  const UpdateTool = (text: Tools) => {
+    setCurrentTool(text);
+
+    if (text == Tools.Delete) {
+      RemoveModel(currentModelIndex.current);
+    }
   };
 
   return (
@@ -109,11 +119,15 @@ export default function View3D() {
         {GetCurrentControls()}
         <SoftShadows size={10} />
 
-        <Content models={models} />
+        <Content
+          models={models}
+          currentTool={currentTool}
+          setCurrentModelIndex={(idx) => (currentModelIndex.current = idx)}
+        />
       </Canvas>
 
       <SideMenu addModel={AddModel} />
-      <BottomMenu updateTool={setCurrentTool} currentTool={currentTool} />
+      <BottomMenu updateTool={UpdateTool} currentTool={currentTool} />
     </div>
   );
 }

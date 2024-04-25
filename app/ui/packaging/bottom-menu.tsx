@@ -10,13 +10,14 @@ import { Tools } from "@/app/lib/3d";
 interface MenuItem {
   type: "block" | "divider";
   icon?: ReactNode;
-  text?: string;
+  text?: Tools;
   hotkeys?: string[];
+  showTooltip?: boolean;
 }
 
 interface Props {
   currentTool: string;
-  updateTool: (t: string) => void;
+  updateTool: (t: Tools) => void;
 }
 
 export default function BottomMenu({ currentTool, updateTool }: Props) {
@@ -26,33 +27,38 @@ export default function BottomMenu({ currentTool, updateTool }: Props) {
       icon: <PiCursorFill />,
       text: Tools.Select,
       hotkeys: ["v"],
+      showTooltip: true,
     },
     {
       type: "block",
       icon: <FaHandPaper />,
       text: Tools.Hand,
       hotkeys: ["h"],
+      showTooltip: true,
     },
     { type: "divider" },
-    {
-      type: "block",
-      icon: <LuSendToBack />,
-      text: Tools.Duplicate,
-      hotkeys: ["d"],
-    },
+    // {
+    //   type: "block",
+    //   icon: <LuSendToBack />,
+    //   text: Tools.Duplicate,
+    //   hotkeys: ["d"],
+    //   showTooltip: true,
+    // },
     {
       type: "block",
       icon: <MdDelete />,
       text: Tools.Delete,
       hotkeys: ["Delete"],
+      showTooltip: true,
     },
-    { type: "divider" },
-    {
-      type: "block",
-      icon: <LuTimerReset />,
-      text: Tools.ResetView,
-      hotkeys: ["r"],
-    },
+    // { type: "divider" },
+    // {
+    //   type: "block",
+    //   icon: <LuTimerReset />,
+    //   text: Tools.ResetView,
+    //   hotkeys: ["r"],
+    //   showTooltip: true,
+    // },
   ];
   const [activeMenuItemIndex, setActiveMenuItemIndex] = useState(0);
 
@@ -67,8 +73,15 @@ export default function BottomMenu({ currentTool, updateTool }: Props) {
   }, []);
 
   const menuItemHandle = (index: number) => {
-    setActiveMenuItemIndex(index);
-    updateTool(menuItems[index].text || Tools.Select);
+    const currentTool = menuItems[index];
+
+    if (index >= 0 && index <= 1) {
+      setActiveMenuItemIndex(index);
+    } else {
+      setActiveMenuItemIndex(0);
+    }
+
+    updateTool(currentTool.text || Tools.Select);
   };
 
   const renderMenuItem = (item: MenuItem, index: number) => {
@@ -82,12 +95,28 @@ export default function BottomMenu({ currentTool, updateTool }: Props) {
     }
 
     return (
-      <div
-        key={`3d-menu-item-${index}`}
-        className={`flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main-gray p-1 ${activeMenuItemIndex == index ? "bg-hover-main-orange text-white" : "bg-white text-main-orange hover:bg-main-orange hover:text-white"}`}
-        onClick={() => menuItemHandle(index)}
-      >
-        <span className={"text-xl/none"}>{item.icon}</span>
+      <div key={`3d-menu-item-${index}`} className={"relative"}>
+        <div
+          className={`peer flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main-gray p-1 ${activeMenuItemIndex == index ? "bg-hover-main-orange text-white" : "bg-white text-main-orange hover:bg-main-orange hover:text-white"}`}
+          onClick={() => menuItemHandle(index)}
+        >
+          <span className={"text-xl/none"}>{item.icon}</span>
+        </div>
+
+        {item.showTooltip && (
+          <div
+            className={
+              "absolute -left-7 -right-7 -top-9 z-10 overflow-visible rounded-md bg-secondary-gray p-1 text-center text-xs text-white opacity-0 transition-opacity peer-hover:opacity-100"
+            }
+          >
+            {item.text}
+            {/*{item.hotkeys && (*/}
+            {/*  <span className={"text-sm capitalize text-main-gray"}>*/}
+            {/*    {item.hotkeys[0]}*/}
+            {/*  </span>*/}
+            {/*)}*/}
+          </div>
+        )}
       </div>
     );
   };

@@ -8,12 +8,14 @@ import {
   useFBX,
   useGLTF,
 } from "@react-three/drei";
-import { KeyMap, Model, ModelType } from "@/app/lib/3d";
+import { KeyMap, Model, ModelType, Tools } from "@/app/lib/3d";
 import { Group, Object3D } from "three";
 import { v4 as uuidV4 } from "uuid";
 
 interface Props {
   models: Model[];
+  setCurrentModelIndex: (i: number) => void;
+  currentTool: Tools;
 }
 
 interface CurrentModel {
@@ -21,7 +23,11 @@ interface CurrentModel {
   model: Object3D;
 }
 
-export default function Content({ models }: Props) {
+export default function Content({
+  models,
+  setCurrentModelIndex,
+  currentTool,
+}: Props) {
   const totalSteps = 5;
   const step = useRef(0);
   const [_, setUpdate] = useState(step.current);
@@ -94,13 +100,15 @@ export default function Content({ models }: Props) {
   };
 
   const GetModel = (model: Model, index: number) => {
+    const active = index == currentModel?.index && currentTool == Tools.Select;
+
     return (
       <PivotControls
+        activeAxes={[active, active, active]}
         key={`model-${model.name}`}
         anchor={[0, 0, 0]}
         depthTest={false}
         disableSliders={true}
-        visible={index == currentModel?.index}
       >
         <group
           name={model.name}
@@ -109,6 +117,8 @@ export default function Content({ models }: Props) {
               index,
               model: e.object,
             });
+
+            setCurrentModelIndex(index);
           }}
         >
           {GetModelNode(model)}
