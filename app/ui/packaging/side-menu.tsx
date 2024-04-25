@@ -117,12 +117,12 @@ export default function SideMenu({ addModel }: Props) {
     return (
       <>
         <div className={"h-auto w-0.5 bg-main-gray"}></div>
-        <div className={"flex flex-col gap-2"}>
+        <div className={"flex w-28 flex-col gap-2"}>
           {activeMenuItem.items.map((item, i) => (
             <div
               key={`3d-menu-subItem-${i}`}
               className={
-                "flex min-h-12 min-w-12 cursor-pointer items-center justify-center rounded-md border border-main-gray p-2 text-xs lowercase text-white hover:bg-main-orange hover:text-white"
+                "flex h-28 w-28 cursor-pointer items-center justify-center rounded-md border border-main-gray p-2 text-center text-xs capitalize text-white hover:bg-main-orange hover:text-white"
               }
               style={{
                 backgroundColor: RandomColors[i % RandomColors.length],
