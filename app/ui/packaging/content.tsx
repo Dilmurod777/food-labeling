@@ -1,4 +1,4 @@
-import { Ref, useMemo, useRef, useState } from "react";
+import { Ref, useEffect, useMemo, useRef, useState } from "react";
 import Ground from "@/app/ui/packaging/ground";
 import DefaultPackage from "@/app/ui/packaging/models/default-package";
 import {
@@ -7,6 +7,7 @@ import {
   PivotControls,
   useFBX,
   useGLTF,
+  useTexture,
 } from "@react-three/drei";
 import {
   AnimationKeyMap,
@@ -15,8 +16,7 @@ import {
   ModelType,
   Tools,
 } from "@/app/lib/3d";
-import { Group, Object3D } from "three";
-import { v4 as uuidV4 } from "uuid";
+import { MeshStandardMaterial, Object3D, Texture } from "three";
 
 interface Props {
   models: Model[];
@@ -38,6 +38,7 @@ export default function Content({
   const step = useRef(0);
   const [_, setUpdate] = useState(step.current);
   const [currentModel, setCurrentModel] = useState<CurrentModel | null>();
+  const texture = useTexture("/uploads/image1.jpg");
 
   const keyMap = useMemo<KeyboardControlsEntry[]>(
     () => [
@@ -85,6 +86,7 @@ export default function Content({
           geometry={nodes.Dorrito001_Lays_0.geometry}
           scale={0.1}
         />
+        <meshBasicMaterial map={texture} />
       </group>
     );
   };

@@ -44,11 +44,13 @@ export enum Keymaps {
 }
 
 export enum Tools {
-  Select = "Select tool",
-  Hand = "Hand tool",
+  Select = "Select",
+  Hand = "Hand",
   Duplicate = "Duplicate",
   Delete = "Delete",
   ResetView = "Reset view",
+  UploadImage = "Upload",
+  ExportRender = "Export",
 }
 
 export function AddVectors<T>(

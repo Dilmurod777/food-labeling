@@ -4,8 +4,11 @@ import { FaHandPaper } from "react-icons/fa";
 import { LuSendToBack } from "react-icons/lu";
 import { MdDelete } from "react-icons/md";
 import { LuTimerReset } from "react-icons/lu";
+import { MdOutlineFileUpload } from "react-icons/md";
+import { FaFileExport } from "react-icons/fa6";
 import { KeyboardControls, KeyboardControlsEntry } from "@react-three/drei";
 import { AnimationKeyMap, Tools } from "@/app/lib/3d";
+import { useThree } from "@react-three/fiber";
 
 interface MenuItem {
   type: "block" | "divider";
@@ -51,7 +54,14 @@ export default function BottomMenu({ currentTool, updateTool }: Props) {
       hotkeys: ["Delete"],
       showTooltip: true,
     },
-    // { type: "divider" },
+    { type: "divider" },
+    {
+      type: "block",
+      icon: <MdOutlineFileUpload />,
+      text: Tools.UploadImage,
+      hotkeys: ["u"],
+      showTooltip: true,
+    },
     // {
     //   type: "block",
     //   icon: <LuTimerReset />,
@@ -59,6 +69,14 @@ export default function BottomMenu({ currentTool, updateTool }: Props) {
     //   hotkeys: ["r"],
     //   showTooltip: true,
     // },
+    { type: "divider" },
+    {
+      type: "block",
+      icon: <FaFileExport />,
+      text: Tools.ExportRender,
+      hotkeys: ["e"],
+      showTooltip: true,
+    },
   ];
   const otherKeymaps: KeyboardControlsEntry[] = [];
   const [activeMenuItemIndex, setActiveMenuItemIndex] = useState(0);

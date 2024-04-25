@@ -1,26 +1,31 @@
 "use client";
 
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useThree } from "@react-three/fiber";
 import {
   GizmoHelper,
   GizmoViewport,
   MapControls,
   OrbitControls,
+  PerspectiveCamera,
   Sky,
   SoftShadows,
+  useTexture,
 } from "@react-three/drei";
 import Content from "@/app/ui/packaging/content";
-import { createRef, useEffect, useRef, useState } from "react";
+import { ChangeEvent, createRef, useEffect, useRef, useState } from "react";
 import SideMenu from "@/app/ui/packaging/side-menu";
 import BottomMenu from "@/app/ui/packaging/bottom-menu";
 import { Model, ModelType, RestrictedKeyCodes, Tools } from "@/app/lib/3d";
 import { v4 as uuidV4 } from "uuid";
+import { Group, Texture, WebGLRenderer } from "three";
 
 export default function View3D() {
-  const cameraControlsRef = useRef(null);
   const [currentTool, setCurrentTool] = useState<Tools>(Tools.Select);
   const [models, setModels] = useState<Model[]>([]);
+  const [texture, setTexture] = useState<Texture>();
   const currentModelIndex = useRef(-1);
+  const cameraRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     window.document.body.onkeydown = function (event) {
@@ -60,7 +65,6 @@ export default function View3D() {
           <>
             <OrbitControls
               makeDefault
-              ref={cameraControlsRef}
               minDistance={5}
               maxDistance={20}
               enabled={true}
@@ -68,13 +72,13 @@ export default function View3D() {
               maxPolarAngle={Math.PI * 0.5}
               enableZoom={true}
             />
-            <GizmoHelper alignment={"bottom-right"}>
-              <GizmoViewport
-                axisColors={["#FA7070", "#90D26D", "#7AA2E3"]}
-                labelColor="white"
-                hideNegativeAxes={true}
-              />
-            </GizmoHelper>
+            {/*<GizmoHelper alignment={"bottom-right"}>*/}
+            {/*  <GizmoViewport*/}
+            {/*    axisColors={["#FA7070", "#90D26D", "#7AA2E3"]}*/}
+            {/*    labelColor="white"*/}
+            {/*    hideNegativeAxes={true}*/}
+            {/*  />*/}
+            {/*</GizmoHelper>*/}
           </>
         );
     }
@@ -97,11 +101,51 @@ export default function View3D() {
     setModels([...models.slice(0, index), ...models.slice(index + 1)]);
   };
 
+  const UploadImage = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+
+    input.onchange = (e: Event) => {
+      // @ts-ignore
+      if (!e.target || e.target.files.length == 0) return;
+      // @ts-ignore
+      UploadImage2(e.target.files[0]);
+    };
+
+    input.click();
+  };
+
+  const UploadImage2 = (file: File) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = (readerEvent) => {
+      if (!readerEvent.target) return;
+      const content = readerEvent.target.result;
+      ApplyTexture(content as string);
+    };
+  };
+
+  const ApplyTexture = (url: string) => {
+    const texture = useTexture(url);
+    setTexture(texture);
+  };
+
   const UpdateTool = (text: Tools) => {
     setCurrentTool(text);
 
     if (text == Tools.Delete) {
       RemoveModel(currentModelIndex.current);
+    } else if (text == Tools.UploadImage) {
+      // UploadImage();
+    } else if (text == Tools.ExportRender) {
+      if (!canvasRef.current) return;
+
+      const screenshot = canvasRef.current.toDataURL("image/png", 1.0);
+      const a = document.createElement("a");
+      a.href = screenshot;
+      a.download = "scene.png";
+      a.click();
     }
   };
 
@@ -110,7 +154,8 @@ export default function View3D() {
       className={"relative h-[700px] w-full flex-grow"}
       style={{ cursor: GetCurrentCursor() }}
     >
-      <Canvas shadows>
+      <Canvas shadows ref={canvasRef} gl={{ preserveDrawingBuffer: true }}>
+        <PerspectiveCamera makeDefault position={[0, 0, -10]} ref={cameraRef} />
         <directionalLight
           visible={true}
           position={[3.3, 1.0, 4.4]}
