@@ -3,6 +3,7 @@ import { PiShapesFill } from "react-icons/pi";
 import { GiCubes } from "react-icons/gi";
 import { FaLightbulb } from "react-icons/fa";
 import { ReactNode, useState } from "react";
+import { Model, ModelType, RandomColors } from "@/app/lib/3d";
 
 interface MenuItem {
   type: "block" | "divider";
@@ -13,10 +14,16 @@ interface MenuItem {
 
 interface MenuSubItem {
   imgPath: string;
+  placeholder: string;
   modelPath: string;
+  type: ModelType;
 }
 
-export default function SideMenu() {
+interface Props {
+  addModel: (t: ModelType, p: string) => void;
+}
+
+export default function SideMenu({ addModel }: Props) {
   const menuItems: MenuItem[] = [
     {
       type: "block",
@@ -28,7 +35,20 @@ export default function SideMenu() {
       type: "block",
       icon: <GiCubes />,
       text: "Models",
-      items: [],
+      items: [
+        {
+          type: ModelType.Generated,
+          modelPath: "default-package",
+          placeholder: "Default Package",
+          imgPath: "",
+        },
+        {
+          type: ModelType.Loaded,
+          modelPath: "chips-package.glb",
+          placeholder: "Chips Package",
+          imgPath: "",
+        },
+      ],
     },
     {
       type: "block",
@@ -91,10 +111,14 @@ export default function SideMenu() {
             <div
               key={`3d-menu-subItem-${i}`}
               className={
-                "cursor-pointer rounded-md border border-main-gray p-2 text-3xl text-black hover:bg-main-orange hover:text-white"
+                "flex min-h-12 min-w-12 cursor-pointer items-center justify-center rounded-md border border-main-gray p-2 text-xs lowercase text-white hover:bg-main-orange hover:text-white"
               }
+              style={{
+                backgroundColor: RandomColors[i % RandomColors.length],
+              }}
+              onClick={() => addModel(item.type, item.modelPath)}
             >
-              {item.imgPath}
+              {item.imgPath || item.placeholder}
             </div>
           ))}
         </div>

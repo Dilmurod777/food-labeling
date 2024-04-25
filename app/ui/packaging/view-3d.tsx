@@ -2,22 +2,24 @@
 
 import { Canvas } from "@react-three/fiber";
 import {
-  OrbitControls,
-  Sky,
-  SoftShadows,
   GizmoHelper,
   GizmoViewport,
   MapControls,
+  OrbitControls,
+  Sky,
+  SoftShadows,
 } from "@react-three/drei";
 import Content from "@/app/ui/packaging/content";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { createRef, useEffect, useRef, useState } from "react";
 import SideMenu from "@/app/ui/packaging/side-menu";
 import BottomMenu from "@/app/ui/packaging/bottom-menu";
-import { KeyMap, RestrictedKeyCodes, Tools } from "@/app/lib/3d";
+import { Model, ModelType, RestrictedKeyCodes, Tools } from "@/app/lib/3d";
+import DefaultPackage from "@/app/ui/packaging/models/default-package";
 
 export default function View3D() {
   const cameraControlsRef = useRef(null);
   const [currentTool, setCurrentTool] = useState<string>(Tools.Select);
+  const [models, setModels] = useState<Model[]>([]);
 
   useEffect(() => {
     window.document.body.onkeydown = function (event) {
@@ -77,6 +79,17 @@ export default function View3D() {
     }
   };
 
+  const AddModel = (t: ModelType, p: string) => {
+    setModels([
+      ...models,
+      {
+        type: t,
+        path: p,
+        ref: null,
+      },
+    ]);
+  };
+
   return (
     <div
       className={"relative h-[700px] w-full flex-grow"}
@@ -88,19 +101,13 @@ export default function View3D() {
           position={[3.3, 1.0, 4.4]}
           castShadow={true}
         />
-        <Sky
-          distance={450000}
-          sunPosition={[0, 1, 0]}
-          inclination={0}
-          azimuth={0.25}
-        />
         {GetCurrentControls()}
         <SoftShadows size={10} />
 
-        <Content />
+        <Content models={models} />
       </Canvas>
 
-      <SideMenu />
+      <SideMenu addModel={AddModel} />
       <BottomMenu updateTool={setCurrentTool} currentTool={currentTool} />
     </div>
   );

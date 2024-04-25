@@ -12,6 +12,28 @@ export interface Data3D {
   };
 }
 
+export interface Model {
+  type: ModelType;
+  path: string;
+  ref: Ref<object>;
+}
+
+export enum ModelType {
+  Null,
+  Generated,
+  Loaded,
+}
+
+export const RandomColors: string[] = [
+  "#003C43",
+  "#77B0AA",
+  "#A79277",
+  "#D1BB9E",
+  "#4793AF",
+  "#FFC470",
+  "#DD5746",
+];
+
 export enum KeyMap {
   open = "open",
   close = "close",
