@@ -5,6 +5,7 @@ import { FaLightbulb } from "react-icons/fa";
 import { ReactNode, useEffect, useState } from "react";
 import { ModelType, RandomColors } from "@/app/lib/3d";
 import { useGLTF } from "@react-three/drei";
+import Image from "next/image";
 
 interface MenuItem {
   type: "block" | "divider";
@@ -15,14 +16,22 @@ interface MenuItem {
 
 interface MenuSubItem {
   imgPath: string;
-  placeholder: string;
+  text: string;
   modelPath: string;
   type: ModelType;
   animatable: boolean;
+  step: number;
+  totalSteps: number;
 }
 
 interface Props {
-  addModel: (t: ModelType, p: string, a: boolean) => void;
+  addModel: (
+    t: ModelType,
+    p: string,
+    a: boolean,
+    s: number,
+    ts: number,
+  ) => void;
 }
 
 export default function SideMenu({ addModel }: Props) {
@@ -41,16 +50,20 @@ export default function SideMenu({ addModel }: Props) {
         {
           type: ModelType.Generated,
           modelPath: "default-package",
-          placeholder: "Default Package",
-          imgPath: "",
+          text: "Default Package",
+          imgPath: "default-package.png",
           animatable: true,
+          step: 0,
+          totalSteps: 15,
         },
         {
           type: ModelType.Loaded,
           modelPath: "chips-package.glb",
-          placeholder: "Chips Package",
-          imgPath: "",
+          text: "Chips Package",
+          imgPath: "chips-package.png",
           animatable: false,
+          step: 0,
+          totalSteps: 0,
         },
       ],
     },
@@ -125,16 +138,48 @@ export default function SideMenu({ addModel }: Props) {
             <div
               key={`3d-menu-subItem-${i}`}
               className={
-                "flex h-28 w-28 cursor-pointer items-center justify-center rounded-md border border-main-gray p-2 text-center text-xs capitalize text-white hover:bg-main-orange hover:text-white"
+                "group relative flex h-28 w-28 cursor-pointer items-center justify-center rounded-md border border-main-gray text-center text-xs capitalize text-white hover:bg-main-orange hover:text-white"
               }
               style={{
                 backgroundColor: RandomColors[i % RandomColors.length],
               }}
               onClick={() =>
-                addModel(item.type, item.modelPath, item.animatable)
+                addModel(
+                  item.type,
+                  item.modelPath,
+                  item.animatable,
+                  item.step,
+                  item.totalSteps,
+                )
               }
             >
-              {item.imgPath || item.placeholder}
+              <div
+                className={
+                  "z-5 absolute bottom-0 left-0 right-0 top-0 bg-black/40"
+                }
+              />
+              {item.imgPath ? (
+                <div className={"relative z-0 h-20 w-20"}>
+                  <span
+                    className={
+                      "absolute -bottom-3 left-0 z-20 w-full text-center text-xs"
+                    }
+                  >
+                    {item.text}
+                  </span>
+                  <Image
+                    className={"transition-all group-hover:scale-110"}
+                    src={`/preview/${item.imgPath}`}
+                    alt={item.text}
+                    fill
+                    style={{
+                      objectFit: "contain",
+                    }}
+                  />
+                </div>
+              ) : (
+                <span>{item.text}</span>
+              )}
             </div>
           ))}
         </div>

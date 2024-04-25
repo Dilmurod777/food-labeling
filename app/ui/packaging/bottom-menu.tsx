@@ -21,8 +21,6 @@ interface MenuItem {
 interface Props {
   currentTool: string;
   updateTool: (t: Tools) => void;
-  step: number;
-  totalSteps: number;
   updateStep: (s: number) => void;
   currentModel: Model | null;
 }
@@ -30,8 +28,6 @@ interface Props {
 export default function BottomMenu({
   currentTool,
   updateTool,
-  step,
-  totalSteps,
   updateStep,
   currentModel,
 }: Props) {
@@ -136,9 +132,9 @@ export default function BottomMenu({
           <input
             id="labels-range-input"
             type="range"
-            value={step}
+            value={currentModel.step}
             min="0"
-            max={totalSteps}
+            max={currentModel.totalSteps}
             className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-main-gray accent-main-orange"
             onChange={(e) => updateStep(e.target.valueAsNumber)}
           />

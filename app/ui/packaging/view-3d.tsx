@@ -24,10 +24,6 @@ export default function View3D() {
   const cameraRef = useRef(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const totalSteps = 15;
-  const step = useRef(0);
-  const [_, setUpdate] = useState(step.current);
-
   useEffect(() => {
     window.document.body.onkeydown = function (event) {
       if (
@@ -85,7 +81,13 @@ export default function View3D() {
     }
   };
 
-  const AddModel = (t: ModelType, p: string, a: boolean) => {
+  const AddModel = (
+    t: ModelType,
+    p: string,
+    a: boolean,
+    s: number,
+    ts: number,
+  ) => {
     setModels([
       ...models,
       {
@@ -93,6 +95,8 @@ export default function View3D() {
         path: p,
         name: uuidV4(),
         animatable: a,
+        step: s,
+        totalSteps: ts,
       },
     ]);
   };
@@ -169,12 +173,17 @@ export default function View3D() {
         <Content
           models={models}
           currentTool={currentTool}
+          currentModelIndex={currentModelIndex}
           setCurrentModelIndex={setCurrentModelIndex}
-          step={step.current}
-          totalSteps={totalSteps}
           updateStep={(s) => {
-            step.current = s;
-            setUpdate(s);
+            setModels([
+              ...models.slice(0, currentModelIndex),
+              {
+                ...models[currentModelIndex],
+                step: s,
+              },
+              ...models.slice(currentModelIndex + 1),
+            ]);
           }}
         />
       </Canvas>
@@ -183,12 +192,16 @@ export default function View3D() {
       <BottomMenu
         updateTool={UpdateTool}
         currentTool={currentTool}
-        step={step.current}
-        totalSteps={totalSteps}
         currentModel={models[currentModelIndex]}
         updateStep={(s) => {
-          step.current = s;
-          setUpdate(s);
+          setModels([
+            ...models.slice(0, currentModelIndex),
+            {
+              ...models[currentModelIndex],
+              step: s,
+            },
+            ...models.slice(currentModelIndex + 1),
+          ]);
         }}
       />
     </div>

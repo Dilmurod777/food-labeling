@@ -20,10 +20,9 @@ import { MeshStandardMaterial, Object3D, Texture } from "three";
 
 interface Props {
   models: Model[];
+  currentModelIndex: number;
   setCurrentModelIndex: (i: number) => void;
   currentTool: Tools;
-  step: number;
-  totalSteps: number;
   updateStep: (s: number) => void;
 }
 
@@ -34,10 +33,9 @@ interface CurrentModel {
 
 export default function Content({
   models,
+  currentModelIndex,
   setCurrentModelIndex,
   currentTool,
-  step,
-  totalSteps,
   updateStep,
 }: Props) {
   const [currentModel, setCurrentModel] = useState<CurrentModel | null>();
@@ -99,7 +97,12 @@ export default function Content({
       case ModelType.Generated:
         switch (model.path) {
           case "default-package":
-            return <DefaultPackage step={step} totalSteps={totalSteps} />;
+            return (
+              <DefaultPackage
+                step={models[currentModelIndex].step}
+                totalSteps={models[currentModelIndex].totalSteps}
+              />
+            );
         }
         break;
       case ModelType.Loaded: {

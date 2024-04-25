@@ -17,6 +17,8 @@ export interface Model {
   path: string;
   name: string;
   animatable: boolean;
+  step: number;
+  totalSteps: number;
 }
 
 export enum ModelType {
