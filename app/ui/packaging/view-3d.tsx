@@ -158,11 +158,11 @@ export default function View3D() {
     >
       <Canvas shadows ref={canvasRef} gl={{ preserveDrawingBuffer: true }}>
         <PerspectiveCamera makeDefault position={[0, 0, -10]} ref={cameraRef} />
-        {/*<directionalLight*/}
-        {/*  visible={true}*/}
-        {/*  position={[3.3, 1.0, 4.4]}*/}
-        {/*  castShadow*/}
-        {/*/>*/}
+        <directionalLight
+          visible={true}
+          position={[3.3, 1.0, 4.4]}
+          castShadow
+        />
         {GetCurrentControls()}
         <SoftShadows size={1} />
 

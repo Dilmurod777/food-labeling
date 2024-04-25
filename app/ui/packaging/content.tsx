@@ -34,7 +34,7 @@ export default function Content({
   setCurrentModelIndex,
   currentTool,
 }: Props) {
-  const totalSteps = 5;
+  const totalSteps = 30;
   const step = useRef(0);
   const [_, setUpdate] = useState(step.current);
   const [currentModel, setCurrentModel] = useState<CurrentModel | null>();

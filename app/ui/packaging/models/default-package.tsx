@@ -6,6 +6,7 @@ import {
   MultiplyBlending,
   NoBlending,
   NormalBlending,
+  Quaternion,
 } from "three";
 import { Ref, useEffect, useRef } from "react";
 import { AddVectors, Data3D, SubtractVectors } from "@/app/lib/3d";
@@ -48,14 +49,24 @@ export default function DefaultPackage({
     },
   };
 
-  // useEffect(() => {
-  //   const obj = meshRefs.bottom[1];
-  //
-  //   if (obj) {
-  //     // @ts-ignore
-  //     obj.current.rotation.y = (step * Math.PI) / 2 / totalSteps;
-  //   }
-  // }, [step]);
+  useEffect(() => {
+    const obj = meshRefs.top[0];
+
+    if (obj) {
+      console.log(step);
+      if (step >= 0 && step < 5) {
+        // @ts-ignore
+        obj.current.position.y = 1.2 + 0.4 * step;
+      }
+
+      if (step >= 5 && step < 15) {
+        // @ts-ignore
+        obj.current.rotation.z = Math.PI - (step - 5) * 0.2;
+        // @ts-ignore
+        obj.current.position.x = 0.3 * (step - 5);
+      }
+    }
+  }, [step]);
 
   return (
     <group position={[0, 0, 0]}>
@@ -67,7 +78,7 @@ export default function DefaultPackage({
           height={height}
           position={[0, 0, 0]}
           rotation={[Math.PI / 2, 0, 0]}
-          color={"#EAD8C0"}
+          color={"#A79277"}
         />
 
         <group position={[(width + depth) / 2, 0, 0]}>
@@ -151,9 +162,12 @@ export default function DefaultPackage({
         </group>
       </group>
       {/*top*/}
-      <group rotation={[0, 0, Math.PI]} position={[0, 1.2, 0]}>
+      <group
+        rotation={[0, 0, Math.PI]}
+        position={[0, 1.2, 0]}
+        ref={meshRefs.top[0] ?? null}
+      >
         <Side
-          meshRef={meshRefs.bottom[0] ?? null}
           width={width + 0.1}
           height={height + 0.1}
           position={[0, 0, 0]}
@@ -163,7 +177,6 @@ export default function DefaultPackage({
 
         <group position={[(width + depth) / 2, 0, 0]}>
           <Side
-            meshRef={meshRefs.bottom[1] ?? null}
             width={depth + 0.1}
             height={height + 0.1}
             position={[0.05, 0.05, 0]}
@@ -172,7 +185,6 @@ export default function DefaultPackage({
             color={"#D1BB9E"}
           />
           <Side
-            meshRef={meshRefs.bottom[2] ?? null}
             width={depth + 0.1}
             height={depth + 0.1}
             position={[-depth, depth / 2 + 0.05, height / 2 + 0.05]}
@@ -181,7 +193,6 @@ export default function DefaultPackage({
             color={"#D1BB9E"}
           />
           <Side
-            meshRef={meshRefs.bottom[3] ?? null}
             width={depth + 0.1}
             height={depth + 0.1}
             position={[-depth, depth / 2 + 0.05, -height / 2 - 0.05]}
@@ -192,7 +203,6 @@ export default function DefaultPackage({
         </group>
         <group position={[-(width + depth) / 2, 0, 0]} rotation={[0, 0, 0]}>
           <Side
-            meshRef={meshRefs.bottom[4] ?? null}
             width={depth + 0.1}
             height={height + 0.1}
             position={[depth - 0.05, 0.05, 0]}
@@ -201,7 +211,6 @@ export default function DefaultPackage({
             color={"#D1BB9E"}
           />
           <Side
-            meshRef={meshRefs.bottom[5] ?? null}
             width={depth + 0.1}
             height={depth + 0.1}
             position={[depth, depth / 2 + 0.05, height / 2 + 0.05]}
@@ -210,7 +219,6 @@ export default function DefaultPackage({
             color={"#D1BB9E"}
           />
           <Side
-            meshRef={meshRefs.bottom[6] ?? null}
             width={depth + 0.1}
             height={depth + 0.1}
             position={[depth, depth / 2 + 0.05, -height / 2 - 0.05]}
@@ -222,7 +230,6 @@ export default function DefaultPackage({
 
         <group>
           <Side
-            meshRef={meshRefs.bottom[7] ?? null}
             width={width + 0.1}
             height={depth + 0.1}
             position={[0, depth / 2 + 0.05, height / 2 + 0.051]}
@@ -231,7 +238,6 @@ export default function DefaultPackage({
             color={"#D1BB9E"}
           />
           <Side
-            meshRef={meshRefs.bottom[8] ?? null}
             width={width + 0.1}
             height={depth + 0.1}
             position={[0, depth / 2 + 0.05, -height / 2 - 0.051]}
@@ -246,7 +252,7 @@ export default function DefaultPackage({
 }
 
 function Side({
-  meshRef,
+  meshRef = null,
   width = 1,
   height = 1,
   position = [0, 0, 0],
@@ -254,7 +260,7 @@ function Side({
   color = "#D1BB9E",
   anchor = [0, 0, 0],
 }: {
-  meshRef: Ref<Group>;
+  meshRef?: Ref<Group>;
   width?: number;
   height?: number;
   position?: [number, number, number];
