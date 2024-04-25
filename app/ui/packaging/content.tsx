@@ -8,7 +8,13 @@ import {
   useFBX,
   useGLTF,
 } from "@react-three/drei";
-import { KeyMap, Model, ModelType, Tools } from "@/app/lib/3d";
+import {
+  AnimationKeyMap,
+  Keymaps,
+  Model,
+  ModelType,
+  Tools,
+} from "@/app/lib/3d";
 import { Group, Object3D } from "three";
 import { v4 as uuidV4 } from "uuid";
 
@@ -31,17 +37,21 @@ export default function Content({
   const totalSteps = 5;
   const step = useRef(0);
   const [_, setUpdate] = useState(step.current);
-  const [currentModel, setCurrentModel] = useState<CurrentModel>();
+  const [currentModel, setCurrentModel] = useState<CurrentModel | null>();
 
   const keyMap = useMemo<KeyboardControlsEntry[]>(
     () => [
       {
-        name: KeyMap.open,
+        name: AnimationKeyMap.open,
         keys: ["ArrowRight"],
       },
       {
-        name: KeyMap.close,
+        name: AnimationKeyMap.close,
         keys: ["ArrowLeft"],
+      },
+      {
+        name: Keymaps.escape,
+        keys: ["Escape"],
       },
     ],
     [],
@@ -51,11 +61,15 @@ export default function Content({
     if (!pressed) return;
 
     switch (name) {
-      case KeyMap.open:
+      case AnimationKeyMap.open:
         step.current = Math.min(step.current + 1, totalSteps);
         break;
-      case KeyMap.close:
+      case AnimationKeyMap.close:
         step.current = Math.max(step.current - 1, 0);
+        break;
+      case Keymaps.escape:
+        setCurrentModel(null);
+        setCurrentModelIndex(-1);
         break;
     }
 
@@ -100,7 +114,7 @@ export default function Content({
   };
 
   const GetModel = (model: Model, index: number) => {
-    const active = index == currentModel?.index && currentTool == Tools.Select;
+    const active = index == currentModel?.index && currentTool != Tools.Hand;
 
     return (
       <PivotControls

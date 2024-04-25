@@ -34,9 +34,13 @@ export const RandomColors: string[] = [
   "#DD5746",
 ];
 
-export enum KeyMap {
+export enum AnimationKeyMap {
   open = "open",
   close = "close",
+}
+
+export enum Keymaps {
+  escape = "Escape",
 }
 
 export enum Tools {

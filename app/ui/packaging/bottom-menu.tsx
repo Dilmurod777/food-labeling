@@ -4,8 +4,8 @@ import { FaHandPaper } from "react-icons/fa";
 import { LuSendToBack } from "react-icons/lu";
 import { MdDelete } from "react-icons/md";
 import { LuTimerReset } from "react-icons/lu";
-import { KeyboardControls } from "@react-three/drei";
-import { Tools } from "@/app/lib/3d";
+import { KeyboardControls, KeyboardControlsEntry } from "@react-three/drei";
+import { AnimationKeyMap, Tools } from "@/app/lib/3d";
 
 interface MenuItem {
   type: "block" | "divider";
@@ -60,6 +60,7 @@ export default function BottomMenu({ currentTool, updateTool }: Props) {
     //   showTooltip: true,
     // },
   ];
+  const otherKeymaps: KeyboardControlsEntry[] = [];
   const [activeMenuItemIndex, setActiveMenuItemIndex] = useState(0);
 
   useEffect(() => {
@@ -137,7 +138,8 @@ export default function BottomMenu({ currentTool, updateTool }: Props) {
       <KeyboardControls
         map={menuItems
           .filter((item) => item.type == "block")
-          .map((item) => ({ name: item.text || "", keys: item.hotkeys || [] }))}
+          .map((item) => ({ name: item.text || "", keys: item.hotkeys || [] }))
+          .concat(otherKeymaps)}
         onChange={keyboardOnChange}
       >
         <div
