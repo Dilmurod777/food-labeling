@@ -88,6 +88,7 @@ export default function View3D() {
     s: number,
     ts: number,
   ) => {
+    setCurrentModelIndex(-1);
     setModels([
       ...models,
       {
@@ -104,6 +105,7 @@ export default function View3D() {
   const RemoveModel = (index: number) => {
     if (index < 0 || index > models.length) return;
 
+    setCurrentModelIndex(-1);
     setModels([...models.slice(0, index), ...models.slice(index + 1)]);
   };
 

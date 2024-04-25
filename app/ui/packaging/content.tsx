@@ -99,8 +99,14 @@ export default function Content({
           case "default-package":
             return (
               <DefaultPackage
-                step={models[currentModelIndex].step}
-                totalSteps={models[currentModelIndex].totalSteps}
+                step={
+                  currentModelIndex >= 0 ? models[currentModelIndex].step : 0
+                }
+                totalSteps={
+                  currentModelIndex >= 0
+                    ? models[currentModelIndex].totalSteps
+                    : 15
+                }
               />
             );
         }
@@ -152,7 +158,6 @@ export default function Content({
       <Ground />
       <KeyboardControls map={keyMap} onChange={keyboardOnChange}>
         {models.map(GetModel)}
-        {/*<DefaultPackage step={step.current} totalSteps={totalSteps} />*/}
       </KeyboardControls>
     </group>
   );
