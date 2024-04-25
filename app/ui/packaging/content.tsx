@@ -84,7 +84,7 @@ export default function Content({
         <mesh
           //@ts-ignore
           geometry={nodes.Dorrito001_Lays_0.geometry}
-          scale={0.1}
+          scale={0.05}
         />
         <meshBasicMaterial map={texture} />
       </group>

@@ -2,8 +2,10 @@
 
 import { Canvas, useThree } from "@react-three/fiber";
 import {
+  Environment,
   GizmoHelper,
   GizmoViewport,
+  Lightformer,
   MapControls,
   OrbitControls,
   PerspectiveCamera,
@@ -156,13 +158,13 @@ export default function View3D() {
     >
       <Canvas shadows ref={canvasRef} gl={{ preserveDrawingBuffer: true }}>
         <PerspectiveCamera makeDefault position={[0, 0, -10]} ref={cameraRef} />
-        <directionalLight
-          visible={true}
-          position={[3.3, 1.0, 4.4]}
-          castShadow={true}
-        />
+        {/*<directionalLight*/}
+        {/*  visible={true}*/}
+        {/*  position={[3.3, 1.0, 4.4]}*/}
+        {/*  castShadow*/}
+        {/*/>*/}
         {GetCurrentControls()}
-        <SoftShadows size={10} />
+        <SoftShadows size={1} />
 
         <Content
           models={models}
