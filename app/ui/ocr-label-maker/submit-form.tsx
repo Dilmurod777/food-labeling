@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DefaultProduct, Ingredient, Product, User } from "@/app/lib/models";
+import { Ingredient, Product, User } from "@/app/lib/models";
 import {
   GetOCRLanguage,
   Language,
@@ -13,6 +13,7 @@ import OcrNutrientsForm from "@/app/ui/ocr-label-maker/ocr-nutrients-form";
 import OCRLanguageSelect from "@/app/ui/ocr-label-maker/ocr-language-select";
 import OCRSaveButton from "@/app/ui/ocr-label-maker/ocr-save-button";
 import { SearchKeyword } from "@/app/lib/ocr";
+import { DefaultProduct } from "@/app/lib/defaults";
 
 interface Props {
   user: User;

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { DefaultProduct, Product, User } from "@/app/lib/models";
+import { Product, User } from "@/app/lib/models";
 import { useRouter } from "next/navigation";
 import { useFormState } from "react-dom";
 import { deleteById, copyById } from "@/app/lib/actions-products";
@@ -12,6 +12,7 @@ import { useState } from "react";
 import Pagination from "@/app/ui/pagination";
 import FormDeleteButton from "@/app/ui/products/form-delete-button";
 import FormCopyButton from "@/app/ui/products/form-copy-button";
+import { DefaultProduct } from "@/app/lib/defaults";
 
 interface Props {
   items: Product[];

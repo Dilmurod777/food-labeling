@@ -1,7 +1,8 @@
 "use client";
 
-import { DefaultProduct, User } from "@/app/lib/models";
+import { User } from "@/app/lib/models";
 import FormSubmitBtn from "@/app/ui/form-submit-btn";
+import { DefaultProduct } from "@/app/lib/defaults";
 
 interface Props {
   user: User;

@@ -3,7 +3,8 @@
 import { IoIosArrowDown } from "react-icons/io";
 import Link from "next/link";
 import { ReactNode, useState } from "react";
-import { DefaultUserRole, User, UserRole } from "@/app/lib/models";
+import { User, UserRole } from "@/app/lib/models";
+import { DefaultUserRole } from "@/app/lib/defaults";
 
 interface MenuItem {
   text: string;

@@ -1,6 +1,5 @@
 import {
   Allergens,
-  DefaultAllergens,
   Ingredient,
   Label,
   LabelOption,
@@ -21,9 +20,8 @@ import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { useDebouncedCallback } from "use-debounce";
 import { FaLocationDot } from "react-icons/fa6";
-import Link from "next/link";
-import { getTotalNutrients } from "@/app/lib/utilities";
 import RoundingRulesBlock from "@/app/ui/products/label-page/rounding-rules-block";
+import { DefaultAllergens } from "@/app/lib/defaults";
 
 interface Props {
   product: Product;

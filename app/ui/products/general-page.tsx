@@ -1,4 +1,4 @@
-import { Ingredient, Product, User, DefaultIngredient } from "@/app/lib/models";
+import { Ingredient, Product, User } from "@/app/lib/models";
 import Title from "@/app/ui/products/title";
 import Tags from "@/app/ui/products/tags";
 import { useRef, useState } from "react";
@@ -14,6 +14,7 @@ import { Simulate } from "react-dom/test-utils";
 import input = Simulate.input;
 import { WordReplacements } from "@/app/lib/constants/common-ingredients";
 import { debounce } from "next/dist/server/utils";
+import { DefaultIngredient } from "@/app/lib/defaults";
 
 interface Props {
   product: Product;
