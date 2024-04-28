@@ -6,6 +6,8 @@ export enum UserRole {
   Normal,
 }
 
+export const DefaultUserRole = UserRole.Normal;
+
 export type User = {
   id: string;
   name: string;

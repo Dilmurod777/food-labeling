@@ -3,7 +3,7 @@
 import { IoIosArrowDown } from "react-icons/io";
 import Link from "next/link";
 import { ReactNode, useState } from "react";
-import { User, UserRole } from "@/app/lib/models";
+import { DefaultUserRole, User, UserRole } from "@/app/lib/models";
 
 interface MenuItem {
   text: string;
@@ -27,19 +27,19 @@ const items: MenuItem[] = [
     url: "#",
     enabled: true,
     rightIcon: <IoIosArrowDown />,
-    userRole: 0,
+    userRole: 2,
     subItems: [
       {
         mainText: "Label Maker",
         secondaryText: "FDA and CFIA compliant nutrition labels.",
         url: "/dashboard",
-        userRole: 0,
+        userRole: 2,
       },
       {
         mainText: "OCR Label Maker",
         secondaryText: "Upload your label and customize it further.",
         url: "/ocr-label-maker",
-        userRole: 0,
+        userRole: 2,
       },
       {
         mainText: "Packaging",
@@ -49,6 +49,12 @@ const items: MenuItem[] = [
       },
     ],
   },
+  {
+    text: "Database",
+    url: "/database",
+    enabled: true,
+    userRole: 0,
+  },
 ];
 
 interface Props {
@@ -57,7 +63,7 @@ interface Props {
 
 export default function MenuItems({ user }: Props) {
   const [activeMenuItemIndex, setActiveMenuItem] = useState(-1);
-  const minRole = user ? user.role : 0;
+  const minRole = user ? user.role : DefaultUserRole;
 
   return (
     <div className={"flex items-center gap-3 pt-3"}>
@@ -93,24 +99,26 @@ export default function MenuItems({ user }: Props) {
                   boxShadow: "0 8px 8px #0a0a0a1a",
                 }}
               >
-                {item.subItems.map((subItem, si) => (
-                  <Link
-                    href={subItem.url}
-                    key={`subItem-${si}`}
-                    className={
-                      "flex flex-col items-start gap-0 px-4 py-2 text-sm hover:bg-[#f2f7fb]"
-                    }
-                  >
-                    <span className={"font-bold text-main-orange"}>
-                      {subItem.mainText}
-                    </span>
-                    {subItem.secondaryText && (
-                      <span className={"text-[0.6rem] text-[#6c6f7c]"}>
-                        {subItem.secondaryText}
+                {item.subItems
+                  .filter((subItem) => subItem.userRole >= minRole)
+                  .map((subItem, si) => (
+                    <Link
+                      href={subItem.url}
+                      key={`subItem-${si}`}
+                      className={
+                        "flex flex-col items-start gap-0 px-4 py-2 text-sm hover:bg-[#f2f7fb]"
+                      }
+                    >
+                      <span className={"font-bold text-main-orange"}>
+                        {subItem.mainText}
                       </span>
-                    )}
-                  </Link>
-                ))}
+                      {subItem.secondaryText && (
+                        <span className={"text-[0.6rem] text-[#6c6f7c]"}>
+                          {subItem.secondaryText}
+                        </span>
+                      )}
+                    </Link>
+                  ))}
               </div>
             )}
           </div>
