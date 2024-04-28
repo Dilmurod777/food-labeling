@@ -148,6 +148,7 @@ async function createCompanyProducts(client) {
             units_per_box TEXT NOT NULL,
             shipping_storage TEXT NOT NULL,
             shelf_life TEXT NOT NULL,
+            certificate TEXT NOT NULL, 
             brand TEXT NOT NULL,
             note TEXT NOT NULL
           );

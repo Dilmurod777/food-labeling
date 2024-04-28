@@ -9,10 +9,15 @@ async function updateProducts(client) {
     //         ALTER COLUMN role SET DEFAULT 2;
     // `;
 
+    // const updateTable = await client.sql`
+    //   UPDATE users
+    //   SET ROLE = 0
+    //   WHERE EMAIL = 'helloworld@gmail.com'
+    // `;
+
     const updateTable = await client.sql`
-      UPDATE users
-      SET ROLE = 0
-      WHERE EMAIL = 'helloworld@gmail.com'
+      ALTER TABLE companyProducts
+      ADD certificate TEXT NOT NULL
     `;
 
     console.log(`Updated table`);
@@ -21,7 +26,7 @@ async function updateProducts(client) {
       updateTable,
     };
   } catch (err) {
-    console.error("Error while updating database:", err);
+    console.error("Error while updating table:", err);
     throw err;
   }
 }

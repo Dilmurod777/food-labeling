@@ -155,6 +155,7 @@ export interface CompanyProduct {
   units_per_box: string;
   shipping_storage: string;
   shelf_life: string;
+  certificate: string;
   brand: string;
   note: string;
 }
