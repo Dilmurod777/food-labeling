@@ -1,10 +1,17 @@
 import { NET_WEIGHT_UNIT } from "@/app/lib/constants/product";
 
+export enum UserRole {
+  Admin,
+  Professional,
+  Normal,
+}
+
 export type User = {
   id: string;
   name: string;
   email: string;
   password: string;
+  role: UserRole;
 };
 
 export interface IProduct {

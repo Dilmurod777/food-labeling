@@ -16,9 +16,7 @@ export default function AuthenticatedButtons({ user }: { user: User }) {
     >
       <Link
         href={"/dashboard/products"}
-        className={
-          "group flex h-full items-center rounded-md px-3 hover:bg-gray-50"
-        }
+        className={"group flex h-full items-center rounded-md hover:bg-gray-50"}
       >
         <span className={"group-hover:text-main-orange"}>My Products</span>
       </Link>
@@ -30,11 +28,16 @@ export default function AuthenticatedButtons({ user }: { user: User }) {
       {/*    <span className={"group-hover:text-main-orange"}>Inventory</span>*/}
       {/*</Link>*/}
 
-      <form action={dispatch}>
-        <button className="flex h-[48px] items-center justify-center gap-2 rounded-md bg-gray-200 p-3 text-sm hover:bg-gray-300">
-          <div className="hidden md:block">Sign Out</div>
-        </button>
-      </form>
+      <div className={"h-[80%] w-0.5 rounded-md bg-main-gray"}></div>
+
+      <div className={"gap-22 flex items-center gap-2"}>
+        <span className={"text-sm"}>{user.email}</span>
+        <form action={dispatch}>
+          <button className="flex h-[48px] items-center justify-center gap-2 rounded-md bg-gray-200 p-3 text-sm hover:bg-gray-300">
+            <div className="hidden md:block">Sign Out</div>
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

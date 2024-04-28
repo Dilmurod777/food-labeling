@@ -1,33 +1,39 @@
-const {db} = require('@vercel/postgres');
-const bcrypt = require('bcrypt');
+const { db } = require("@vercel/postgres");
+const bcrypt = require("bcrypt");
 
 async function updateProducts(client) {
-    try {
-        await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-        const updateTable = await client.sql`
-            ALTER TABLE products
-            ADD net_weight_unit VARCHAR(255);
+  try {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+    // const updateTable = await client.sql`
+    //         ALTER TABLE users
+    //         ALTER COLUMN role SET DEFAULT 2;
+    // `;
+
+    const updateTable = await client.sql`
+      UPDATE users
+      SET ROLE = 0
+      WHERE EMAIL = 'helloworld@gmail.com'
     `;
 
-        console.log(`Updated "products" table`);
+    console.log(`Updated table`);
 
-        return {
-            updateTable
-        };
-    } catch (error) {
-        console.error('Error updating products:', error);
-        throw error;
-    }
+    return {
+      updateTable,
+    };
+  } catch (err) {
+    console.error("Error while updating database:", err);
+    throw err;
+  }
 }
 
 async function main() {
-    const client = await db.connect();
+  const client = await db.connect();
 
-    await updateProducts(client);
+  await updateProducts(client);
 
-    await client.end();
+  await client.end();
 }
 
 main().catch((err) => {
-    console.error('An error occurred while attempting to seed the database:', err,);
+  console.error("Error while updating database:", err);
 });

@@ -22,7 +22,7 @@ export default async function Header() {
           />
         </Link>
 
-        <MenuItems />
+        <MenuItems user={user} />
       </div>
 
       {!user && <NotAuthenticatedButtons />}
