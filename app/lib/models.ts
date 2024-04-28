@@ -131,3 +131,30 @@ export interface OptionalNutrient {
   dvText: string;
   key: string;
 }
+
+export interface Company {
+  id: string;
+  name: string;
+  email: string;
+}
+
+export interface CompanyProductList {
+  company_id: string;
+  date: string;
+  list: CompanyProduct[];
+}
+
+export interface CompanyProduct {
+  id: string;
+  category: string;
+  name: string;
+  type_flavor: string;
+  supply_type: string;
+  unit_price: string;
+  moq: string;
+  units_per_box: string;
+  shipping_storage: string;
+  shelf_life: string;
+  brand: string;
+  note: string;
+}
