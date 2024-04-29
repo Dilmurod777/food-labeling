@@ -16,7 +16,7 @@ import {
 import { CompanyProduct } from "@/app/lib/models";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { CaretSortIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { CaretSortIcon } from "@radix-ui/react-icons";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -26,20 +26,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Suspense, useEffect, useState } from "react";
+import { ChangeEvent, Suspense, useEffect, useState } from "react";
 import * as React from "react";
 import { Input } from "@/components/ui/input";
-import { ChevronDown } from "lucide-react";
+import { Calendar, CalendarIcon, ChevronDown } from "lucide-react";
 import {
   Table,
   TableBody,
+  TableCaption,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import * as XLSX from "xlsx";
+import { DialogBody } from "next/dist/client/components/react-dev-overlay/internal/components/Dialog";
+import { DatePicker } from "@/components/ui/date-picker";
 
 export default function CompanyProductsTable() {
+  const [showFileModal, setShowFileModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<CompanyProduct[]>([]);
   const columns: ColumnDef<CompanyProduct>[] = [
@@ -274,6 +281,7 @@ export default function CompanyProductsTable() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [workbook, setWorkbook] = React.useState(XLSX.utils.book_new());
 
   const table = useReactTable({
     data,
@@ -297,6 +305,39 @@ export default function CompanyProductsTable() {
       },
     },
   });
+
+  const UploadFileHandler = (files: FileList | null) => {
+    if (!files || files.length == 0) return;
+
+    const file = files[0];
+
+    const promise = new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsArrayBuffer(file);
+      fileReader.onload = (e) => {
+        if (!e.target) return;
+
+        const bufferArray = e.target.result;
+        const wb = XLSX.read(bufferArray, {
+          type: "buffer",
+        });
+        const wsname = wb.SheetNames[0];
+        const ws = wb.Sheets[wsname];
+        const data = XLSX.utils.sheet_to_json(ws);
+        console.log(data);
+        setWorkbook(wb);
+
+        resolve(data);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+
+    promise.then(() => {
+      setShowFileModal(true);
+    });
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -325,10 +366,52 @@ export default function CompanyProductsTable() {
           className={
             "ml-2 max-w-xs cursor-pointer border border-main-orange hover:border-hover-main-orange"
           }
-          onChange={(e) => {
-            console.log(e.target.files);
-          }}
+          onChange={(e) => UploadFileHandler(e.target.files)}
         />
+        <Dialog
+          open={showFileModal}
+          defaultOpen={false}
+          onOpenChange={(value) => setShowFileModal(value)}
+        >
+          <DialogBody>
+            <DialogContent className="max-w-screen flex h-[90%] w-[90%] flex-col gap-4 border border-main-orange pt-12">
+              <div className={"flex w-full items-center justify-between gap-2"}>
+                <Input
+                  type="text"
+                  placeholder="Company name"
+                  required
+                  className={"ring-main-orange"}
+                />
+                <DatePicker />
+              </div>
+              {/*<Table>*/}
+              {/*  <TableCaption>A list of your recent invoices.</TableCaption>*/}
+              {/*  <TableHeader>*/}
+              {/*    <TableRow>*/}
+              {/*      <TableHead className="w-[100px]">Invoice</TableHead>*/}
+              {/*      <TableHead>Status</TableHead>*/}
+              {/*      <TableHead>Method</TableHead>*/}
+              {/*      <TableHead className="text-right">Amount</TableHead>*/}
+              {/*    </TableRow>*/}
+              {/*  </TableHeader>*/}
+              {/*  <TableBody>*/}
+              {/*    <TableRow>*/}
+              {/*      <TableCell className="font-medium">invoice</TableCell>*/}
+              {/*      <TableCell>payment status</TableCell>*/}
+              {/*      <TableCell>paymentMethod</TableCell>*/}
+              {/*      <TableCell className="text-right">totalAmount</TableCell>*/}
+              {/*    </TableRow>*/}
+              {/*  </TableBody>*/}
+              {/*  <TableFooter>*/}
+              {/*    <TableRow>*/}
+              {/*      <TableCell colSpan={3}>Total</TableCell>*/}
+              {/*      <TableCell className="text-right">$2,500.00</TableCell>*/}
+              {/*    </TableRow>*/}
+              {/*  </TableFooter>*/}
+              {/*</Table>*/}
+            </DialogContent>
+          </DialogBody>
+        </Dialog>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

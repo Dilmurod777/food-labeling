@@ -11,7 +11,7 @@ export async function getAllCompanyProducts(): Promise<CompanyProduct[]> {
     const user = await getCurrentUser();
     if (!user) return [];
 
-    const query = `SELECT * FROM ${TABLE}'`;
+    const query = `SELECT * FROM ${TABLE}`;
 
     const result = await sql.query<CompanyProduct>(query);
     return result.rows;
