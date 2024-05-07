@@ -36,7 +36,6 @@ export default function Content({ productsHistory }: Props) {
           })),
     );
 
-    console.log(fileTabs);
     setFileTabs({
       ...fileTabs,
       [id]: {
@@ -73,6 +72,7 @@ export default function Content({ productsHistory }: Props) {
           <TabsContent value={id} key={id}>
             <div className={"h-full w-full flex-grow overflow-x-scroll"}>
               <Spreadsheet
+                className={"text-sm/none"}
                 data={fileTabs[id].data}
                 columnLabels={fileTabs[id].columns}
                 onChange={(data) =>
