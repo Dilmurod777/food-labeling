@@ -9,6 +9,7 @@ import bcrypt from "bcrypt";
 import { randomUUID } from "crypto";
 import { cache } from "react";
 import { redirect } from "next/navigation";
+import { DefaultUserRole } from "@/app/lib/defaults";
 
 export const getCurrentUser = cache(async (): Promise<User | undefined> => {
   const session = await auth();
@@ -99,6 +100,7 @@ export async function signup(_: string | undefined, formData: FormData) {
           email,
           name: name,
           password: await bcrypt.hash(password, 10),
+          role: DefaultUserRole,
         });
 
         await signIn("credentials", formData);
