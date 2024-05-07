@@ -1,7 +1,6 @@
 import Image from "next/image";
 import MenuItems from "@/app/ui/main/menu_items";
 import Link from "next/link";
-import { User } from "@/app/lib/models";
 import NotAuthenticatedButtons from "@/app/ui/main/auth_buttons/not_authenticated_buttons";
 import AuthenticatedButtons from "@/app/ui/main/auth_buttons/authenticated_buttons";
 import { getCurrentUser } from "@/app/lib/actions-user";

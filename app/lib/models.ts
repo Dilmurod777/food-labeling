@@ -144,6 +144,13 @@ export interface CompanyProductList {
   list: CompanyProduct[];
 }
 
+export interface ProductsHistoryItem {
+  id: string;
+  name: string;
+  email: string;
+  date: string;
+}
+
 export interface CompanyProduct {
   id: string;
   category: string;

@@ -1,19 +1,17 @@
 "use server";
 
-import type { CompanyProduct } from "@/app/lib/models";
+import { CompanyProduct, ProductsHistoryItem } from "@/app/lib/models";
 import { getCurrentUser } from "@/app/lib/actions-user";
 import { sql } from "@vercel/postgres";
 
-const TABLE = "companyProducts";
-
-export async function getAllCompanyProducts(): Promise<CompanyProduct[]> {
+export async function getAllCompanyProducts(): Promise<ProductsHistoryItem[]> {
   try {
     const user = await getCurrentUser();
     if (!user) return [];
 
-    const query = `SELECT * FROM ${TABLE}`;
+    const query = `SELECT cp.id, name, date, email FROM companyProductList AS cp INNER JOIN companies AS c ON c.id=cp.company_id`;
 
-    const result = await sql.query<CompanyProduct>(query);
+    const result = await sql.query<ProductsHistoryItem>(query);
     return result.rows;
   } catch (error) {
     console.error("Failed to fetch company products:", error);

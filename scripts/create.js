@@ -117,9 +117,10 @@ async function createCompanyProductList(client) {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
     const createTable = await client.sql`
           CREATE TABLE IF NOT EXISTS companyProductList (
-            company_id UUID NOT NULL,
-            date VARCHAR(255) NOT NULL,
-            list TEXT NOT NULL
+              id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+              company_id UUID NOT NULL,
+              date VARCHAR(255) NOT NULL,
+              list TEXT NOT NULL
           );
         `;
     console.log(`Created "companyProductList" table`);
