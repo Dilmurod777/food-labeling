@@ -174,7 +174,11 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
 
         const columns: GridColumn[] = headers.map((item) => ({
           columnId: item ? item.toString() : "",
-          width: 150,
+          width: item
+            ? item.toString().toLowerCase().startsWith("no.")
+              ? 20
+              : 150
+            : 150,
           resizable: true,
         }));
 
