@@ -9,16 +9,16 @@ async function updateProducts(client) {
     //         ALTER COLUMN role SET DEFAULT 2;
     // `;
 
-    // const updateTable = await client.sql`
-    //   UPDATE users
-    //   SET ROLE = 0
-    //   WHERE EMAIL = 'helloworld@gmail.com'
-    // `;
-
     const updateTable = await client.sql`
-      ALTER TABLE companyProducts
-      ADD certificate TEXT NOT NULL
+      UPDATE users
+      SET ROLE = 0
+      WHERE EMAIL = 'thejrd@thefoodplanet.co.kr'
     `;
+
+    // const updateTable = await client.sql`
+    //   ALTER TABLE companyProducts
+    //   ADD certificate TEXT NOT NULL
+    // `;
 
     console.log(`Updated table`);
 

@@ -18,3 +18,18 @@ export async function getAllCompanyProducts(): Promise<ProductsHistoryItem[]> {
     return [];
   }
 }
+
+export async function addCompanyProducts() {
+  try {
+    const user = await getCurrentUser();
+    if (!user) return [];
+
+    const query = `INSERT INTO companyProducts`;
+
+    const result = await sql.query<ProductsHistoryItem>(query);
+    return result.rows;
+  } catch (error) {
+    console.error("Failed to fetch company products:", error);
+    return -1;
+  }
+}

@@ -14,6 +14,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
+import { Column as GridColumn, Row as GridRow } from "@silevis/reactgrid";
+import "@silevis/reactgrid/styles.css";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -36,7 +38,7 @@ import {
 } from "@/components/ui/table";
 import { ProductsHistoryItem } from "@/app/lib/models";
 import { useState } from "react";
-import readXlsxFile from "read-excel-file";
+import readXlsxFile, { Row } from "read-excel-file";
 
 export const columns: ColumnDef<ProductsHistoryItem>[] = [
   {
@@ -150,9 +152,8 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
       if (!files || files.length == 0) return;
 
       const file = files[0];
-      const fileReader = new FileReader();
 
-      readXlsxFile(file, { trim: true }).then(function (data) {
+      readXlsxFile(file, { trim: true }).then(function (data: Row[]) {
         const nonNullData = data.filter(
           (row) => row.findIndex((item) => item != null) != -1,
         );
@@ -161,52 +162,51 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
           (row) =>
             row[0] != null && row[0].toString().toLowerCase().startsWith("no"),
         );
-        const headers = nonNullData[headerIndex];
 
-        const jsonData = [];
+        const headers = nonNullData[headerIndex];
+        const headersRow: GridRow = {
+          rowId: "header",
+          cells: headers.map((item) => ({
+            type: "header",
+            text: item ? item.toString() : "",
+          })),
+        };
+
+        const columns: GridColumn[] = headers.map((item) => ({
+          columnId: item ? item.toString() : "",
+          width: 150,
+          resizable: true,
+        }));
+
+        const rows: GridRow[] = [headersRow];
         for (let i = headerIndex + 1; i < nonNullData.length; i++) {
-          const temp = {};
+          const row: GridRow = {
+            rowId: i,
+            cells: [],
+          };
           for (let j = 0; j < headers.length; j++) {
-            // @ts-ignore
-            temp[headers[j]] = nonNullData[i][j];
+            let value = nonNullData[i][j];
+
+            if (typeof value == "number") {
+              value = Number(value.toFixed(2));
+              row.cells.push({ type: "number", value: value });
+            } else {
+              row.cells.push({
+                type: "text",
+                text: value ? value.toString() : "",
+              });
+            }
           }
-          jsonData.push(temp);
+          rows.push(row);
         }
 
-        openFile(JSON.stringify(jsonData));
+        openFile(
+          JSON.stringify({
+            rows: rows,
+            columns: columns,
+          }),
+        );
       });
-
-      // const promise = new Promise((resolve, reject) => {
-      //   fileReader.readAsArrayBuffer(file);
-      //   fileReader.onload = (e) => {
-      //     if (!e.target) return;
-      //
-      //     const bufferArray = e.target.result;
-      //     const wb = XLSX.read(bufferArray, {
-      //       type: "buffer",
-      //     });
-      //     const wsname = wb.SheetNames[0];
-      //     const ws = wb.Sheets[wsname];
-      //     const data: any[] = XLSX.utils.sheet_to_json(ws, {
-      //       defval: "",
-      //       blankrows: false,
-      //     });
-      //     const rows: string[][] = data.map((item: object) =>
-      //       Object.values(item),
-      //     );
-      //
-      //     console.log(rows);
-      //
-      //     resolve(data);
-      //   };
-      //   fileReader.onerror = (error) => {
-      //     reject(error);
-      //   };
-      // });
-      //
-      // promise.then(() => {
-      //   console.log("ended");
-      // });
     } finally {
       setUploading(false);
     }
