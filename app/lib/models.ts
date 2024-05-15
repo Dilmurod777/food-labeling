@@ -166,3 +166,10 @@ export interface CompanyProduct {
   brand: string;
   note: string;
 }
+
+export interface TodoListItem {
+  id: string;
+  user_id: string;
+  value: string;
+  completed: boolean;
+}

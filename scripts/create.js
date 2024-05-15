@@ -165,6 +165,29 @@ async function createCompanyProducts(client) {
   }
 }
 
+async function createTodoList(client) {
+  try {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+    const createTable = await client.sql`
+      CREATE TABLE IF NOT EXISTS todolist (
+        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        user_id VARCHAR(255) NOT NULL,
+        value TEXT NOT NULL,
+        completed VARCHAR(255) NOT NULL
+      );
+    `;
+
+    console.log(`Created "todolist" table`);
+
+    return {
+      createTable,
+    };
+  } catch (error) {
+    console.error("Error creating todolist:", error);
+    throw error;
+  }
+}
+
 async function main() {
   const client = await db.connect();
 
@@ -173,6 +196,7 @@ async function main() {
   await createCompanies(client);
   await createCompanyProductList(client);
   await createCompanyProducts(client);
+  await createTodoList(client);
 
   await client.end();
 }
