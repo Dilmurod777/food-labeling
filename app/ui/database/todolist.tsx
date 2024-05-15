@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useRef, useState } from "react";
 import { Loader2 } from "lucide-react";
 import * as databaseActions from "@/app/lib/actions-database";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface Props {
   items: TodoListItem[];
@@ -55,7 +56,19 @@ export default function TodoList({ items: initialItems }: Props) {
         "flex h-full w-5/12 flex-col gap-4 rounded-md border border-main-orange p-2"
       }
     >
-      <div className={"flex w-full gap-2"}>
+      <div className={"flex w-full items-center gap-2"}>
+        <Checkbox
+          checked={
+            selectedItems.length == items.length && selectedItems.length != 0
+          }
+          onClick={() => {
+            if (selectedItems.length == items.length) {
+              setSelectedItems([]);
+            } else {
+              setSelectedItems(items.map((item) => item.id));
+            }
+          }}
+        />
         <Input
           type="text"
           placeholder="Enter new todo"
