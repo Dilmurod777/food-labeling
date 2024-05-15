@@ -18,6 +18,7 @@ export default function TodoList({ items: initialItems }: Props) {
   const [isRemoving, setIsRemoving] = useState(false);
   const [items, setItems] = useState(initialItems);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const maxLength = 50;
 
   const addNewTodo = async () => {
     if (!inputRef.current) return;
@@ -74,6 +75,7 @@ export default function TodoList({ items: initialItems }: Props) {
           placeholder="Enter new todo"
           ref={inputRef}
           className={"focus-visible:ring-main-orange"}
+          maxLength={maxLength}
         />
         <Button
           onClick={addNewTodo}
@@ -112,7 +114,7 @@ export default function TodoList({ items: initialItems }: Props) {
         {items.map((item, i) => (
           <div
             key={`todo-${i}`}
-            className={`w-full cursor-pointer overflow-ellipsis border-l border-l-main-orange p-2 ${selectedItems.includes(item.id) ? "bg-main-orange hover:bg-hover-main-orange" : "bg-transparent hover:bg-main-gray"}`}
+            className={`w-full cursor-pointer overflow-ellipsis border-l border-l-main-orange p-2 ${selectedItems.includes(item.id) ? "rounded-md bg-main-orange text-white hover:bg-hover-main-orange" : "bg-transparent text-black hover:bg-main-gray"}`}
             onClick={() => {
               if (selectedItems.includes(item.id)) {
                 setSelectedItems(selectedItems.filter((id) => id != item.id));
@@ -121,7 +123,9 @@ export default function TodoList({ items: initialItems }: Props) {
               }
             }}
           >
-            {item.value.slice(0, 50)}
+            <span className={"select-none"}>
+              {item.value.slice(0, maxLength)}
+            </span>
           </div>
         ))}
       </div>
