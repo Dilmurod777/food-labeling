@@ -3,7 +3,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
 import { ProductsHistory } from "@/app/ui/database/products-history";
-import { ProductsHistoryItem } from "@/app/lib/models";
+import { ProductsHistoryItem, TodoListItem } from "@/app/lib/models";
 import { v4 as uuidV4 } from "uuid";
 import Spreadsheet from "react-spreadsheet";
 import {
@@ -12,6 +12,7 @@ import {
   Column as GridColumn,
   Id,
 } from "@silevis/reactgrid";
+import TodoList from "@/app/ui/database/todolist";
 
 interface TabData {
   id: string;
@@ -22,9 +23,10 @@ interface TabData {
 
 interface Props {
   productsHistory: ProductsHistoryItem[];
+  todoListItems: TodoListItem[];
 }
 
-export default function Content({ productsHistory }: Props) {
+export default function Content({ productsHistory, todoListItems }: Props) {
   const [fileTabs, setFileTabs] = useState<{ [key: string]: TabData }>({});
   const initialTab = "products-history";
   const [currentTab, setCurrentTab] = useState(initialTab);
@@ -89,40 +91,44 @@ export default function Content({ productsHistory }: Props) {
 
   return (
     <div className={"flex h-full w-full flex-grow flex-col gap-2"}>
-      <Tabs
-        defaultValue={"products-history"}
-        className="w-full"
-        value={currentTab}
-        onValueChange={(v) => setCurrentTab(v)}
-      >
-        <TabsList className="grid w-full grid-cols-12 bg-main-orange">
-          <TabsTrigger value={initialTab}>History</TabsTrigger>
-          {Object.keys(fileTabs).map((id) => (
-            <TabsTrigger value={id} key={id}>
-              {fileTabs[id].title}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-        <TabsContent value={initialTab}>
-          <ProductsHistory
-            productsHistory={productsHistory}
-            openFile={addTab}
-          />
-        </TabsContent>
-        {Object.keys(fileTabs).map((id) => (
-          <TabsContent value={id} key={id}>
-            <div className={"h-full w-full flex-grow overflow-x-scroll"}>
-              <ReactGrid
-                rows={fileTabs[id].rows}
-                columns={fileTabs[id].columns}
-                onColumnResized={(columnId, width) =>
-                  updateColumns(id, columnId, width)
-                }
-              />
-            </div>
+      <div className={"flex gap-2"}>
+        <Tabs
+          defaultValue={"products-history"}
+          className="w-full"
+          value={currentTab}
+          onValueChange={(v) => setCurrentTab(v)}
+        >
+          <TabsList className="grid w-full grid-cols-12 bg-main-orange">
+            <TabsTrigger value={initialTab}>History</TabsTrigger>
+            {Object.keys(fileTabs).map((id) => (
+              <TabsTrigger value={id} key={id}>
+                {fileTabs[id].title}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          <TabsContent value={initialTab}>
+            <ProductsHistory
+              productsHistory={productsHistory}
+              openFile={addTab}
+            />
           </TabsContent>
-        ))}
-      </Tabs>
+          {Object.keys(fileTabs).map((id) => (
+            <TabsContent value={id} key={id}>
+              <div className={"h-full w-full flex-grow overflow-x-scroll"}>
+                <ReactGrid
+                  rows={fileTabs[id].rows}
+                  columns={fileTabs[id].columns}
+                  onColumnResized={(columnId, width) =>
+                    updateColumns(id, columnId, width)
+                  }
+                />
+              </div>
+            </TabsContent>
+          ))}
+        </Tabs>
+
+        {currentTab == initialTab && <TodoList items={todoListItems} />}
+      </div>
     </div>
   );
 }

@@ -160,7 +160,7 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [currentName, setCurrentName] = useState("");
   const [currentFile, setCurrentFile] = useState<File>();
-  const [currentDate, setCurrentDate] = useState<number>(-1);
+  const [currentDate, setCurrentDate] = useState<number>(Date.now());
 
   const uploadFileHandler = () => {
     setUploading(true);
@@ -339,7 +339,7 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
                   onChange={(e) => setCurrentName(e.target.value.trim())}
                 />
                 <DatePicker
-                  initialDate={Date.now()}
+                  initialDate={currentDate}
                   updateDate={setCurrentDate}
                 />
               </div>

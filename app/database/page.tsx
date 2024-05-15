@@ -11,8 +11,7 @@ export default async function Page() {
   return (
     <Suspense fallback={<Loading />}>
       <div className={"flex flex-grow items-start gap-4 px-8 py-2"}>
-        <Content productsHistory={productsHistory} />
-        <TodoList items={todoList} />
+        <Content productsHistory={productsHistory} todoListItems={todoList} />
       </div>
     </Suspense>
   );
