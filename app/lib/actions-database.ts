@@ -1,12 +1,34 @@
 "use server";
 
 import {
+  Company,
   CompanyProduct,
   ProductsHistoryItem,
   TodoListItem,
 } from "@/app/lib/models";
 import { getCurrentUser } from "@/app/lib/actions-user";
 import { sql } from "@vercel/postgres";
+
+const tableCompanies = "companies";
+const tableCompanyProductList = "companyProductList";
+const tableCompanyProducts = "companyProducts";
+
+export async function addCompany(name: string): Promise<Company | null> {
+  try {
+    let query = `SELECT * FROM ${tableCompanies} WHERE name='${name}'`;
+    let result = await sql.query<Company>(query);
+    if (result.rowCount == 0) {
+      query = `INSERT INTO ${tableCompanies} (name, email) VALUES ('${name}', '') RETURNING *`;
+      result = await sql.query<Company>(query);
+    }
+
+    if (result.rowCount == 0) return null;
+    return result.rows[0];
+  } catch (error) {
+    console.error("Failed to fetch company products:", error);
+    return null;
+  }
+}
 
 export async function getAllCompanyProducts(): Promise<ProductsHistoryItem[]> {
   try {

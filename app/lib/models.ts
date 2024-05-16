@@ -1,4 +1,4 @@
-import { NET_WEIGHT_UNIT } from "@/app/lib/constants/product";
+import { Column as GridColumn, Row as GridRow } from "@silevis/reactgrid";
 
 export enum UserRole {
   Admin,
@@ -172,4 +172,11 @@ export interface TodoListItem {
   user_id: string;
   value: string;
   completed: boolean;
+}
+
+export interface TabFileData {
+  rows: GridRow[];
+  columns: GridColumn[];
+  name: string;
+  date: number;
 }

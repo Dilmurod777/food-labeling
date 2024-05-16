@@ -36,7 +36,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ProductsHistoryItem } from "@/app/lib/models";
+import { TabFileData, ProductsHistoryItem } from "@/app/lib/models";
 import { useEffect, useState } from "react";
 import readXlsxFile, { Row } from "read-excel-file";
 import { PiMicrosoftExcelLogo } from "react-icons/pi";
@@ -44,7 +44,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogPortal,
   DialogTitle,
@@ -52,6 +51,7 @@ import {
 } from "@/components/ui/dialog";
 import { DialogBody } from "next/dist/client/components/react-dev-overlay/internal/components/Dialog";
 import { DatePicker } from "@/components/ui/date-picker";
+import { v4 as uuidV4 } from "uuid";
 
 export const columns: ColumnDef<ProductsHistoryItem>[] = [
   {
@@ -129,7 +129,7 @@ export const columns: ColumnDef<ProductsHistoryItem>[] = [
 
 interface Props {
   productsHistory: ProductsHistoryItem[];
-  openFile: (url: string) => void;
+  openFile: (data: TabFileData) => void;
 }
 
 export function ProductsHistory({ productsHistory, openFile }: Props) {
@@ -219,12 +219,12 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
           rows.push(row);
         }
 
-        openFile(
-          JSON.stringify({
-            rows: rows,
-            columns: columns,
-          }),
-        );
+        openFile({
+          rows: rows,
+          columns: columns,
+          name: `${currentName}-${currentDate}-${uuidV4()}`,
+          date: currentDate,
+        });
       });
     } finally {
       setUploading(false);

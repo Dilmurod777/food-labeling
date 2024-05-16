@@ -3,7 +3,11 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
 import { ProductsHistory } from "@/app/ui/database/products-history";
-import { ProductsHistoryItem, TodoListItem } from "@/app/lib/models";
+import {
+  TabFileData,
+  ProductsHistoryItem,
+  TodoListItem,
+} from "@/app/lib/models";
 import { v4 as uuidV4 } from "uuid";
 import Spreadsheet from "react-spreadsheet";
 import {
@@ -31,9 +35,9 @@ export default function Content({ productsHistory, todoListItems }: Props) {
   const initialTab = "products-history";
   const [currentTab, setCurrentTab] = useState(initialTab);
 
-  const addTab = (json: string) => {
+  const addTab = (data: TabFileData) => {
     const id = uuidV4();
-    const { columns, rows } = JSON.parse(json);
+    const { columns, rows, name, date } = data;
     // let columns: string[] = Object.keys(rawData[0]).slice(1);
 
     // let data: { value: string; readonly: boolean }[][] = rawData.map(
@@ -50,7 +54,7 @@ export default function Content({ productsHistory, todoListItems }: Props) {
       ...fileTabs,
       [id]: {
         id: id,
-        title: id.slice(0, 4),
+        title: name,
         rows: rows,
         columns: columns,
       },
@@ -60,7 +64,7 @@ export default function Content({ productsHistory, todoListItems }: Props) {
 
     fetch("/api/database/products", {
       method: "POST",
-      body: json,
+      body: JSON.stringify(data),
     });
   };
 
@@ -98,11 +102,13 @@ export default function Content({ productsHistory, todoListItems }: Props) {
           value={currentTab}
           onValueChange={(v) => setCurrentTab(v)}
         >
-          <TabsList className="grid w-full grid-cols-12 bg-main-orange">
-            <TabsTrigger value={initialTab}>History</TabsTrigger>
+          <TabsList className="flex justify-start gap-4 bg-main-orange">
+            <TabsTrigger value={initialTab} className={"w-24"}>
+              History
+            </TabsTrigger>
             {Object.keys(fileTabs).map((id) => (
-              <TabsTrigger value={id} key={id}>
-                {fileTabs[id].title}
+              <TabsTrigger value={id} key={id} className={"w-24"}>
+                {fileTabs[id].title.slice(0, 10) + "..."}
               </TabsTrigger>
             ))}
           </TabsList>
