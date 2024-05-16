@@ -22,7 +22,7 @@ import { IoMdClose } from "react-icons/io";
 
 interface TabData {
   id: string;
-  title: string;
+  name: string;
   rows: GridRow[];
   columns: GridColumn[];
 }
@@ -39,29 +39,28 @@ export default function Content({ productsHistory, todoListItems }: Props) {
   const router = useRouter();
 
   const addTab = (data: TabFileData, local: boolean) => {
-    const id = uuidV4();
-    const { columns, rows, name, date } = data;
-    // let columns: string[] = Object.keys(rawData[0]).slice(1);
+    let { columns, rows, name, date } = data;
 
-    // let data: { value: string; readonly: boolean }[][] = rawData.map(
-    //   (item: {}) =>
-    //     Object.values(item)
-    //       .slice(1)
-    //       .map((value: any) => ({
-    //         value: value ? value.toString() : "",
-    //         readonly: false,
-    //       })),
-    // );
+    const existingTabs = Object.values(fileTabs).filter(
+      (item) => item.name == name,
+    );
+    let id: string;
 
-    setFileTabs({
-      ...fileTabs,
-      [id]: {
-        id: id,
-        title: name,
-        rows: rows,
-        columns: columns,
-      },
-    });
+    if (existingTabs.length == 0) {
+      id = uuidV4();
+
+      setFileTabs({
+        ...fileTabs,
+        [id]: {
+          id: id,
+          name: name,
+          rows: rows,
+          columns: columns,
+        },
+      });
+    } else {
+      id = existingTabs[0].id;
+    }
 
     setCurrentTab(id);
 
@@ -112,7 +111,7 @@ export default function Content({ productsHistory, todoListItems }: Props) {
           <ScrollArea>
             <TabsList className="flex justify-start gap-4 bg-main-orange">
               <TabsTrigger value={initialTab} className={"w-28"}>
-                History
+                All
               </TabsTrigger>
               {Object.keys(fileTabs).map((id) => (
                 <div key={id} className={"relative"}>
@@ -120,7 +119,11 @@ export default function Content({ productsHistory, todoListItems }: Props) {
                     value={id}
                     className={`flex w-40 justify-between gap-2 border pl-2 pr-1 ${currentTab == id ? "border-main-orange" : "border-white"}`}
                   >
-                    <span>{fileTabs[id].title.slice(0, 10) + "..."}</span>
+                    <span>
+                      {fileTabs[id].name.length > 10
+                        ? fileTabs[id].name.slice(0, 10) + "..."
+                        : fileTabs[id].name}
+                    </span>
                   </TabsTrigger>
                   <IoMdClose
                     className={`absolute right-2 top-1/2 -translate-y-[50%] cursor-pointer text-xl ${currentTab == id ? "text-main-orange" : "text-white"}`}

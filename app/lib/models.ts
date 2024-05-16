@@ -178,6 +178,7 @@ export interface TodoListItem {
 }
 
 export interface TabFileData {
+  id?: string;
   rows: GridRow[];
   columns: GridColumn[];
   name: string;
