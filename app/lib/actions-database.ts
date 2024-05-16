@@ -45,18 +45,50 @@ export async function getAllCompanyProducts(): Promise<ProductsHistoryItem[]> {
   }
 }
 
-export async function addCompanyProducts() {
+export async function addCompanyProductsList(
+  name: string,
+  date: number,
+  data: string,
+): Promise<string> {
   try {
     const user = await getCurrentUser();
-    if (!user) return [];
+    if (!user) return "-1";
 
-    const query = `INSERT INTO companyProducts`;
+    const companyQuery = `SELECT * FROM ${tableCompanies} WHERE name='${name}'`;
+    const companyResult = await sql.query<Company>(companyQuery);
+    let company: Company;
+    if (companyResult.rowCount == 0) {
+      const createdCompany = await addCompany(name);
+      if (createdCompany) {
+        company = createdCompany;
+      } else {
+        return "-1";
+      }
+    } else {
+      company = companyResult.rows[0];
+    }
 
+    const query = `INSERT INTO ${tableCompanyProductList} (company_id, date, list) VALUES ('${company.id}', '${date}', '${data.replaceAll('"', "`").replaceAll("'", "`")}') RETURNING *`;
     const result = await sql.query<ProductsHistoryItem>(query);
-    return result.rows;
+    if (result.rowCount == 0) return "-1";
+
+    return result.rows[0].id;
   } catch (error) {
     console.error("Failed to fetch company products:", error);
-    return -1;
+    return "-1";
+  }
+}
+
+export async function removeCompanyProductsList(id: string): Promise<string> {
+  try {
+    const query = `DELETE FROM ${tableCompanyProductList} WHERE id='${id}' RETURNING *`;
+    const result = await sql.query<ProductsHistoryItem>(query);
+    if (result.rowCount == 0) return "-1";
+
+    return result.rows[0].id;
+  } catch (error) {
+    console.error("Failed to fetch company products:", error);
+    return "-1";
   }
 }
 

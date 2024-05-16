@@ -148,7 +148,7 @@ export interface ProductsHistoryItem {
   id: string;
   name: string;
   email: string;
-  date: string;
+  date: number;
 }
 
 export interface CompanyProduct {

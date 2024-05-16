@@ -17,6 +17,7 @@ import {
   Id,
 } from "@silevis/reactgrid";
 import TodoList from "@/app/ui/database/todolist";
+import { useRouter } from "next/navigation";
 
 interface TabData {
   id: string;
@@ -34,6 +35,7 @@ export default function Content({ productsHistory, todoListItems }: Props) {
   const [fileTabs, setFileTabs] = useState<{ [key: string]: TabData }>({});
   const initialTab = "products-history";
   const [currentTab, setCurrentTab] = useState(initialTab);
+  const router = useRouter();
 
   const addTab = (data: TabFileData) => {
     const id = uuidV4();
@@ -65,6 +67,8 @@ export default function Content({ productsHistory, todoListItems }: Props) {
     fetch("/api/database/products", {
       method: "POST",
       body: JSON.stringify(data),
+    }).then(() => {
+      router.refresh();
     });
   };
 
@@ -103,11 +107,11 @@ export default function Content({ productsHistory, todoListItems }: Props) {
           onValueChange={(v) => setCurrentTab(v)}
         >
           <TabsList className="flex justify-start gap-4 bg-main-orange">
-            <TabsTrigger value={initialTab} className={"w-24"}>
+            <TabsTrigger value={initialTab} className={"w-28"}>
               History
             </TabsTrigger>
             {Object.keys(fileTabs).map((id) => (
-              <TabsTrigger value={id} key={id} className={"w-24"}>
+              <TabsTrigger value={id} key={id} className={"w-28"}>
                 {fileTabs[id].title.slice(0, 10) + "..."}
               </TabsTrigger>
             ))}

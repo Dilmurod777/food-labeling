@@ -52,80 +52,7 @@ import {
 import { DialogBody } from "next/dist/client/components/react-dev-overlay/internal/components/Dialog";
 import { DatePicker } from "@/components/ui/date-picker";
 import { v4 as uuidV4 } from "uuid";
-
-export const columns: ColumnDef<ProductsHistoryItem>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "name",
-    header: "Name",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
-  },
-  {
-    accessorKey: "email",
-    header: "Email",
-    cell: ({ row }) => <div>{row.getValue("email")}</div>,
-  },
-  {
-    accessorKey: "date",
-    header: "Last modified",
-    cell: ({ row }) => <div>{row.getValue("date")}</div>,
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const item = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(item.name)}
-            >
-              Copy name
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(item.email)}
-            >
-              Copy email
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-  },
-];
+import { useRouter } from "next/navigation";
 
 interface Props {
   productsHistory: ProductsHistoryItem[];
@@ -137,6 +64,95 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
+  const router = useRouter();
+
+  const columns: ColumnDef<ProductsHistoryItem>[] = [
+    {
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
+      accessorKey: "name",
+      header: "Name",
+      cell: ({ row }) => <div>{row.getValue("name")}</div>,
+    },
+    {
+      accessorKey: "email",
+      header: "Email",
+      cell: ({ row }) => <div>{row.getValue("email")}</div>,
+    },
+    {
+      accessorKey: "date",
+      header: "Last modified",
+      cell: ({ row }) => {
+        const date = new Date(0);
+        date.setUTCSeconds(row.getValue("date"));
+        return <div>{date.toString()}</div>;
+      },
+    },
+    {
+      id: "actions",
+      enableHiding: false,
+      cell: ({ row, table }) => {
+        const item = row.original;
+
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem
+                onClick={() => navigator.clipboard.writeText(item.name)}
+              >
+                Copy name
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => navigator.clipboard.writeText(item.email)}
+              >
+                Copy email
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => {
+                  fetch("/api/database/products", {
+                    method: "DELETE",
+                    body: JSON.stringify({ id: item.id }),
+                  }).then(() => {
+                    router.refresh();
+                  });
+                }}
+              >
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      },
+    },
+  ];
 
   const table = useReactTable({
     data: productsHistory,

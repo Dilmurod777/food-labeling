@@ -98,7 +98,7 @@ async function createCompanies(client) {
           CREATE TABLE IF NOT EXISTS companies (
             id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
             name TEXT NOT NULL,
-            email TEXT NOT NULL UNIQUE
+            email TEXT NOT NULL
           );
         `;
     console.log(`Created "companies" table`);
