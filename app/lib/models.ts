@@ -1,4 +1,10 @@
-import { Column as GridColumn, Row as GridRow } from "@silevis/reactgrid";
+import {
+  Column as GridColumn,
+  HeaderCell,
+  NumberCell,
+  Row as GridRow,
+  TextCell,
+} from "@silevis/reactgrid";
 
 export enum UserRole {
   Admin,
@@ -179,7 +185,7 @@ export interface TodoListItem {
 
 export interface TabFileData {
   id?: string;
-  rows: GridRow[];
+  rows: GridRow<TextCell | NumberCell | HeaderCell>[];
   columns: GridColumn[];
   name: string;
   date: number;

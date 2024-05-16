@@ -14,7 +14,13 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
-import { Column as GridColumn, Row as GridRow } from "@silevis/reactgrid";
+import {
+  Column as GridColumn,
+  HeaderCell,
+  NumberCell,
+  Row as GridRow,
+  TextCell,
+} from "@silevis/reactgrid";
 import "@silevis/reactgrid/styles.css";
 
 import { Button } from "@/components/ui/button";
@@ -53,7 +59,7 @@ import { DatePicker } from "@/components/ui/date-picker";
 import { v4 as uuidV4 } from "uuid";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { IoMdRefreshCircle } from "react-icons/io";
+import { IoSaveOutline } from "react-icons/io5";
 
 interface Props {
   productsHistory: ProductsHistoryItem[];
@@ -144,12 +150,14 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
                   const {
                     rows,
                     columns,
-                  }: { rows: GridRow[]; columns: GridColumn[] } = JSON.parse(
-                    item.list.replaceAll("`", '"'),
-                  );
+                  }: {
+                    rows: GridRow<TextCell | NumberCell | HeaderCell>[];
+                    columns: GridColumn[];
+                  } = JSON.parse(item.list.replaceAll("`", '"'));
 
                   openFile(
                     {
+                      id: item.id,
                       name: item.name,
                       columns: columns,
                       rows: rows,
@@ -244,7 +252,7 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
         );
 
         const headers = nonNullData[headerIndex];
-        const headersRow: GridRow = {
+        const headersRow: GridRow<TextCell | NumberCell | HeaderCell> = {
           rowId: "header",
           cells: headers.map((item) => ({
             type: "header",
@@ -262,9 +270,11 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
           resizable: true,
         }));
 
-        const rows: GridRow[] = [headersRow];
+        const rows: GridRow<TextCell | NumberCell | HeaderCell>[] = [
+          headersRow,
+        ];
         for (let i = headerIndex + 1; i < nonNullData.length; i++) {
-          const row: GridRow = {
+          const row: GridRow<TextCell | NumberCell | HeaderCell> = {
             rowId: i,
             cells: [],
           };

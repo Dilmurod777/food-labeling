@@ -129,6 +129,24 @@ export async function removeCompanyProductsLists(
   }
 }
 
+export async function updateCompanyProductsList(
+  id: string,
+  list: string,
+): Promise<ProductsHistoryItem | null> {
+  try {
+    const query = `UPDATE ${tableCompanyProductList} SET list='${list}' WHERE id='${id}' RETURNING *`;
+    const result = await sql.query<ProductsHistoryItem>(query);
+    if (result.rowCount == 0) return null;
+
+    revalidatePath("/database");
+
+    return result.rows[0];
+  } catch (error) {
+    console.error("Failed to fetch company products:", error);
+    return null;
+  }
+}
+
 export async function getAllTodoList(): Promise<TodoListItem[]> {
   try {
     const user = await getCurrentUser();

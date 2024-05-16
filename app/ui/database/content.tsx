@@ -8,23 +8,28 @@ import {
   ProductsHistoryItem,
   TodoListItem,
 } from "@/app/lib/models";
-import { v4 as uuidV4 } from "uuid";
 import {
   ReactGrid,
   Row as GridRow,
   Column as GridColumn,
   Id,
+  CellChange,
+  TextCell,
+  NumberCell,
+  HeaderCell,
 } from "@silevis/reactgrid";
 import TodoList from "@/app/ui/database/todolist";
 import { useRouter } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { IoMdClose } from "react-icons/io";
+import { Button } from "@/components/ui/button";
 
 interface TabData {
   id: string;
   name: string;
-  rows: GridRow[];
+  rows: GridRow<TextCell | NumberCell | HeaderCell>[];
   columns: GridColumn[];
+  updating: boolean;
 }
 
 interface Props {
@@ -36,10 +41,11 @@ export default function Content({ productsHistory, todoListItems }: Props) {
   const [fileTabs, setFileTabs] = useState<{ [key: string]: TabData }>({});
   const initialTab = "products-history";
   const [currentTab, setCurrentTab] = useState(initialTab);
+  const [savingAll, setSavingAll] = useState(false);
   const router = useRouter();
 
-  const addTab = (data: TabFileData, local: boolean) => {
-    let { columns, rows, name, date } = data;
+  const addTab = async (data: TabFileData, local: boolean) => {
+    let { columns, rows, name, date, id: fileId } = data;
 
     const existingTabs = Object.values(fileTabs).filter(
       (item) => item.name == name,
@@ -47,7 +53,15 @@ export default function Content({ productsHistory, todoListItems }: Props) {
     let id: string;
 
     if (existingTabs.length == 0) {
-      id = uuidV4();
+      if (!fileId) {
+        const response = await fetch("/api/database/products", {
+          method: "POST",
+          body: JSON.stringify(data),
+        });
+        id = await response.json();
+      } else {
+        id = fileId;
+      }
 
       setFileTabs({
         ...fileTabs,
@@ -56,22 +70,16 @@ export default function Content({ productsHistory, todoListItems }: Props) {
           name: name,
           rows: rows,
           columns: columns,
+          updating: false,
         },
       });
+
+      router.refresh();
     } else {
       id = existingTabs[0].id;
     }
 
     setCurrentTab(id);
-
-    if (!local) {
-      fetch("/api/database/products", {
-        method: "POST",
-        body: JSON.stringify(data),
-      }).then(() => {
-        router.refresh();
-      });
-    }
   };
 
   const updateColumns = (tabId: string, columnId: Id, width: number) => {
@@ -95,6 +103,80 @@ export default function Content({ productsHistory, todoListItems }: Props) {
     });
   };
 
+  const updateCell = (changes: CellChange[]) => {
+    changes.forEach((change) => {
+      const rowIdx = fileTabs[currentTab].rows.findIndex(
+        (item) => item.rowId == change.rowId,
+      );
+      const columnIdx = fileTabs[currentTab].columns.findIndex(
+        (item) => item.columnId == change.columnId,
+      );
+      const currentRows = fileTabs[currentTab].rows;
+
+      const newCell = {
+        ...currentRows[rowIdx].cells[columnIdx],
+      };
+
+      if (newCell.type == "text") {
+        newCell.text = (change.newCell as TextCell).text;
+      } else if (newCell.type == "number") {
+        newCell.value = (change.newCell as NumberCell).value;
+      }
+
+      setFileTabs({
+        ...fileTabs,
+        [currentTab]: {
+          ...fileTabs[currentTab],
+          rows: [
+            ...currentRows.slice(0, rowIdx),
+            {
+              ...currentRows[rowIdx],
+              cells: [
+                ...currentRows[rowIdx].cells.slice(0, columnIdx),
+                {
+                  ...newCell,
+                },
+                ...currentRows[rowIdx].cells.slice(columnIdx + 1),
+              ],
+            },
+            ...currentRows.slice(rowIdx + 1),
+          ],
+        },
+      });
+    });
+  };
+
+  const saveAll = async () => {
+    if (currentTab == initialTab) return;
+
+    setSavingAll(true);
+
+    const response = await fetch("/api/database/products", {
+      method: "PUT",
+      body: JSON.stringify({
+        id: fileTabs[currentTab].id,
+        rows: fileTabs[currentTab].rows,
+        columns: fileTabs[currentTab].columns,
+      }),
+    });
+
+    const data: ProductsHistoryItem | null = await response.json();
+
+    if (data) {
+      const { rows, columns } = JSON.parse(data.list);
+      setFileTabs({
+        ...fileTabs,
+        [currentTab]: {
+          ...fileTabs[currentTab],
+          rows,
+          columns,
+        },
+      });
+    }
+
+    setSavingAll(false);
+  };
+
   useEffect(() => {
     setFileTabs({});
   }, []);
@@ -110,19 +192,26 @@ export default function Content({ productsHistory, todoListItems }: Props) {
         >
           <ScrollArea>
             <TabsList className="flex justify-start gap-4 bg-main-orange">
-              <TabsTrigger value={initialTab} className={"w-28"}>
+              <TabsTrigger
+                value={initialTab}
+                className={"w-28"}
+                disabled={savingAll}
+              >
                 All
               </TabsTrigger>
               {Object.keys(fileTabs).map((id) => (
                 <div key={id} className={"relative"}>
                   <TabsTrigger
                     value={id}
+                    disabled={savingAll}
                     className={`flex w-40 justify-between gap-2 border pl-2 pr-1 ${currentTab == id ? "border-main-orange" : "border-white"}`}
                   >
                     <span>
-                      {fileTabs[id].name.length > 10
-                        ? fileTabs[id].name.slice(0, 10) + "..."
-                        : fileTabs[id].name}
+                      {fileTabs[id].updating
+                        ? "Updating..."
+                        : fileTabs[id].name.length > 10
+                          ? fileTabs[id].name.slice(0, 10) + "..."
+                          : fileTabs[id].name}
                     </span>
                   </TabsTrigger>
                   <IoMdClose
@@ -152,8 +241,17 @@ export default function Content({ productsHistory, todoListItems }: Props) {
                   onColumnResized={(columnId, width) =>
                     updateColumns(id, columnId, width)
                   }
+                  onCellsChanged={updateCell}
                 />
               </div>
+
+              <Button
+                className={"mb-2 mt-4"}
+                onClick={saveAll}
+                disabled={savingAll}
+              >
+                Save
+              </Button>
             </TabsContent>
           ))}
         </Tabs>
