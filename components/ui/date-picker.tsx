@@ -42,7 +42,7 @@ export function DatePicker({ initialDate, updateDate }: Props) {
           onSelect={(d) => {
             if (d) {
               setDate(d);
-              updateDate(Number(d.toString()));
+              updateDate(d.getTime());
             }
           }}
           initialFocus

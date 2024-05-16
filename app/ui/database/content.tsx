@@ -9,7 +9,6 @@ import {
   TodoListItem,
 } from "@/app/lib/models";
 import { v4 as uuidV4 } from "uuid";
-import Spreadsheet from "react-spreadsheet";
 import {
   ReactGrid,
   Row as GridRow,
@@ -18,6 +17,8 @@ import {
 } from "@silevis/reactgrid";
 import TodoList from "@/app/ui/database/todolist";
 import { useRouter } from "next/navigation";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { IoMdClose } from "react-icons/io";
 
 interface TabData {
   id: string;
@@ -37,7 +38,7 @@ export default function Content({ productsHistory, todoListItems }: Props) {
   const [currentTab, setCurrentTab] = useState(initialTab);
   const router = useRouter();
 
-  const addTab = (data: TabFileData) => {
+  const addTab = (data: TabFileData, local: boolean) => {
     const id = uuidV4();
     const { columns, rows, name, date } = data;
     // let columns: string[] = Object.keys(rawData[0]).slice(1);
@@ -64,12 +65,14 @@ export default function Content({ productsHistory, todoListItems }: Props) {
 
     setCurrentTab(id);
 
-    fetch("/api/database/products", {
-      method: "POST",
-      body: JSON.stringify(data),
-    }).then(() => {
-      router.refresh();
-    });
+    if (!local) {
+      fetch("/api/database/products", {
+        method: "POST",
+        body: JSON.stringify(data),
+      }).then(() => {
+        router.refresh();
+      });
+    }
   };
 
   const updateColumns = (tabId: string, columnId: Id, width: number) => {
@@ -106,16 +109,31 @@ export default function Content({ productsHistory, todoListItems }: Props) {
           value={currentTab}
           onValueChange={(v) => setCurrentTab(v)}
         >
-          <TabsList className="flex justify-start gap-4 bg-main-orange">
-            <TabsTrigger value={initialTab} className={"w-28"}>
-              History
-            </TabsTrigger>
-            {Object.keys(fileTabs).map((id) => (
-              <TabsTrigger value={id} key={id} className={"w-28"}>
-                {fileTabs[id].title.slice(0, 10) + "..."}
+          <ScrollArea>
+            <TabsList className="flex justify-start gap-4 bg-main-orange">
+              <TabsTrigger value={initialTab} className={"w-28"}>
+                History
               </TabsTrigger>
-            ))}
-          </TabsList>
+              {Object.keys(fileTabs).map((id) => (
+                <div key={id} className={"relative"}>
+                  <TabsTrigger
+                    value={id}
+                    className={`flex w-40 justify-between gap-2 border pl-2 pr-1 ${currentTab == id ? "border-main-orange" : "border-white"}`}
+                  >
+                    <span>{fileTabs[id].title.slice(0, 10) + "..."}</span>
+                  </TabsTrigger>
+                  <IoMdClose
+                    className={`absolute right-2 top-1/2 -translate-y-[50%] cursor-pointer text-xl ${currentTab == id ? "text-main-orange" : "text-white"}`}
+                    onClick={() => {
+                      if (currentTab == id) setCurrentTab(initialTab);
+                      delete fileTabs[id];
+                      setFileTabs({ ...fileTabs });
+                    }}
+                  />
+                </div>
+              ))}
+            </TabsList>
+          </ScrollArea>
           <TabsContent value={initialTab}>
             <ProductsHistory
               productsHistory={productsHistory}

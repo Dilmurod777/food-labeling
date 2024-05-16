@@ -37,7 +37,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { TabFileData, ProductsHistoryItem } from "@/app/lib/models";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import readXlsxFile, { Row } from "read-excel-file";
 import { PiMicrosoftExcelLogo } from "react-icons/pi";
 import {
@@ -49,14 +49,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { DialogBody } from "next/dist/client/components/react-dev-overlay/internal/components/Dialog";
 import { DatePicker } from "@/components/ui/date-picker";
 import { v4 as uuidV4 } from "uuid";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { IoMdRefreshCircle } from "react-icons/io";
 
 interface Props {
   productsHistory: ProductsHistoryItem[];
-  openFile: (data: TabFileData) => void;
+  openFile: (data: TabFileData, local: boolean) => void;
 }
 
 export function ProductsHistory({ productsHistory, openFile }: Props) {
@@ -64,6 +65,10 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
+  const [pagination, setPagination] = React.useState({
+    pageIndex: 0,
+    pageSize: 5,
+  });
   const router = useRouter();
 
   const columns: ColumnDef<ProductsHistoryItem>[] = [
@@ -92,7 +97,17 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
     {
       accessorKey: "name",
       header: "Name",
-      cell: ({ row }) => <div>{row.getValue("name")}</div>,
+      cell: ({ row }) => {
+        const item = row.original;
+        return (
+          <Link
+            href={`/companies/${item.company_id}`}
+            className={"hover:text-main-orange"}
+          >
+            {row.getValue("name")}
+          </Link>
+        );
+      },
     },
     {
       accessorKey: "email",
@@ -104,8 +119,8 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
       header: "Last modified",
       cell: ({ row }) => {
         const date = new Date(0);
-        date.setUTCSeconds(row.getValue("date"));
-        return <div>{date.toString()}</div>;
+        date.setUTCMilliseconds(row.getValue("date"));
+        return <div>{date.toDateString()}</div>;
       },
     },
     {
@@ -125,6 +140,29 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
+                onClick={() => {
+                  const {
+                    rows,
+                    columns,
+                  }: { rows: GridRow[]; columns: GridColumn[] } = JSON.parse(
+                    item.list.replaceAll("`", '"'),
+                  );
+
+                  openFile(
+                    {
+                      name: item.name,
+                      columns: columns,
+                      rows: rows,
+                      date: item.date,
+                    },
+                    true,
+                  );
+                }}
+              >
+                Open
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
                 onClick={() => navigator.clipboard.writeText(item.name)}
               >
                 Copy name
@@ -139,13 +177,22 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
                 onClick={() => {
                   fetch("/api/database/products", {
                     method: "DELETE",
-                    body: JSON.stringify({ id: item.id }),
+                    body: JSON.stringify({
+                      ids: table.getIsSomePageRowsSelected()
+                        ? table
+                            .getSelectedRowModel()
+                            .rows.map((item) => item.original.id)
+                        : [item.id],
+                    }),
                   }).then(() => {
                     router.refresh();
+                    table.resetRowSelection();
                   });
                 }}
               >
-                Delete
+                {table.getSelectedRowModel().rows.length <= 1
+                  ? "Delete"
+                  : "Delete Selected"}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -165,11 +212,13 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    onPaginationChange: setPagination,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination: pagination,
     },
   });
   const [uploading, setUploading] = useState(false);
@@ -235,12 +284,15 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
           rows.push(row);
         }
 
-        openFile({
-          rows: rows,
-          columns: columns,
-          name: `${currentName}-${currentDate}-${uuidV4()}`,
-          date: currentDate,
-        });
+        openFile(
+          {
+            rows: rows,
+            columns: columns,
+            name: `${currentName}-${currentDate}-${uuidV4()}`,
+            date: currentDate,
+          },
+          false,
+        );
       });
     } finally {
       setUploading(false);
@@ -317,10 +369,10 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
           </Table>
         </div>
         <div className="flex items-center justify-end space-x-2 py-4">
-          <div className="flex-1 text-sm text-muted-foreground">
-            {table.getFilteredSelectedRowModel().rows.length} of{" "}
-            {table.getFilteredRowModel().rows.length} row(s) selected.
-          </div>
+          {/*<div className="flex-1 text-sm text-muted-foreground">*/}
+          {/*  {table.getFilteredSelectedRowModel().rows.length} of{" "}*/}
+          {/*  {table.getFilteredRowModel().rows.length} row(s) selected.*/}
+          {/*</div>*/}
           <div className="space-x-2">
             <Button
               variant="outline"
@@ -345,7 +397,7 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
             <DialogHeader className={"w-full"}>
               <DialogTitle>Add new Product List</DialogTitle>
             </DialogHeader>
-            <DialogBody className={"flex flex-col gap-4"}>
+            <div className={"flex flex-col gap-4"}>
               <div className={"flex w-full items-center gap-2"}>
                 <Input
                   className={"flex w-60 gap-2 focus-within:ring-offset-0"}
@@ -382,7 +434,7 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
                   Add
                 </Button>
               </DialogClose>
-            </DialogBody>
+            </div>
           </DialogContent>
         </DialogPortal>
       </Dialog>

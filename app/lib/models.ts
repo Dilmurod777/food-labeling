@@ -136,6 +136,7 @@ export interface Company {
   id: string;
   name: string;
   email: string;
+  note: string;
 }
 
 export interface CompanyProductList {
@@ -146,9 +147,11 @@ export interface CompanyProductList {
 
 export interface ProductsHistoryItem {
   id: string;
+  company_id: string;
   name: string;
   email: string;
   date: number;
+  list: string;
 }
 
 export interface CompanyProduct {

@@ -5,7 +5,7 @@ import Content from "@/app/ui/database/content";
 import TodoList from "@/app/ui/database/todolist";
 
 export default async function Page() {
-  const productsHistory = await databaseActions.getAllCompanyProducts();
+  const productsHistory = await databaseActions.getAllCompanyProductsList();
   const todoList = await databaseActions.getAllTodoList();
 
   return (

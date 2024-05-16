@@ -8,17 +8,31 @@ import {
 } from "@/app/lib/models";
 import { getCurrentUser } from "@/app/lib/actions-user";
 import { sql } from "@vercel/postgres";
+import { revalidatePath } from "next/cache";
 
 const tableCompanies = "companies";
 const tableCompanyProductList = "companyProductList";
 const tableCompanyProducts = "companyProducts";
+
+export async function getCompany(id: string) {
+  try {
+    let query = `SELECT * FROM ${tableCompanies} WHERE id='${id}'`;
+    let result = await sql.query<Company>(query);
+    if (result.rowCount == 0) return null;
+
+    return result.rows[0];
+  } catch (error) {
+    console.error("Failed to fetch company:", error);
+    return null;
+  }
+}
 
 export async function addCompany(name: string): Promise<Company | null> {
   try {
     let query = `SELECT * FROM ${tableCompanies} WHERE name='${name}'`;
     let result = await sql.query<Company>(query);
     if (result.rowCount == 0) {
-      query = `INSERT INTO ${tableCompanies} (name, email) VALUES ('${name}', '') RETURNING *`;
+      query = `INSERT INTO ${tableCompanies} (name, email, note) VALUES ('${name}', '', '') RETURNING *`;
       result = await sql.query<Company>(query);
     }
 
@@ -27,15 +41,36 @@ export async function addCompany(name: string): Promise<Company | null> {
   } catch (error) {
     console.error("Failed to fetch company products:", error);
     return null;
+  } finally {
+    revalidatePath("/database");
   }
 }
 
-export async function getAllCompanyProducts(): Promise<ProductsHistoryItem[]> {
+export async function updateCompany(company: Company): Promise<Company | null> {
+  try {
+    const query = `UPDATE ${tableCompanies} SET name='${company.name}', email='${company.email}', note='${company.note}' WHERE id='${company.id}'`;
+    const result = await sql.query<Company>(query);
+
+    revalidatePath("/database");
+
+    if (result.rowCount == 0) return null;
+    return result.rows[0];
+  } catch (error) {
+    console.error("Failed to fetch company products:", error);
+    return null;
+  } finally {
+    revalidatePath("/database");
+  }
+}
+
+export async function getAllCompanyProductsList(): Promise<
+  ProductsHistoryItem[]
+> {
   try {
     const user = await getCurrentUser();
     if (!user) return [];
 
-    const query = `SELECT cp.id, name, date, email FROM companyProductList AS cp INNER JOIN companies AS c ON c.id=cp.company_id`;
+    const query = `SELECT cp.id, c.id as company_id, name, date, email, cp.list FROM companyProductList AS cp INNER JOIN companies AS c ON c.id=cp.company_id`;
 
     const result = await sql.query<ProductsHistoryItem>(query);
     return result.rows;
@@ -79,9 +114,11 @@ export async function addCompanyProductsList(
   }
 }
 
-export async function removeCompanyProductsList(id: string): Promise<string> {
+export async function removeCompanyProductsLists(
+  ids: string[],
+): Promise<string> {
   try {
-    const query = `DELETE FROM ${tableCompanyProductList} WHERE id='${id}' RETURNING *`;
+    const query = `DELETE FROM ${tableCompanyProductList} WHERE id IN (${ids.map((id) => `'${id}'`).join(", ")}) RETURNING *`;
     const result = await sql.query<ProductsHistoryItem>(query);
     if (result.rowCount == 0) return "-1";
 

@@ -26,10 +26,10 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   // const id = await databaseActions.addCompanyProducts(await request.json());
-  const { id }: { id: string } = await request.json();
-  console.log(id);
+  const { ids }: { ids: string[] } = await request.json();
+  console.log(ids);
 
-  const returnedId = await databaseActions.removeCompanyProductsList(id);
+  const returnedId = await databaseActions.removeCompanyProductsLists(ids);
 
   return Response.json({ id: returnedId });
 }

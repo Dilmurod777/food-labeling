@@ -1,7 +1,7 @@
 const { db } = require("@vercel/postgres");
 const bcrypt = require("bcrypt");
 
-async function updateProducts(client) {
+async function updateDatabase(client) {
   try {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
     // const updateTable = await client.sql`
@@ -9,15 +9,20 @@ async function updateProducts(client) {
     //         ALTER COLUMN role SET DEFAULT 2;
     // `;
 
-    const updateTable = await client.sql`
-      UPDATE users
-      SET ROLE = 0
-      WHERE EMAIL = 'thejrd@thefoodplanet.co.kr'
-    `;
+    // const updateTable = await client.sql`
+    //   UPDATE users
+    //   SET ROLE = 0
+    //   WHERE EMAIL = 'thejrd@thefoodplanet.co.kr'
+    // `;
 
     // const updateTable = await client.sql`
     //   ALTER TABLE companyProducts
     //   ADD certificate TEXT NOT NULL
+    // `;
+
+    // const updateTable = await client.sql`
+    //   ALTER TABLE companies
+    //   ADD note TEXT
     // `;
 
     console.log(`Updated table`);
@@ -34,7 +39,7 @@ async function updateProducts(client) {
 async function main() {
   const client = await db.connect();
 
-  await updateProducts(client);
+  await updateDatabase(client);
 
   await client.end();
 }
