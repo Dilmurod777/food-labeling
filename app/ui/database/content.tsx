@@ -27,7 +27,7 @@ import { Button } from "@/components/ui/button";
 interface TabData {
   id: string;
   name: string;
-  rows: GridRow<TextCell | NumberCell | HeaderCell>[];
+  rows: GridRow<TextCell | HeaderCell>[];
   columns: GridColumn[];
   updating: boolean;
 }
@@ -44,7 +44,7 @@ export default function Content({ productsHistory, todoListItems }: Props) {
   const [savingAll, setSavingAll] = useState(false);
   const router = useRouter();
 
-  const addTab = async (data: TabFileData, local: boolean) => {
+  const addTabHandler = async (data: TabFileData, local: boolean) => {
     let { columns, rows, name, date, id: fileId } = data;
 
     const existingTabs = Object.values(fileTabs).filter(
@@ -82,7 +82,7 @@ export default function Content({ productsHistory, todoListItems }: Props) {
     setCurrentTab(id);
   };
 
-  const updateColumns = (tabId: string, columnId: Id, width: number) => {
+  const updateColumnsHandler = (tabId: string, columnId: Id, width: number) => {
     const idx = fileTabs[tabId].columns.findIndex(
       (item) => item.columnId == columnId,
     );
@@ -103,7 +103,7 @@ export default function Content({ productsHistory, todoListItems }: Props) {
     });
   };
 
-  const updateCell = (changes: CellChange[]) => {
+  const updateCellHandler = (changes: CellChange[]) => {
     changes.forEach((change) => {
       const rowIdx = fileTabs[currentTab].rows.findIndex(
         (item) => item.rowId == change.rowId,
@@ -119,8 +119,8 @@ export default function Content({ productsHistory, todoListItems }: Props) {
 
       if (newCell.type == "text") {
         newCell.text = (change.newCell as TextCell).text;
-      } else if (newCell.type == "number") {
-        newCell.value = (change.newCell as NumberCell).value;
+      } else {
+        newCell.text = (change.previousCell as TextCell).text;
       }
 
       setFileTabs({
@@ -146,7 +146,7 @@ export default function Content({ productsHistory, todoListItems }: Props) {
     });
   };
 
-  const saveAll = async () => {
+  const saveAllHandler = async () => {
     if (currentTab == initialTab) return;
 
     setSavingAll(true);
@@ -168,12 +168,15 @@ export default function Content({ productsHistory, todoListItems }: Props) {
         ...fileTabs,
         [currentTab]: {
           ...fileTabs[currentTab],
-          rows,
-          columns,
+          rows: [...rows],
+          columns: [...columns],
         },
       });
+
+      router.refresh();
     }
 
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     setSavingAll(false);
   };
 
@@ -229,7 +232,7 @@ export default function Content({ productsHistory, todoListItems }: Props) {
           <TabsContent value={initialTab}>
             <ProductsHistory
               productsHistory={productsHistory}
-              openFile={addTab}
+              openFile={addTabHandler}
             />
           </TabsContent>
           {Object.keys(fileTabs).map((id) => (
@@ -239,15 +242,15 @@ export default function Content({ productsHistory, todoListItems }: Props) {
                   rows={fileTabs[id].rows}
                   columns={fileTabs[id].columns}
                   onColumnResized={(columnId, width) =>
-                    updateColumns(id, columnId, width)
+                    updateColumnsHandler(id, columnId, width)
                   }
-                  onCellsChanged={updateCell}
+                  onCellsChanged={updateCellHandler}
                 />
               </div>
 
               <Button
                 className={"mb-2 mt-4"}
-                onClick={saveAll}
+                onClick={saveAllHandler}
                 disabled={savingAll}
               >
                 Save

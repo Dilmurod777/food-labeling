@@ -144,14 +144,13 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
                 onClick={() => {
                   const {
                     rows,
                     columns,
                   }: {
-                    rows: GridRow<TextCell | NumberCell | HeaderCell>[];
+                    rows: GridRow<TextCell | HeaderCell>[];
                     columns: GridColumn[];
                   } = JSON.parse(item.list.replaceAll("`", '"'));
 
@@ -167,7 +166,14 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
                   );
                 }}
               >
-                Open
+                View Record
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  router.push(`/companies/${item.company_id}`);
+                }}
+              >
+                View Company
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
@@ -252,7 +258,7 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
         );
 
         const headers = nonNullData[headerIndex];
-        const headersRow: GridRow<TextCell | NumberCell | HeaderCell> = {
+        const headersRow: GridRow<TextCell | HeaderCell> = {
           rowId: "header",
           cells: headers.map((item) => ({
             type: "header",
@@ -270,11 +276,9 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
           resizable: true,
         }));
 
-        const rows: GridRow<TextCell | NumberCell | HeaderCell>[] = [
-          headersRow,
-        ];
+        const rows: GridRow<TextCell | HeaderCell>[] = [headersRow];
         for (let i = headerIndex + 1; i < nonNullData.length; i++) {
-          const row: GridRow<TextCell | NumberCell | HeaderCell> = {
+          const row: GridRow<TextCell | HeaderCell> = {
             rowId: i,
             cells: [],
           };
@@ -282,8 +286,7 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
             let value = nonNullData[i][j];
 
             if (typeof value == "number") {
-              value = Number(value.toFixed(2));
-              row.cells.push({ type: "number", value: value });
+              row.cells.push({ type: "text", text: value.toFixed(2) });
             } else {
               row.cells.push({
                 type: "text",

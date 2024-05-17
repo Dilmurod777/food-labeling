@@ -185,7 +185,7 @@ export interface TodoListItem {
 
 export interface TabFileData {
   id?: string;
-  rows: GridRow<TextCell | NumberCell | HeaderCell>[];
+  rows: GridRow<TextCell | HeaderCell>[];
   columns: GridColumn[];
   name: string;
   date: number;
