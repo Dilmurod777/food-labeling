@@ -50,9 +50,9 @@ export default function OcrIngredientsForm({
         let { words, image }: { words: Word[]; image: string } =
           await response.json();
 
-        if (image) {
-          setFileUploaded(ConvertBase64ToFile(image));
-        }
+        // if (image) {
+        //   setFileUploaded(ConvertBase64ToFile(image));
+        // }
 
         if (words != null && words.length > 0) {
           // let text = words.map((w) => w.text).join("###");

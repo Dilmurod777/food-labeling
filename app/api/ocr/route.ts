@@ -27,24 +27,25 @@ export async function POST(req: NextRequest) {
   });
 
   const data: PapagoOCRResponse = await response.json();
+  // console.dir(data, { depth: null });
 
-  const formData2 = new FormData();
-  formData2.append("source", "ko");
-  formData2.append("target", "en");
-  formData2.append("image", ConvertBase64ToFile(data.data.renderedImage));
+  // const formData2 = new FormData();
+  // formData2.append("source", "ko");
+  // formData2.append("target", "en");
+  // formData2.append("image", ConvertBase64ToFile(data.data.renderedImage));
+  //
+  // const response2 = await fetch(url, {
+  //   method: "POST",
+  //   headers: {
+  //     "X-NCP-APIGW-API-KEY-ID": clientID,
+  //     "X-NCP-APIGW-API-KEY": clientSecret,
+  //   },
+  //   body: formData2,
+  // });
 
-  const response2 = await fetch(url, {
-    method: "POST",
-    headers: {
-      "X-NCP-APIGW-API-KEY-ID": clientID,
-      "X-NCP-APIGW-API-KEY": clientSecret,
-    },
-    body: formData2,
-  });
+  // const data2: PapagoOCRResponse = await response2.json();
 
-  const data2: PapagoOCRResponse = await response2.json();
-
-  const words: Word[] = data2.data.blocks.reduce<Word[]>((result, b) => {
+  const words: Word[] = data.data.blocks.reduce<Word[]>((result, b) => {
     return result.concat(
       b.lines.reduce<Word[]>((result, l) => {
         return result.concat(
