@@ -1,7 +1,7 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useEffect, useState } from "react";
+import { createRef, Ref, useEffect, useState } from "react";
 import { ProductsHistory } from "@/app/ui/database/products-history";
 import {
   TabFileData,
@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import "handsontable/dist/handsontable.full.min.css";
 import Handsontable from "handsontable/base";
 import { registerAllModules } from "handsontable/registry";
-import { HotTable } from "@handsontable/react";
+import { HotTable, HotTableClass } from "@handsontable/react";
 import { Row } from "read-excel-file";
 import { HyperFormula } from "hyperformula";
 
@@ -25,6 +25,7 @@ interface TabData {
   name: string;
   rows: Row[];
   updating: boolean;
+  ref: Ref<HotTableClass>;
 }
 
 interface Props {
@@ -37,6 +38,7 @@ export default function Content({ productsHistory, todoListItems }: Props) {
   const initialTab = "products-history";
   const [currentTab, setCurrentTab] = useState(initialTab);
   const [savingAll, setSavingAll] = useState(false);
+  const [downloading, setDownloading] = useState(false);
   const router = useRouter();
 
   registerAllModules();
@@ -67,6 +69,7 @@ export default function Content({ productsHistory, todoListItems }: Props) {
           name: name,
           rows: rows,
           updating: false,
+          ref: createRef<HotTableClass>(),
         },
       });
 
@@ -109,6 +112,28 @@ export default function Content({ productsHistory, todoListItems }: Props) {
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setSavingAll(false);
+  };
+
+  const downloadFileHandler = () => {
+    const hotRef = fileTabs[currentTab].ref;
+    if (!hotRef) return;
+
+    // @ts-ignore
+    const hot = hotRef.current.hotInstance;
+
+    const exportPlugin = hot.getPlugin("exportFile");
+    exportPlugin.downloadFile("csv", {
+      bom: false,
+      columnDelimiter: ",",
+      columnHeaders: false,
+      exportHiddenColumns: false,
+      exportHiddenRows: false,
+      fileExtension: "csv",
+      filename: `${fileTabs[currentTab].name}-[YYYY]-[MM]-[DD]`,
+      mimeType: "text/csv",
+      rowDelimiter: "\r\n",
+      rowHeaders: true,
+    });
   };
 
   useEffect(() => {
@@ -174,6 +199,7 @@ export default function Content({ productsHistory, todoListItems }: Props) {
             <TabsContent value={id} key={id}>
               <div className={"h-full w-full flex-grow"}>
                 <HotTable
+                  ref={fileTabs[id].ref}
                   data={[...fileTabs[id].rows]}
                   rowHeaders={true}
                   colHeaders={true}
@@ -190,13 +216,19 @@ export default function Content({ productsHistory, todoListItems }: Props) {
                 />
               </div>
 
-              <Button
-                className={"mb-2 mt-4"}
-                onClick={saveAllHandler}
-                disabled={savingAll}
-              >
-                Save
-              </Button>
+              <div className={"mb-2 mt-4 flex w-full gap-2"}>
+                <Button onClick={saveAllHandler} disabled={savingAll}>
+                  Save
+                </Button>
+
+                <Button
+                  onClick={downloadFileHandler}
+                  disabled={downloading}
+                  className={"bg-main-green hover:bg-hover-main-green"}
+                >
+                  Download as CSV
+                </Button>
+              </div>
             </TabsContent>
           ))}
         </Tabs>
