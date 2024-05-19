@@ -206,6 +206,7 @@ export default function Content({ productsHistory, todoListItems }: Props) {
                   height="auto"
                   autoWrapRow={true}
                   autoWrapCol={true}
+                  contextMenu={true}
                   licenseKey="non-commercial-and-evaluation"
                   minRows={5}
                   minCols={5}
