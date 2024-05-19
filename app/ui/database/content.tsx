@@ -8,27 +8,22 @@ import {
   ProductsHistoryItem,
   TodoListItem,
 } from "@/app/lib/models";
-import {
-  ReactGrid,
-  Row as GridRow,
-  Column as GridColumn,
-  Id,
-  CellChange,
-  TextCell,
-  NumberCell,
-  HeaderCell,
-} from "@silevis/reactgrid";
 import TodoList from "@/app/ui/database/todolist";
 import { useRouter } from "next/navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { IoMdClose } from "react-icons/io";
 import { Button } from "@/components/ui/button";
+import "handsontable/dist/handsontable.full.min.css";
+import Handsontable from "handsontable/base";
+import { registerAllModules } from "handsontable/registry";
+import { HotTable } from "@handsontable/react";
+import { Row } from "read-excel-file";
+import { HyperFormula } from "hyperformula";
 
 interface TabData {
   id: string;
   name: string;
-  rows: GridRow<TextCell | HeaderCell>[];
-  columns: GridColumn[];
+  rows: Row[];
   updating: boolean;
 }
 
@@ -44,8 +39,10 @@ export default function Content({ productsHistory, todoListItems }: Props) {
   const [savingAll, setSavingAll] = useState(false);
   const router = useRouter();
 
+  registerAllModules();
+
   const addTabHandler = async (data: TabFileData, local: boolean) => {
-    let { columns, rows, name, date, id: fileId } = data;
+    let { rows, name, date, id: fileId } = data;
 
     const existingTabs = Object.values(fileTabs).filter(
       (item) => item.name == name,
@@ -69,7 +66,6 @@ export default function Content({ productsHistory, todoListItems }: Props) {
           id: id,
           name: name,
           rows: rows,
-          columns: columns,
           updating: false,
         },
       });
@@ -79,71 +75,8 @@ export default function Content({ productsHistory, todoListItems }: Props) {
       id = existingTabs[0].id;
     }
 
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     setCurrentTab(id);
-  };
-
-  const updateColumnsHandler = (tabId: string, columnId: Id, width: number) => {
-    const idx = fileTabs[tabId].columns.findIndex(
-      (item) => item.columnId == columnId,
-    );
-    const currentColumns = fileTabs[tabId].columns;
-    setFileTabs({
-      ...fileTabs,
-      [tabId]: {
-        ...fileTabs[tabId],
-        columns: [
-          ...currentColumns.slice(0, idx),
-          {
-            ...currentColumns[idx],
-            width,
-          },
-          ...currentColumns.slice(idx + 1),
-        ],
-      },
-    });
-  };
-
-  const updateCellHandler = (changes: CellChange[]) => {
-    changes.forEach((change) => {
-      const rowIdx = fileTabs[currentTab].rows.findIndex(
-        (item) => item.rowId == change.rowId,
-      );
-      const columnIdx = fileTabs[currentTab].columns.findIndex(
-        (item) => item.columnId == change.columnId,
-      );
-      const currentRows = fileTabs[currentTab].rows;
-
-      const newCell = {
-        ...currentRows[rowIdx].cells[columnIdx],
-      };
-
-      if (newCell.type == "text") {
-        newCell.text = (change.newCell as TextCell).text;
-      } else {
-        newCell.text = (change.previousCell as TextCell).text;
-      }
-
-      setFileTabs({
-        ...fileTabs,
-        [currentTab]: {
-          ...fileTabs[currentTab],
-          rows: [
-            ...currentRows.slice(0, rowIdx),
-            {
-              ...currentRows[rowIdx],
-              cells: [
-                ...currentRows[rowIdx].cells.slice(0, columnIdx),
-                {
-                  ...newCell,
-                },
-                ...currentRows[rowIdx].cells.slice(columnIdx + 1),
-              ],
-            },
-            ...currentRows.slice(rowIdx + 1),
-          ],
-        },
-      });
-    });
   };
 
   const saveAllHandler = async () => {
@@ -156,20 +89,18 @@ export default function Content({ productsHistory, todoListItems }: Props) {
       body: JSON.stringify({
         id: fileTabs[currentTab].id,
         rows: fileTabs[currentTab].rows,
-        columns: fileTabs[currentTab].columns,
       }),
     });
 
     const data: ProductsHistoryItem | null = await response.json();
 
     if (data) {
-      const { rows, columns } = JSON.parse(data.list);
+      const { rows } = JSON.parse(data.list);
       setFileTabs({
         ...fileTabs,
         [currentTab]: {
           ...fileTabs[currentTab],
           rows: [...rows],
-          columns: [...columns],
         },
       });
 
@@ -183,6 +114,10 @@ export default function Content({ productsHistory, todoListItems }: Props) {
   useEffect(() => {
     setFileTabs({});
   }, []);
+
+  const hyperformulaInstance = HyperFormula.buildEmpty({
+    licenseKey: "internal-use-in-handsontable",
+  });
 
   return (
     <div className={"flex h-full w-full flex-grow flex-col gap-2"}>
@@ -237,14 +172,21 @@ export default function Content({ productsHistory, todoListItems }: Props) {
           </TabsContent>
           {Object.keys(fileTabs).map((id) => (
             <TabsContent value={id} key={id}>
-              <div className={"h-full w-full flex-grow overflow-x-scroll"}>
-                <ReactGrid
-                  rows={fileTabs[id].rows}
-                  columns={fileTabs[id].columns}
-                  onColumnResized={(columnId, width) =>
-                    updateColumnsHandler(id, columnId, width)
-                  }
-                  onCellsChanged={updateCellHandler}
+              <div className={"h-full w-full flex-grow"}>
+                <HotTable
+                  data={[...fileTabs[id].rows]}
+                  rowHeaders={true}
+                  colHeaders={true}
+                  height="auto"
+                  autoWrapRow={true}
+                  autoWrapCol={true}
+                  licenseKey="non-commercial-and-evaluation"
+                  minRows={5}
+                  minCols={5}
+                  formulas={{
+                    engine: hyperformulaInstance,
+                    sheetName: "Sheet1",
+                  }}
                 />
               </div>
 

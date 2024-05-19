@@ -148,17 +148,14 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
                 onClick={() => {
                   const {
                     rows,
-                    columns,
                   }: {
-                    rows: GridRow<TextCell | HeaderCell>[];
-                    columns: GridColumn[];
+                    rows: Row[];
                   } = JSON.parse(item.list.replaceAll("`", '"'));
 
                   openFile(
                     {
                       id: item.id,
                       name: item.name,
-                      columns: columns,
                       rows: rows,
                       date: item.date,
                     },
@@ -252,55 +249,16 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
           (row) => row.findIndex((item) => item != null) != -1,
         );
 
+        console.log(data);
+
         const headerIndex = nonNullData.findIndex(
           (row) =>
             row[0] != null && row[0].toString().toLowerCase().startsWith("no"),
         );
 
-        const headers = nonNullData[headerIndex];
-        const headersRow: GridRow<TextCell | HeaderCell> = {
-          rowId: "header",
-          cells: headers.map((item) => ({
-            type: "header",
-            text: item ? item.toString() : "",
-          })),
-        };
-
-        const columns: GridColumn[] = headers.map((item) => ({
-          columnId: item ? item.toString() : "",
-          width: item
-            ? item.toString().toLowerCase().startsWith("no.")
-              ? 20
-              : 150
-            : 150,
-          resizable: true,
-        }));
-
-        const rows: GridRow<TextCell | HeaderCell>[] = [headersRow];
-        for (let i = headerIndex + 1; i < nonNullData.length; i++) {
-          const row: GridRow<TextCell | HeaderCell> = {
-            rowId: i,
-            cells: [],
-          };
-          for (let j = 0; j < headers.length; j++) {
-            let value = nonNullData[i][j];
-
-            if (typeof value == "number") {
-              row.cells.push({ type: "text", text: value.toFixed(2) });
-            } else {
-              row.cells.push({
-                type: "text",
-                text: value ? value.toString() : "",
-              });
-            }
-          }
-          rows.push(row);
-        }
-
         openFile(
           {
-            rows: rows,
-            columns: columns,
+            rows: nonNullData.slice(headerIndex),
             name: `${currentName}-${currentDate}-${uuidV4()}`,
             date: currentDate,
           },

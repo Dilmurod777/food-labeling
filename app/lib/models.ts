@@ -5,6 +5,7 @@ import {
   Row as GridRow,
   TextCell,
 } from "@silevis/reactgrid";
+import { Row } from "read-excel-file";
 
 export enum UserRole {
   Admin,
@@ -185,8 +186,7 @@ export interface TodoListItem {
 
 export interface TabFileData {
   id?: string;
-  rows: GridRow<TextCell | HeaderCell>[];
-  columns: GridColumn[];
+  rows: Row[];
   name: string;
   date: number;
 }
