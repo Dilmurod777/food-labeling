@@ -16,7 +16,6 @@ export async function POST(request: NextRequest) {
     data.date,
     JSON.stringify({
       rows: data.rows,
-      columns: data.columns,
     }),
   );
 
