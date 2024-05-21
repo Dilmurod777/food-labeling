@@ -11,3 +11,12 @@ export async function GET(request: NextRequest) {
 
   return Response.json(company);
 }
+
+export async function DELETE(request: NextRequest) {
+  // const id = await databaseActions.addCompanyProducts(await request.json());
+  const { ids }: { ids: string[] } = await request.json();
+
+  const returnedId = await databaseActions.removeCompanies(ids);
+
+  return Response.json({ id: returnedId });
+}

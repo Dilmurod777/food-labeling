@@ -1,45 +1,34 @@
 "use client";
 
-import * as React from "react";
+import { Company } from "@/app/lib/models";
+import { useState } from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
-  SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  SortingState,
   useReactTable,
+  VisibilityState,
 } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
-import "@silevis/reactgrid/styles.css";
-import { LiaAddressCardSolid } from "react-icons/lia";
-
-import { Button } from "@/components/ui/button";
+import * as React from "react";
+import { useRouter } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { TabFileData, ProductsHistoryItem } from "@/app/lib/models";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { MoreHorizontal } from "lucide-react";
 import readXlsxFile, { Row } from "read-excel-file";
-import { PiMicrosoftExcelLogo } from "react-icons/pi";
+import { v4 as uuidV4 } from "uuid";
 import {
   Dialog,
   DialogClose,
@@ -49,18 +38,28 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { PiMicrosoftExcelLogo } from "react-icons/pi";
+import { LiaAddressCardSolid } from "react-icons/lia";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { DatePicker } from "@/components/ui/date-picker";
-import { v4 as uuidV4 } from "uuid";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { IoSaveOutline } from "react-icons/io5";
+import { Textarea } from "@/components/ui/textarea";
+import { overflowText } from "@/app/lib/utilities";
+import Loading from "@/app/ui/loading";
 
 interface Props {
-  productsHistory: ProductsHistoryItem[];
-  openFile: (data: TabFileData, local: boolean) => void;
+  companies: Company[];
 }
 
-export function ProductsHistory({ productsHistory, openFile }: Props) {
+export default function Content({ companies }: Props) {
+  const [loading, setLoading] = useState(false);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -71,7 +70,7 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
   });
   const router = useRouter();
 
-  const columns: ColumnDef<ProductsHistoryItem>[] = [
+  const columns: ColumnDef<Company>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -101,7 +100,7 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
         const item = row.original;
         return (
           <Link
-            href={`/companies/${item.company_id}`}
+            href={`/companies/${item.id}`}
             className={"hover:text-main-orange"}
           >
             {row.getValue("name")}
@@ -112,16 +111,12 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
     {
       accessorKey: "email",
       header: "Email",
-      cell: ({ row }) => <div>{row.getValue("email")}</div>,
+      cell: ({ row }) => <div>{overflowText(row.getValue("email"), 30)}</div>,
     },
     {
-      accessorKey: "date",
-      header: "Last modified",
-      cell: ({ row }) => {
-        const date = new Date(0);
-        date.setUTCMilliseconds(row.getValue("date"));
-        return <div>{date.toDateString()}</div>;
-      },
+      accessorKey: "note",
+      header: "Note",
+      cell: ({ row }) => <div>{overflowText(row.getValue("note"), 50)}</div>,
     },
     {
       id: "actions",
@@ -140,28 +135,7 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
             <DropdownMenuContent align="end">
               <DropdownMenuItem
                 onClick={() => {
-                  const {
-                    rows,
-                  }: {
-                    rows: Row[];
-                  } = JSON.parse(item.list.replaceAll("`", '"'));
-
-                  openFile(
-                    {
-                      id: item.id,
-                      name: item.name,
-                      rows: rows,
-                      date: item.date,
-                    },
-                    true,
-                  );
-                }}
-              >
-                View Record
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => {
-                  router.push(`/companies/${item.company_id}`);
+                  router.push(`/companies/${item.id}`);
                 }}
               >
                 View Company
@@ -177,21 +151,31 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
               >
                 Copy email
               </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => navigator.clipboard.writeText(item.note)}
+              >
+                Copy note
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() => {
-                  fetch("/api/database/products", {
+                  setLoading(true);
+                  fetch("/api/database/companies", {
                     method: "DELETE",
                     body: JSON.stringify({
-                      ids: table.getIsSomePageRowsSelected()
-                        ? table
-                            .getSelectedRowModel()
-                            .rows.map((item) => item.original.id)
-                        : [item.id],
+                      ids:
+                        table.getSelectedRowModel().rows.length > 0
+                          ? table
+                              .getSelectedRowModel()
+                              .rows.map((item) => item.original.id)
+                          : [item.id],
                     }),
                   }).then(() => {
                     router.refresh();
                     table.resetRowSelection();
+                    setTimeout(() => {
+                      setLoading(false);
+                    }, 1500);
                   });
                 }}
               >
@@ -207,7 +191,7 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
   ];
 
   const table = useReactTable({
-    data: productsHistory,
+    data: companies,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -226,46 +210,21 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
       pagination: pagination,
     },
   });
-  const [uploading, setUploading] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [showAddDialog, setShowAddDialog] = useState(false);
-  const [currentName, setCurrentName] = useState("");
-  const [currentFile, setCurrentFile] = useState<File>();
-  const [currentDate, setCurrentDate] = useState<number>(Date.now());
+  const [currentCompany, setCurrentCompany] = useState<Company>({
+    name: "",
+    id: "",
+    email: "",
+    note: "",
+  });
 
-  const uploadFileHandler = () => {
-    setUploading(true);
-
-    try {
-      if (!currentFile) return;
-
-      readXlsxFile(currentFile, { trim: true }).then(function (data: Row[]) {
-        const nonNullData = data.filter(
-          (row) => row.findIndex((item) => item != null) != -1,
-        );
-
-        console.log(data);
-
-        const headerIndex = nonNullData.findIndex(
-          (row) =>
-            row[0] != null && row[0].toString().toLowerCase().startsWith("no"),
-        );
-
-        openFile(
-          {
-            rows: nonNullData.slice(headerIndex),
-            name: `${currentName}-${currentDate}-${uuidV4()}`,
-            date: currentDate,
-          },
-          false,
-        );
-      });
-    } finally {
-      setUploading(false);
-    }
+  const saveCompany = () => {
+    console.log(currentCompany);
   };
 
   return (
-    <div className="w-full">
+    <div className="relative h-full w-full flex-grow px-12 py-4">
       <Dialog open={showAddDialog} onOpenChange={(v) => setShowAddDialog(v)}>
         <div className="flex items-center gap-2 py-4">
           <Input
@@ -276,22 +235,12 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
             }
             className="max-w-sm"
           />
-          <DialogTrigger asChild>
-            <Button className={"flex gap-2"} type={"button"}>
-              <PiMicrosoftExcelLogo className={"text-xl"} />
-              <span>Add</span>
-            </Button>
-          </DialogTrigger>
-
-          <Button
-            className={"flex gap-2 bg-main-green hover:bg-main-green"}
-            type={"button"}
-            onClick={() => {
-              router.push("/companies/all");
-            }}
-          >
-            <span>Show all companies</span>
-          </Button>
+          {/*<DialogTrigger asChild>*/}
+          {/*  <Button className={"flex gap-2"} type={"button"}>*/}
+          {/*    <PiMicrosoftExcelLogo className={"text-xl"} />*/}
+          {/*    <span>Add</span>*/}
+          {/*  </Button>*/}
+          {/*</DialogTrigger>*/}
         </div>
         <div className="rounded-md border">
           <Table>
@@ -373,37 +322,51 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
               <DialogTitle>Add new Product List</DialogTitle>
             </DialogHeader>
             <div className={"flex flex-col gap-4"}>
-              <div className={"flex w-full items-center gap-2"}>
-                <Input
-                  className={"flex w-60 gap-2 focus-within:ring-offset-0"}
-                  type={"text"}
-                  autoFocus={false}
-                  defaultValue={currentName}
-                  onChange={(e) => setCurrentName(e.target.value.trim())}
-                />
-                <DatePicker
-                  initialDate={currentDate}
-                  updateDate={setCurrentDate}
-                />
-              </div>
               <Input
-                onChange={(e) => {
-                  if (e.target.files && e.target.files.length > 0) {
-                    setCurrentFile(e.target.files[0]);
-                  }
-                }}
-                className={"w-full"}
-                type={"file"}
+                className={"flex w-full gap-2 focus-within:ring-offset-0"}
+                type={"text"}
+                placeholder={"Enter company name"}
+                defaultValue={currentCompany?.name || ""}
+                onChange={(e) =>
+                  setCurrentCompany({
+                    ...currentCompany,
+                    name: e.target.value.trim(),
+                  })
+                }
               />
+              <Input
+                className={"flex w-full gap-2 focus-within:ring-offset-0"}
+                type={"email"}
+                placeholder={"Enter company email"}
+                defaultValue={currentCompany?.email || ""}
+                onChange={(e) =>
+                  setCurrentCompany({
+                    ...currentCompany,
+                    email: e.target.value.trim(),
+                  })
+                }
+              />
+              <Textarea
+                className={"flex w-60 gap-2 focus-within:ring-offset-0"}
+                placeholder={"Enter company name"}
+                defaultValue={currentCompany?.note || ""}
+                onChange={(e) =>
+                  setCurrentCompany({
+                    ...currentCompany,
+                    note: e.target.value.trim(),
+                  })
+                }
+              ></Textarea>
               <DialogClose asChild>
                 <Button
                   type={"submit"}
-                  onClick={() => uploadFileHandler()}
+                  onClick={() => saveCompany()}
                   disabled={
-                    uploading ||
-                    !currentFile ||
-                    currentDate == -1 ||
-                    currentName == ""
+                    saving ||
+                    currentCompany == null ||
+                    currentCompany.name == "" ||
+                    currentCompany.email == "" ||
+                    currentCompany.id == ""
                   }
                 >
                   Add
@@ -413,6 +376,15 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
           </DialogContent>
         </DialogPortal>
       </Dialog>
+      {loading && (
+        <div
+          className={
+            "absolute bottom-0 left-0 right-0 top-0 z-10 bg-main-gray/60"
+          }
+        >
+          <Loading />
+        </div>
+      )}
     </div>
   );
 }

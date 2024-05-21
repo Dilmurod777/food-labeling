@@ -3,6 +3,7 @@
 import {
   Company,
   CompanyProduct,
+  CompanyProductList,
   ProductsHistoryItem,
   TodoListItem,
 } from "@/app/lib/models";
@@ -13,6 +14,19 @@ import { revalidatePath } from "next/cache";
 const tableCompanies = "companies";
 const tableCompanyProductList = "companyProductList";
 const tableCompanyProducts = "companyProducts";
+
+export async function getAllCompanies(): Promise<Company[]> {
+  try {
+    let query = `SELECT * FROM ${tableCompanies} ORDER BY id DESC`;
+    let result = await sql.query<Company>(query);
+    if (result.rowCount == 0) return [];
+
+    return result.rows;
+  } catch (error) {
+    console.error("Failed to fetch company:", error);
+    return [];
+  }
+}
 
 export async function getCompany(id: string) {
   try {
@@ -60,6 +74,26 @@ export async function updateCompany(company: Company): Promise<Company | null> {
     return null;
   } finally {
     revalidatePath("/database");
+  }
+}
+
+export async function removeCompanies(ids: string[]): Promise<Company[]> {
+  try {
+    let joinedIds = ids.map((item) => `'${item}'`).join(", ");
+    console.log(joinedIds);
+    let companyListQuery = `DELETE FROM ${tableCompanyProductList} WHERE company_id IN (${joinedIds}) RETURNING *`;
+    let companyListResult =
+      await sql.query<CompanyProductList>(companyListQuery);
+    console.log(companyListResult.rowCount);
+
+    let companyQuery = `DELETE FROM ${tableCompanies} WHERE id IN (${joinedIds}) RETURNING *`;
+    let companyResult = await sql.query<Company>(companyQuery);
+    console.log(companyResult.rowCount);
+
+    return companyResult.rows;
+  } catch (error) {
+    console.error("Failed to fetch company:", error);
+    return [];
   }
 }
 

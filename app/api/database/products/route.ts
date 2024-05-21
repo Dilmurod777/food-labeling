@@ -40,7 +40,6 @@ export async function PUT(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   // const id = await databaseActions.addCompanyProducts(await request.json());
   const { ids }: { ids: string[] } = await request.json();
-  console.log(ids);
 
   const returnedId = await databaseActions.removeCompanyProductsLists(ids);
 

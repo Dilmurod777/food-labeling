@@ -8,6 +8,7 @@ import {
 } from "@/app/lib/constants/common-ingredients";
 
 export function overflowText(text: string, max_length = 30): string {
+  if (!text) return "";
   if (text.length <= max_length) return text;
 
   return text.substring(0, max_length) + "...";
