@@ -54,7 +54,7 @@ export default function TodoList({ items: initialItems }: Props) {
   return (
     <div
       className={
-        "flex h-full w-5/12 flex-col gap-4 rounded-md border border-main-orange p-2"
+        "border-home-orange flex h-full w-5/12 flex-col gap-4 rounded-md border p-2"
       }
     >
       <div className={"flex w-full items-center gap-2"}>
@@ -74,12 +74,12 @@ export default function TodoList({ items: initialItems }: Props) {
           type="text"
           placeholder="Enter new todo"
           ref={inputRef}
-          className={"focus-visible:ring-main-orange"}
+          className={"focus-visible:ring-home-orange"}
           maxLength={maxLength}
         />
         <Button
           onClick={addNewTodo}
-          className={"bg-main-orange hover:bg-hover-main-orange"}
+          className={"bg-home-orange hover:bg-hover-home-orange"}
           disabled={isAdding}
         >
           {isAdding ? (
@@ -114,7 +114,7 @@ export default function TodoList({ items: initialItems }: Props) {
         {items.map((item, i) => (
           <div
             key={`todo-${i}`}
-            className={`w-full cursor-pointer overflow-ellipsis border-l border-l-main-orange p-2 ${selectedItems.includes(item.id) ? "rounded-md bg-main-orange text-white hover:bg-hover-main-orange" : "bg-transparent text-black hover:bg-main-gray"}`}
+            className={`w-full cursor-pointer overflow-ellipsis border-l border-l-main-orange p-2 ${selectedItems.includes(item.id) ? "bg-home-orange hover:bg-hover-home-orange rounded-md text-white" : "hover:bg-home-gray bg-transparent text-black"}`}
             onClick={() => {
               if (selectedItems.includes(item.id)) {
                 setSelectedItems(selectedItems.filter((id) => id != item.id));

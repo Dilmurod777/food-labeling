@@ -12,6 +12,14 @@ export async function GET(request: NextRequest) {
   return Response.json(company);
 }
 
+export async function PUT(request: NextRequest) {
+  const { id }: { id: string } = await request.json();
+
+  const company = await databaseActions.getCompany(id);
+
+  return Response.json(company);
+}
+
 export async function DELETE(request: NextRequest) {
   // const id = await databaseActions.addCompanyProducts(await request.json());
   const { ids }: { ids: string[] } = await request.json();

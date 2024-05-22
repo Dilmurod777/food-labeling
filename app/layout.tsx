@@ -4,7 +4,6 @@ import "./globals.css";
 import React, { Suspense } from "react";
 import Header from "@/app/ui/header";
 import Footer from "@/app/ui/footer";
-import Loading from "@/app/ui/loading";
 
 const merriweather = Merriweather({
   weight: ["300", "400", "700", "900"],
@@ -31,9 +30,7 @@ export default async function RootLayout({
         style={{ lineHeight: "0.5" }}
       >
         <Header />
-        <main className={"flex flex-grow bg-[#fafafa]"}>
-          <Suspense fallback={<Loading />}>{children}</Suspense>
-        </main>
+        <main className={"flex flex-grow bg-[#fafafa]"}>{children}</main>
         <Footer />
       </body>
     </html>

@@ -65,7 +65,7 @@ export default function RecipeList({ items, user }: Props) {
           >
             <tr
               className={
-                "border-main-gray *:h-[45px] *:border-l-2 *:px-2 *:py-2 last:*:border-none"
+                "border-home-gray *:h-[45px] *:border-l-2 *:px-2 *:py-2 last:*:border-none"
               }
             >
               <th>Name</th>
@@ -84,13 +84,13 @@ export default function RecipeList({ items, user }: Props) {
                   <tr
                     key={`ingredient-row-${i}`}
                     className={
-                      "border-main-gray *:h-[45px] *:border-l-2 *:px-2 *:py-2 *:align-middle *:text-sm even:bg-main-gray"
+                      "border-home-gray even:bg-home-gray *:h-[45px] *:border-l-2 *:px-2 *:py-2 *:align-middle *:text-sm"
                     }
                   >
                     <td>
                       <Link
                         href={`/products/${item.id}/edit`}
-                        className={"text-main-blue hover:text-hover-main-blue"}
+                        className={"text-home-blue hover:text-hover-home-blue"}
                       >
                         {item.name}
                       </Link>

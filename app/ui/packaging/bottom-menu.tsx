@@ -144,7 +144,7 @@ export default function BottomMenu({
       return (
         <div key={`3d-menu-item-${index}`} className={"relative"}>
           <div
-            className={`peer flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main-gray p-1 ${activeMenuItemIndex == index ? "bg-hover-main-orange text-white" : "bg-white text-main-orange hover:bg-main-orange hover:text-white"}`}
+            className={`peer flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main-gray p-1 ${activeMenuItemIndex == index ? "bg-hover-home-orange text-white" : "text-home-orange hover:bg-home-orange bg-white hover:text-white"}`}
             onClick={() => menuItemHandle(index)}
           >
             <span className={"text-xl/none"}>{item.icon}</span>
@@ -158,7 +158,7 @@ export default function BottomMenu({
             >
               {item.text}
               {/*{item.hotkeys && (*/}
-              {/*  <span className={"text-sm capitalize text-main-gray"}>*/}
+              {/*  <span className={"text-sm capitalize text-home-gray"}>*/}
               {/*    {item.hotkeys[0]}*/}
               {/*  </span>*/}
               {/*)}*/}
@@ -193,7 +193,7 @@ export default function BottomMenu({
       >
         <div
           className={
-            "absolute bottom-2 left-1/2 flex -translate-x-1/2 items-center justify-center gap-2 rounded-md border border-main-orange bg-white px-2 py-1"
+            "border-home-orange absolute bottom-2 left-1/2 flex -translate-x-1/2 items-center justify-center gap-2 rounded-md border bg-white px-2 py-1"
           }
         >
           {menuItems.map(renderMenuItem)}

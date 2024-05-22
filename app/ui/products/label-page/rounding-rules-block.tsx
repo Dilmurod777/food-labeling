@@ -171,7 +171,7 @@ export const RoundingRulesBlock = ({ product }: Props) => {
           </div>
         </div>
 
-        <hr className={"border-main-gray"} />
+        <hr className={"border-home-gray"} />
 
         <div>
           <span className={"font-bold underline"}>Trans Fat</span>:&nbsp;
@@ -191,7 +191,7 @@ export const RoundingRulesBlock = ({ product }: Props) => {
           </div>
         </div>
 
-        <hr className={"border-main-gray"} />
+        <hr className={"border-home-gray"} />
 
         <div>
           <span className={"font-bold underline"}>Polyunsaturated Fat</span>
@@ -211,7 +211,7 @@ export const RoundingRulesBlock = ({ product }: Props) => {
           </div>
         </div>
 
-        <hr className={"border-main-gray"} />
+        <hr className={"border-home-gray"} />
 
         <div>
           <span className={"font-bold underline"}>Monounsaturated Fat</span>
@@ -231,7 +231,7 @@ export const RoundingRulesBlock = ({ product }: Props) => {
           </div>
         </div>
 
-        <hr className={"border-main-gray"} />
+        <hr className={"border-home-gray"} />
 
         <div>
           <span className={"font-bold underline"}>Cholesterol</span>:&nbsp;
@@ -265,7 +265,7 @@ export const RoundingRulesBlock = ({ product }: Props) => {
           </div>
         </div>
 
-        <hr className={"border-main-gray"} />
+        <hr className={"border-home-gray"} />
 
         <div>
           <span className={"font-bold underline"}>Sodium</span>:&nbsp;
@@ -302,7 +302,7 @@ export const RoundingRulesBlock = ({ product }: Props) => {
           </div>
         </div>
 
-        <hr className={"border-main-gray"} />
+        <hr className={"border-home-gray"} />
 
         <div>
           <span className={"font-bold underline"}>Carbohydrate</span>:&nbsp;
@@ -338,7 +338,7 @@ export const RoundingRulesBlock = ({ product }: Props) => {
           </div>
         </div>
 
-        <hr className={"border-main-gray"} />
+        <hr className={"border-home-gray"} />
 
         <div>
           <span className={"font-bold underline"}>Dietary Fiber</span>:&nbsp;
@@ -376,7 +376,7 @@ export const RoundingRulesBlock = ({ product }: Props) => {
           </div>
         </div>
 
-        <hr className={"border-main-gray"} />
+        <hr className={"border-home-gray"} />
 
         <div>
           <span className={"font-bold underline"}>Total Sugars</span>:&nbsp;
@@ -411,7 +411,7 @@ export const RoundingRulesBlock = ({ product }: Props) => {
           </div>
         </div>
 
-        <hr className={"border-main-gray"} />
+        <hr className={"border-home-gray"} />
 
         <div>
           <span className={"font-bold underline"}>Added Sugars</span>:&nbsp;
@@ -446,7 +446,7 @@ export const RoundingRulesBlock = ({ product }: Props) => {
           </div>
         </div>
 
-        <hr className={"border-main-gray"} />
+        <hr className={"border-home-gray"} />
 
         <div>
           <span className={"font-bold underline"}>Sugar Alcohol</span>:&nbsp;
@@ -464,7 +464,7 @@ export const RoundingRulesBlock = ({ product }: Props) => {
           </div>
         </div>
 
-        <hr className={"border-main-gray"} />
+        <hr className={"border-home-gray"} />
 
         <div>
           <span className={"font-bold underline"}>Protein</span>:&nbsp;
@@ -483,7 +483,7 @@ export const RoundingRulesBlock = ({ product }: Props) => {
           </div>
         </div>
 
-        <hr className={"border-main-gray"} />
+        <hr className={"border-home-gray"} />
 
         <div>
           <div className={"text-center font-normal"}>Vitamins & Minerals</div>
@@ -515,7 +515,7 @@ export const RoundingRulesBlock = ({ product }: Props) => {
 
             return (
               <div key={`rounding-block-${item}`}>
-                <hr className={"my-1 border-main-gray"} />
+                <hr className={"border-home-gray my-1"} />
                 <div key={`vitamin-mineral-block-${i}`}>
                   <span
                     className={"font-bold underline"}

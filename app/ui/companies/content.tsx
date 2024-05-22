@@ -101,7 +101,7 @@ export default function Content({ companies }: Props) {
         return (
           <Link
             href={`/companies/${item.id}`}
-            className={"hover:text-main-orange"}
+            className={"hover:text-home-orange"}
           >
             {row.getValue("name")}
           </Link>
@@ -219,8 +219,17 @@ export default function Content({ companies }: Props) {
     note: "",
   });
 
-  const saveCompany = () => {
-    console.log(currentCompany);
+  const saveCompany = async () => {
+    setSaving(true);
+
+    await fetch("/api/products/companies", {
+      method: currentCompany.id == "" ? "PUT" : "POST",
+      body: JSON.stringify({
+        ...currentCompany,
+      }),
+    });
+
+    setSaving(false);
   };
 
   return (
@@ -235,12 +244,11 @@ export default function Content({ companies }: Props) {
             }
             className="max-w-sm"
           />
-          {/*<DialogTrigger asChild>*/}
-          {/*  <Button className={"flex gap-2"} type={"button"}>*/}
-          {/*    <PiMicrosoftExcelLogo className={"text-xl"} />*/}
-          {/*    <span>Add</span>*/}
-          {/*  </Button>*/}
-          {/*</DialogTrigger>*/}
+          <DialogTrigger asChild>
+            <Button className={"flex gap-2"} type={"button"}>
+              <span>Add</span>
+            </Button>
+          </DialogTrigger>
         </div>
         <div className="rounded-md border">
           <Table>
@@ -317,9 +325,9 @@ export default function Content({ companies }: Props) {
           </div>
         </div>
         <DialogPortal>
-          <DialogContent className="flex h-auto max-h-[80%] w-auto max-w-[80%] flex-col gap-2">
+          <DialogContent className="flex h-auto max-h-[80%] w-auto max-w-[80%] flex-col gap-6">
             <DialogHeader className={"w-full"}>
-              <DialogTitle>Add new Product List</DialogTitle>
+              <DialogTitle>Add New Company</DialogTitle>
             </DialogHeader>
             <div className={"flex flex-col gap-4"}>
               <Input
@@ -347,8 +355,8 @@ export default function Content({ companies }: Props) {
                 }
               />
               <Textarea
-                className={"flex w-60 gap-2 focus-within:ring-offset-0"}
-                placeholder={"Enter company name"}
+                className={"flex w-96 gap-2 focus-within:ring-offset-0"}
+                placeholder={"Enter note"}
                 defaultValue={currentCompany?.note || ""}
                 onChange={(e) =>
                   setCurrentCompany({
@@ -365,8 +373,7 @@ export default function Content({ companies }: Props) {
                     saving ||
                     currentCompany == null ||
                     currentCompany.name == "" ||
-                    currentCompany.email == "" ||
-                    currentCompany.id == ""
+                    currentCompany.email == ""
                   }
                 >
                   Add
@@ -376,10 +383,10 @@ export default function Content({ companies }: Props) {
           </DialogContent>
         </DialogPortal>
       </Dialog>
-      {loading && (
+      {(loading || saving) && (
         <div
           className={
-            "absolute bottom-0 left-0 right-0 top-0 z-10 bg-main-gray/60"
+            "bg-home-gray/60 absolute bottom-0 left-0 right-0 top-0 z-10"
           }
         >
           <Loading />

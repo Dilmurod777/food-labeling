@@ -84,11 +84,9 @@ export async function removeCompanies(ids: string[]): Promise<Company[]> {
     let companyListQuery = `DELETE FROM ${tableCompanyProductList} WHERE company_id IN (${joinedIds}) RETURNING *`;
     let companyListResult =
       await sql.query<CompanyProductList>(companyListQuery);
-    console.log(companyListResult.rowCount);
 
     let companyQuery = `DELETE FROM ${tableCompanies} WHERE id IN (${joinedIds}) RETURNING *`;
     let companyResult = await sql.query<Company>(companyQuery);
-    console.log(companyResult.rowCount);
 
     return companyResult.rows;
   } catch (error) {
@@ -158,7 +156,7 @@ export async function removeCompanyProductsLists(
 
     return result.rows[0].id;
   } catch (error) {
-    console.error("Failed to fetch company products:", error);
+    console.error("Failed to remove company products:", error);
     return "-1";
   }
 }
