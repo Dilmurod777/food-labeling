@@ -102,7 +102,7 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
         return (
           <Link
             href={`/companies/${item.company_id}`}
-            className={"hover:text-home-orange"}
+            className={"hover:text-main-orange"}
           >
             {row.getValue("name")}
           </Link>
@@ -284,7 +284,7 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
           </DialogTrigger>
 
           <Button
-            className={"bg-home-green hover:bg-home-green flex gap-2"}
+            className={"flex gap-2 bg-main-green hover:bg-main-green"}
             type={"button"}
             onClick={() => {
               router.push("/companies/all");

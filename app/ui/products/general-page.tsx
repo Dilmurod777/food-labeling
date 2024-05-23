@@ -240,7 +240,7 @@ export default function GeneralPage({
                 type="text"
                 placeholder={"Enter ingredient name..."}
                 className={
-                  "border-home-gray placeholder:text-home-gray focus-within:border-home-orange w-full rounded-md border-2 px-2 py-2 pr-12 text-sm outline-none placeholder:text-sm"
+                  "w-full rounded-md border-2 border-main-gray px-2 py-2 pr-12 text-sm outline-none placeholder:text-sm placeholder:text-main-gray focus-within:border-main-orange"
                 }
                 onFocus={(e) => e.target.select()}
                 onKeyDown={(e) => {
@@ -267,7 +267,7 @@ export default function GeneralPage({
 
               <div
                 className={
-                  "bg-home-orange group absolute right-0 top-0 flex h-full w-10 cursor-pointer items-center justify-center rounded-r-md text-xl text-white"
+                  "group absolute right-0 top-0 flex h-full w-10 cursor-pointer items-center justify-center rounded-r-md bg-main-orange text-xl text-white"
                 }
                 onClick={translateIngredient}
               >
@@ -289,7 +289,7 @@ export default function GeneralPage({
                   <div
                     key={`suggestion-${i}`}
                     className={
-                      "border-home-orange text-home-orange hover:bg-home-orange w-full cursor-pointer rounded-md border bg-white px-2 py-0.5 text-xs hover:text-white"
+                      "w-full cursor-pointer rounded-md border border-main-orange bg-white px-2 py-0.5 text-xs text-main-orange hover:bg-main-orange hover:text-white"
                     }
                     onClick={() => {
                       if (!inputRef.current) return;
@@ -320,7 +320,7 @@ export default function GeneralPage({
                 <div
                   key={`item-${i}`}
                   className={
-                    "even:bg-home-gray group flex h-[50px] items-center gap-2 px-2 py-2"
+                    "group flex h-[50px] items-center gap-2 px-2 py-2 even:bg-main-gray"
                   }
                 >
                   <MdDelete
@@ -331,7 +331,7 @@ export default function GeneralPage({
                   />
                   <div
                     className={
-                      "border-home-orange hover:bg-home-orange flex h-full w-full cursor-pointer items-center rounded-r-md border-l-2 pl-2 leading-none hover:text-white"
+                      "flex h-full w-full cursor-pointer items-center rounded-r-md border-l-2 border-main-orange pl-2 leading-none hover:bg-main-orange hover:text-white"
                     }
                     onClick={() => selectIngredient(perPage * page + i)}
                   >

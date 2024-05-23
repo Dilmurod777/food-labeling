@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import * as databaseActions from "@/app/lib/actions-database";
-import { TabFileData } from "@/app/lib/models";
+import { Company, TabFileData } from "@/app/lib/models";
 
 export const dynamic = "force-dynamic"; // defaults to auto
 
@@ -13,9 +13,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-  const { id }: { id: string } = await request.json();
+  const data: Company = await request.json();
 
-  const company = await databaseActions.getCompany(id);
+  const company = await databaseActions.addCompany(data);
 
   return Response.json(company);
 }

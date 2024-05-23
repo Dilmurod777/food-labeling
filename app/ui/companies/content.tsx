@@ -53,6 +53,7 @@ import { DatePicker } from "@/components/ui/date-picker";
 import { Textarea } from "@/components/ui/textarea";
 import { overflowText } from "@/app/lib/utilities";
 import Loading from "@/app/ui/loading";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 interface Props {
   companies: Company[];
@@ -101,7 +102,7 @@ export default function Content({ companies }: Props) {
         return (
           <Link
             href={`/companies/${item.id}`}
-            className={"hover:text-home-orange"}
+            className={"hover:text-main-orange"}
           >
             {row.getValue("name")}
           </Link>
@@ -222,13 +223,20 @@ export default function Content({ companies }: Props) {
   const saveCompany = async () => {
     setSaving(true);
 
-    await fetch("/api/products/companies", {
+    await fetch("/api/database/companies", {
       method: currentCompany.id == "" ? "PUT" : "POST",
       body: JSON.stringify({
         ...currentCompany,
       }),
     });
 
+    router.refresh();
+    setCurrentCompany({
+      id: "",
+      name: "",
+      email: "",
+      note: "",
+    });
     setSaving(false);
   };
 
@@ -355,7 +363,9 @@ export default function Content({ companies }: Props) {
                 }
               />
               <Textarea
-                className={"flex w-96 gap-2 focus-within:ring-offset-0"}
+                className={
+                  "flex max-h-96 w-96 gap-2 focus-within:ring-offset-0"
+                }
                 placeholder={"Enter note"}
                 defaultValue={currentCompany?.note || ""}
                 onChange={(e) =>
@@ -386,7 +396,7 @@ export default function Content({ companies }: Props) {
       {(loading || saving) && (
         <div
           className={
-            "bg-home-gray/60 absolute bottom-0 left-0 right-0 top-0 z-10"
+            "absolute bottom-0 left-0 right-0 top-0 z-10 bg-main-gray/60"
           }
         >
           <Loading />

@@ -85,7 +85,7 @@ export default function Signup() {
                 I agree to the Foodpanel
                 <Link
                   href={"/"}
-                  className={"hover:text-hover-home-blue text-main-blue"}
+                  className={"text-main-blue hover:text-hover-main-blue"}
                 >
                   {" "}
                   Terms and Conditions
@@ -123,7 +123,7 @@ export default function Signup() {
           Already registered?
           <Link
             href={"/signup"}
-            className={"text-home-blue hover:text-hover-home-blue"}
+            className={"text-main-blue hover:text-hover-main-blue"}
           >
             Log In here.
           </Link>

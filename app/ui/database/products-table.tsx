@@ -369,7 +369,7 @@
 //           id="picture"
 //           type="file"
 //           className={
-//             "ml-2 max-w-xs cursor-pointer border border-home-orange hover:border-hover-home-orange"
+//             "ml-2 max-w-xs cursor-pointer border border-main-orange hover:border-hover-main-orange"
 //           }
 //           onChange={(e) => UploadFileHandler(e.target.files)}
 //         />
@@ -379,13 +379,13 @@
 //           onOpenChange={(value) => setShowFileModal(value)}
 //         >
 //           <DialogBody>
-//             <DialogContent className="max-w-screen flex h-[90%] w-[90%] flex-col gap-4 border border-home-orange pt-12">
+//             <DialogContent className="max-w-screen flex h-[90%] w-[90%] flex-col gap-4 border border-main-orange pt-12">
 //               <div className={"flex w-full items-center justify-between gap-2"}>
 //                 <Input
 //                   type="text"
 //                   placeholder="Company name"
 //                   required
-//                   className={"ring-home-orange"}
+//                   className={"ring-main-orange"}
 //                 />
 //                 <DatePicker />
 //               </div>
@@ -449,7 +449,7 @@
 //                   <div className={"flex w-full justify-center"}>
 //                     <svg
 //                       aria-hidden="true"
-//                       className="h-8 w-8 animate-spin fill-home-orange text-white"
+//                       className="h-8 w-8 animate-spin fill-main-orange text-white"
 //                       viewBox="0 0 100 101"
 //                       fill="none"
 //                       xmlns="http://www.w3.org/2000/svg"

@@ -167,7 +167,7 @@ export default function Content({ productsHistory, todoListItems }: Props) {
                   <TabsTrigger
                     value={id}
                     disabled={savingAll}
-                    className={`flex w-40 justify-between gap-2 border pl-2 pr-1 ${currentTab == id ? "border-home-orange" : "border-white"}`}
+                    className={`flex w-40 justify-between gap-2 border pl-2 pr-1 ${currentTab == id ? "border-main-orange" : "border-white"}`}
                   >
                     <span>
                       {fileTabs[id].updating
@@ -178,7 +178,7 @@ export default function Content({ productsHistory, todoListItems }: Props) {
                     </span>
                   </TabsTrigger>
                   <IoMdClose
-                    className={`absolute right-2 top-1/2 -translate-y-[50%] cursor-pointer text-xl ${currentTab == id ? "text-home-orange" : "text-white"}`}
+                    className={`absolute right-2 top-1/2 -translate-y-[50%] cursor-pointer text-xl ${currentTab == id ? "text-main-orange" : "text-white"}`}
                     onClick={() => {
                       if (currentTab == id) setCurrentTab(initialTab);
                       delete fileTabs[id];
@@ -225,7 +225,7 @@ export default function Content({ productsHistory, todoListItems }: Props) {
                 <Button
                   onClick={downloadFileHandler}
                   disabled={downloading}
-                  className={"bg-home-green hover:bg-hover-home-green"}
+                  className={"bg-main-green hover:bg-hover-main-green"}
                 >
                   Download as CSV
                 </Button>

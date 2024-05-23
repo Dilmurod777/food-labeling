@@ -505,7 +505,7 @@ export default function LabelPage({
                         placeholder={"Other (comma separated)"}
                         defaultValue={item.other}
                         className={
-                          "border-home-gray rounded-md border px-2 py-1 text-sm outline-none placeholder:text-xs"
+                          "rounded-md border border-main-gray px-2 py-1 text-sm outline-none placeholder:text-xs"
                         }
                         onFocus={(e) => e.target.select()}
                         onChange={(e) => {
@@ -553,7 +553,7 @@ export default function LabelPage({
                   placeholder={"Other (comma separated)"}
                   defaultValue={otherFacilityAllergens}
                   className={
-                    "border-home-gray rounded-md border px-2 py-1 text-sm outline-none placeholder:text-xs"
+                    "rounded-md border border-main-gray px-2 py-1 text-sm outline-none placeholder:text-xs"
                   }
                   onFocus={(e) => e.target.select()}
                   onChange={(e) => setOtherFacilityAllergens(e.target.value)}
@@ -609,7 +609,7 @@ export default function LabelPage({
                         placeholder={"Other (comma separated)"}
                         defaultValue={item.other}
                         className={
-                          "border-home-gray rounded-md border px-2 py-1 text-sm outline-none placeholder:text-xs"
+                          "rounded-md border border-main-gray px-2 py-1 text-sm outline-none placeholder:text-xs"
                         }
                         onFocus={(e) => e.target.select()}
                         onChange={(e) => {
@@ -632,7 +632,7 @@ export default function LabelPage({
                 name="brand"
                 id="brand"
                 className={
-                  "border-home-gray focus-within:border-home-orange h-[40px] w-[300px] rounded-md border p-2 text-sm outline-none placeholder:text-sm"
+                  "h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main-orange"
                 }
                 placeholder={"Product brand"}
                 defaultValue={brand}
@@ -651,7 +651,7 @@ export default function LabelPage({
                 name="best_before"
                 id="best_before"
                 className={
-                  "border-home-gray focus-within:border-home-orange h-[40px] w-[300px] rounded-md border p-2 text-sm outline-none placeholder:text-sm"
+                  "h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main-orange"
                 }
                 placeholder={"Printed on the Package"}
                 defaultValue={best_before}
@@ -670,7 +670,7 @@ export default function LabelPage({
                 name="company"
                 id="company"
                 className={
-                  "border-home-gray focus-within:border-home-orange h-[40px] w-[300px] rounded-md border p-2 text-sm outline-none placeholder:text-sm"
+                  "h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main-orange"
                 }
                 placeholder={"Brand owner"}
                 defaultValue={company}
@@ -689,7 +689,7 @@ export default function LabelPage({
                 name="manufacturer"
                 id="manufacturer"
                 className={
-                  "border-home-gray focus-within:border-home-orange h-[40px] w-[300px] rounded-md border p-2 text-sm outline-none placeholder:text-sm"
+                  "h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main-orange"
                 }
                 placeholder={"Manufacturer"}
                 defaultValue={manufacturer}
@@ -709,7 +709,7 @@ export default function LabelPage({
                 name="address"
                 id="address"
                 className={
-                  "border-home-gray focus-within:border-home-orange h-[40px] w-[300px] rounded-md border p-2 text-sm outline-none placeholder:text-sm"
+                  "h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main-orange"
                 }
                 placeholder={"123 Tasty Way, New York, NY 10036"}
                 defaultValue={address}
@@ -730,7 +730,7 @@ export default function LabelPage({
                   <div
                     key={`address-search-result-${i}`}
                     className={
-                      "border-home-gray hover:bg-home-orange z-10 flex w-8/12 cursor-pointer items-center gap-2 border border-b-0 bg-white px-2 py-2 text-xs font-bold text-black last:border-b hover:text-white"
+                      "z-10 flex w-8/12 cursor-pointer items-center gap-2 border border-b-0 border-main-gray bg-white px-2 py-2 text-xs font-bold text-black last:border-b hover:bg-main-orange hover:text-white"
                     }
                     onClick={() => {
                       setAddress(addr.address_name);
@@ -756,7 +756,7 @@ export default function LabelPage({
                 name="country"
                 id="country"
                 className={
-                  "border-home-gray focus-within:border-home-orange h-[40px] w-[300px] rounded-md border p-2 text-sm outline-none placeholder:text-sm"
+                  "h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main-orange"
                 }
                 placeholder={"South Korea"}
                 defaultValue={country}
@@ -778,7 +778,7 @@ export default function LabelPage({
                 name="prepare_instructions"
                 id="prepare_instructions"
                 className={
-                  "border-home-gray focus-within:border-home-orange min-h-[40px] w-[300px] rounded-md border p-2 text-sm outline-none placeholder:text-sm"
+                  "min-h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main-orange"
                 }
                 placeholder={"Prepare Instructions"}
                 defaultValue={prepareInstructions}
@@ -800,7 +800,7 @@ export default function LabelPage({
                 name="storage_instructions"
                 id="storage_instructions"
                 className={
-                  "border-home-gray focus-within:border-home-orange min-h-[40px] w-[300px] rounded-md border p-2 text-sm outline-none placeholder:text-sm"
+                  "min-h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main-orange"
                 }
                 placeholder={"Storage Instructions"}
                 defaultValue={storageInstructions}
@@ -819,7 +819,7 @@ export default function LabelPage({
                 name="comments"
                 id="comments"
                 className={
-                  "border-home-gray focus-within:border-home-orange min-h-[40px] w-[300px] rounded-md border p-2 text-sm outline-none placeholder:text-sm"
+                  "min-h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main-orange"
                 }
                 placeholder={"Comments"}
                 defaultValue={comments}
@@ -833,14 +833,14 @@ export default function LabelPage({
 
           <div
             className={
-              "border-home-gray mt-4 flex w-fit flex-col items-start gap-2 rounded-md border-[1px] bg-[#fafafa] px-2 pb-10 pt-2"
+              "mt-4 flex w-fit flex-col items-start gap-2 rounded-md border-[1px] border-main-gray bg-[#fafafa] px-2 pb-10 pt-2"
             }
           >
             <p className={"text-sm font-bold text-black"}>File Format</p>
 
             <select
               className={
-                "border-home-gray h-[50px] w-[300px] border-[1px] px-2 py-1 text-sm outline-none"
+                "h-[50px] w-[300px] border-[1px] border-main-gray px-2 py-1 text-sm outline-none"
               }
               ref={downloadTypeRef}
             >
@@ -850,7 +850,7 @@ export default function LabelPage({
 
             <div
               className={
-                "bg-home-green hover:bg-hover-home-green cursor-pointer self-end rounded-md px-6 py-4 text-white"
+                "cursor-pointer self-end rounded-md bg-main-green px-6 py-4 text-white hover:bg-hover-main-green"
               }
               onClick={downloadProduct}
             >

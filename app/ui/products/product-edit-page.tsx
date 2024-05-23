@@ -367,7 +367,7 @@ export default function ProductEditPage({ product, user }: Props) {
                 {i != steps.length - 1 && (
                   <div
                     className={
-                      "bg-home-gray text-home-gray flex h-[5px] w-[20px] items-center justify-center rounded-full border-2 border-main-gray"
+                      "flex h-[5px] w-[20px] items-center justify-center rounded-full border-2 border-main-gray bg-main-gray text-main-gray"
                     }
                   />
                 )}
@@ -379,9 +379,9 @@ export default function ProductEditPage({ product, user }: Props) {
         <div
           className={
             `flex cursor-pointer items-center rounded-full border-2 px-2 py-2 text-lg hover:border-main-orange hover:text-main-orange ` +
-            `${savingState == SavingState.NotSaved ? "border-home-orange text-home-orange " : ""}` +
-            `${savingState == SavingState.Saving ? "border-home-orange text-home-orange animate-pulse " : ""}` +
-            `${savingState == SavingState.Saved ? "border-home-gray text-home-gray" : ""}`
+            `${savingState == SavingState.NotSaved ? "border-main-orange text-main-orange " : ""}` +
+            `${savingState == SavingState.Saving ? "animate-pulse border-main-orange text-main-orange " : ""}` +
+            `${savingState == SavingState.Saved ? "border-main-gray text-main-gray" : ""}`
           }
           onClick={saveRecipeToDB}
         >

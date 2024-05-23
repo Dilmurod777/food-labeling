@@ -41,22 +41,27 @@ export async function getCompany(id: string) {
   }
 }
 
-export async function addCompany(name: string): Promise<Company | null> {
+export async function addCompany(data: Company): Promise<Company | null> {
   try {
+    let name = data.name ?? "";
+    let email = data.email ?? "";
+    let note = data.note ?? "";
+    if (name == "") return null;
+
     let query = `SELECT * FROM ${tableCompanies} WHERE name='${name}'`;
     let result = await sql.query<Company>(query);
     if (result.rowCount == 0) {
-      query = `INSERT INTO ${tableCompanies} (name, email, note) VALUES ('${name}', '', '') RETURNING *`;
+      query = `INSERT INTO ${tableCompanies} (name, email, note) VALUES ('${name}', '${email}', '${note}') RETURNING *`;
       result = await sql.query<Company>(query);
     }
 
     if (result.rowCount == 0) return null;
     return result.rows[0];
   } catch (error) {
-    console.error("Failed to fetch company products:", error);
+    console.error("Failed to add company products:", error);
     return null;
   } finally {
-    revalidatePath("/database");
+    revalidatePath("/companies/all", "page");
   }
 }
 
@@ -125,7 +130,12 @@ export async function addCompanyProductsList(
     const companyResult = await sql.query<Company>(companyQuery);
     let company: Company;
     if (companyResult.rowCount == 0) {
-      const createdCompany = await addCompany(name);
+      const createdCompany = await addCompany({
+        name: name,
+        email: "",
+        note: "",
+        id: "",
+      });
       if (createdCompany) {
         company = createdCompany;
       } else {

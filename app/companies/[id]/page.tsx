@@ -65,7 +65,7 @@ export default function Page() {
             placeholder="Enter name"
             value={company.name}
             maxLength={50}
-            className={"focus-visible:ring-home-orange"}
+            className={"focus-visible:ring-main-orange"}
             onChange={(e) =>
               setCompany({ ...company, name: e.target.value.trim() })
             }
@@ -77,7 +77,7 @@ export default function Page() {
             type="email"
             placeholder="Enter email"
             value={company.email}
-            className={"focus-visible:ring-home-orange"}
+            className={"focus-visible:ring-main-orange"}
             onChange={(e) =>
               setCompany({ ...company, email: e.target.value.trim() })
             }
@@ -88,7 +88,7 @@ export default function Page() {
           <Textarea
             placeholder="Enter note"
             value={company.note || ""}
-            className={"focus-visible:ring-home-orange h-36 max-h-48 min-h-32"}
+            className={"h-36 max-h-48 min-h-32 focus-visible:ring-main-orange"}
             onChange={(e) =>
               setCompany({ ...company, note: e.target.value.trim() })
             }
