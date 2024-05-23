@@ -8,11 +8,10 @@ export const dynamic = "force-dynamic"; // defaults to auto
 export async function POST(request: NextRequest) {
   // const id = await databaseActions.addCompanyProducts(await request.json());
   const data: TabFileData = await request.json();
-  const companyName = data.name.split("-")[0];
+  const companyId = data.name.split("__")[0];
 
-  await databaseActions.addCompany(companyName);
   await databaseActions.addCompanyProductsList(
-    companyName,
+    companyId,
     data.date,
     JSON.stringify({
       rows: data.rows,

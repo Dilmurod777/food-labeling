@@ -118,7 +118,7 @@ export async function getAllCompanyProductsList(): Promise<
 }
 
 export async function addCompanyProductsList(
-  name: string,
+  company_id: string,
   date: number,
   data: string,
 ): Promise<string> {
@@ -126,26 +126,7 @@ export async function addCompanyProductsList(
     const user = await getCurrentUser();
     if (!user) return "-1";
 
-    const companyQuery = `SELECT * FROM ${tableCompanies} WHERE name='${name}'`;
-    const companyResult = await sql.query<Company>(companyQuery);
-    let company: Company;
-    if (companyResult.rowCount == 0) {
-      const createdCompany = await addCompany({
-        name: name,
-        email: "",
-        note: "",
-        id: "",
-      });
-      if (createdCompany) {
-        company = createdCompany;
-      } else {
-        return "-1";
-      }
-    } else {
-      company = companyResult.rows[0];
-    }
-
-    const query = `INSERT INTO ${tableCompanyProductList} (company_id, date, list) VALUES ('${company.id}', '${date}', '${data.replaceAll('"', "`").replaceAll("'", "`")}') RETURNING *`;
+    const query = `INSERT INTO ${tableCompanyProductList} (company_id, date, list) VALUES ('${company_id}', '${date}', '${data.replaceAll('"', "`").replaceAll("'", "`")}') RETURNING *`;
     const result = await sql.query<ProductsHistoryItem>(query);
     if (result.rowCount == 0) return "-1";
 

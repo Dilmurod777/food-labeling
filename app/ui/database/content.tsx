@@ -7,6 +7,7 @@ import {
   TabFileData,
   ProductsHistoryItem,
   TodoListItem,
+  Company,
 } from "@/app/lib/models";
 import TodoList from "@/app/ui/database/todolist";
 import { useRouter } from "next/navigation";
@@ -29,11 +30,16 @@ interface TabData {
 }
 
 interface Props {
+  companies: Company[];
   productsHistory: ProductsHistoryItem[];
   todoListItems: TodoListItem[];
 }
 
-export default function Content({ productsHistory, todoListItems }: Props) {
+export default function Content({
+  productsHistory,
+  todoListItems,
+  companies,
+}: Props) {
   const [fileTabs, setFileTabs] = useState<{ [key: string]: TabData }>({});
   const initialTab = "products-history";
   const [currentTab, setCurrentTab] = useState(initialTab);
@@ -78,8 +84,8 @@ export default function Content({ productsHistory, todoListItems }: Props) {
       id = existingTabs[0].id;
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setCurrentTab(id);
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    // setCurrentTab(id);
   };
 
   const saveAllHandler = async () => {
@@ -110,8 +116,8 @@ export default function Content({ productsHistory, todoListItems }: Props) {
       router.refresh();
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setSavingAll(false);
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    // setSavingAll(false);
   };
 
   const downloadFileHandler = () => {
@@ -191,6 +197,7 @@ export default function Content({ productsHistory, todoListItems }: Props) {
           </ScrollArea>
           <TabsContent value={initialTab}>
             <ProductsHistory
+              companies={companies}
               productsHistory={productsHistory}
               openFile={addTabHandler}
             />

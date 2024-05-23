@@ -13,9 +13,8 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+import { Check, ChevronsUpDown, MoreHorizontal } from "lucide-react";
 import "@silevis/reactgrid/styles.css";
-import { LiaAddressCardSolid } from "react-icons/lia";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -36,7 +35,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { TabFileData, ProductsHistoryItem } from "@/app/lib/models";
+import { TabFileData, ProductsHistoryItem, Company } from "@/app/lib/models";
 import { useState } from "react";
 import readXlsxFile, { Row } from "read-excel-file";
 import { PiMicrosoftExcelLogo } from "react-icons/pi";
@@ -53,14 +52,31 @@ import { DatePicker } from "@/components/ui/date-picker";
 import { v4 as uuidV4 } from "uuid";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { IoSaveOutline } from "react-icons/io5";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 interface Props {
+  companies: Company[];
   productsHistory: ProductsHistoryItem[];
   openFile: (data: TabFileData, local: boolean) => void;
 }
 
-export function ProductsHistory({ productsHistory, openFile }: Props) {
+export function ProductsHistory({
+  companies,
+  productsHistory,
+  openFile,
+}: Props) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -228,11 +244,13 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
   });
   const [uploading, setUploading] = useState(false);
   const [showAddDialog, setShowAddDialog] = useState(false);
-  const [currentName, setCurrentName] = useState("");
+  const [currentCompany, setCurrentCompany] = useState<Company>();
   const [currentFile, setCurrentFile] = useState<File>();
   const [currentDate, setCurrentDate] = useState<number>(Date.now());
+  const [showCompanyPopup, setShowCompanyPopup] = useState(false);
 
   const uploadFileHandler = () => {
+    if (!currentCompany) return;
     setUploading(true);
 
     try {
@@ -243,8 +261,6 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
           (row) => row.findIndex((item) => item != null) != -1,
         );
 
-        console.log(data);
-
         const headerIndex = nonNullData.findIndex(
           (row) =>
             row[0] != null && row[0].toString().toLowerCase().startsWith("no"),
@@ -253,7 +269,7 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
         openFile(
           {
             rows: nonNullData.slice(headerIndex),
-            name: `${currentName}-${currentDate}-${uuidV4()}`,
+            name: `${currentCompany.id}__${currentDate}__${uuidV4()}`,
             date: currentDate,
           },
           false,
@@ -374,13 +390,53 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
             </DialogHeader>
             <div className={"flex flex-col gap-4"}>
               <div className={"flex w-full items-center gap-2"}>
-                <Input
-                  className={"flex w-60 gap-2 focus-within:ring-offset-0"}
-                  type={"text"}
-                  autoFocus={false}
-                  defaultValue={currentName}
-                  onChange={(e) => setCurrentName(e.target.value.trim())}
-                />
+                <Popover
+                  open={showCompanyPopup}
+                  onOpenChange={setShowCompanyPopup}
+                >
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={showCompanyPopup}
+                      className="w-[200px] justify-between"
+                    >
+                      {currentCompany
+                        ? companies.find(
+                            (company) => company.id === currentCompany.id,
+                          )?.name
+                        : "Select Company..."}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[200px] p-0">
+                    <Command>
+                      <CommandInput placeholder="Search Company..." />
+                      <CommandEmpty>No company found.</CommandEmpty>
+                      <CommandGroup>
+                        <CommandList>
+                          {companies.map((company) => (
+                            <CommandItem
+                              key={company.id}
+                              value={company.id}
+                              onSelect={(value) => {
+                                setCurrentCompany(
+                                  companies.find((c) => c.id == value),
+                                );
+                                setShowCompanyPopup(false);
+                              }}
+                            >
+                              <Check
+                                className={`mr-2 h-4 w-4 ${currentCompany?.id === company.id ? "opacity-100" : "opacity-0"}`}
+                              />
+                              {company.name}
+                            </CommandItem>
+                          ))}
+                        </CommandList>
+                      </CommandGroup>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
                 <DatePicker
                   initialDate={currentDate}
                   updateDate={setCurrentDate}
@@ -403,7 +459,7 @@ export function ProductsHistory({ productsHistory, openFile }: Props) {
                     uploading ||
                     !currentFile ||
                     currentDate == -1 ||
-                    currentName == ""
+                    !currentCompany
                   }
                 >
                   Add
