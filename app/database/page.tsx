@@ -11,13 +11,11 @@ export default async function Page() {
 
   return (
     <Suspense fallback={<Loading />}>
-      <div className={"flex flex-grow items-start gap-4 px-8 py-2"}>
-        <Content
-          productsHistory={productsHistory}
-          todoListItems={todoList}
-          companies={companies}
-        />
-      </div>
+      <Content
+        productsHistory={productsHistory}
+        todoListItems={todoList}
+        companies={companies}
+      />
     </Suspense>
   );
 }

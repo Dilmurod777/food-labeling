@@ -35,7 +35,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { TabFileData, ProductsHistoryItem, Company } from "@/app/lib/models";
+import {
+  TabFileData,
+  ExtendedCompanyProductList,
+  Company,
+} from "@/app/lib/models";
 import { useState } from "react";
 import readXlsxFile, { Row } from "read-excel-file";
 import { PiMicrosoftExcelLogo } from "react-icons/pi";
@@ -68,7 +72,7 @@ import {
 
 interface Props {
   companies: Company[];
-  productsHistory: ProductsHistoryItem[];
+  productsHistory: ExtendedCompanyProductList[];
   openFile: (data: TabFileData, local: boolean) => void;
 }
 
@@ -87,7 +91,7 @@ export function ProductsHistory({
   });
   const router = useRouter();
 
-  const columns: ColumnDef<ProductsHistoryItem>[] = [
+  const columns: ColumnDef<ExtendedCompanyProductList>[] = [
     {
       id: "select",
       header: ({ table }) => (

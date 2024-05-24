@@ -4,7 +4,7 @@ import {
   Company,
   CompanyProduct,
   CompanyProductList,
-  ProductsHistoryItem,
+  ExtendedCompanyProductList,
   TodoListItem,
 } from "@/app/lib/models";
 import { getCurrentUser } from "@/app/lib/actions-user";
@@ -100,16 +100,20 @@ export async function removeCompanies(ids: string[]): Promise<Company[]> {
   }
 }
 
-export async function getAllCompanyProductsList(): Promise<
-  ProductsHistoryItem[]
-> {
+export async function getAllCompanyProductsList(
+  id: string = "",
+): Promise<ExtendedCompanyProductList[]> {
   try {
     const user = await getCurrentUser();
     if (!user) return [];
 
-    const query = `SELECT cp.id, c.id as company_id, name, date, email, cp.list FROM companyProductList AS cp INNER JOIN companies AS c ON c.id=cp.company_id`;
+    let query = `SELECT cp.id, c.id as company_id, name, date, email, cp.list FROM companyProductList AS cp INNER JOIN companies AS c ON c.id=cp.company_id`;
 
-    const result = await sql.query<ProductsHistoryItem>(query);
+    if (id.trim() != "") {
+      query += ` WHERE c.id='${id}'`;
+    }
+
+    const result = await sql.query<ExtendedCompanyProductList>(query);
     return result.rows;
   } catch (error) {
     console.error("Failed to fetch company products:", error);
@@ -127,7 +131,7 @@ export async function addCompanyProductsList(
     if (!user) return "-1";
 
     const query = `INSERT INTO ${tableCompanyProductList} (company_id, date, list) VALUES ('${company_id}', '${date}', '${data.replaceAll('"', "`").replaceAll("'", "`")}') RETURNING *`;
-    const result = await sql.query<ProductsHistoryItem>(query);
+    const result = await sql.query<ExtendedCompanyProductList>(query);
     if (result.rowCount == 0) return "-1";
 
     return result.rows[0].id;
@@ -139,26 +143,26 @@ export async function addCompanyProductsList(
 
 export async function removeCompanyProductsLists(
   ids: string[],
-): Promise<string> {
+): Promise<string[]> {
   try {
     const query = `DELETE FROM ${tableCompanyProductList} WHERE id IN (${ids.map((id) => `'${id}'`).join(", ")}) RETURNING *`;
-    const result = await sql.query<ProductsHistoryItem>(query);
-    if (result.rowCount == 0) return "-1";
+    const result = await sql.query<ExtendedCompanyProductList>(query);
+    if (result.rowCount == 0) return [];
 
-    return result.rows[0].id;
+    return result.rows.map((item) => item.id);
   } catch (error) {
     console.error("Failed to remove company products:", error);
-    return "-1";
+    return [];
   }
 }
 
 export async function updateCompanyProductsList(
   id: string,
   list: string,
-): Promise<ProductsHistoryItem | null> {
+): Promise<ExtendedCompanyProductList | null> {
   try {
     const query = `UPDATE ${tableCompanyProductList} SET list='${list}' WHERE id='${id}' RETURNING *`;
-    const result = await sql.query<ProductsHistoryItem>(query);
+    const result = await sql.query<ExtendedCompanyProductList>(query);
     if (result.rowCount == 0) return null;
 
     revalidatePath("/database");

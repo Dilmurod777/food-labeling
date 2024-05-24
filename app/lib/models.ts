@@ -152,7 +152,7 @@ export interface CompanyProductList {
   list: CompanyProduct[];
 }
 
-export interface ProductsHistoryItem {
+export interface ExtendedCompanyProductList {
   id: string;
   company_id: string;
   name: string;

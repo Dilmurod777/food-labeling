@@ -5,7 +5,7 @@ import { createRef, Ref, useEffect, useState } from "react";
 import { ProductsHistory } from "@/app/ui/database/products-history";
 import {
   TabFileData,
-  ProductsHistoryItem,
+  ExtendedCompanyProductList,
   TodoListItem,
   Company,
 } from "@/app/lib/models";
@@ -20,6 +20,7 @@ import { registerAllModules } from "handsontable/registry";
 import { HotTable, HotTableClass } from "@handsontable/react";
 import { Row } from "read-excel-file";
 import { HyperFormula } from "hyperformula";
+import Loading from "@/app/ui/loading";
 
 interface TabData {
   id: string;
@@ -31,7 +32,7 @@ interface TabData {
 
 interface Props {
   companies: Company[];
-  productsHistory: ProductsHistoryItem[];
+  productsHistory: ExtendedCompanyProductList[];
   todoListItems: TodoListItem[];
 }
 
@@ -44,12 +45,15 @@ export default function Content({
   const initialTab = "products-history";
   const [currentTab, setCurrentTab] = useState(initialTab);
   const [savingAll, setSavingAll] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [downloading, setDownloading] = useState(false);
   const router = useRouter();
 
   registerAllModules();
 
   const addTabHandler = async (data: TabFileData, local: boolean) => {
+    setLoading(true);
+
     let { rows, name, date, id: fileId } = data;
 
     const existingTabs = Object.values(fileTabs).filter(
@@ -63,28 +67,29 @@ export default function Content({
           method: "POST",
           body: JSON.stringify(data),
         });
-        id = await response.json();
+        // id = await response.json();
       } else {
-        id = fileId;
+        // id = fileId;
       }
 
-      setFileTabs({
-        ...fileTabs,
-        [id]: {
-          id: id,
-          name: name,
-          rows: rows,
-          updating: false,
-          ref: createRef<HotTableClass>(),
-        },
-      });
+      // setFileTabs({
+      //   ...fileTabs,
+      //   [id]: {
+      //     id: id,
+      //     name: name,
+      //     rows: rows,
+      //     updating: false,
+      //     ref: createRef<HotTableClass>(),
+      //   },
+      // });
 
       router.refresh();
     } else {
       id = existingTabs[0].id;
     }
 
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setLoading(false);
     // setCurrentTab(id);
   };
 
@@ -101,7 +106,7 @@ export default function Content({
       }),
     });
 
-    const data: ProductsHistoryItem | null = await response.json();
+    const data: ExtendedCompanyProductList | null = await response.json();
 
     if (data) {
       const { rows } = JSON.parse(data.list);
@@ -151,8 +156,17 @@ export default function Content({
   });
 
   return (
-    <div className={"flex h-full w-full flex-grow flex-col gap-2"}>
-      <div className={"flex gap-2"}>
+    <div className={"relative flex h-full w-full flex-grow flex-col gap-2"}>
+      {loading && (
+        <div
+          className={
+            "absolute z-10 flex h-full w-full items-center justify-center bg-main-gray/60"
+          }
+        >
+          <Loading />
+        </div>
+      )}
+      <div className={"z-0 flex gap-2 px-8 py-2"}>
         <Tabs
           defaultValue={"products-history"}
           className="w-full"
