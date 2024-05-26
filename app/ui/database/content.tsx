@@ -21,6 +21,7 @@ import { HotTable, HotTableClass } from "@handsontable/react";
 import { Row } from "read-excel-file";
 import { HyperFormula } from "hyperformula";
 import Loading from "@/app/ui/loading";
+import * as React from "react";
 
 interface TabData {
   id: string;
@@ -67,21 +68,26 @@ export default function Content({
           method: "POST",
           body: JSON.stringify(data),
         });
-        // id = await response.json();
+        id = await response.json();
       } else {
-        // id = fileId;
+        id = fileId;
       }
 
-      // setFileTabs({
-      //   ...fileTabs,
-      //   [id]: {
-      //     id: id,
-      //     name: name,
-      //     rows: rows,
-      //     updating: false,
-      //     ref: createRef<HotTableClass>(),
-      //   },
-      // });
+      if (local) {
+        const d = new Date(0);
+        d.setUTCMilliseconds(date);
+
+        setFileTabs({
+          ...fileTabs,
+          [id]: {
+            id: id,
+            name: `${name} ${d.toDateString()}`,
+            rows: rows,
+            updating: false,
+            ref: createRef<HotTableClass>(),
+          },
+        });
+      }
 
       router.refresh();
     } else {
@@ -90,7 +96,10 @@ export default function Content({
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setLoading(false);
-    // setCurrentTab(id);
+
+    if (local) {
+      setCurrentTab(id);
+    }
   };
 
   const saveAllHandler = async () => {
