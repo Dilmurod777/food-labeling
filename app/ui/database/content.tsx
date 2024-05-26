@@ -1,7 +1,13 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { createRef, Ref, useEffect, useState } from "react";
+import {
+  createRef,
+  KeyboardEventHandler,
+  Ref,
+  useEffect,
+  useState,
+} from "react";
 import { ProductsHistory } from "@/app/ui/database/products-history";
 import {
   TabFileData,
@@ -15,13 +21,14 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { IoMdClose } from "react-icons/io";
 import { Button } from "@/components/ui/button";
 import "handsontable/dist/handsontable.full.min.css";
-import Handsontable from "handsontable/base";
 import { registerAllModules } from "handsontable/registry";
-import { HotTable, HotTableClass } from "@handsontable/react";
+import { HotColumn, HotTable, HotTableClass } from "@handsontable/react";
 import { Row } from "read-excel-file";
 import { HyperFormula } from "hyperformula";
 import Loading from "@/app/ui/loading";
 import * as React from "react";
+import { Input } from "@/components/ui/input";
+import { textRenderer } from "handsontable/renderers/textRenderer";
 
 interface TabData {
   id: string;
@@ -43,6 +50,7 @@ export default function Content({
   companies,
 }: Props) {
   const [fileTabs, setFileTabs] = useState<{ [key: string]: TabData }>({});
+  const formulaInputRef = createRef<HTMLInputElement>();
   const initialTab = "products-history";
   const [currentTab, setCurrentTab] = useState(initialTab);
   const [savingAll, setSavingAll] = useState(false);
@@ -130,8 +138,8 @@ export default function Content({
       router.refresh();
     }
 
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
-    // setSavingAll(false);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setSavingAll(false);
   };
 
   const downloadFileHandler = () => {
@@ -154,6 +162,28 @@ export default function Content({
       rowDelimiter: "\r\n",
       rowHeaders: true,
     });
+  };
+
+  const formulaKeyDownHandler = (keyCode: string) => {
+    if (!formulaInputRef.current) return;
+
+    if (keyCode == "Enter") {
+      const value = formulaInputRef.current.value;
+      const hotRef = fileTabs[currentTab].ref;
+      if (!hotRef) return;
+
+      // @ts-ignore
+      const hot: HotTableClass = hotRef.current.hotInstance;
+
+      const sheetId = hyperformulaInstance.getSheetId("Sheet1");
+      if (sheetId == null) return;
+
+      const calculatedFormula = hyperformulaInstance.calculateFormula(
+        value,
+        sheetId,
+      );
+      console.log(hot.state);
+    }
   };
 
   useEffect(() => {
@@ -227,7 +257,16 @@ export default function Content({
           </TabsContent>
           {Object.keys(fileTabs).map((id) => (
             <TabsContent value={id} key={id}>
-              <div className={"h-full w-full flex-grow"}>
+              <div className={"flex h-full w-full flex-grow flex-col"}>
+                {/*<div className={"flex h-12 w-full gap-2 bg-red-400 p-2"}>*/}
+                {/*  <Input*/}
+                {/*    ref={formulaInputRef}*/}
+                {/*    type={"text"}*/}
+                {/*    className={"h-full max-w-60"}*/}
+                {/*    placeholder={"Enter formula..."}*/}
+                {/*    onKeyDown={(e) => formulaKeyDownHandler(e.code)}*/}
+                {/*  />*/}
+                {/*</div>*/}
                 <HotTable
                   ref={fileTabs[id].ref}
                   data={[...fileTabs[id].rows]}
@@ -243,6 +282,35 @@ export default function Content({
                   formulas={{
                     engine: hyperformulaInstance,
                     sheetName: "Sheet1",
+                  }}
+                  autoColumnSize={{
+                    useHeaders: true,
+                    syncLimit: 100,
+                  }}
+                  renderer={(
+                    instance,
+                    td,
+                    row,
+                    column,
+                    prop,
+                    value,
+                    cellProperties,
+                  ) => {
+                    value = value ?? "";
+                    td.innerText = "";
+
+                    if (value.toString().startsWith("http")) {
+                      const img = document.createElement(
+                        "img",
+                      ) as HTMLImageElement;
+                      img.src = value;
+                      img.width = 100;
+                      td.appendChild(img);
+                    } else {
+                      td.innerText = value;
+                    }
+
+                    return td;
                   }}
                 />
               </div>
