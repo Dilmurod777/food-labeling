@@ -29,6 +29,8 @@ import Loading from "@/app/ui/loading";
 import * as React from "react";
 import { Input } from "@/components/ui/input";
 import { textRenderer } from "handsontable/renderers/textRenderer";
+import { ContextMenu } from "handsontable/plugins";
+import { Selection } from "handsontable/plugins/contextMenu";
 
 interface TabData {
   id: string;
@@ -64,6 +66,9 @@ export default function Content({
     setLoading(true);
 
     let { rows, name, date, id: fileId } = data;
+    // console.log(name, date, fileId, rows);
+    // setLoading(false);
+    // return;
 
     const existingTabs = Object.values(fileTabs).filter(
       (item) => item.name == name,
@@ -113,20 +118,26 @@ export default function Content({
   const saveAllHandler = async () => {
     if (currentTab == initialTab) return;
 
+    const hotRef = fileTabs[currentTab].ref;
+    if (!hotRef) return;
+
+    // @ts-ignore
+    const hot = hotRef.current.hotInstance;
+
     setSavingAll(true);
 
     const response = await fetch("/api/database/products", {
       method: "PUT",
       body: JSON.stringify({
         id: fileTabs[currentTab].id,
-        rows: fileTabs[currentTab].rows,
+        data: hot.getData(),
       }),
     });
 
     const data: ExtendedCompanyProductList | null = await response.json();
 
     if (data) {
-      const { rows } = JSON.parse(data.list);
+      const { data: rows } = JSON.parse(data.list);
       setFileTabs({
         ...fileTabs,
         [currentTab]: {
@@ -164,6 +175,42 @@ export default function Content({
     });
   };
 
+  const contextMenuClickHandler = (
+    key: string,
+    selection: Selection[],
+    clickEvent: MouseEvent,
+  ) => {
+    const hotRef = fileTabs[currentTab].ref;
+    if (!hotRef) return;
+
+    // @ts-ignore
+    const hot: HotTable = hotRef.current.hotInstance;
+
+    selection.forEach((item) => {
+      const row = item.start.row;
+      const col = item.start.col;
+
+      // @ts-ignore
+      const meta = hot.getCellMeta(row, col);
+
+      if (key == "styles:bold") {
+        // @ts-ignore
+        hot.setCellMeta(row, col, "bold", !meta.bold);
+      }
+      if (key == "styles:italic") {
+        // @ts-ignore
+        hot.setCellMeta(row, col, "italic", !meta.italic);
+      }
+      if (key == "styles:underline") {
+        // @ts-ignore
+        hot.setCellMeta(row, col, "underline", !meta.underline);
+      }
+    });
+
+    //@ts-ignore
+    hot.render();
+  };
+
   const formulaKeyDownHandler = (keyCode: string) => {
     if (!formulaInputRef.current) return;
 
@@ -182,7 +229,6 @@ export default function Content({
         value,
         sheetId,
       );
-      console.log(hot.state);
     }
   };
 
@@ -275,7 +321,6 @@ export default function Content({
                   height="auto"
                   autoWrapRow={true}
                   autoWrapCol={true}
-                  contextMenu={true}
                   licenseKey="non-commercial-and-evaluation"
                   minRows={5}
                   minCols={5}
@@ -286,6 +331,47 @@ export default function Content({
                   autoColumnSize={{
                     useHeaders: true,
                     syncLimit: 100,
+                  }}
+                  contextMenu={{
+                    callback(
+                      key: string,
+                      selection: Selection[],
+                      clickEvent: MouseEvent,
+                    ) {
+                      contextMenuClickHandler(key, selection, clickEvent);
+                    },
+                    items: {
+                      row_above: {},
+                      row_below: {},
+                      col_left: {},
+                      col_right: {},
+                      separator1: ContextMenu.SEPARATOR,
+                      remove_row: {},
+                      clear_column: {},
+                      separator2: ContextMenu.SEPARATOR,
+                      alignment: {},
+                      styles: {
+                        name: "Styles",
+                        submenu: {
+                          items: [
+                            {
+                              key: "styles:bold",
+                              name: "Bold",
+                            },
+                            {
+                              key: "styles:italic",
+                              name: "Italic",
+                            },
+                            {
+                              key: "styles:underline",
+                              name: "Underline",
+                            },
+                          ],
+                        },
+                      },
+                      separator3: ContextMenu.SEPARATOR,
+                      copy: {},
+                    },
                   }}
                   renderer={(
                     instance,
@@ -308,6 +394,22 @@ export default function Content({
                       td.appendChild(img);
                     } else {
                       td.innerText = value;
+                      if (cellProperties.className) {
+                        (cellProperties.className as string)
+                          .split(" ")
+                          .filter((c) => c.trim() != "")
+                          .forEach((c) => td.classList.toggle(c.trim()));
+                      }
+
+                      td.style.fontStyle = cellProperties.italic
+                        ? "italic"
+                        : "normal";
+                      td.style.fontWeight = cellProperties.bold
+                        ? "bold"
+                        : "normal";
+                      td.style.textDecoration = cellProperties.underline
+                        ? "underline"
+                        : "none";
                     }
 
                     return td;

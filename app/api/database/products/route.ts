@@ -22,15 +22,11 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-  const data: { id: string; rows: GridRow[]; columns: GridColumn[] } =
-    await request.json();
+  const data: { id: string; data: any } = await request.json();
 
   const updatedItem = await databaseActions.updateCompanyProductsList(
     data.id,
-    JSON.stringify({
-      rows: data.rows,
-      columns: data.columns,
-    }),
+    JSON.stringify(data),
   );
 
   return Response.json(updatedItem);

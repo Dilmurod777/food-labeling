@@ -160,11 +160,9 @@ export function ProductsHistory({
             <DropdownMenuContent align="end">
               <DropdownMenuItem
                 onClick={() => {
-                  const {
-                    rows,
-                  }: {
-                    rows: Row[];
-                  } = JSON.parse(item.list.replaceAll("`", '"'));
+                  const { data: rows } = JSON.parse(
+                    item.list.replaceAll("`", '"'),
+                  );
 
                   openFile(
                     {
