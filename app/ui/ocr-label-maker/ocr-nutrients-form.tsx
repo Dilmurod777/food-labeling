@@ -75,7 +75,7 @@ export default function OcrNutrientsForm({
 
           text = await translation.json();
           words = text.split("###").map((w, i) => {
-            words[i].text = w;
+            words[i].text = words[i].text == w ? w : `${words[i].text}/${w}`;
             return words[i];
           });
         }

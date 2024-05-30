@@ -27,7 +27,6 @@ export async function POST(req: NextRequest) {
   });
 
   const data: PapagoOCRResponse = await response.json();
-  // console.dir(data, { depth: null });
 
   // const formData2 = new FormData();
   // formData2.append("source", "ko");
@@ -42,8 +41,9 @@ export async function POST(req: NextRequest) {
   //   },
   //   body: formData2,
   // });
-
+  //
   // const data2: PapagoOCRResponse = await response2.json();
+  // console.dir(data.data.blocks, { depth: null });
 
   const words: Word[] = data.data.blocks.reduce<Word[]>((result, b) => {
     return result.concat(

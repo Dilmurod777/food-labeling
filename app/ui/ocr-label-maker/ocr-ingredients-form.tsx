@@ -6,7 +6,10 @@ import OCRExtractButton from "@/app/ui/ocr-label-maker/ocr-extract-button";
 import OCRImageViewer from "@/app/ui/ocr-label-maker/ocr-image-viewer";
 import OCRIngredientsList from "@/app/ui/ocr-label-maker/ocr-ingredients-list";
 import { Ingredient } from "@/app/lib/models";
-import { ConvertBase64ToFile } from "@/app/lib/utilities";
+import {
+  ConvertBase64ToFile,
+  convertOCRLangToLabelLang,
+} from "@/app/lib/utilities";
 
 interface Props {
   language: OCRLanguage;
@@ -55,24 +58,24 @@ export default function OcrIngredientsForm({
         // }
 
         if (words != null && words.length > 0) {
-          // let text = words.map((w) => w.text).join("###");
+          let text = words.map((w) => w.text).join("###");
 
-          // if (language != OCRLanguage.English) {
-          //   const translation = await fetch("/api/translate", {
-          //     method: "POST",
-          //     body: JSON.stringify({
-          //       text: text,
-          //       target: "en",
-          //       source: convertOCRLangToLabelLang(language).toString(),
-          //     }),
-          //   });
-          //
-          //   text = await translation.json();
-          //   words = text.split("###").map((w, i) => {
-          //     words[i].text = w;
-          //     return words[i];
-          //   });
-          // }
+          if (language != OCRLanguage.English) {
+            const translation = await fetch("/api/translate", {
+              method: "POST",
+              body: JSON.stringify({
+                text: text,
+                target: "en",
+                source: convertOCRLangToLabelLang(language).toString(),
+              }),
+            });
+
+            text = await translation.json();
+            words = text.split("###").map((w, i) => {
+              words[i].text = words[i].text == w ? w : `${words[i].text}/${w}`;
+              return words[i];
+            });
+          }
 
           setWordBoxes(words);
         }

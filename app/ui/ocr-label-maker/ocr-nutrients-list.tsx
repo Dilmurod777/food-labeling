@@ -29,7 +29,7 @@ export default function OCRNutrientsList({
           >
             <div className={"flex justify-between"}>
               <h3
-                className={`cursor-pointer text-sm font-bold ${selectedNutrient == i ? "bg-main-orange text-white" : "transparent"}`}
+                className={`text-sm font-bold ${selectedNutrient == i ? "bg-main-orange text-white" : "transparent"}`}
                 dangerouslySetInnerHTML={{
                   __html: title + `${unit ? ` (${unit})` : ""}`,
                 }}
