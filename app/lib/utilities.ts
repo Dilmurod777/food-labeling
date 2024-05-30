@@ -326,7 +326,7 @@ export function getFormattedFormInputTitle(
 }
 
 export function convertParamToTitle(param: string, short = false) {
-  let title = param;
+  let title: string;
   param = param.replaceAll("_", "-");
   if (param == "fat") {
     title = "Total Fat";
@@ -365,7 +365,7 @@ export function convertParamToTitle(param: string, short = false) {
   } else if (param == "vitamin-b12") {
     title = "Vitamin B<sub>12</sub>";
   } else {
-    title = capitalize(param.replace("-", " "), " ");
+    title = capitalize(param.replaceAll("-", " "), " ");
   }
 
   return title;
