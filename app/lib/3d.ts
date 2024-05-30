@@ -21,6 +21,7 @@ export interface Model {
   step: number;
   totalSteps: number;
   description: string;
+  badges: string[];
 }
 
 export enum ModelType {
@@ -93,6 +94,7 @@ export const DefaultModelItems: Model[] = [
     totalSteps: 15,
     description:
       "This high-quality packaging is ideal for those seeking to safely and attractively package their products, making it perfect for courier delivery.",
+    badges: ["cardboard", "custom size"],
   },
   {
     type: ModelType.Loaded,
@@ -104,5 +106,6 @@ export const DefaultModelItems: Model[] = [
     totalSteps: 0,
     description:
       "This premium chip packaging is perfect for those who want to keep their chips fresh and appealing, ensuring safe and secure delivery.",
+    badges: ["polymer", "custom size"],
   },
 ];

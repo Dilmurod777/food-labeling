@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { FaInfo } from "react-icons/fa";
 import { CiCircleInfo } from "react-icons/ci";
 import { overflowText } from "@/app/lib/utilities";
+import { Badge } from "@/components/ui/badge";
 
 export default async function Page() {
   const models = await new Promise<Model[]>((resolve) => {
@@ -37,6 +38,20 @@ export default async function Page() {
         <Button className={"bg-main-orange hover:bg-hover-main-orange"}>
           Select
         </Button>
+
+        {/*{model.badges.length > 0 && (*/}
+        {/*  <div className={"absolute left-0 top-0 flex w-20 flex-wrap"}>*/}
+        {/*    {model.badges.slice(0, 3).map((badge) => (*/}
+        {/*      <Badge*/}
+        {/*        key={`${model.modelPath}-${model.imgPath}-badge-${badge}`}*/}
+        {/*        className={"text-xs/none"}*/}
+        {/*      >*/}
+        {/*        {badge}*/}
+        {/*      </Badge>*/}
+        {/*    ))}*/}
+        {/*  </div>*/}
+        {/*)}*/}
+
         {model.description != "" && (
           <>
             <CiCircleInfo
