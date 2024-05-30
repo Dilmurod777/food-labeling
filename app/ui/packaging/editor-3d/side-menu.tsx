@@ -3,7 +3,12 @@ import { PiShapesFill } from "react-icons/pi";
 import { GiCubes } from "react-icons/gi";
 import { FaLightbulb } from "react-icons/fa";
 import { ReactNode, useEffect, useState } from "react";
-import { ModelType, RandomColors } from "@/app/lib/3d";
+import {
+  Model,
+  DefaultModelItems,
+  ModelType,
+  RandomColors,
+} from "@/app/lib/3d";
 import { useGLTF } from "@react-three/drei";
 import Image from "next/image";
 
@@ -11,17 +16,7 @@ interface MenuItem {
   type: "block" | "divider";
   icon?: ReactNode;
   text?: string;
-  items?: MenuSubItem[];
-}
-
-interface MenuSubItem {
-  imgPath: string;
-  text: string;
-  modelPath: string;
-  type: ModelType;
-  animatable: boolean;
-  step: number;
-  totalSteps: number;
+  items?: Model[];
 }
 
 interface Props {
@@ -46,26 +41,7 @@ export default function SideMenu({ addModel }: Props) {
       type: "block",
       icon: <GiCubes />,
       text: "Models",
-      items: [
-        {
-          type: ModelType.Generated,
-          modelPath: "default-package",
-          text: "Default Package",
-          imgPath: "default-package.png",
-          animatable: true,
-          step: 0,
-          totalSteps: 15,
-        },
-        {
-          type: ModelType.Loaded,
-          modelPath: "chips-package.glb",
-          text: "Chips Package",
-          imgPath: "chips-package.png",
-          animatable: false,
-          step: 0,
-          totalSteps: 0,
-        },
-      ],
+      items: [...DefaultModelItems],
     },
     {
       type: "block",
