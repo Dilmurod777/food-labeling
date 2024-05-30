@@ -8,15 +8,15 @@ import {
   SoftShadows,
   useTexture,
 } from "@react-three/drei";
-import Content from "@/app/ui/packaging/content";
+import Content from "@/app/ui/packaging/editor-3d/content";
 import { useEffect, useRef, useState } from "react";
-import SideMenu from "@/app/ui/packaging/side-menu";
-import BottomMenu from "@/app/ui/packaging/bottom-menu";
+import SideMenu from "@/app/ui/packaging/editor-3d/side-menu";
+import BottomMenu from "@/app/ui/packaging/editor-3d/bottom-menu";
 import { Model, ModelType, RestrictedKeyCodes, Tools } from "@/app/lib/3d";
 import { v4 as uuidV4 } from "uuid";
 import { Texture } from "three";
 
-export default function View3D() {
+export default function View() {
   const [currentTool, setCurrentTool] = useState<Tools>(Tools.Select);
   const [models, setModels] = useState<Model[]>([]);
   const [texture, setTexture] = useState<Texture>();

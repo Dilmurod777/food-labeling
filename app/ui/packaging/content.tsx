@@ -1,164 +1,104 @@
-import { Ref, useEffect, useMemo, useRef, useState } from "react";
-import Ground from "@/app/ui/packaging/ground";
-import DefaultPackage from "@/app/ui/packaging/models/default-package";
-import {
-  KeyboardControls,
-  KeyboardControlsEntry,
-  PivotControls,
-  useFBX,
-  useGLTF,
-  useTexture,
-} from "@react-three/drei";
-import {
-  AnimationKeyMap,
-  Keymaps,
-  Model,
-  ModelType,
-  Tools,
-} from "@/app/lib/3d";
-import { MeshStandardMaterial, Object3D, Texture } from "three";
+"use client";
 
-interface Props {
-  models: Model[];
-  currentModelIndex: number;
-  setCurrentModelIndex: (i: number) => void;
-  currentTool: Tools;
-  updateStep: (s: number) => void;
-}
+import AllPackagesImg from "@/public/images/packaging/all.png";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
-interface CurrentModel {
-  index: number;
-  model: Object3D;
-}
+import { LuPackage, LuPackageCheck } from "react-icons/lu";
+import { RxDimensions } from "react-icons/rx";
+import { MdOutlineDownloading } from "react-icons/md";
+import { TbLayoutBoard } from "react-icons/tb";
 
-export default function Content({
-  models,
-  currentModelIndex,
-  setCurrentModelIndex,
-  currentTool,
-  updateStep,
-}: Props) {
-  const [currentModel, setCurrentModel] = useState<CurrentModel | null>();
-  const texture = useTexture("/uploads/image1.jpg");
-  const [animationValue, setAnimationValue] = useState(0);
-
-  const keyMap = useMemo<KeyboardControlsEntry[]>(
-    () => [
-      {
-        name: AnimationKeyMap.open,
-        keys: ["ArrowRight"],
-      },
-      {
-        name: AnimationKeyMap.close,
-        keys: ["ArrowLeft"],
-      },
-      {
-        name: Keymaps.escape,
-        keys: ["Escape"],
-      },
-    ],
-    [],
-  );
-
-  const keyboardOnChange = (name: string, pressed: boolean) => {
-    if (!pressed) return;
-
-    switch (name) {
-      // case AnimationKeyMap.open:
-      //   updateStep(Math.min(step + 1, totalSteps));
-      //   break;
-      // case AnimationKeyMap.close:
-      //   updateStep(Math.min(step - 1, 0));
-      //   break;
-      case Keymaps.escape:
-        setCurrentModel(null);
-        setCurrentModelIndex(-1);
-        break;
-    }
-  };
-
-  const LoadGLTF = (path: string) => {
-    const { nodes, materials } = useGLTF(path);
-    return (
-      <group dispose={null} position={[0, 0, 0]}>
-        <mesh
-          //@ts-ignore
-          geometry={nodes.Dorrito001_Lays_0.geometry}
-          // material={materials.Lays}
-          scale={0.05}
-        />
-        <meshBasicMaterial map={texture} />
-      </group>
-    );
-  };
-
-  const GetModelNode = (model: Model) => {
-    switch (model.type) {
-      case ModelType.Generated:
-        switch (model.path) {
-          case "default-package":
-            return (
-              <DefaultPackage
-                step={
-                  currentModelIndex >= 0 ? models[currentModelIndex].step : 0
-                }
-                totalSteps={
-                  currentModelIndex >= 0
-                    ? models[currentModelIndex].totalSteps
-                    : 15
-                }
-              />
-            );
-        }
-        break;
-      case ModelType.Loaded: {
-        const extension = model.path.split(".").pop();
-        switch (extension) {
-          case "glb":
-          case "gltf":
-            return LoadGLTF(`/models/${model.path}`);
-        }
-        return null;
-      }
-    }
-
-    return null;
-  };
-
-  const GetModel = (model: Model, index: number) => {
-    const active = index == currentModel?.index && currentTool != Tools.Hand;
-
-    return (
-      <PivotControls
-        activeAxes={[active, active, active]}
-        key={`model-${model.name}`}
-        anchor={[0, 0, 0]}
-        depthTest={false}
-        disableSliders={true}
-      >
-        <group
-          name={model.name}
-          onClick={(e) => {
-            setCurrentModel({
-              index,
-              model: e.object,
-            });
-
-            setCurrentModelIndex(index);
-          }}
-        >
-          {GetModelNode(model)}
-        </group>
-      </PivotControls>
-    );
-  };
+export default function Content() {
+  const router = useRouter();
 
   return (
-    <group position-y={-1}>
-      <Ground />
-      <KeyboardControls map={keyMap} onChange={keyboardOnChange}>
-        {models.map(GetModel)}
-      </KeyboardControls>
-    </group>
+    <div className={"flex h-full w-full flex-grow flex-col"}>
+      <div
+        className={
+          "flex h-[700px] w-full items-center justify-center gap-2 bg-white"
+        }
+      >
+        <div className={"flex w-96 flex-col items-center gap-8 text-center"}>
+          <h1 className={"text-5xl/none font-bold"}>
+            Fast and Easy Package Creation!
+          </h1>
+          <p className={"text-xl/none font-normal"}>
+            Design your own package effortlessly with a real-time and free 3D
+            editor — no waiting required!
+          </p>
+
+          <Button
+            onClick={() => router.push("/packaging/models")}
+            className={"w-fit bg-main-orange hover:bg-hover-main-orange"}
+          >
+            Get Started
+          </Button>
+        </div>
+
+        <Image src={AllPackagesImg} alt={"All Packages"} width={600} />
+      </div>
+
+      <div
+        className={
+          "flex w-full flex-col items-center justify-center gap-12 bg-main-orange px-12 pb-16 pt-24"
+        }
+      >
+        <div className={"flex items-start justify-center gap-8"}>
+          <div
+            className={"flex w-2/12 flex-col items-center gap-5 text-center"}
+          >
+            <LuPackageCheck className={"text-8xl text-white"} />
+            <h1 className={"text-4xl/none font-bold"}>Step 1.</h1>
+            <p className={"text-xl/none font-bold"}>Select package type</p>
+            <p className={"text-sm/none"}>
+              Choose a package that suits your product and intended use.
+            </p>
+          </div>
+
+          <div
+            className={"flex w-2/12 flex-col items-center gap-5 text-center"}
+          >
+            <RxDimensions className={"z-10 text-8xl text-white"} />
+            <h1 className={"text-4xl/none font-bold"}>Step 2.</h1>
+            <p className={"text-xl/none font-bold"}>Select size and quantity</p>
+            <p className={"text-sm/none"}>
+              Determine the box size and order quantity appropriate for the
+              product size.
+            </p>
+          </div>
+
+          <div
+            className={"flex w-2/12 flex-col items-center gap-5 text-center"}
+          >
+            <TbLayoutBoard className={"z-10 text-8xl text-white"} />
+            <h1 className={"text-4xl/none font-bold"}>Step 3.</h1>
+            <p className={"text-xl/none font-bold"}>Design with the editor</p>
+            <p className={"text-sm/none"}>
+              Check your design in real time with 3D preview
+            </p>
+          </div>
+
+          <div
+            className={"flex w-2/12 flex-col items-center gap-5 text-center"}
+          >
+            <MdOutlineDownloading className={"z-10 text-8xl text-white"} />
+            <h1 className={"text-4xl/none font-bold"}>Step 4.</h1>
+            <p className={"text-xl/none font-bold"}>Export</p>
+            <p className={"text-sm/none"}>
+              Export your custom package as image or 3D model
+            </p>
+          </div>
+        </div>
+
+        <Button
+          onClick={() => router.push("/packaging/models")}
+          className={"w-fit bg-white text-main-orange hover:bg-gray-100"}
+        >
+          See all packages
+        </Button>
+      </div>
+    </div>
   );
 }

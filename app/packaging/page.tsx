@@ -1,6 +1,7 @@
 import { getCurrentUser } from "@/app/lib/actions-user";
 import { redirect } from "next/navigation";
-import View3D from "@/app/ui/packaging/view-3d";
+import View from "@/app/ui/packaging/editor-3d/view";
+import Content from "@/app/ui/packaging/content";
 
 export default async function Packaging() {
   const user = await getCurrentUser();
@@ -8,5 +9,5 @@ export default async function Packaging() {
     redirect("/login");
   }
 
-  return <View3D />;
+  return <Content />;
 }
