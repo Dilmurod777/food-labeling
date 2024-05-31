@@ -95,7 +95,7 @@ export default function Content({
   const GetModelNode = (model: Model) => {
     switch (model.type) {
       case ModelType.Generated:
-        switch (model.path) {
+        switch (model.modelPath) {
           case "default-package":
             return (
               <DefaultPackage
@@ -112,11 +112,11 @@ export default function Content({
         }
         break;
       case ModelType.Loaded: {
-        const extension = model.path.split(".").pop();
+        const extension = model.modelPath.split(".").pop();
         switch (extension) {
           case "glb":
           case "gltf":
-            return LoadGLTF(`/models/${model.path}`);
+            return LoadGLTF(`/models/${model.modelPath}`);
         }
         return null;
       }
@@ -131,13 +131,13 @@ export default function Content({
     return (
       <PivotControls
         activeAxes={[active, active, active]}
-        key={`model-${model.name}`}
+        key={`model-${model.modelPath}`}
         anchor={[0, 0, 0]}
         depthTest={false}
         disableSliders={true}
       >
         <group
-          name={model.name}
+          name={model.modelPath}
           onClick={(e) => {
             setCurrentModel({
               index,
