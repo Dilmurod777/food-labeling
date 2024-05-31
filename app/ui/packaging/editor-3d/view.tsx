@@ -93,11 +93,14 @@ export default function View() {
       ...models,
       {
         type: t,
-        path: p,
-        name: uuidV4(),
+        modelPath: p,
+        text: uuidV4(),
         animatable: a,
         step: s,
         totalSteps: ts,
+        badges: [],
+        imgPath: "",
+        description: "",
       },
     ]);
   };
