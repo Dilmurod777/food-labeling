@@ -1,6 +1,6 @@
-"use server";
+"use client";
 
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { DefaultModelItems, Model } from "@/app/lib/3d";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -10,12 +10,26 @@ import { overflowText } from "@/app/lib/utilities";
 import { Badge } from "@/components/ui/badge";
 import { GetTagColor, TAG_COLORS } from "@/app/lib/constants/colors";
 
-export default async function Page() {
-  const models = await new Promise<Model[]>((resolve) => {
-    setTimeout(function () {
-      return resolve([...DefaultModelItems]);
-    }, 2000);
-  });
+export default function Page() {
+  const [fetching, setFetching] = useState(true);
+  const [models, setModels] = useState<Model[]>([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    setFetching(true);
+
+    const models = await new Promise<Model[]>((resolve) => {
+      setTimeout(function () {
+        return resolve([...DefaultModelItems]);
+      }, 2000);
+    });
+
+    setModels(models);
+    setFetching(false);
+  };
 
   const renderModelCard = (model: Model) => {
     return (
@@ -77,13 +91,11 @@ export default async function Page() {
   };
 
   return (
-    <Suspense>
-      <div className={"flex h-full w-full flex-grow flex-col gap-6 px-12 py-6"}>
-        <h1 className={"text-2xl/none font-bold"}>Select package type</h1>
-        <div className={"flex flex-wrap gap-4"}>
-          {models.map(renderModelCard)}
-        </div>
+    <div className={"flex h-full w-full flex-grow flex-col gap-6 px-12 py-6"}>
+      <h1 className={"text-2xl/none font-bold"}>Select package type</h1>
+      <div className={"flex flex-wrap gap-4"}>
+        {models.map(renderModelCard)}
       </div>
-    </Suspense>
+    </div>
   );
 }
