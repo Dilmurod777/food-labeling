@@ -12,6 +12,11 @@ const nextConfig = {
         destination: "/dashboard/products",
         permanent: true,
       },
+      {
+        source: "/companies",
+        destination: "/companies/all",
+        permanent: true,
+      },
     ];
   },
   transpilePackages: ["three"],

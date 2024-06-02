@@ -2,26 +2,33 @@
 
 import { useState } from "react";
 import { Ingredient, Product, User } from "@/app/lib/models";
-import {
-  GetOCRLanguage,
-  Language,
-  OCRLanguage,
-} from "@/app/lib/constants/label";
+import { Language, OCRLanguage } from "@/app/lib/constants/label";
 import { useRouter } from "next/navigation";
 import OcrIngredientsForm from "@/app/ui/ocr-label-maker/ocr-ingredients-form";
 import OcrNutrientsForm from "@/app/ui/ocr-label-maker/ocr-nutrients-form";
-import OCRLanguageSelect from "@/app/ui/ocr-label-maker/ocr-language-select";
-import OCRSaveButton from "@/app/ui/ocr-label-maker/ocr-save-button";
 import { SearchKeyword } from "@/app/lib/ocr";
 import { DefaultProduct } from "@/app/lib/defaults";
+import { Button } from "@/components/ui/button";
+import OCRInitializeForm from "@/app/ui/ocr-label-maker/ocr-initialize-form";
+import OCRSaveForm from "@/app/ui/ocr-label-maker/ocr-save-form";
 
 interface Props {
   user: User;
 }
 
+enum StepType {
+  Initialize,
+  Ingredients,
+  Nutrients,
+  Save,
+}
+
 export default function SubmitForm({ user }: Props) {
+  const [product, setProduct] = useState<Product>(
+    JSON.parse(JSON.stringify(DefaultProduct)),
+  );
+  const [step, setStep] = useState<StepType>(StepType.Initialize);
   const [saving, setSaving] = useState(false);
-  const [extracting, setExtracting] = useState(false);
   const router = useRouter();
   const [language, setLanguage] = useState(OCRLanguage.Korean);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
@@ -240,7 +247,6 @@ export default function SubmitForm({ user }: Props) {
 
   const saveHandler = async () => {
     setSaving(true);
-    const product: Product = JSON.parse(JSON.stringify(DefaultProduct));
     product.user_id = user.id;
 
     const translatedIngredients: Ingredient[] = [];
@@ -288,27 +294,83 @@ export default function SubmitForm({ user }: Props) {
     }
   };
 
+  const GetStepTitle = () => {
+    let text = "";
+
+    if (step == StepType.Initialize) {
+      text = "Initialize New Product";
+    } else if (step == StepType.Ingredients) {
+      text = "Add Ingredients";
+    } else if (step == StepType.Nutrients) {
+      text = "Add Nutrients";
+    } else if (step == StepType.Save) {
+      text = "Final Overview";
+    }
+
+    return (
+      <div className={"w-[400px] text-center text-3xl font-black"}>{text}</div>
+    );
+  };
+
+  const updateStep = (delta: number) => {
+    setStep(
+      Math.min(Math.max(step + delta, StepType.Initialize), StepType.Save),
+    );
+  };
+
   return (
     <div
       className={
         "relative flex flex-grow flex-col items-start justify-start gap-3 px-24 py-12"
       }
     >
-      <OCRLanguageSelect defaultLanguage={language} onChange={setLanguage} />
+      <div
+        className={"flex w-full select-none items-center justify-center gap-4"}
+      >
+        <Button
+          className={"bg-main-orange hover:bg-hover-main-orange"}
+          onClick={() => updateStep(-1)}
+          disabled={step - 1 < StepType.Initialize}
+        >
+          Previous
+        </Button>
+        {GetStepTitle()}
+        <Button
+          className={"bg-main-orange hover:bg-hover-main-orange"}
+          onClick={() => updateStep(1)}
+          disabled={step + 1 > StepType.Save || product.name == ""}
+        >
+          Next
+        </Button>
+      </div>
       <hr className={"w-full border border-main-orange"} />
-      <OcrIngredientsForm
-        language={language}
-        ingredients={[...ingredients]}
-        setIngredients={setIngredients}
-      />
-      <hr className={"w-full border border-main-orange"} />
-      <OcrNutrientsForm
-        language={language}
-        user={user}
-        searchKeywords={[...searchKeywords]}
-        setSearchKeywords={setSearchKeywords}
-      />
-      <OCRSaveButton saving={saving} clickHandler={saveHandler} />
+      {step == StepType.Initialize && (
+        <OCRInitializeForm product={product} updateProduct={setProduct} />
+      )}
+      {step == StepType.Ingredients && (
+        <OcrIngredientsForm
+          language={language}
+          ingredients={[...ingredients]}
+          setIngredients={setIngredients}
+        />
+      )}
+      {step == StepType.Nutrients && (
+        <OcrNutrientsForm
+          language={language}
+          user={user}
+          searchKeywords={[...searchKeywords]}
+          setSearchKeywords={setSearchKeywords}
+        />
+      )}
+      {step == StepType.Save && (
+        <OCRSaveForm
+          product={product}
+          ingredients={ingredients}
+          saving={saving}
+          saveHandler={saveHandler}
+          searchKeywords={searchKeywords}
+        />
+      )}
 
       {saving && (
         <div

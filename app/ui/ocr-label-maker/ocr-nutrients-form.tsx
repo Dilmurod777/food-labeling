@@ -75,7 +75,7 @@ export default function OcrNutrientsForm({
 
           text = await translation.json();
           words = text.split("###").map((w, i) => {
-            words[i].text = words[i].text == w ? w : `${words[i].text}/${w}`;
+            words[i].text = words[i].text == w ? w : `${words[i].text}###${w}`;
             return words[i];
           });
         }
@@ -177,7 +177,7 @@ export default function OcrNutrientsForm({
   };
 
   return (
-    <div className={"flex flex-col gap-2"}>
+    <div className={"flex h-full w-full flex-grow flex-col gap-2"}>
       <h2 className={"text-2xl font-bold"}>Nutrients</h2>
       <div className={"flex w-full items-start justify-between gap-4"}>
         <div

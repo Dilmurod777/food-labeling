@@ -138,7 +138,7 @@ export default function OCRImageViewer({
           )}
           {words.map((word, index) => {
             const bbox = word.box;
-            const text = word.text;
+            const text = word.text.replaceAll("###", "/");
 
             return (
               <div
@@ -153,7 +153,7 @@ export default function OCRImageViewer({
                   containerType: "size",
                 }}
                 title={text}
-                onClick={() => selectBoxHandler(word.text)}
+                onClick={() => selectBoxHandler(word.text.split("###")[0])}
                 className={"flex items-center justify-start"}
               >
                 {showTextInBoxes && (
