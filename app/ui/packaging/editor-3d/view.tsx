@@ -16,7 +16,11 @@ import { Model, ModelType, RestrictedKeyCodes, Tools } from "@/app/lib/3d";
 import { v4 as uuidV4 } from "uuid";
 import { Texture } from "three";
 
-export default function View() {
+interface Props {
+  initialModel: Model | undefined;
+}
+
+export default function View({ initialModel }: Props) {
   const [currentTool, setCurrentTool] = useState<Tools>(Tools.Select);
   const [models, setModels] = useState<Model[]>([]);
   const [texture, setTexture] = useState<Texture>();
@@ -35,6 +39,8 @@ export default function View() {
       }
       return true;
     };
+
+    if (initialModel) setModels([{ ...initialModel }]);
   }, []);
 
   const GetCurrentCursor = () => {
@@ -81,26 +87,12 @@ export default function View() {
     }
   };
 
-  const AddModel = (
-    t: ModelType,
-    p: string,
-    a: boolean,
-    s: number,
-    ts: number,
-  ) => {
+  const AddModel = (m: Model) => {
     setCurrentModelIndex(-1);
     setModels([
       ...models,
       {
-        type: t,
-        modelPath: p,
-        text: uuidV4(),
-        animatable: a,
-        step: s,
-        totalSteps: ts,
-        badges: [],
-        imgPath: "",
-        description: "",
+        ...m,
       },
     ]);
   };
@@ -193,7 +185,7 @@ export default function View() {
         />
       </Canvas>
 
-      <SideMenu addModel={AddModel} />
+      {/*<SideMenu addModel={AddModel} />*/}
       <BottomMenu
         updateTool={UpdateTool}
         currentTool={currentTool}

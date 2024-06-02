@@ -9,10 +9,14 @@ import { CiCircleInfo } from "react-icons/ci";
 import { overflowText } from "@/app/lib/utilities";
 import { Badge } from "@/components/ui/badge";
 import { GetTagColor, TAG_COLORS } from "@/app/lib/constants/colors";
+import Loading from "@/app/ui/loading";
+import { router } from "next/client";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [fetching, setFetching] = useState(true);
   const [models, setModels] = useState<Model[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     fetchData();
@@ -50,7 +54,12 @@ export default function Page() {
             }}
           />
         </div>
-        <Button className={"bg-main-orange hover:bg-hover-main-orange"}>
+        <Button
+          className={"bg-main-orange hover:bg-hover-main-orange"}
+          onClick={() => {
+            router.push(`/packaging/editor?model=${model.id}`);
+          }}
+        >
           Select
         </Button>
 
@@ -94,6 +103,7 @@ export default function Page() {
     <div className={"flex h-full w-full flex-grow flex-col gap-6 px-12 py-6"}>
       <h1 className={"text-2xl/none font-bold"}>Select package type</h1>
       <div className={"flex flex-wrap gap-4"}>
+        {fetching && <div>Loading...</div>}
         {models.map(renderModelCard)}
       </div>
     </div>

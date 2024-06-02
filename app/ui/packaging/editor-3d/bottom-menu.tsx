@@ -46,7 +46,7 @@ export default function BottomMenu({
       hotkeys: ["h"],
       showTooltip: true,
     },
-    { type: "divider" },
+    // { type: "divider" },
     // {
     //   type: "block",
     //   icon: <LuSendToBack />,
@@ -54,21 +54,21 @@ export default function BottomMenu({
     //   hotkeys: ["d"],
     //   showTooltip: true,
     // },
-    {
-      type: "block",
-      icon: <MdDelete />,
-      text: Tools.Delete,
-      hotkeys: ["Delete"],
-      showTooltip: true,
-    },
-    { type: "divider" },
-    {
-      type: "block",
-      icon: <MdOutlineFileUpload />,
-      text: Tools.UploadImage,
-      hotkeys: ["u"],
-      showTooltip: true,
-    },
+    // {
+    //   type: "block",
+    //   icon: <MdDelete />,
+    //   text: Tools.Delete,
+    //   hotkeys: ["Delete"],
+    //   showTooltip: true,
+    // },
+    // { type: "divider" },
+    // {
+    //   type: "block",
+    //   icon: <MdOutlineFileUpload />,
+    //   text: Tools.UploadImage,
+    //   hotkeys: ["u"],
+    //   showTooltip: true,
+    // },
     // {
     //   type: "block",
     //   icon: <LuTimerReset />,
@@ -76,19 +76,19 @@ export default function BottomMenu({
     //   hotkeys: ["r"],
     //   showTooltip: true,
     // },
-    { type: "divider" },
-    {
-      type: "block",
-      icon: <FaFileExport />,
-      text: Tools.ExportRender,
-      hotkeys: ["e"],
-      showTooltip: true,
-    },
-    { type: "divider" },
-    {
-      type: "slider",
-      text: Tools.AnimationSlider,
-    },
+    // { type: "divider" },
+    // {
+    //   type: "block",
+    //   icon: <FaFileExport />,
+    //   text: Tools.ExportRender,
+    //   hotkeys: ["e"],
+    //   showTooltip: true,
+    // },
+    // { type: "divider" },
+    // {
+    //   type: "slider",
+    //   text: Tools.AnimationSlider,
+    // },
   ];
   const otherKeymaps: KeyboardControlsEntry[] = [];
   const [activeMenuItemIndex, setActiveMenuItemIndex] = useState(0);

@@ -20,13 +20,7 @@ interface MenuItem {
 }
 
 interface Props {
-  addModel: (
-    t: ModelType,
-    p: string,
-    a: boolean,
-    s: number,
-    ts: number,
-  ) => void;
+  addModel: (m: Model) => void;
 }
 
 export default function SideMenu({ addModel }: Props) {
@@ -119,15 +113,7 @@ export default function SideMenu({ addModel }: Props) {
               style={{
                 backgroundColor: RandomColors[i % RandomColors.length],
               }}
-              onClick={() =>
-                addModel(
-                  item.type,
-                  item.modelPath,
-                  item.animatable,
-                  item.step,
-                  item.totalSteps,
-                )
-              }
+              onClick={() => addModel(item)}
             >
               <div
                 className={

@@ -87,7 +87,7 @@ export default function Content({
           // material={materials.Lays}
           scale={0.05}
         />
-        <meshBasicMaterial map={texture} />
+        {/*<meshBasicMaterial map={materials} />*/}
       </group>
     );
   };
@@ -131,7 +131,7 @@ export default function Content({
     return (
       <PivotControls
         activeAxes={[active, active, active]}
-        key={`model-${model.modelPath}`}
+        key={`model-${model.modelPath}-${index}`}
         anchor={[0, 0, 0]}
         depthTest={false}
         disableSliders={true}

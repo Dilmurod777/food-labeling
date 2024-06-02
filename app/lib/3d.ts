@@ -13,9 +13,12 @@ export interface Data3D {
 }
 
 export interface Model {
+  id: string;
   type: ModelType;
   modelPath: string;
   imgPath: string;
+  layoutPath: string;
+  sizes: number[][];
   text: string;
   animatable: boolean;
   step: number;
@@ -85,27 +88,36 @@ export const RestrictedKeyCodes: string[] = [
 
 export const DefaultModelItems: Model[] = [
   {
+    id: "0",
     type: ModelType.Generated,
     modelPath: "default-package",
     text: "Default Package",
     imgPath: "default-package.png",
+    layoutPath: "default-package.png",
     animatable: true,
     step: 0,
     totalSteps: 15,
     description:
       "This high-quality packaging is ideal for those seeking to safely and attractively package their products, making it perfect for courier delivery.",
     badges: ["cardboard", "custom size"],
+    sizes: [
+      [10, 10, 10],
+      [20, 20, 20],
+    ],
   },
   {
+    id: "1",
     type: ModelType.Loaded,
     modelPath: "chips-package.glb",
     text: "Chips Package",
     imgPath: "chips-package.png",
+    layoutPath: "chips-package.png",
     animatable: false,
     step: 0,
     totalSteps: 0,
     description:
       "This premium chip packaging is perfect for those who want to keep their chips fresh and appealing, ensuring safe and secure delivery.",
     badges: ["polymer", "custom size"],
+    sizes: [],
   },
 ];
