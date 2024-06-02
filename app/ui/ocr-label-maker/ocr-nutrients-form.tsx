@@ -156,6 +156,7 @@ export default function OcrNutrientsForm({
   };
 
   const selectBoxHandler = (word: string) => {
+    if (selectedNutrient == -1) return;
     const searchKeyword = searchKeywords[selectedNutrient];
 
     word.split(" ").forEach((w) => {
