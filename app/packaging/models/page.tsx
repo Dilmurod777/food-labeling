@@ -1,16 +1,13 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { DefaultModelItems, Model } from "@/app/lib/3d";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { FaInfo } from "react-icons/fa";
 import { CiCircleInfo } from "react-icons/ci";
 import { overflowText } from "@/app/lib/utilities";
 import { Badge } from "@/components/ui/badge";
 import { GetTagColor, TAG_COLORS } from "@/app/lib/constants/colors";
-import Loading from "@/app/ui/loading";
-import { router } from "next/client";
 import { useRouter } from "next/navigation";
 
 export default function Page() {
@@ -100,7 +97,11 @@ export default function Page() {
   };
 
   return (
-    <div className={"flex h-full w-full flex-grow flex-col gap-6 px-12 py-6"}>
+    <div
+      className={
+        "relative flex h-full w-full flex-grow flex-col gap-6 px-12 py-6"
+      }
+    >
       <h1 className={"text-2xl/none font-bold"}>Select package type</h1>
       <div className={"flex flex-wrap gap-4"}>
         {fetching && <div>Loading...</div>}
