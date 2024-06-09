@@ -19,13 +19,14 @@ export interface Model {
   modelPath: string;
   imgPath: string;
   layoutPath: string;
-  sizes: number[][];
+  sizes: number[];
   text: string;
   animatable: boolean;
   step: number;
   totalSteps: number;
   description: string;
   badges: string[];
+  baseColor: number[];
 }
 
 export enum ModelCategory {
@@ -108,10 +109,8 @@ export const DefaultModelItems: Model[] = [
     description:
       "Telescoping boxes consist of a separate top, or top and bottom that fit over each other or a separate body. They can be produced in a number of unjoined or preglued styles and configurations.",
     badges: ["cardboard", "custom size"],
-    sizes: [
-      [10, 10, 10],
-      [20, 20, 20],
-    ],
+    sizes: [3, 2, 0.75],
+    baseColor: [34, 23, 60],
   },
   {
     id: "1",
@@ -127,6 +126,7 @@ export const DefaultModelItems: Model[] = [
     description:
       "This premium chip packaging is perfect for those who want to keep their chips fresh and appealing, ensuring safe and secure delivery.",
     badges: ["polymer", "custom size"],
-    sizes: [],
+    sizes: [1, 1],
+    baseColor: [34, 23, 60],
   },
 ];

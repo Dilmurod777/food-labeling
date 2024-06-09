@@ -24,6 +24,7 @@ interface Props {
   currentTool: Tools;
   currentStep: number;
   updateCurrentStep: (step: number) => void;
+  baseColor: number[];
 }
 
 interface CurrentModel {
@@ -37,6 +38,7 @@ export default function Content({
   currentTool,
   currentStep,
   updateCurrentStep,
+  baseColor,
 }: Props) {
   const texture = useTexture("/uploads/image1.jpg");
   const [animationValue, setAnimationValue] = useState(0);
@@ -100,6 +102,10 @@ export default function Content({
               <TelescopeBox
                 step={currentStep}
                 totalSteps={currentModel.totalSteps}
+                width={currentModel.sizes[0]}
+                height={currentModel.sizes[1]}
+                depth={currentModel.sizes[2]}
+                baseColor={baseColor}
               />
             );
         }

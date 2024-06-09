@@ -12,6 +12,7 @@ import { Ref, useEffect, useRef } from "react";
 import { AddVectors, Data3D, SubtractVectors } from "@/app/lib/3d";
 import { BBAnchor, Box } from "@react-three/drei";
 import { groupStackFramesByFramework } from "next/dist/client/components/react-dev-overlay/internal/helpers/group-stack-frames-by-framework";
+import { GetHSV } from "@/app/lib/utilities";
 
 interface Props {
   width?: number;
@@ -19,6 +20,7 @@ interface Props {
   depth?: number;
   step: number;
   totalSteps: number;
+  baseColor: number[];
 }
 
 export default function TelescopeBox({
@@ -27,6 +29,7 @@ export default function TelescopeBox({
   width = 3,
   height = 2,
   depth = 0.75,
+  baseColor = [34, 0, 82],
 }: Props) {
   const { meshRefs }: Data3D = {
     meshRefs: {
@@ -102,6 +105,11 @@ export default function TelescopeBox({
     }
   }, [step]);
 
+  // const baseColor = [167, 146, 119];
+  // const baseColor = [34, 23, 60];
+  // #a79277
+  // #D1BB9E
+
   return (
     <group position={[0, 0, 0]}>
       {/*bottom*/}
@@ -112,7 +120,7 @@ export default function TelescopeBox({
           height={height}
           position={[0, 0, 0]}
           rotation={[Math.PI / 2, 0, 0]}
-          color={"#A79277"}
+          color={GetHSV([baseColor[0], baseColor[1], baseColor[2]])}
         />
 
         <group position={[(width + depth) / 2, 0, 0]}>
@@ -123,7 +131,7 @@ export default function TelescopeBox({
             position={[0, 0, 0]}
             rotation={[Math.PI / 2, Math.PI / 2, 0]}
             anchor={[depth / 2, 0, 0]}
-            color={"#EAD8C0"}
+            color={GetHSV([baseColor[0], baseColor[1], baseColor[2] + 5])}
           />
           <Side
             meshRef={meshRefs.bottom[2] ?? null}
@@ -132,7 +140,7 @@ export default function TelescopeBox({
             position={[-depth, depth / 2, height / 2]}
             rotation={[0, 0, 0]}
             anchor={[0, 0, 0]}
-            color={"#EAD8C0"}
+            color={GetHSV([baseColor[0], baseColor[1], baseColor[2] + 5])}
           />
           <Side
             meshRef={meshRefs.bottom[3] ?? null}
@@ -141,7 +149,7 @@ export default function TelescopeBox({
             position={[-depth, depth / 2, -height / 2]}
             rotation={[0, 0, 0]}
             anchor={[0, 0, 0]}
-            color={"#EAD8C0"}
+            color={GetHSV([baseColor[0], baseColor[1], baseColor[2] + 5])}
           />
         </group>
         <group position={[-(width + depth) / 2, 0, 0]} rotation={[0, 0, 0]}>
@@ -152,7 +160,7 @@ export default function TelescopeBox({
             position={[depth, 0, 0]}
             rotation={[Math.PI / 2, Math.PI / 2, 0]}
             anchor={[depth / 2, 0, 0]}
-            color={"#EAD8C0"}
+            color={GetHSV([baseColor[0], baseColor[1], baseColor[2] + 5])}
           />
           <Side
             meshRef={meshRefs.bottom[5] ?? null}
@@ -161,7 +169,7 @@ export default function TelescopeBox({
             position={[depth, depth / 2, height / 2]}
             rotation={[0, 0, 0]}
             anchor={[0, 0, 0]}
-            color={"#EAD8C0"}
+            color={GetHSV([baseColor[0], baseColor[1], baseColor[2] + 5])}
           />
           <Side
             meshRef={meshRefs.bottom[6] ?? null}
@@ -170,7 +178,7 @@ export default function TelescopeBox({
             position={[depth, depth / 2, -height / 2]}
             rotation={[0, 0, 0]}
             anchor={[0, 0, 0]}
-            color={"#EAD8C0"}
+            color={GetHSV([baseColor[0], baseColor[1], baseColor[2] + 5])}
           />
         </group>
 
@@ -182,7 +190,7 @@ export default function TelescopeBox({
             position={[0, depth / 2, height / 2 + 0.001]}
             rotation={[0, 0, 0]}
             anchor={[0, 0, 0]}
-            color={"#EAD8C0"}
+            color={GetHSV([baseColor[0], baseColor[1], baseColor[2] + 7])}
           />
           <Side
             meshRef={meshRefs.bottom[8] ?? null}
@@ -191,7 +199,7 @@ export default function TelescopeBox({
             position={[0, depth / 2, -height / 2 - 0.001]}
             rotation={[0, 0, 0]}
             anchor={[0, 0, 0]}
-            color={"#EAD8C0"}
+            color={GetHSV([baseColor[0], baseColor[1], baseColor[2] + 7])}
           />
         </group>
       </group>
@@ -206,7 +214,7 @@ export default function TelescopeBox({
           height={height + 0.1}
           position={[0, 0, 0]}
           rotation={[Math.PI / 2, 0, 0]}
-          color={"#A79277"}
+          color={GetHSV(baseColor)}
         />
 
         <group position={[(width + depth) / 2, 0, 0]} ref={meshRefs.top[1]}>
@@ -216,7 +224,7 @@ export default function TelescopeBox({
             position={[0.05, 0.05, 0]}
             rotation={[Math.PI / 2, Math.PI / 2, 0]}
             anchor={[depth / 2, 0, 0]}
-            color={"#D1BB9E"}
+            color={GetHSV([baseColor[0], baseColor[1], baseColor[2] - 5])}
             meshRef={meshRefs.top[2]}
           />
           <Side
@@ -225,7 +233,7 @@ export default function TelescopeBox({
             position={[-depth, depth / 2 + 0.05, height / 2 + 0.05]}
             rotation={[0, 0, 0]}
             anchor={[0, 0, 0]}
-            color={"#D1BB9E"}
+            color={GetHSV([baseColor[0], baseColor[1], baseColor[2] - 5])}
             meshRef={meshRefs.top[3]}
           />
           <Side
@@ -234,7 +242,7 @@ export default function TelescopeBox({
             position={[-depth, depth / 2 + 0.05, -height / 2 - 0.05]}
             rotation={[0, 0, 0]}
             anchor={[0, 0, 0]}
-            color={"#D1BB9E"}
+            color={GetHSV([baseColor[0], baseColor[1], baseColor[2] - 5])}
             meshRef={meshRefs.top[4]}
           />
         </group>
@@ -245,7 +253,7 @@ export default function TelescopeBox({
             position={[depth - 0.05, 0.05, 0]}
             rotation={[Math.PI / 2, Math.PI / 2, 0]}
             anchor={[depth / 2, 0, 0]}
-            color={"#D1BB9E"}
+            color={GetHSV([baseColor[0], baseColor[1], baseColor[2] - 5])}
           />
           <Side
             width={depth + 0.1}
@@ -253,7 +261,7 @@ export default function TelescopeBox({
             position={[depth, depth / 2 + 0.05, height / 2 + 0.05]}
             rotation={[0, 0, 0]}
             anchor={[0, 0, 0]}
-            color={"#D1BB9E"}
+            color={GetHSV([baseColor[0], baseColor[1], baseColor[2] - 5])}
           />
           <Side
             width={depth + 0.1}
@@ -261,7 +269,7 @@ export default function TelescopeBox({
             position={[depth, depth / 2 + 0.05, -height / 2 - 0.05]}
             rotation={[0, 0, 0]}
             anchor={[0, 0, 0]}
-            color={"#D1BB9E"}
+            color={GetHSV([baseColor[0], baseColor[1], baseColor[2] - 5])}
           />
         </group>
 
@@ -272,7 +280,7 @@ export default function TelescopeBox({
             position={[0, depth / 2 + 0.05, height / 2 + 0.051]}
             rotation={[0, 0, 0]}
             anchor={[0, 0, 0]}
-            color={"#D1BB9E"}
+            color={GetHSV([baseColor[0], baseColor[1], baseColor[2] - 2])}
           />
           <Side
             width={width + 0.1}
@@ -280,7 +288,7 @@ export default function TelescopeBox({
             position={[0, depth / 2 + 0.05, -height / 2 - 0.051]}
             rotation={[0, 0, 0]}
             anchor={[0, 0, 0]}
-            color={"#D1BB9E"}
+            color={GetHSV([baseColor[0], baseColor[1], baseColor[2] - 2])}
           />
         </group>
       </group>

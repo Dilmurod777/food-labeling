@@ -18,9 +18,10 @@ import { Texture } from "three";
 
 interface Props {
   initialModel: Model;
+  baseColor: number[];
 }
 
-export default function View({ initialModel }: Props) {
+export default function View({ initialModel, baseColor }: Props) {
   const [currentTool, setCurrentTool] = useState<Tools>(Tools.Select);
   const [currentModel, setCurrentModel] = useState<Model>({ ...initialModel });
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -154,6 +155,7 @@ export default function View({ initialModel }: Props) {
           currentTool={currentTool}
           currentStep={currentStep}
           updateCurrentStep={setCurrentStep}
+          baseColor={baseColor}
         />
       </Canvas>
 

@@ -591,3 +591,7 @@ export function convertModelCategoryToTitle(category: ModelCategory) {
       return "Others";
   }
 }
+
+export function GetHSV(color: number[]): string {
+  return `hsl(${color[0]}, ${color[1]}%, ${color[2]}%)`;
+}
