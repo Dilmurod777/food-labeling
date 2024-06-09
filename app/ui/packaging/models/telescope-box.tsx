@@ -84,15 +84,15 @@ export default function TelescopeBox({
         topCover.current.position.y = 2.4 - 0.4 * (step - 15);
       }
 
-      if (step >= 22 && step <= 27) {
-        // @ts-ignore
-        topCover01.current.rotation.z = -((step - 22) * 18 * Math.PI) / 180;
-        // @ts-ignore
-        topCover01.current.position.x =
-          (width + depth) / 2 - (step - 22) * 0.065;
-        // @ts-ignore
-        topCover01.current.position.y = -(step - 22) * 0.065;
-      }
+      // if (step >= 22 && step <= 27) {
+      //   // @ts-ignore
+      //   topCover01.current.rotation.z = -((step - 22) * 18 * Math.PI) / 180;
+      //   // @ts-ignore
+      //   topCover01.current.position.x =
+      //     (width + depth) / 2 - (step - 22) * 0.065;
+      //   // @ts-ignore
+      //   topCover01.current.position.y = -(step - 22) * 0.065;
+      // }
 
       // if (step >= 28 && step <= 32) {
       //   // @ts-ignore

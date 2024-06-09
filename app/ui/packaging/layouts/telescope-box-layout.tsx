@@ -4,13 +4,14 @@ import { GetHSV } from "@/app/lib/utilities";
 interface Props {
   model: Model;
   baseColor: number[];
+  size: number[];
 }
 
-export default function TelescopeBoxLayout({ model, baseColor }: Props) {
-  const base = 60;
-  const width = model.sizes[0] * base;
-  const height = model.sizes[1] * base;
-  const depth = model.sizes[2] * base;
+export default function TelescopeBoxLayout({ model, baseColor, size }: Props) {
+  const base = 40;
+  const width = size[0] * base;
+  const height = size[1] * base;
+  const depth = size[2] * base;
 
   return (
     <div className={"flex w-full flex-col gap-8"}>
