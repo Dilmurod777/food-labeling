@@ -7,7 +7,7 @@ import OCRImageViewer from "@/app/ui/ocr-label-maker/ocr-image-viewer";
 import OCRIngredientsList from "@/app/ui/ocr-label-maker/ocr-ingredients-list";
 import { Ingredient } from "@/app/lib/models";
 import {
-  ConvertBase64ToFile,
+  convertBase64ToFile,
   convertOCRLangToLabelLang,
 } from "@/app/lib/utilities";
 

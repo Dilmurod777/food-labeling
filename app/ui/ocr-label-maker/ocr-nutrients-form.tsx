@@ -2,7 +2,7 @@ import { useState } from "react";
 import { OCRLanguage } from "@/app/lib/constants/label";
 import { Word } from "@/app/lib/ocr";
 import {
-  ConvertBase64ToFile,
+  convertBase64ToFile,
   convertOCRLangToLabelLang,
   jaroWinklerDistance,
 } from "@/app/lib/utilities";

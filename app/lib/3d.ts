@@ -14,6 +14,7 @@ export interface Data3D {
 
 export interface Model {
   id: string;
+  category: ModelCategory;
   type: ModelType;
   modelPath: string;
   imgPath: string;
@@ -25,6 +26,12 @@ export interface Model {
   totalSteps: number;
   description: string;
   badges: string[];
+}
+
+export enum ModelCategory {
+  Box,
+  Pouch,
+  Sachet,
 }
 
 export enum ModelType {
@@ -89,6 +96,7 @@ export const RestrictedKeyCodes: string[] = [
 export const DefaultModelItems: Model[] = [
   {
     id: "0",
+    category: ModelCategory.Box,
     type: ModelType.Generated,
     modelPath: "default-package",
     text: "Default Package",
@@ -107,6 +115,7 @@ export const DefaultModelItems: Model[] = [
   },
   {
     id: "1",
+    category: ModelCategory.Pouch,
     type: ModelType.Loaded,
     modelPath: "chips-package.glb",
     text: "Chips Package",

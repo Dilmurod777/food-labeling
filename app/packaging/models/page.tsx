@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DefaultModelItems, Model } from "@/app/lib/3d";
+import { DefaultModelItems, Model, ModelCategory } from "@/app/lib/3d";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { CiCircleInfo } from "react-icons/ci";
-import { overflowText } from "@/app/lib/utilities";
+import { convertModelCategoryToTitle, overflowText } from "@/app/lib/utilities";
 import { Badge } from "@/components/ui/badge";
 import { GetTagColor, TAG_COLORS } from "@/app/lib/constants/colors";
 import { useRouter } from "next/navigation";
@@ -37,7 +37,7 @@ export default function Page() {
       <div
         key={`model-${model.modelPath}-${model.imgPath}`}
         className={
-          "relative flex h-64 w-36 flex-col items-center overflow-hidden rounded-md border border-main-orange"
+          "relative flex h-64 w-40 flex-col items-center overflow-hidden rounded-md border border-main-orange"
         }
       >
         <div className={"relative h-[80%] w-[90%]"}>
@@ -102,10 +102,33 @@ export default function Page() {
         "relative flex h-full w-full flex-grow flex-col gap-6 px-12 py-6"
       }
     >
-      <h1 className={"text-2xl/none font-bold"}>Select package type</h1>
-      <div className={"flex flex-wrap gap-4"}>
+      <div className={"flex flex-col gap-2"}>
+        <h1 className={"text-3xl/none font-bold"}>Select package:</h1>
+        <hr />
+      </div>
+      <div className={"flex flex-col gap-4"}>
         {fetching && <div>Loading...</div>}
-        {models.map(renderModelCard)}
+        {[ModelCategory.Box, ModelCategory.Sachet, ModelCategory.Pouch].map(
+          (category) => {
+            const filteredModels = models.filter((m) => m.category == category);
+
+            if (filteredModels.length == 0)
+              return <div key={`model-category-${category}`} />;
+
+            return (
+              <div
+                key={`model-category-${category}`}
+                className={"flex w-full flex-col flex-wrap gap-2"}
+              >
+                <h1 className={"text-2xl/none font-bold"}>
+                  {convertModelCategoryToTitle(category)}:
+                </h1>
+                <hr />
+                {filteredModels.map(renderModelCard)}
+              </div>
+            );
+          },
+        )}
       </div>
     </div>
   );

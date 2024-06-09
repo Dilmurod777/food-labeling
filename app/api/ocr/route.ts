@@ -1,6 +1,6 @@
 import { type NextRequest } from "next/server";
 import { PapagoOCRResponse, Word } from "@/app/lib/ocr";
-import { ConvertBase64ToFile } from "@/app/lib/utilities";
+import { convertBase64ToFile } from "@/app/lib/utilities";
 
 export async function POST(req: NextRequest) {
   const requestFormData = await req.formData();

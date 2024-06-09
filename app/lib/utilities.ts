@@ -6,6 +6,7 @@ import {
   CommonWords,
   WordReplacements,
 } from "@/app/lib/constants/common-ingredients";
+import { ModelCategory } from "@/app/lib/3d";
 
 export function overflowText(text: string, max_length = 30): string {
   if (!text) return "";
@@ -558,7 +559,7 @@ export function convertOCRLangToLabelLang(from: OCRLanguage) {
   }
 }
 
-export function ConvertBase64ToFile(
+export function convertBase64ToFile(
   base64String: string,
   filename: string = "text.png",
 ) {
@@ -576,4 +577,17 @@ export function ConvertBase64ToFile(
 
   // Create a File from the Blob with the given filename
   return new File([blob], filename, { type: blob.type });
+}
+
+export function convertModelCategoryToTitle(category: ModelCategory) {
+  switch (category) {
+    case ModelCategory.Box:
+      return "Boxes";
+    case ModelCategory.Sachet:
+      return "Sachets";
+    case ModelCategory.Pouch:
+      return "Pouches";
+    default:
+      return "Others";
+  }
 }
