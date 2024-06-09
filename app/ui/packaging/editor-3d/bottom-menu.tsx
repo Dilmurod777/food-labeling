@@ -21,15 +21,19 @@ interface MenuItem {
 interface Props {
   currentTool: string;
   updateTool: (t: Tools) => void;
-  updateStep: (s: number) => void;
-  currentModel: Model | null;
+  updateCurrentModel: (m: Model) => void;
+  currentModel: Model;
+  currentStep: number;
+  updateCurrentStep: (step: number) => void;
 }
 
 export default function BottomMenu({
   currentTool,
   updateTool,
-  updateStep,
   currentModel,
+  updateCurrentModel,
+  currentStep,
+  updateCurrentStep,
 }: Props) {
   const menuItems: MenuItem[] = [
     {
@@ -84,11 +88,11 @@ export default function BottomMenu({
     //   hotkeys: ["e"],
     //   showTooltip: true,
     // },
-    // { type: "divider" },
-    // {
-    //   type: "slider",
-    //   text: Tools.AnimationSlider,
-    // },
+    { type: "divider" },
+    {
+      type: "slider",
+      text: Tools.AnimationSlider,
+    },
   ];
   const otherKeymaps: KeyboardControlsEntry[] = [];
   const [activeMenuItemIndex, setActiveMenuItemIndex] = useState(0);
@@ -132,11 +136,11 @@ export default function BottomMenu({
           <input
             id="labels-range-input"
             type="range"
-            value={currentModel.step}
+            value={currentStep}
             min="0"
             max={currentModel.totalSteps}
             className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-main-gray accent-main-orange"
-            onChange={(e) => updateStep(e.target.valueAsNumber)}
+            onChange={(e) => updateCurrentStep(e.target.valueAsNumber)}
           />
         </div>
       );

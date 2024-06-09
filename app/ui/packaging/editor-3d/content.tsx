@@ -1,6 +1,6 @@
 import { Ref, useEffect, useMemo, useRef, useState } from "react";
 import Ground from "@/app/ui/packaging/editor-3d/ground";
-import DefaultPackage from "@/app/ui/packaging/models/default-package";
+import TelescopeBox from "@/app/ui/packaging/models/telescope-box";
 import {
   KeyboardControls,
   KeyboardControlsEntry,
@@ -19,11 +19,11 @@ import {
 import { MeshStandardMaterial, Object3D, Texture } from "three";
 
 interface Props {
-  models: Model[];
-  currentModelIndex: number;
-  setCurrentModelIndex: (i: number) => void;
+  currentModel: Model;
+  updateCurrentModel: (m: Model) => void;
   currentTool: Tools;
-  updateStep: (s: number) => void;
+  currentStep: number;
+  updateCurrentStep: (step: number) => void;
 }
 
 interface CurrentModel {
@@ -32,15 +32,15 @@ interface CurrentModel {
 }
 
 export default function Content({
-  models,
-  currentModelIndex,
-  setCurrentModelIndex,
+  currentModel,
+  updateCurrentModel,
   currentTool,
-  updateStep,
+  currentStep,
+  updateCurrentStep,
 }: Props) {
-  const [currentModel, setCurrentModel] = useState<CurrentModel | null>();
   const texture = useTexture("/uploads/image1.jpg");
   const [animationValue, setAnimationValue] = useState(0);
+  const [showPivots, setShowPivots] = useState(false);
 
   const keyMap = useMemo<KeyboardControlsEntry[]>(
     () => [
@@ -64,15 +64,14 @@ export default function Content({
     if (!pressed) return;
 
     switch (name) {
-      // case AnimationKeyMap.open:
-      //   updateStep(Math.min(step + 1, totalSteps));
-      //   break;
-      // case AnimationKeyMap.close:
-      //   updateStep(Math.min(step - 1, 0));
-      //   break;
+      case AnimationKeyMap.open:
+        updateCurrentStep(currentStep + 1);
+        break;
+      case AnimationKeyMap.close:
+        updateCurrentStep(currentStep - 1);
+        break;
       case Keymaps.escape:
-        setCurrentModel(null);
-        setCurrentModelIndex(-1);
+        setShowPivots(false);
         break;
     }
   };
@@ -96,17 +95,11 @@ export default function Content({
     switch (model.type) {
       case ModelType.Generated:
         switch (model.modelPath) {
-          case "default-package":
+          case "telescope-box":
             return (
-              <DefaultPackage
-                step={
-                  currentModelIndex >= 0 ? models[currentModelIndex].step : 0
-                }
-                totalSteps={
-                  currentModelIndex >= 0
-                    ? models[currentModelIndex].totalSteps
-                    : 15
-                }
+              <TelescopeBox
+                step={currentStep}
+                totalSteps={currentModel.totalSteps}
               />
             );
         }
@@ -126,27 +119,15 @@ export default function Content({
   };
 
   const GetModel = (model: Model, index: number) => {
-    const active = index == currentModel?.index && currentTool != Tools.Hand;
-
     return (
       <PivotControls
-        activeAxes={[active, active, active]}
+        activeAxes={[showPivots, showPivots, showPivots]}
         key={`model-${model.modelPath}-${index}`}
         anchor={[0, 0, 0]}
         depthTest={false}
         disableSliders={true}
       >
-        <group
-          name={model.modelPath}
-          onClick={(e) => {
-            setCurrentModel({
-              index,
-              model: e.object,
-            });
-
-            setCurrentModelIndex(index);
-          }}
-        >
+        <group name={model.modelPath} onClick={() => setShowPivots(true)}>
           {GetModelNode(model)}
         </group>
       </PivotControls>
@@ -157,7 +138,7 @@ export default function Content({
     <group position-y={-1}>
       <Ground />
       <KeyboardControls map={keyMap} onChange={keyboardOnChange}>
-        {models.map(GetModel)}
+        {GetModel(currentModel, 0)}
       </KeyboardControls>
     </group>
   );

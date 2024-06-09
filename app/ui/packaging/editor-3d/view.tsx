@@ -17,14 +17,14 @@ import { v4 as uuidV4 } from "uuid";
 import { Texture } from "three";
 
 interface Props {
-  initialModel: Model | undefined;
+  initialModel: Model;
 }
 
 export default function View({ initialModel }: Props) {
   const [currentTool, setCurrentTool] = useState<Tools>(Tools.Select);
-  const [models, setModels] = useState<Model[]>([]);
+  const [currentModel, setCurrentModel] = useState<Model>({ ...initialModel });
+  const [currentStep, setCurrentStep] = useState<number>(0);
   const [texture, setTexture] = useState<Texture>();
-  const [currentModelIndex, setCurrentModelIndex] = useState(-1);
   const cameraRef = useRef(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -39,8 +39,6 @@ export default function View({ initialModel }: Props) {
       }
       return true;
     };
-
-    if (initialModel) setModels([{ ...initialModel }]);
   }, []);
 
   const GetCurrentCursor = () => {
@@ -87,23 +85,6 @@ export default function View({ initialModel }: Props) {
     }
   };
 
-  const AddModel = (m: Model) => {
-    setCurrentModelIndex(-1);
-    setModels([
-      ...models,
-      {
-        ...m,
-      },
-    ]);
-  };
-
-  const RemoveModel = (index: number) => {
-    if (index < 0 || index > models.length) return;
-
-    setCurrentModelIndex(-1);
-    setModels([...models.slice(0, index), ...models.slice(index + 1)]);
-  };
-
   const UploadImage = () => {
     const input = document.createElement("input");
     input.type = "file";
@@ -138,7 +119,7 @@ export default function View({ initialModel }: Props) {
     setCurrentTool(text);
 
     if (text == Tools.Delete) {
-      RemoveModel(currentModelIndex);
+      // RemoveModel(currentModelIndex);
     } else if (text == Tools.UploadImage) {
       // UploadImage();
     } else if (text == Tools.ExportRender) {
@@ -168,20 +149,11 @@ export default function View({ initialModel }: Props) {
         <SoftShadows size={1} />
 
         <Content
-          models={models}
+          currentModel={currentModel}
+          updateCurrentModel={setCurrentModel}
           currentTool={currentTool}
-          currentModelIndex={currentModelIndex}
-          setCurrentModelIndex={setCurrentModelIndex}
-          updateStep={(s) => {
-            setModels([
-              ...models.slice(0, currentModelIndex),
-              {
-                ...models[currentModelIndex],
-                step: s,
-              },
-              ...models.slice(currentModelIndex + 1),
-            ]);
-          }}
+          currentStep={currentStep}
+          updateCurrentStep={setCurrentStep}
         />
       </Canvas>
 
@@ -189,17 +161,10 @@ export default function View({ initialModel }: Props) {
       <BottomMenu
         updateTool={UpdateTool}
         currentTool={currentTool}
-        currentModel={models[currentModelIndex]}
-        updateStep={(s) => {
-          setModels([
-            ...models.slice(0, currentModelIndex),
-            {
-              ...models[currentModelIndex],
-              step: s,
-            },
-            ...models.slice(currentModelIndex + 1),
-          ]);
-        }}
+        currentModel={currentModel}
+        updateCurrentModel={setCurrentModel}
+        currentStep={currentStep}
+        updateCurrentStep={setCurrentStep}
       />
     </div>
   );

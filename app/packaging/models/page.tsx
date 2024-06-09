@@ -9,6 +9,7 @@ import { convertModelCategoryToTitle, overflowText } from "@/app/lib/utilities";
 import { Badge } from "@/components/ui/badge";
 import { GetTagColor, TAG_COLORS } from "@/app/lib/constants/colors";
 import { useRouter } from "next/navigation";
+import { AiOutlineSelect } from "react-icons/ai";
 
 export default function Page() {
   const [fetching, setFetching] = useState(true);
@@ -51,14 +52,25 @@ export default function Page() {
             }}
           />
         </div>
-        <Button
-          className={"bg-main-orange hover:bg-hover-main-orange"}
-          onClick={() => {
-            router.push(`/packaging/editor?model=${model.id}`);
-          }}
+        <div
+          className={"flex h-[20%] w-full items-center justify-center gap-1"}
         >
-          Select
-        </Button>
+          <p className={"text-center text-sm/none"}>{model.text}</p>
+          <AiOutlineSelect
+            className={
+              "cursor-pointer text-main-orange hover:text-hover-main-orange"
+            }
+            onClick={() => router.push(`/packaging/editor?model=${model.id}`)}
+          />
+          {/*<Button*/}
+          {/*  className={"bg-main-orange hover:bg-hover-main-orange"}*/}
+          {/*  onClick={() => {*/}
+          {/*    router.push(`/packaging/editor?model=${model.id}`);*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  Select*/}
+          {/*</Button>*/}
+        </div>
 
         {model.badges.length > 0 && (
           <div className={"absolute left-1 top-1 flex w-20 flex-wrap gap-1"}>

@@ -32,7 +32,7 @@ export default function Page() {
           />
         )}
       </div>
-      <div className={"w-1/2"}>
+      <div className={"relative w-1/2"}>
         <View initialModel={model} />
       </div>
     </div>
