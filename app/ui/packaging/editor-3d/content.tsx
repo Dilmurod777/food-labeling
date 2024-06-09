@@ -17,6 +17,8 @@ import {
   Tools,
 } from "@/app/lib/3d";
 import { MeshStandardMaterial, Object3D, Texture } from "three";
+import { Vector3 } from "@react-three/fiber";
+import { GetHSV } from "@/app/lib/utilities";
 
 interface Props {
   currentModel: Model;
@@ -88,9 +90,10 @@ export default function Content({
           //@ts-ignore
           geometry={nodes.Dorrito001_Lays_0.geometry}
           // material={materials.Lays}
-          scale={0.05}
-        />
-        {/*<meshBasicMaterial map={materials} />*/}
+          scale={size.map((s) => s * 0.05) as Vector3}
+        >
+          <meshBasicMaterial color={GetHSV(baseColor)} />
+        </mesh>
       </group>
     );
   };

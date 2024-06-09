@@ -126,7 +126,7 @@ export const DefaultModelItems: Model[] = [
     description:
       "This premium chip packaging is perfect for those who want to keep their chips fresh and appealing, ensuring safe and secure delivery.",
     badges: ["polymer", "custom size"],
-    sizes: [1, 1],
+    sizes: [1, 1, 1],
     baseColor: [34, 23, 60],
   },
 ];
