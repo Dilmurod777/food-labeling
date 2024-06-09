@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import ChipsPackageLayout from "@/app/ui/packaging/layouts/chips-package-layout";
 
 interface Props {
   model: Model;
@@ -29,6 +30,11 @@ export default function Editor3D({ model }: Props) {
       case "0":
         return (
           <TelescopeBoxLayout model={model} baseColor={baseColor} size={size} />
+        );
+
+      case "1":
+        return (
+          <ChipsPackageLayout model={model} baseColor={baseColor} size={size} />
         );
       default:
         return (
