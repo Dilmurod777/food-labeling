@@ -19,6 +19,7 @@ import {
 import { MeshStandardMaterial, Object3D, Texture } from "three";
 import { Vector3 } from "@react-three/fiber";
 import { GetHSV } from "@/app/lib/utilities";
+import FullOverlapSlottedContainer from "@/app/ui/packaging/models/full-overlap-slotted-container";
 
 interface Props {
   currentModel: Model;
@@ -105,6 +106,17 @@ export default function Content({
           case "telescope-box":
             return (
               <TelescopeBox
+                step={currentStep}
+                totalSteps={currentModel.totalSteps}
+                width={size[0]}
+                height={size[1]}
+                depth={size[2]}
+                baseColor={baseColor}
+              />
+            );
+          case "full-overlap-slotted-container":
+            return (
+              <FullOverlapSlottedContainer
                 step={currentStep}
                 totalSteps={currentModel.totalSteps}
                 width={size[0]}

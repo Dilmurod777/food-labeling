@@ -1,6 +1,6 @@
 "use client";
 
-import { Model } from "@/app/lib/3d";
+import { Model, ModelCategory } from "@/app/lib/3d";
 import View from "@/app/ui/packaging/editor-3d/view";
 import TelescopeBoxLayout from "@/app/ui/packaging/layouts/telescope-box-layout";
 import { useState } from "react";
@@ -11,10 +11,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import ChipsPackageLayout from "@/app/ui/packaging/layouts/chips-package-layout";
+import FullOverlapSlottedContainerLayout from "@/app/ui/packaging/layouts/full-overlap-slotted-container-layout";
 
 interface Props {
   model: Model;
@@ -27,15 +27,38 @@ export default function Editor3D({ model }: Props) {
 
   const GetModelLayout = (model: Model) => {
     switch (model.id) {
-      case "0":
-        return (
-          <TelescopeBoxLayout model={model} baseColor={baseColor} size={size} />
-        );
-
-      case "1":
-        return (
-          <ChipsPackageLayout model={model} baseColor={baseColor} size={size} />
-        );
+      case "0": {
+        if (model.category == ModelCategory.Box) {
+          return (
+            <TelescopeBoxLayout
+              model={model}
+              baseColor={baseColor}
+              size={size}
+            />
+          );
+        }
+        if (model.category == ModelCategory.Pouch) {
+          return (
+            <ChipsPackageLayout
+              model={model}
+              baseColor={baseColor}
+              size={size}
+            />
+          );
+        }
+        break;
+      }
+      case "1": {
+        if (model.category == ModelCategory.Box) {
+          return (
+            <FullOverlapSlottedContainerLayout
+              model={model}
+              baseColor={baseColor}
+              size={size}
+            />
+          );
+        }
+      }
       default:
         return (
           <div

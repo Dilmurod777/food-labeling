@@ -114,6 +114,23 @@ export const DefaultModelItems: Model[] = [
   },
   {
     id: "1",
+    category: ModelCategory.Box,
+    type: ModelType.Generated,
+    modelPath: "full-overlap-slotted-container",
+    text: "FOL Container",
+    imgPath: "fol.png",
+    layoutPath: "full-overlap-slotted-container-layout",
+    animatable: true,
+    step: 0,
+    totalSteps: 35,
+    description:
+      "All flaps are the same length (approximately the width of the box). When closed, the outer flaps come within one inch of complete overlap. The style is especially resistant to rough handling. Stacked on its bottom panel, the overlapping flaps provide added cushioning and protection. Stacked on its side, the extra thickness provides added stacking strength.",
+    badges: ["cardboard", "custom size"],
+    sizes: [2, 3, 1],
+    baseColor: [34, 23, 60],
+  },
+  {
+    id: "pouch-0",
     category: ModelCategory.Pouch,
     type: ModelType.Loaded,
     modelPath: "chips-package.glb",

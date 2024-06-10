@@ -36,7 +36,7 @@ export default function Page() {
   const renderModelCard = (model: Model) => {
     return (
       <div
-        key={`model-${model.modelPath}-${model.imgPath}`}
+        key={`model-${model.category}-${model.id}`}
         className={
           "relative flex h-64 w-40 flex-col items-center overflow-hidden rounded-md border border-main-orange"
         }
@@ -60,7 +60,11 @@ export default function Page() {
             className={
               "cursor-pointer text-main-orange hover:text-hover-main-orange"
             }
-            onClick={() => router.push(`/packaging/editor?model=${model.id}`)}
+            onClick={() =>
+              router.push(
+                `/packaging/editor?model=${model.id}&category=${model.category}`,
+              )
+            }
           />
           {/*<Button*/}
           {/*  className={"bg-main-orange hover:bg-hover-main-orange"}*/}
@@ -76,7 +80,7 @@ export default function Page() {
           <div className={"absolute left-1 top-1 flex w-20 flex-wrap gap-1"}>
             {model.badges.slice(0, 3).map((badge, i) => (
               <Badge
-                key={`${model.modelPath}-${model.imgPath}-badge-${badge}`}
+                key={`${model.category}-${model.id}-badge-${badge}`}
                 className={`cursor-default px-1 text-[8px]/none`}
                 style={{
                   backgroundColor: GetTagColor(i),
@@ -136,7 +140,9 @@ export default function Page() {
                   {convertModelCategoryToTitle(category)}:
                 </h1>
                 <hr />
-                {filteredModels.map(renderModelCard)}
+                <div className={"flex w-full flex-wrap gap-2"}>
+                  {filteredModels.map(renderModelCard)}
+                </div>
               </div>
             );
           },
