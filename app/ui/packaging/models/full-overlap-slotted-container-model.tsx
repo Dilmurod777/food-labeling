@@ -1,17 +1,7 @@
 import { Euler, Vector3 } from "@react-three/fiber";
-import {
-  DoubleSide,
-  Group,
-  Mesh,
-  MultiplyBlending,
-  NoBlending,
-  NormalBlending,
-  Quaternion,
-} from "three";
+import { DoubleSide, Group } from "three";
 import { Ref, useEffect, useRef } from "react";
-import { AddVectors, SubtractVectors } from "@/app/lib/3d";
-import { BBAnchor, Box } from "@react-three/drei";
-import { groupStackFramesByFramework } from "next/dist/client/components/react-dev-overlay/internal/helpers/group-stack-frames-by-framework";
+import { SubtractVectors } from "@/app/lib/3d";
 import { GetHSV } from "@/app/lib/utilities";
 
 interface Props {
@@ -27,7 +17,7 @@ interface Data3D {
   meshRefs: Ref<Group>[];
 }
 
-export default function FullOverlapSlottedContainer({
+export default function FullOverlapSlottedContainerModel({
   step,
   totalSteps,
   width = 3,

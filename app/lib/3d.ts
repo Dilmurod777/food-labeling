@@ -33,6 +33,7 @@ export enum ModelCategory {
   Box,
   Pouch,
   Sachet,
+  CanJar,
 }
 
 export enum ModelType {
@@ -96,7 +97,7 @@ export const RestrictedKeyCodes: string[] = [
 
 export const DefaultModelItems: Model[] = [
   {
-    id: "0",
+    id: "box-0",
     category: ModelCategory.Box,
     type: ModelType.Generated,
     modelPath: "telescope-box",
@@ -113,7 +114,7 @@ export const DefaultModelItems: Model[] = [
     baseColor: [34, 23, 60],
   },
   {
-    id: "1",
+    id: "box-1",
     category: ModelCategory.Box,
     type: ModelType.Generated,
     modelPath: "full-overlap-slotted-container",
@@ -133,15 +134,32 @@ export const DefaultModelItems: Model[] = [
     id: "pouch-0",
     category: ModelCategory.Pouch,
     type: ModelType.Loaded,
-    modelPath: "chips-package.glb",
-    text: "Chips Package",
-    imgPath: "chips-package.png",
-    layoutPath: "chips-package-layout",
+    modelPath: "pouch-chips.glb",
+    text: "Chips pouch",
+    imgPath: "pouch-chips.png",
+    layoutPath: "pouch-chips-layout",
     animatable: false,
     step: 0,
     totalSteps: 0,
     description:
       "This premium chip packaging is perfect for those who want to keep their chips fresh and appealing, ensuring safe and secure delivery.",
+    badges: ["polymer", "custom size"],
+    sizes: [1, 1, 0.5],
+    baseColor: [34, 23, 60],
+  },
+  {
+    id: "sachet-0",
+    category: ModelCategory.Sachet,
+    type: ModelType.Loaded,
+    modelPath: "sachet-drink.glb",
+    text: "Drink Sachet",
+    imgPath: "sachet-drink.png",
+    layoutPath: "sachet-drink-layout",
+    animatable: false,
+    step: 0,
+    totalSteps: 0,
+    description:
+      "Enjoy delicious beverages anytime, anywhere with our convenient drink sachets. Just tear, mix, and savor a burst of flavor in every sip. Perfect for busy mornings or a quick pick-me-up!",
     badges: ["polymer", "custom size"],
     sizes: [1, 1, 0.5],
     baseColor: [34, 23, 60],

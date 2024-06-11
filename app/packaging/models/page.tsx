@@ -41,7 +41,7 @@ export default function Page() {
           "relative flex h-64 w-40 flex-col items-center overflow-hidden rounded-md border border-main-orange"
         }
       >
-        <div className={"relative h-[80%] w-[90%]"}>
+        <div className={"relative mt-10 h-[70%] w-[90%]"}>
           <Image
             className={"transition-all group-hover:scale-110"}
             src={`/preview/${model.imgPath}`}

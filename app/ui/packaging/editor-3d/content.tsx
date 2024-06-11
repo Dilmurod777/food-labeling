@@ -1,6 +1,6 @@
 import { Ref, useEffect, useMemo, useRef, useState } from "react";
 import Ground from "@/app/ui/packaging/editor-3d/ground";
-import TelescopeBox from "@/app/ui/packaging/models/telescope-box";
+import TelescopeBoxModel from "@/app/ui/packaging/models/telescope-box-model";
 import {
   KeyboardControls,
   KeyboardControlsEntry,
@@ -19,7 +19,9 @@ import {
 import { MeshStandardMaterial, Object3D, Texture } from "three";
 import { Vector3 } from "@react-three/fiber";
 import { GetHSV } from "@/app/lib/utilities";
-import FullOverlapSlottedContainer from "@/app/ui/packaging/models/full-overlap-slotted-container";
+import FullOverlapSlottedContainerModel from "@/app/ui/packaging/models/full-overlap-slotted-container-model";
+import { PouchChipsModel } from "@/app/ui/packaging/models/pouch-chips-model";
+import { SachetDrinkModel } from "@/app/ui/packaging/models/sachet-drink-model";
 
 interface Props {
   currentModel: Model;
@@ -83,29 +85,13 @@ export default function Content({
     }
   };
 
-  const LoadGLTF = (path: string) => {
-    const { nodes, materials } = useGLTF(path);
-    return (
-      <group dispose={null} position={[0, 0, 0]}>
-        <mesh
-          //@ts-ignore
-          geometry={nodes.Dorrito001_Lays_0.geometry}
-          // material={materials.Lays}
-          scale={size.map((s) => s * 0.05) as Vector3}
-        >
-          <meshBasicMaterial color={GetHSV(baseColor)} />
-        </mesh>
-      </group>
-    );
-  };
-
   const GetModelNode = (model: Model) => {
     switch (model.type) {
       case ModelType.Generated:
-        switch (model.modelPath) {
-          case "telescope-box":
+        switch (model.id) {
+          case "box-0":
             return (
-              <TelescopeBox
+              <TelescopeBoxModel
                 step={currentStep}
                 totalSteps={currentModel.totalSteps}
                 width={size[0]}
@@ -114,9 +100,9 @@ export default function Content({
                 baseColor={baseColor}
               />
             );
-          case "full-overlap-slotted-container":
+          case "box-1":
             return (
-              <FullOverlapSlottedContainer
+              <FullOverlapSlottedContainerModel
                 step={currentStep}
                 totalSteps={currentModel.totalSteps}
                 width={size[0]}
@@ -128,13 +114,12 @@ export default function Content({
         }
         break;
       case ModelType.Loaded: {
-        const extension = model.modelPath.split(".").pop();
-        switch (extension) {
-          case "glb":
-          case "gltf":
-            return LoadGLTF(`/models/${model.modelPath}`);
+        switch (model.id) {
+          case "pouch-0":
+            return <PouchChipsModel size={size} baseColor={baseColor} />;
+          case "sachet-0":
+            return <SachetDrinkModel size={size} baseColor={baseColor} />;
         }
-        return null;
       }
     }
 

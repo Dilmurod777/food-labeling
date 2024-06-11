@@ -23,7 +23,7 @@ interface Props {
   baseColor: number[];
 }
 
-export default function TelescopeBox({
+export default function TelescopeBoxModel({
   step,
   totalSteps,
   width = 3,
