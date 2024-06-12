@@ -7,7 +7,7 @@ interface Props {
   size: number[];
 }
 
-export default function ChipsPackageLayout({ model, baseColor, size }: Props) {
+export default function PouchChipsLayout({ model, baseColor, size }: Props) {
   const base = 150;
   const width = size[0] * base;
   const height = size[1] * base;

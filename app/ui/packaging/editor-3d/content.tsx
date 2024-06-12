@@ -22,6 +22,7 @@ import { GetHSV } from "@/app/lib/utilities";
 import FullOverlapSlottedContainerModel from "@/app/ui/packaging/models/full-overlap-slotted-container-model";
 import { PouchChipsModel } from "@/app/ui/packaging/models/pouch-chips-model";
 import { SachetDrinkModel } from "@/app/ui/packaging/models/sachet-drink-model";
+import { SachetSnackModel } from "@/app/ui/packaging/models/sachet-snack-model";
 
 interface Props {
   currentModel: Model;
@@ -86,41 +87,35 @@ export default function Content({
   };
 
   const GetModelNode = (model: Model) => {
-    switch (model.type) {
-      case ModelType.Generated:
-        switch (model.id) {
-          case "box-0":
-            return (
-              <TelescopeBoxModel
-                step={currentStep}
-                totalSteps={currentModel.totalSteps}
-                width={size[0]}
-                height={size[1]}
-                depth={size[2]}
-                baseColor={baseColor}
-              />
-            );
-          case "box-1":
-            return (
-              <FullOverlapSlottedContainerModel
-                step={currentStep}
-                totalSteps={currentModel.totalSteps}
-                width={size[0]}
-                height={size[1]}
-                depth={size[2]}
-                baseColor={baseColor}
-              />
-            );
-        }
-        break;
-      case ModelType.Loaded: {
-        switch (model.id) {
-          case "pouch-0":
-            return <PouchChipsModel size={size} baseColor={baseColor} />;
-          case "sachet-0":
-            return <SachetDrinkModel size={size} baseColor={baseColor} />;
-        }
-      }
+    switch (model.id) {
+      case "box-0":
+        return (
+          <TelescopeBoxModel
+            step={currentStep}
+            totalSteps={currentModel.totalSteps}
+            width={size[0]}
+            height={size[1]}
+            depth={size[2]}
+            baseColor={baseColor}
+          />
+        );
+      case "box-1":
+        return (
+          <FullOverlapSlottedContainerModel
+            step={currentStep}
+            totalSteps={currentModel.totalSteps}
+            width={size[0]}
+            height={size[1]}
+            depth={size[2]}
+            baseColor={baseColor}
+          />
+        );
+      case "pouch-0":
+        return <PouchChipsModel size={size} baseColor={baseColor} />;
+      case "sachet-0":
+        return <SachetDrinkModel size={size} baseColor={baseColor} />;
+      case "sachet-1":
+        return <SachetSnackModel size={size} baseColor={baseColor} />;
     }
 
     return null;

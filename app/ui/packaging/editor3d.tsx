@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import ChipsPackageLayout from "@/app/ui/packaging/layouts/chips-package-layout";
+import PouchChipsLayout from "@/app/ui/packaging/layouts/pouch-chips-layout";
 import FullOverlapSlottedContainerLayout from "@/app/ui/packaging/layouts/full-overlap-slotted-container-layout";
 
 interface Props {
@@ -39,11 +39,7 @@ export default function Editor3D({ model }: Props) {
         }
         if (model.category == ModelCategory.Pouch) {
           return (
-            <ChipsPackageLayout
-              model={model}
-              baseColor={baseColor}
-              size={size}
-            />
+            <PouchChipsLayout model={model} baseColor={baseColor} size={size} />
           );
         }
         break;

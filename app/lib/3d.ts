@@ -164,4 +164,21 @@ export const DefaultModelItems: Model[] = [
     sizes: [1, 1, 0.5],
     baseColor: [34, 23, 60],
   },
+  {
+    id: "sachet-1",
+    category: ModelCategory.Sachet,
+    type: ModelType.Loaded,
+    modelPath: "sachet-snack.glb",
+    text: "Snack Sachet",
+    imgPath: "sachet-snack.png",
+    layoutPath: "sachet-snack-layout",
+    animatable: false,
+    step: 0,
+    totalSteps: 0,
+    description:
+      "Enjoy a tasty snack on the go with our convenient snack sachets. Perfectly portioned for a quick, delicious treat anytime, anywhere. Just open and enjoy!",
+    badges: ["polymer", "custom size"],
+    sizes: [1, 1, 0.5],
+    baseColor: [34, 23, 60],
+  },
 ];
