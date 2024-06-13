@@ -19,9 +19,10 @@ import SachetDrinkLayout from "@/app/ui/packaging/layouts/sachet-drink-layout";
 import SachetSnackLayout from "@/app/ui/packaging/layouts/sachet-snack-layout";
 import { BagCoffeeModel } from "@/app/ui/packaging/models/bag-coffee-model";
 import BagCoffeeLayout from "@/app/ui/packaging/layouts/bag-coffee-layout";
-import BagMediumShoppingLayout from "@/app/ui/packaging/layouts/bag-medium-shopping-layout";
+import BagMediumShopping2Layout from "@/app/ui/packaging/layouts/bag-medium-shopping-2-layout";
 import CanPaintingTinShortLayout from "@/app/ui/packaging/layouts/can-painting-tin-short-layout";
 import CanPaintingTinTallLayout from "@/app/ui/packaging/layouts/can-painting-tin-tall-layout";
+import BagMediumShoppingLayout from "@/app/ui/packaging/layouts/bag-medium-shopping-layout";
 
 interface Props {
   model: Model;
@@ -66,6 +67,15 @@ export default function Editor3D({ model }: Props) {
       case "pouch-1": {
         return (
           <BagCoffeeLayout model={model} baseColor={baseColor} size={size} />
+        );
+      }
+      case "bag-0": {
+        return (
+          <BagMediumShopping2Layout
+            model={model}
+            baseColor={baseColor}
+            size={size}
+          />
         );
       }
       case "bag-1": {

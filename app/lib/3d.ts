@@ -194,6 +194,23 @@ export const DefaultModelItems: Model[] = [
     baseColor: [34, 23, 60],
   },
   {
+    id: "bag-0",
+    category: ModelCategory.Bag,
+    type: ModelType.Loaded,
+    modelPath: "bag-medium-shopping-2.glb",
+    text: "Medium shopping bag",
+    imgPath: "bag-medium-shopping-2.png",
+    layoutPath: "bag-medium-shopping-2-layout",
+    animatable: false,
+    step: 0,
+    totalSteps: 0,
+    description:
+      "Carry your essentials in style with our versatile medium shopping bag. Durable, spacious, and eco-friendly, it's perfect for all your shopping needs. Shop smart and stylishly!",
+    badges: ["polymer", "custom size"],
+    sizes: [1, 1, 1],
+    baseColor: [34, 23, 60],
+  },
+  {
     id: "bag-1",
     category: ModelCategory.Bag,
     type: ModelType.Loaded,

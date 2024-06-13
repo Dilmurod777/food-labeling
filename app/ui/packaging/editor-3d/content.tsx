@@ -27,6 +27,7 @@ import { BagCoffeeModel } from "@/app/ui/packaging/models/bag-coffee-model";
 import { BagMediumShoppingModel } from "@/app/ui/packaging/models/bag-medium-shopping-model";
 import { CanPaintTinShortModel } from "@/app/ui/packaging/models/can-paint-tin-short-model";
 import { CanPaintTinTallModel } from "@/app/ui/packaging/models/can-paint-tin-tall-model";
+import { BagMediumShopping2Model } from "@/app/ui/packaging/models/bag-medium-shopping-2-model";
 
 interface Props {
   currentModel: Model;
@@ -122,6 +123,8 @@ export default function Content({
         return <SachetDrinkModel size={size} baseColor={baseColor} />;
       case "sachet-1":
         return <SachetSnackModel size={size} baseColor={baseColor} />;
+      case "bag-0":
+        return <BagMediumShopping2Model size={size} baseColor={baseColor} />;
       case "bag-1":
         return <BagMediumShoppingModel size={size} baseColor={baseColor} />;
       case "can-0":
