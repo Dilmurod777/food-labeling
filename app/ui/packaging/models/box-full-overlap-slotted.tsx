@@ -17,7 +17,7 @@ interface Data3D {
   meshRefs: Ref<Group>[];
 }
 
-export default function FullOverlapSlottedContainerModel({
+export default function BoxFullOverlapSlotted({
   step,
   totalSteps,
   width = 3,

@@ -2,7 +2,7 @@
 
 import { Model, ModelCategory } from "@/app/lib/3d";
 import View from "@/app/ui/packaging/editor-3d/view";
-import TelescopeBoxLayout from "@/app/ui/packaging/layouts/telescope-box-layout";
+import BoxTelescopeLayout from "@/app/ui/packaging/layouts/box-telescope-layout";
 import { useState } from "react";
 import { HslColorPicker } from "react-colorful";
 import { GetHSV } from "@/app/lib/utilities";
@@ -14,7 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import PouchChipsLayout from "@/app/ui/packaging/layouts/pouch-chips-layout";
-import FullOverlapSlottedContainerLayout from "@/app/ui/packaging/layouts/full-overlap-slotted-container-layout";
+import BoxFullOverlapSlottedLayout from "@/app/ui/packaging/layouts/box-full-overlap-slotted-layout";
 import SachetDrinkLayout from "@/app/ui/packaging/layouts/sachet-drink-layout";
 import SachetSnackLayout from "@/app/ui/packaging/layouts/sachet-snack-layout";
 import { BagCoffeeModel } from "@/app/ui/packaging/models/bag-coffee-model";
@@ -23,6 +23,7 @@ import BagMediumShopping2Layout from "@/app/ui/packaging/layouts/bag-medium-shop
 import CanPaintingTinShortLayout from "@/app/ui/packaging/layouts/can-painting-tin-short-layout";
 import CanPaintingTinTallLayout from "@/app/ui/packaging/layouts/can-painting-tin-tall-layout";
 import BagMediumShoppingLayout from "@/app/ui/packaging/layouts/bag-medium-shopping-layout";
+import BoxSimpleTallLayout from "@/app/ui/packaging/layouts/box-simple-tall-layout";
 
 interface Props {
   model: Model;
@@ -37,12 +38,21 @@ export default function Editor3D({ model }: Props) {
     switch (model.id) {
       case "box-0": {
         return (
-          <TelescopeBoxLayout model={model} baseColor={baseColor} size={size} />
+          <BoxTelescopeLayout model={model} baseColor={baseColor} size={size} />
         );
       }
       case "box-1": {
         return (
-          <FullOverlapSlottedContainerLayout
+          <BoxFullOverlapSlottedLayout
+            model={model}
+            baseColor={baseColor}
+            size={size}
+          />
+        );
+      }
+      case "box-2": {
+        return (
+          <BoxSimpleTallLayout
             model={model}
             baseColor={baseColor}
             size={size}

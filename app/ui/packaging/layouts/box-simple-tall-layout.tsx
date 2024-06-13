@@ -7,12 +7,8 @@ interface Props {
   size: number[];
 }
 
-export default function FullOverlapSlottedContainerLayout({
-  model,
-  baseColor,
-  size,
-}: Props) {
-  const base = 60;
+export default function BoxSimpleTallLayout({ model, baseColor, size }: Props) {
+  const base = 40;
   const width = size[0] * base;
   const height = size[1] * base;
   const depth = size[2] * base;
@@ -25,12 +21,47 @@ export default function FullOverlapSlottedContainerLayout({
             "w-full border-b border-b-main-gray pb-2 text-2xl/none font-bold"
           }
         >
-          Full:
+          Top:
         </h1>
         <div className={"flex w-full items-center justify-center gap-1"}>
           <div className={"flex w-fit flex-col gap-1"}>
             <div
               style={{
+                width: `${depth}px`,
+                height: `${depth}px`,
+                backgroundColor: GetHSV([
+                  baseColor[0],
+                  baseColor[1],
+                  baseColor[2] - 5,
+                ]),
+              }}
+            />
+            <div
+              style={{
+                width: `${depth}px`,
+                height: `${height}px`,
+                backgroundColor: GetHSV([
+                  baseColor[0],
+                  baseColor[1],
+                  baseColor[2] - 2,
+                ]),
+              }}
+            />
+            <div
+              style={{
+                width: `${depth}px`,
+                height: `${depth}px`,
+                backgroundColor: GetHSV([
+                  baseColor[0],
+                  baseColor[1],
+                  baseColor[2] - 5,
+                ]),
+              }}
+            />
+          </div>
+          <div className={"flex w-fit flex-col gap-1"}>
+            <div
+              style={{
                 width: `${width}px`,
                 height: `${depth}px`,
                 backgroundColor: GetHSV([
@@ -44,11 +75,7 @@ export default function FullOverlapSlottedContainerLayout({
               style={{
                 width: `${width}px`,
                 height: `${height}px`,
-                backgroundColor: GetHSV([
-                  baseColor[0],
-                  baseColor[1],
-                  baseColor[2] - 2,
-                ]),
+                backgroundColor: GetHSV(baseColor),
               }}
             />
             <div
@@ -67,7 +94,7 @@ export default function FullOverlapSlottedContainerLayout({
             <div
               style={{
                 width: `${depth}px`,
-                height: `${width}px`,
+                height: `${depth}px`,
                 backgroundColor: GetHSV([
                   baseColor[0],
                   baseColor[1],
@@ -89,11 +116,58 @@ export default function FullOverlapSlottedContainerLayout({
             <div
               style={{
                 width: `${depth}px`,
-                height: `${width}px`,
+                height: `${depth}px`,
                 backgroundColor: GetHSV([
                   baseColor[0],
                   baseColor[1],
                   baseColor[2] - 5,
+                ]),
+              }}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className={"flex w-full flex-col gap-6"}>
+        <h1
+          className={
+            "w-full border-b border-b-main-gray pb-2 text-2xl/none font-bold"
+          }
+        >
+          Bottom:
+        </h1>
+        <div className={"flex w-full items-center justify-center gap-1"}>
+          <div className={"flex w-fit flex-col gap-1"}>
+            <div
+              style={{
+                width: `${depth}px`,
+                height: `${depth}px`,
+                backgroundColor: GetHSV([
+                  baseColor[0],
+                  baseColor[1],
+                  baseColor[2] + 5,
+                ]),
+              }}
+            />
+            <div
+              style={{
+                width: `${depth}px`,
+                height: `${height}px`,
+                backgroundColor: GetHSV([
+                  baseColor[0],
+                  baseColor[1],
+                  baseColor[2] + 2,
+                ]),
+              }}
+            />
+            <div
+              style={{
+                width: `${depth}px`,
+                height: `${depth}px`,
+                backgroundColor: GetHSV([
+                  baseColor[0],
+                  baseColor[1],
+                  baseColor[2] + 5,
                 ]),
               }}
             />
@@ -106,7 +180,7 @@ export default function FullOverlapSlottedContainerLayout({
                 backgroundColor: GetHSV([
                   baseColor[0],
                   baseColor[1],
-                  baseColor[2] - 5,
+                  baseColor[2] + 5,
                 ]),
               }}
             />
@@ -114,11 +188,7 @@ export default function FullOverlapSlottedContainerLayout({
               style={{
                 width: `${width}px`,
                 height: `${height}px`,
-                backgroundColor: GetHSV([
-                  baseColor[0],
-                  baseColor[1],
-                  baseColor[2] - 2,
-                ]),
+                backgroundColor: GetHSV(baseColor),
               }}
             />
             <div
@@ -128,7 +198,7 @@ export default function FullOverlapSlottedContainerLayout({
                 backgroundColor: GetHSV([
                   baseColor[0],
                   baseColor[1],
-                  baseColor[2] - 5,
+                  baseColor[2] + 5,
                 ]),
               }}
             />
@@ -137,11 +207,11 @@ export default function FullOverlapSlottedContainerLayout({
             <div
               style={{
                 width: `${depth}px`,
-                height: `${width}px`,
+                height: `${depth}px`,
                 backgroundColor: GetHSV([
                   baseColor[0],
                   baseColor[1],
-                  baseColor[2] - 5,
+                  baseColor[2] + 5,
                 ]),
               }}
             />
@@ -152,18 +222,18 @@ export default function FullOverlapSlottedContainerLayout({
                 backgroundColor: GetHSV([
                   baseColor[0],
                   baseColor[1],
-                  baseColor[2] - 2,
+                  baseColor[2] + 2,
                 ]),
               }}
             />
             <div
               style={{
                 width: `${depth}px`,
-                height: `${width}px`,
+                height: `${depth}px`,
                 backgroundColor: GetHSV([
                   baseColor[0],
                   baseColor[1],
-                  baseColor[2] - 5,
+                  baseColor[2] + 5,
                 ]),
               }}
             />

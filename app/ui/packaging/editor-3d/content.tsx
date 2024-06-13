@@ -1,6 +1,6 @@
 import { Ref, useEffect, useMemo, useRef, useState } from "react";
 import Ground from "@/app/ui/packaging/editor-3d/ground";
-import TelescopeBoxModel from "@/app/ui/packaging/models/telescope-box-model";
+import BoxTelescopeModel from "@/app/ui/packaging/models/box-telescope-model";
 import {
   KeyboardControls,
   KeyboardControlsEntry,
@@ -19,7 +19,7 @@ import {
 import { MeshStandardMaterial, Object3D, Texture } from "three";
 import { Vector3 } from "@react-three/fiber";
 import { GetHSV } from "@/app/lib/utilities";
-import FullOverlapSlottedContainerModel from "@/app/ui/packaging/models/full-overlap-slotted-container-model";
+import BoxFullOverlapSlotted from "@/app/ui/packaging/models/box-full-overlap-slotted";
 import { PouchChipsModel } from "@/app/ui/packaging/models/pouch-chips-model";
 import { SachetDrinkModel } from "@/app/ui/packaging/models/sachet-drink-model";
 import { SachetSnackModel } from "@/app/ui/packaging/models/sachet-snack-model";
@@ -28,6 +28,7 @@ import { BagMediumShoppingModel } from "@/app/ui/packaging/models/bag-medium-sho
 import { CanPaintTinShortModel } from "@/app/ui/packaging/models/can-paint-tin-short-model";
 import { CanPaintTinTallModel } from "@/app/ui/packaging/models/can-paint-tin-tall-model";
 import { BagMediumShopping2Model } from "@/app/ui/packaging/models/bag-medium-shopping-2-model";
+import BoxSimpleTallModel from "@/app/ui/packaging/models/box-simple-tall-model";
 
 interface Props {
   currentModel: Model;
@@ -95,7 +96,7 @@ export default function Content({
     switch (model.id) {
       case "box-0":
         return (
-          <TelescopeBoxModel
+          <BoxTelescopeModel
             step={currentStep}
             totalSteps={currentModel.totalSteps}
             width={size[0]}
@@ -106,7 +107,19 @@ export default function Content({
         );
       case "box-1":
         return (
-          <FullOverlapSlottedContainerModel
+          <BoxFullOverlapSlotted
+            step={currentStep}
+            totalSteps={currentModel.totalSteps}
+            width={size[0]}
+            height={size[1]}
+            depth={size[2]}
+            baseColor={baseColor}
+          />
+        );
+
+      case "box-2":
+        return (
+          <BoxSimpleTallModel
             step={currentStep}
             totalSteps={currentModel.totalSteps}
             width={size[0]}
