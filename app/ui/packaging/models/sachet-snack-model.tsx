@@ -15,12 +15,13 @@ export function SachetSnackModel({
   baseColor = [34, 0, 82],
 }: Props) {
   const { nodes, materials } = useGLTF(modelPath);
+
   return (
     <group dispose={null}>
       <mesh
         //@ts-ignore
         geometry={nodes.Default.geometry}
-        scale={size.map((s) => s * 0.2) as Vector3}
+        scale={[size[1], size[2], size[0]].map((s) => s * 30) as Vector3}
       >
         <meshBasicMaterial color={GetHSV(baseColor)} />
       </mesh>

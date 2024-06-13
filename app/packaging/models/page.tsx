@@ -60,11 +60,7 @@ export default function Page() {
             className={
               "cursor-pointer text-main-orange hover:text-hover-main-orange"
             }
-            onClick={() =>
-              router.push(
-                `/packaging/editor?model=${model.id}&category=${model.category}`,
-              )
-            }
+            onClick={() => router.push(`/packaging/editor?model=${model.id}`)}
           />
           {/*<Button*/}
           {/*  className={"bg-main-orange hover:bg-hover-main-orange"}*/}

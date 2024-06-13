@@ -9,11 +9,8 @@ import Editor3D from "@/app/ui/packaging/editor3d";
 export default function Page() {
   const params = useSearchParams();
   const modelId = params.get("model");
-  const modelCategory = params.get("category");
 
-  const model = DefaultModelItems.find(
-    (item) => item.id === modelId && item.category.toString() == modelCategory,
-  );
+  const model = DefaultModelItems.find((item) => item.id === modelId);
 
   if (!model)
     return (

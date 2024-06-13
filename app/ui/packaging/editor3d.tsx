@@ -15,6 +15,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import PouchChipsLayout from "@/app/ui/packaging/layouts/pouch-chips-layout";
 import FullOverlapSlottedContainerLayout from "@/app/ui/packaging/layouts/full-overlap-slotted-container-layout";
+import SachetDrinkLayout from "@/app/ui/packaging/layouts/sachet-drink-layout";
+import SachetSnackLayout from "@/app/ui/packaging/layouts/sachet-snack-layout";
 
 interface Props {
   model: Model;
@@ -27,24 +29,12 @@ export default function Editor3D({ model }: Props) {
 
   const GetModelLayout = (model: Model) => {
     switch (model.id) {
-      case "0": {
-        if (model.category == ModelCategory.Box) {
-          return (
-            <TelescopeBoxLayout
-              model={model}
-              baseColor={baseColor}
-              size={size}
-            />
-          );
-        }
-        if (model.category == ModelCategory.Pouch) {
-          return (
-            <PouchChipsLayout model={model} baseColor={baseColor} size={size} />
-          );
-        }
-        break;
+      case "box-0": {
+        return (
+          <TelescopeBoxLayout model={model} baseColor={baseColor} size={size} />
+        );
       }
-      case "1": {
+      case "box-1": {
         if (model.category == ModelCategory.Box) {
           return (
             <FullOverlapSlottedContainerLayout
@@ -54,6 +44,21 @@ export default function Editor3D({ model }: Props) {
             />
           );
         }
+      }
+      case "pouch-0": {
+        return (
+          <PouchChipsLayout model={model} baseColor={baseColor} size={size} />
+        );
+      }
+      case "sachet-0": {
+        return (
+          <SachetDrinkLayout model={model} baseColor={baseColor} size={size} />
+        );
+      }
+      case "sachet-1": {
+        return (
+          <SachetSnackLayout model={model} baseColor={baseColor} size={size} />
+        );
       }
       default:
         return (

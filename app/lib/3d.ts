@@ -86,14 +86,7 @@ export function SubtractVectors<T>(
   return [a[0] - b[0], a[1] - b[1], a[2] - b[2]] as T;
 }
 
-export const RestrictedKeyCodes: string[] = [
-  "Delete",
-  "Backspace",
-  "ArrowDown",
-  "ArrowUp",
-  "Alt",
-  "Control",
-];
+export const RestrictedKeyCodes: string[] = [];
 
 export const DefaultModelItems: Model[] = [
   {
@@ -178,7 +171,7 @@ export const DefaultModelItems: Model[] = [
     description:
       "Enjoy a tasty snack on the go with our convenient snack sachets. Perfectly portioned for a quick, delicious treat anytime, anywhere. Just open and enjoy!",
     badges: ["polymer", "custom size"],
-    sizes: [1, 1, 0.5],
+    sizes: [1, 1, 1],
     baseColor: [34, 23, 60],
   },
 ];
