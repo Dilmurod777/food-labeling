@@ -130,6 +130,7 @@ export default function Page() {
           ModelCategory.Sachet,
           ModelCategory.Pouch,
           ModelCategory.Bag,
+          ModelCategory.Can,
         ].map((category) => {
           const filteredModels = models.filter((m) => m.category == category);
 

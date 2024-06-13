@@ -210,4 +210,21 @@ export const DefaultModelItems: Model[] = [
     sizes: [1, 1, 1],
     baseColor: [34, 23, 60],
   },
+  {
+    id: "can-0",
+    category: ModelCategory.Can,
+    type: ModelType.Loaded,
+    modelPath: "can-painting-tin-short.glb",
+    text: "Small can",
+    imgPath: "can-painting-tin-short.png",
+    layoutPath: "can-painting-tin-short-layout",
+    animatable: false,
+    step: 0,
+    totalSteps: 0,
+    description:
+      "Transform your projects with our short painting tin. Easy to handle and perfect for small jobs, it delivers smooth, vibrant results every time. Ideal for quick touch-ups and detailed work!",
+    badges: ["polymer", "custom size"],
+    sizes: [1, 1, 1],
+    baseColor: [34, 23, 60],
+  },
 ];

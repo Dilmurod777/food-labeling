@@ -20,6 +20,7 @@ import SachetSnackLayout from "@/app/ui/packaging/layouts/sachet-snack-layout";
 import { BagCoffeeModel } from "@/app/ui/packaging/models/bag-coffee-model";
 import BagCoffeeLayout from "@/app/ui/packaging/layouts/bag-coffee-layout";
 import BagMediumShoppingLayout from "@/app/ui/packaging/layouts/bag-medium-shopping-layout";
+import CanPaintingTinShortLayout from "@/app/ui/packaging/layouts/can-painting-tin-short-layout";
 
 interface Props {
   model: Model;
@@ -69,6 +70,15 @@ export default function Editor3D({ model }: Props) {
       case "bag-1": {
         return (
           <BagMediumShoppingLayout
+            model={model}
+            baseColor={baseColor}
+            size={size}
+          />
+        );
+      }
+      case "can-0": {
+        return (
+          <CanPaintingTinShortLayout
             model={model}
             baseColor={baseColor}
             size={size}

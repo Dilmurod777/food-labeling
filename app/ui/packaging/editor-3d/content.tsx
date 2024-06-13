@@ -25,6 +25,7 @@ import { SachetDrinkModel } from "@/app/ui/packaging/models/sachet-drink-model";
 import { SachetSnackModel } from "@/app/ui/packaging/models/sachet-snack-model";
 import { BagCoffeeModel } from "@/app/ui/packaging/models/bag-coffee-model";
 import { BagMediumShoppingModel } from "@/app/ui/packaging/models/bag-medium-shopping-model";
+import { CanPaintTinShortModel } from "@/app/ui/packaging/models/can-paint-tin-short-model";
 
 interface Props {
   currentModel: Model;
@@ -122,6 +123,8 @@ export default function Content({
         return <BagCoffeeModel size={size} baseColor={baseColor} />;
       case "bag-1":
         return <BagMediumShoppingModel size={size} baseColor={baseColor} />;
+      case "can-0":
+        return <CanPaintTinShortModel size={size} baseColor={baseColor} />;
     }
 
     return null;
@@ -135,6 +138,7 @@ export default function Content({
         anchor={[0, 0, 0]}
         depthTest={false}
         disableSliders={true}
+        disableScaling={true}
       >
         <group name={model.modelPath} onClick={() => setShowPivots(true)}>
           {GetModelNode(model)}
