@@ -17,8 +17,9 @@ import PouchChipsLayout from "@/app/ui/packaging/layouts/pouch-chips-layout";
 import FullOverlapSlottedContainerLayout from "@/app/ui/packaging/layouts/full-overlap-slotted-container-layout";
 import SachetDrinkLayout from "@/app/ui/packaging/layouts/sachet-drink-layout";
 import SachetSnackLayout from "@/app/ui/packaging/layouts/sachet-snack-layout";
-import { BagCoffeeModel } from "@/app/ui/packaging/models/bag-coffee";
+import { BagCoffeeModel } from "@/app/ui/packaging/models/bag-coffee-model";
 import BagCoffeeLayout from "@/app/ui/packaging/layouts/bag-coffee-layout";
+import BagMediumShoppingLayout from "@/app/ui/packaging/layouts/bag-medium-shopping-layout";
 
 interface Props {
   model: Model;
@@ -63,6 +64,15 @@ export default function Editor3D({ model }: Props) {
       case "bag-0": {
         return (
           <BagCoffeeLayout model={model} baseColor={baseColor} size={size} />
+        );
+      }
+      case "bag-1": {
+        return (
+          <BagMediumShoppingLayout
+            model={model}
+            baseColor={baseColor}
+            size={size}
+          />
         );
       }
       default:
