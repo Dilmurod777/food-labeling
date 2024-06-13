@@ -33,7 +33,9 @@ export enum ModelCategory {
   Box,
   Pouch,
   Sachet,
-  CanJar,
+  Can,
+  Jar,
+  Bag,
 }
 
 export enum ModelType {
@@ -170,6 +172,23 @@ export const DefaultModelItems: Model[] = [
     totalSteps: 0,
     description:
       "Enjoy a tasty snack on the go with our convenient snack sachets. Perfectly portioned for a quick, delicious treat anytime, anywhere. Just open and enjoy!",
+    badges: ["polymer", "custom size"],
+    sizes: [1, 1, 1],
+    baseColor: [34, 23, 60],
+  },
+  {
+    id: "bag-0",
+    category: ModelCategory.Bag,
+    type: ModelType.Loaded,
+    modelPath: "bag-coffee.glb",
+    text: "Coffee bag",
+    imgPath: "bag-coffee.png",
+    layoutPath: "coffee-bag-layout",
+    animatable: false,
+    step: 0,
+    totalSteps: 0,
+    description:
+      "Experience the perfect brew anytime with our convenient coffee bags. Just steep, sip, and savor rich, aromatic coffee in minutes. Perfect for home, office, or on the go!",
     badges: ["polymer", "custom size"],
     sizes: [1, 1, 1],
     baseColor: [34, 23, 60],

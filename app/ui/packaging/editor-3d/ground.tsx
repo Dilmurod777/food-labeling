@@ -20,6 +20,7 @@ export default function Ground() {
       args={[10, 10]}
       {...gridConfig}
       receiveShadow={true}
+      castShadow={true}
     />
   );
 }

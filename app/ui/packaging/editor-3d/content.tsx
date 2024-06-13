@@ -23,6 +23,7 @@ import FullOverlapSlottedContainerModel from "@/app/ui/packaging/models/full-ove
 import { PouchChipsModel } from "@/app/ui/packaging/models/pouch-chips-model";
 import { SachetDrinkModel } from "@/app/ui/packaging/models/sachet-drink-model";
 import { SachetSnackModel } from "@/app/ui/packaging/models/sachet-snack-model";
+import { BagCoffeeModel } from "@/app/ui/packaging/models/bag-coffee";
 
 interface Props {
   currentModel: Model;
@@ -116,6 +117,8 @@ export default function Content({
         return <SachetDrinkModel size={size} baseColor={baseColor} />;
       case "sachet-1":
         return <SachetSnackModel size={size} baseColor={baseColor} />;
+      case "bag-0":
+        return <BagCoffeeModel size={size} baseColor={baseColor} />;
     }
 
     return null;

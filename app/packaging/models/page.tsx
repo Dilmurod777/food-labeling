@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DefaultModelItems, Model, ModelCategory } from "@/app/lib/3d";
+import {
+  DefaultModelItems,
+  Model,
+  ModelCategory,
+  ModelType,
+} from "@/app/lib/3d";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { CiCircleInfo } from "react-icons/ci";
@@ -120,29 +125,32 @@ export default function Page() {
       </div>
       <div className={"flex flex-col gap-4"}>
         {fetching && <div>Loading...</div>}
-        {[ModelCategory.Box, ModelCategory.Sachet, ModelCategory.Pouch].map(
-          (category) => {
-            const filteredModels = models.filter((m) => m.category == category);
+        {[
+          ModelCategory.Box,
+          ModelCategory.Sachet,
+          ModelCategory.Pouch,
+          ModelCategory.Bag,
+        ].map((category) => {
+          const filteredModels = models.filter((m) => m.category == category);
 
-            if (filteredModels.length == 0)
-              return <div key={`model-category-${category}`} />;
+          if (filteredModels.length == 0)
+            return <div key={`model-category-${category}`} />;
 
-            return (
-              <div
-                key={`model-category-${category}`}
-                className={"flex w-full flex-col flex-wrap gap-2"}
-              >
-                <h1 className={"text-2xl/none font-bold"}>
-                  {convertModelCategoryToTitle(category)}:
-                </h1>
-                <hr />
-                <div className={"flex w-full flex-wrap gap-2"}>
-                  {filteredModels.map(renderModelCard)}
-                </div>
+          return (
+            <div
+              key={`model-category-${category}`}
+              className={"flex w-full flex-col flex-wrap gap-2"}
+            >
+              <h1 className={"text-2xl/none font-bold"}>
+                {convertModelCategoryToTitle(category)}:
+              </h1>
+              <hr />
+              <div className={"flex w-full flex-wrap gap-2"}>
+                {filteredModels.map(renderModelCard)}
               </div>
-            );
-          },
-        )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

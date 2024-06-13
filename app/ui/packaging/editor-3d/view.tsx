@@ -146,9 +146,10 @@ export default function View({ initialModel, baseColor, size }: Props) {
           visible={true}
           position={[3.3, 1.0, 4.4]}
           castShadow
+          intensity={0}
         />
         {GetCurrentControls()}
-        <SoftShadows size={1} />
+        <SoftShadows size={10} focus={10} />
 
         <Content
           currentModel={currentModel}
