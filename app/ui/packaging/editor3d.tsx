@@ -63,7 +63,7 @@ export default function Editor3D({ model }: Props) {
           <SachetSnackLayout model={model} baseColor={baseColor} size={size} />
         );
       }
-      case "bag-0": {
+      case "pouch-1": {
         return (
           <BagCoffeeLayout model={model} baseColor={baseColor} size={size} />
         );

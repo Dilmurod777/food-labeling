@@ -116,12 +116,12 @@ export default function Content({
         );
       case "pouch-0":
         return <PouchChipsModel size={size} baseColor={baseColor} />;
+      case "pouch-1":
+        return <BagCoffeeModel size={size} baseColor={baseColor} />;
       case "sachet-0":
         return <SachetDrinkModel size={size} baseColor={baseColor} />;
       case "sachet-1":
         return <SachetSnackModel size={size} baseColor={baseColor} />;
-      case "bag-0":
-        return <BagCoffeeModel size={size} baseColor={baseColor} />;
       case "bag-1":
         return <BagMediumShoppingModel size={size} baseColor={baseColor} />;
       case "can-0":

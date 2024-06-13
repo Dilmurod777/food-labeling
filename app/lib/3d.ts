@@ -177,8 +177,8 @@ export const DefaultModelItems: Model[] = [
     baseColor: [34, 23, 60],
   },
   {
-    id: "bag-0",
-    category: ModelCategory.Bag,
+    id: "pouch-1",
+    category: ModelCategory.Pouch,
     type: ModelType.Loaded,
     modelPath: "bag-coffee.glb",
     text: "Coffee bag",
