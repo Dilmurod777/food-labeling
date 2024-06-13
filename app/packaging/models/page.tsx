@@ -52,6 +52,8 @@ export default function Page() {
             src={`/preview/${model.imgPath}`}
             alt={model.text}
             fill
+            sizes={"100%"}
+            priority={true}
             style={{
               objectFit: "contain",
             }}
@@ -67,14 +69,6 @@ export default function Page() {
             }
             onClick={() => router.push(`/packaging/editor?model=${model.id}`)}
           />
-          {/*<Button*/}
-          {/*  className={"bg-main-orange hover:bg-hover-main-orange"}*/}
-          {/*  onClick={() => {*/}
-          {/*    router.push(`/packaging/editor?model=${model.id}`);*/}
-          {/*  }}*/}
-          {/*>*/}
-          {/*  Select*/}
-          {/*</Button>*/}
         </div>
 
         {model.badges.length > 0 && (
