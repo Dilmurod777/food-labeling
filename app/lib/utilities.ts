@@ -587,6 +587,10 @@ export function convertModelCategoryToTitle(category: ModelCategory) {
       return "Sachets";
     case ModelCategory.Pouch:
       return "Pouches";
+    case ModelCategory.Bag:
+      return "Bags";
+    case ModelCategory.Can:
+      return "Cans";
     default:
       return "Others";
   }

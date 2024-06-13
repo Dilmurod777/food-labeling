@@ -227,4 +227,21 @@ export const DefaultModelItems: Model[] = [
     sizes: [1, 1, 1],
     baseColor: [34, 23, 60],
   },
+  {
+    id: "can-1",
+    category: ModelCategory.Can,
+    type: ModelType.Loaded,
+    modelPath: "can-painting-tin-tall.glb",
+    text: "Tall can",
+    imgPath: "can-painting-tin-tall.png",
+    layoutPath: "can-painting-tin-tall-layout",
+    animatable: false,
+    step: 0,
+    totalSteps: 0,
+    description:
+      "Achieve flawless coverage with our tall painting tin. Perfect for larger projects, it ensures a smooth, even finish with every stroke. Ideal for transforming any space with ease!",
+    badges: ["polymer", "custom size"],
+    sizes: [1, 1, 1],
+    baseColor: [34, 23, 60],
+  },
 ];
