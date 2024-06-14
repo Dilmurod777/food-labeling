@@ -165,6 +165,23 @@ export const DefaultModelItems: Model[] = [
     baseColor: [34, 23, 60],
   },
   {
+    id: "box-4",
+    category: ModelCategory.Box,
+    type: ModelType.Generated,
+    modelPath: "box-slide-model",
+    text: "Slide box",
+    imgPath: ["box-slide-2.png", "box-slide.png"],
+    layoutPath: "simple-tall-box-layout",
+    animatable: true,
+    step: 0,
+    totalSteps: 7,
+    description:
+      "Discover convenience and style with our sleek slide box. Perfect for organizing and protecting your items, it offers easy access and secure storage. Ideal for gifts, collectibles, and everyday essentials!",
+    badges: ["cardboard", "custom size"],
+    sizes: [2, 1, 2],
+    baseColor: [34, 23, 60],
+  },
+  {
     id: "pouch-0",
     category: ModelCategory.Pouch,
     type: ModelType.Loaded,

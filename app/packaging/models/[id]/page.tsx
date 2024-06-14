@@ -52,10 +52,10 @@ export default function Page({ params }: { params: { id: string } }) {
   return (
     <div
       className={
-        "flex h-full w-full flex-grow items-start justify-center gap-12 px-12 py-12"
+        "flex h-full w-full flex-grow items-start justify-center gap-20 px-20 py-12"
       }
     >
-      <div className={"flex h-full w-1/3 items-start justify-center"}>
+      <div className={"flex h-full w-1/4 items-start justify-center"}>
         <Carousel
           opts={{
             align: "start",
