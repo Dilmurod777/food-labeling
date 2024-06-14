@@ -3,7 +3,7 @@
 import View from "@/app/ui/packaging/editor-3d/view";
 import { useParams, useSearchParams } from "next/navigation";
 import { DefaultModelItems, Model } from "@/app/lib/3d";
-import TelescopeBoxLayout from "@/app/ui/packaging/layouts/telescope-box-layout";
+import BoxTelescopeLayout from "@/app/ui/packaging/layouts/box-telescope-layout";
 import Editor3D from "@/app/ui/packaging/editor3d";
 
 export default function Page() {
