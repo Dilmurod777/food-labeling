@@ -36,15 +36,55 @@ export default function BoxSimpleTallModel({
       useRef(null),
       useRef(null),
       useRef(null),
+      useRef(null),
     ],
   };
 
-  useEffect(() => {}, [step]);
+  useEffect(() => {
+    const obj3 = meshRefs[3];
+    const obj5 = meshRefs[5];
+    const obj1 = meshRefs[1];
+    const obj2 = meshRefs[2];
+
+    if (step <= 5) {
+      //@ts-ignore
+      obj3.current.rotation.z = (step * Math.PI) / 2 / 5;
+      //@ts-ignore
+      obj3.current.position.x = -(step * width) / 2 / 5;
+      //@ts-ignore
+      obj3.current.position.y = height + (step * width) / 2 / 5;
+    }
+
+    if (step > 5 && step <= 11) {
+      //@ts-ignore
+      obj5.current.rotation.y = Math.PI / 2 + ((step - 6) * Math.PI) / 2 / 5;
+      //@ts-ignore
+      obj5.current.position.y = -width / 6 + ((step - 6) * width) / 6 / 5;
+      //@ts-ignore
+      obj5.current.position.x = width / 2 + ((step - 6) * width) / 6 / 5;
+    }
+
+    if (step > 11 && step <= 17) {
+      //@ts-ignore
+      obj1.current.rotation.x = Math.PI / 2 + ((step - 12) * Math.PI) / 2 / 5;
+      //@ts-ignore
+      obj1.current.position.y = height + ((step - 12) * depth) / 4 / 5;
+      //@ts-ignore
+      obj1.current.position.z = depth / 4 + ((step - 12) * depth) / 4 / 5;
+
+      //@ts-ignore
+      obj2.current.rotation.x = -Math.PI / 2 - ((step - 12) * Math.PI) / 2 / 5;
+      //@ts-ignore
+      obj2.current.position.y = height + ((step - 12) * depth) / 4 / 5;
+      //@ts-ignore
+      obj2.current.position.z = -depth / 4 - ((step - 12) * depth) / 4 / 5;
+    }
+  }, [step]);
 
   return (
     <group position={[0, 0, 0]}>
-      {/*bottom*/}
       <group>
+        {/*bottom*/}
         <Side
           meshRef={meshRefs[0] ?? null}
           width={width}
@@ -54,9 +94,52 @@ export default function BoxSimpleTallModel({
           color={GetHSV([baseColor[0], baseColor[1], baseColor[2]])}
         />
 
+        {/*top*/}
+        <group position={[0, 0, 0]}>
+          <Side
+            meshRef={meshRefs[1] ?? null}
+            width={width}
+            height={depth / 2}
+            position={[0, height, depth / 4]}
+            rotation={[Math.PI / 2, 0, 0]}
+            color={GetHSV([baseColor[0], baseColor[1], baseColor[2]])}
+          />
+          <Side
+            meshRef={meshRefs[2] ?? null}
+            width={width}
+            height={depth / 2}
+            position={[0, height, -depth / 4]}
+            rotation={[-Math.PI / 2, 0, 0]}
+            color={GetHSV([baseColor[0], baseColor[1], baseColor[2]])}
+          />
+          <group
+            position={[0, height + 0.01, 0]}
+            ref={meshRefs[3] ?? null}
+            rotation={[0, 0, 0]}
+          >
+            <Side
+              meshRef={meshRefs[4] ?? null}
+              width={width}
+              height={depth}
+              position={[0, 0, 0]}
+              rotation={[Math.PI / 2, 0, 0]}
+              color={GetHSV([baseColor[0], baseColor[1], baseColor[2] + 5])}
+            />
+            <Side
+              meshRef={meshRefs[5] ?? null}
+              width={width / 3}
+              height={depth}
+              position={[depth / 2, -width / 3 / 2, 0]}
+              rotation={[Math.PI / 2, Math.PI / 2, 0]}
+              color={GetHSV([baseColor[0], baseColor[1], baseColor[2] + 2])}
+            />
+          </group>
+        </group>
+
+        {/*side*/}
         <group position={[0, 0, 0]} rotation={[0, 0, 0]}>
           <Side
-            meshRef={meshRefs[4] ?? null}
+            meshRef={meshRefs[6] ?? null}
             width={height}
             height={depth}
             position={[width / 2, height / 2, 0]}
@@ -65,7 +148,7 @@ export default function BoxSimpleTallModel({
             color={GetHSV([baseColor[0], baseColor[1], baseColor[2] + 2])}
           />
           <Side
-            meshRef={meshRefs[5] ?? null}
+            meshRef={meshRefs[7] ?? null}
             width={width}
             height={height}
             position={[0, height / 2, depth / 2]}
@@ -74,7 +157,7 @@ export default function BoxSimpleTallModel({
             color={GetHSV([baseColor[0], baseColor[1], baseColor[2] + 5])}
           />
           <Side
-            meshRef={meshRefs[5] ?? null}
+            meshRef={meshRefs[8] ?? null}
             width={width}
             height={height}
             position={[0, height / 2, -depth / 2]}
@@ -83,7 +166,7 @@ export default function BoxSimpleTallModel({
             color={GetHSV([baseColor[0], baseColor[1], baseColor[2] + 5])}
           />
           <Side
-            meshRef={meshRefs[4] ?? null}
+            meshRef={meshRefs[9] ?? null}
             width={height}
             height={depth}
             position={[-width / 2, height / 2, 0]}

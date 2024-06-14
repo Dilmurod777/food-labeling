@@ -122,9 +122,9 @@ export default function Content({
           <BoxSimpleTallModel
             step={currentStep}
             totalSteps={currentModel.totalSteps}
-            width={size[0]}
+            width={size[2]}
             height={size[1]}
-            depth={size[2]}
+            depth={size[0]}
             baseColor={baseColor}
           />
         );

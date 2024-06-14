@@ -21,18 +21,18 @@ export default function BoxSimpleTallLayout({ model, baseColor, size }: Props) {
             "w-full border-b border-b-main-gray pb-2 text-2xl/none font-bold"
           }
         >
-          Top:
+          Full:
         </h1>
         <div className={"flex w-full items-center justify-center gap-1"}>
           <div className={"flex w-fit flex-col gap-1"}>
             <div
               style={{
                 width: `${depth}px`,
-                height: `${depth}px`,
+                height: `${width / 2}px`,
                 backgroundColor: GetHSV([
                   baseColor[0],
                   baseColor[1],
-                  baseColor[2] - 5,
+                  baseColor[2] - 2,
                 ]),
               }}
             />
@@ -50,11 +50,11 @@ export default function BoxSimpleTallLayout({ model, baseColor, size }: Props) {
             <div
               style={{
                 width: `${depth}px`,
-                height: `${depth}px`,
+                height: `${width / 2}px`,
                 backgroundColor: GetHSV([
                   baseColor[0],
                   baseColor[1],
-                  baseColor[2] - 5,
+                  baseColor[2] - 2,
                 ]),
               }}
             />
@@ -63,11 +63,22 @@ export default function BoxSimpleTallLayout({ model, baseColor, size }: Props) {
             <div
               style={{
                 width: `${width}px`,
+                height: `${depth / 3}px`,
+                backgroundColor: GetHSV([
+                  baseColor[0],
+                  baseColor[1],
+                  baseColor[2] - 2,
+                ]),
+              }}
+            />
+            <div
+              style={{
+                width: `${width}px`,
                 height: `${depth}px`,
                 backgroundColor: GetHSV([
                   baseColor[0],
                   baseColor[1],
-                  baseColor[2] - 5,
+                  baseColor[2] - 2,
                 ]),
               }}
             />
@@ -75,18 +86,25 @@ export default function BoxSimpleTallLayout({ model, baseColor, size }: Props) {
               style={{
                 width: `${width}px`,
                 height: `${height}px`,
-                backgroundColor: GetHSV(baseColor),
+                backgroundColor: GetHSV([
+                  baseColor[0],
+                  baseColor[1],
+                  baseColor[2] - 2,
+                ]),
+              }}
+            />
+            <div
+              style={{
+                width: `${width}px`,
+                height: `${depth / 3}px`,
+                backgroundColor: "transparent",
               }}
             />
             <div
               style={{
                 width: `${width}px`,
                 height: `${depth}px`,
-                backgroundColor: GetHSV([
-                  baseColor[0],
-                  baseColor[1],
-                  baseColor[2] - 5,
-                ]),
+                backgroundColor: "transparent",
               }}
             />
           </div>
@@ -94,11 +112,11 @@ export default function BoxSimpleTallLayout({ model, baseColor, size }: Props) {
             <div
               style={{
                 width: `${depth}px`,
-                height: `${depth}px`,
+                height: `${width / 2}px`,
                 backgroundColor: GetHSV([
                   baseColor[0],
                   baseColor[1],
-                  baseColor[2] - 5,
+                  baseColor[2] - 2,
                 ]),
               }}
             />
@@ -116,58 +134,11 @@ export default function BoxSimpleTallLayout({ model, baseColor, size }: Props) {
             <div
               style={{
                 width: `${depth}px`,
-                height: `${depth}px`,
+                height: `${width / 2}px`,
                 backgroundColor: GetHSV([
                   baseColor[0],
                   baseColor[1],
-                  baseColor[2] - 5,
-                ]),
-              }}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className={"flex w-full flex-col gap-6"}>
-        <h1
-          className={
-            "w-full border-b border-b-main-gray pb-2 text-2xl/none font-bold"
-          }
-        >
-          Bottom:
-        </h1>
-        <div className={"flex w-full items-center justify-center gap-1"}>
-          <div className={"flex w-fit flex-col gap-1"}>
-            <div
-              style={{
-                width: `${depth}px`,
-                height: `${depth}px`,
-                backgroundColor: GetHSV([
-                  baseColor[0],
-                  baseColor[1],
-                  baseColor[2] + 5,
-                ]),
-              }}
-            />
-            <div
-              style={{
-                width: `${depth}px`,
-                height: `${height}px`,
-                backgroundColor: GetHSV([
-                  baseColor[0],
-                  baseColor[1],
-                  baseColor[2] + 2,
-                ]),
-              }}
-            />
-            <div
-              style={{
-                width: `${depth}px`,
-                height: `${depth}px`,
-                backgroundColor: GetHSV([
-                  baseColor[0],
-                  baseColor[1],
-                  baseColor[2] + 5,
+                  baseColor[2] - 2,
                 ]),
               }}
             />
@@ -180,7 +151,7 @@ export default function BoxSimpleTallLayout({ model, baseColor, size }: Props) {
                 backgroundColor: GetHSV([
                   baseColor[0],
                   baseColor[1],
-                  baseColor[2] + 5,
+                  baseColor[2] - 2,
                 ]),
               }}
             />
@@ -188,53 +159,18 @@ export default function BoxSimpleTallLayout({ model, baseColor, size }: Props) {
               style={{
                 width: `${width}px`,
                 height: `${height}px`,
-                backgroundColor: GetHSV(baseColor),
+                backgroundColor: GetHSV([
+                  baseColor[0],
+                  baseColor[1],
+                  baseColor[2] - 2,
+                ]),
               }}
             />
             <div
               style={{
                 width: `${width}px`,
                 height: `${depth}px`,
-                backgroundColor: GetHSV([
-                  baseColor[0],
-                  baseColor[1],
-                  baseColor[2] + 5,
-                ]),
-              }}
-            />
-          </div>
-          <div className={"flex w-fit flex-col gap-1"}>
-            <div
-              style={{
-                width: `${depth}px`,
-                height: `${depth}px`,
-                backgroundColor: GetHSV([
-                  baseColor[0],
-                  baseColor[1],
-                  baseColor[2] + 5,
-                ]),
-              }}
-            />
-            <div
-              style={{
-                width: `${depth}px`,
-                height: `${height}px`,
-                backgroundColor: GetHSV([
-                  baseColor[0],
-                  baseColor[1],
-                  baseColor[2] + 2,
-                ]),
-              }}
-            />
-            <div
-              style={{
-                width: `${depth}px`,
-                height: `${depth}px`,
-                backgroundColor: GetHSV([
-                  baseColor[0],
-                  baseColor[1],
-                  baseColor[2] + 5,
-                ]),
+                backgroundColor: "transparent",
               }}
             />
           </div>

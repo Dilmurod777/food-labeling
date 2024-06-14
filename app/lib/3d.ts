@@ -139,7 +139,7 @@ export const DefaultModelItems: Model[] = [
     description:
       "Simplify your storage and shipping with our sturdy cardboard box. Durable, versatile, and eco-friendly, it’s perfect for all your packing needs. Reliable protection for your items every time!",
     badges: ["cardboard", "custom size"],
-    sizes: [1, 3, 1],
+    sizes: [1, 2, 3],
     baseColor: [34, 23, 60],
   },
   {
