@@ -49,7 +49,11 @@ export default function Page() {
         <div className={"relative mt-10 h-[70%] w-[90%]"}>
           <Image
             className={"transition-all group-hover:scale-110"}
-            src={`/preview/${model.imgPath}`}
+            src={
+              model.imgPath.length
+                ? `/preview/${model.imgPath[0]}`
+                : "/preview/default.png"
+            }
             alt={model.text}
             fill
             sizes={"100%"}
@@ -67,7 +71,7 @@ export default function Page() {
             className={
               "cursor-pointer text-main-orange hover:text-hover-main-orange"
             }
-            onClick={() => router.push(`/packaging/editor?model=${model.id}`)}
+            onClick={() => router.push(`/packaging/models/${model.id}`)}
           />
         </div>
 
