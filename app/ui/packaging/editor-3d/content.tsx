@@ -29,6 +29,7 @@ import { CanPaintTinShortModel } from "@/app/ui/packaging/models/can-paint-tin-s
 import { CanPaintTinTallModel } from "@/app/ui/packaging/models/can-paint-tin-tall-model";
 import { BagMediumShopping2Model } from "@/app/ui/packaging/models/bag-medium-shopping-2-model";
 import BoxSimpleTallModel from "@/app/ui/packaging/models/box-simple-tall-model";
+import BoxDonutModel from "@/app/ui/packaging/models/box-donut-model";
 
 interface Props {
   currentModel: Model;
@@ -116,10 +117,20 @@ export default function Content({
             baseColor={baseColor}
           />
         );
-
       case "box-2":
         return (
           <BoxSimpleTallModel
+            step={currentStep}
+            totalSteps={currentModel.totalSteps}
+            width={size[2]}
+            height={size[1]}
+            depth={size[0]}
+            baseColor={baseColor}
+          />
+        );
+      case "box-3":
+        return (
+          <BoxDonutModel
             step={currentStep}
             totalSteps={currentModel.totalSteps}
             width={size[2]}

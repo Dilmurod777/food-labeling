@@ -24,6 +24,7 @@ import CanPaintingTinShortLayout from "@/app/ui/packaging/layouts/can-painting-t
 import CanPaintingTinTallLayout from "@/app/ui/packaging/layouts/can-painting-tin-tall-layout";
 import BagMediumShoppingLayout from "@/app/ui/packaging/layouts/bag-medium-shopping-layout";
 import BoxSimpleTallLayout from "@/app/ui/packaging/layouts/box-simple-tall-layout";
+import BoxDonutLayout from "@/app/ui/packaging/layouts/box-donut-layout";
 
 interface Props {
   model: Model;
@@ -57,6 +58,11 @@ export default function Editor3D({ model }: Props) {
             baseColor={baseColor}
             size={size}
           />
+        );
+      }
+      case "box-3": {
+        return (
+          <BoxDonutLayout model={model} baseColor={baseColor} size={size} />
         );
       }
       case "pouch-0": {
