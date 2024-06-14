@@ -23,6 +23,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const sizes = [
   "55x55x75",
@@ -116,6 +117,30 @@ export default function Page({ params }: { params: { id: string } }) {
         >
           Open in 3D Editor
         </Button>
+      </div>
+      <div className={"flex h-full w-1/4"}>
+        <Tabs defaultValue="usa" className={"w-full text-base/none"}>
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="usa">USA</TabsTrigger>
+            <TabsTrigger value="korea">Korea</TabsTrigger>
+            <TabsTrigger value="india">India</TabsTrigger>
+          </TabsList>
+          <TabsContent value="usa">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores,
+            dolorum minus mollitia omnis quaerat rem sunt. Adipisci
+            exercitationem quo saepe.
+          </TabsContent>
+          <TabsContent value="korea">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid,
+            autem!
+          </TabsContent>
+          <TabsContent value="india">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
+            alias aperiam architecto asperiores atque, deserunt doloribus illo
+            impedit laudantium libero minima, quam, quasi saepe sapiente sint
+            suscipit veritatis voluptas voluptate.
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
