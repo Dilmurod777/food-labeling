@@ -126,6 +126,23 @@ export const DefaultModelItems: Model[] = [
     baseColor: [34, 23, 60],
   },
   {
+    id: "box-2",
+    category: ModelCategory.Box,
+    type: ModelType.Generated,
+    modelPath: "box-simple-tall",
+    text: "Simple box",
+    imgPath: "box-simple-tall.png",
+    layoutPath: "box-simple-tall-layout",
+    animatable: true,
+    step: 0,
+    totalSteps: 35,
+    description:
+      "Simplify your storage and shipping with our sturdy cardboard box. Durable, versatile, and eco-friendly, it’s perfect for all your packing needs. Reliable protection for your items every time!",
+    badges: ["cardboard", "custom size"],
+    sizes: [2, 3, 1],
+    baseColor: [34, 23, 60],
+  },
+  {
     id: "pouch-0",
     category: ModelCategory.Pouch,
     type: ModelType.Loaded,
