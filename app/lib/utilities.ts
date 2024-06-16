@@ -599,3 +599,7 @@ export function convertModelCategoryToTitle(category: ModelCategory) {
 export function GetHSV(color: number[]): string {
   return `hsl(${color[0]}, ${color[1]}%, ${color[2]}%)`;
 }
+
+export function convertTemplateGroupNameToTitle(groupName: string) {
+  return capitalize(groupName.replaceAll("-", " "), " ");
+}

@@ -3,7 +3,7 @@
 import { Model, ModelCategory } from "@/app/lib/3d";
 import View from "@/app/ui/packaging/editor-3d/view";
 import BoxTelescopeLayout from "@/app/ui/packaging/layouts/box-telescope-layout";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { HslColorPicker } from "react-colorful";
 import { GetHSV } from "@/app/lib/utilities";
 import {
@@ -26,13 +26,13 @@ import BagMediumShoppingLayout from "@/app/ui/packaging/layouts/bag-medium-shopp
 import BoxSimpleTallLayout from "@/app/ui/packaging/layouts/box-simple-tall-layout";
 import BoxDonutLayout from "@/app/ui/packaging/layouts/box-donut-layout";
 import BoxSlideLayout from "@/app/ui/packaging/layouts/box-slide-layout";
+import TemplatesPanel from "@/app/ui/packaging/templates";
 
 interface Props {
   model: Model;
 }
 
 export default function Editor3D({ model }: Props) {
-  const [showColorPicker, setShowColorPicker] = useState(false);
   const [baseColor, setBaseColor] = useState(model.baseColor);
   const [size, setSize] = useState(model.sizes);
 
@@ -150,6 +150,9 @@ export default function Editor3D({ model }: Props) {
 
   return (
     <div className={"relative z-0 flex h-full w-full flex-grow"}>
+      <Suspense fallback={<div className={"h-full w-20 bg-transparent"} />}>
+        <TemplatesPanel />
+      </Suspense>
       <div className={"relative m-12 flex w-1/2 flex-col gap-6"}>
         <div
           className={

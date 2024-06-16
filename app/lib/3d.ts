@@ -74,6 +74,11 @@ export enum Tools {
   AnimationSlider = "Open/Close",
 }
 
+export interface TemplateGroup {
+  name: string;
+  images: string[];
+}
+
 export function AddVectors<T>(
   a: [number, number, number],
   b: [number, number, number],
