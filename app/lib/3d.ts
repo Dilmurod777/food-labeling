@@ -72,6 +72,7 @@ export enum Tools {
   UploadImage = "Upload",
   ExportRender = "Export",
   AnimationSlider = "Open/Close",
+  ColorPalette = "Color",
 }
 
 export interface TemplateGroup {

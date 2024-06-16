@@ -19,10 +19,16 @@ import { Texture } from "three";
 interface Props {
   initialModel: Model;
   baseColor: number[];
+  updateBaseColor: (c: number[]) => void;
   size: number[];
 }
 
-export default function View({ initialModel, baseColor, size }: Props) {
+export default function View({
+  initialModel,
+  baseColor,
+  size,
+  updateBaseColor,
+}: Props) {
   const [currentTool, setCurrentTool] = useState<Tools>(Tools.Select);
   const [currentModel, setCurrentModel] = useState<Model>({ ...initialModel });
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -170,6 +176,8 @@ export default function View({ initialModel, baseColor, size }: Props) {
         updateCurrentModel={setCurrentModel}
         currentStep={currentStep}
         updateCurrentStep={setCurrentStep}
+        updateBaseColor={updateBaseColor}
+        baseColor={baseColor}
       />
     </div>
   );

@@ -9,6 +9,14 @@ import { FaFileExport } from "react-icons/fa6";
 import { KeyboardControls, KeyboardControlsEntry } from "@react-three/drei";
 import { AnimationKeyMap, Model, Tools } from "@/app/lib/3d";
 import { useThree } from "@react-three/fiber";
+import { MdFormatColorFill } from "react-icons/md";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { HslColorPicker } from "react-colorful";
+import { GetHSV } from "@/app/lib/utilities";
 
 interface MenuItem {
   type: "block" | "divider" | "slider";
@@ -25,6 +33,8 @@ interface Props {
   currentModel: Model;
   currentStep: number;
   updateCurrentStep: (step: number) => void;
+  baseColor: number[];
+  updateBaseColor: (c: number[]) => void;
 }
 
 export default function BottomMenu({
@@ -34,6 +44,8 @@ export default function BottomMenu({
   updateCurrentModel,
   currentStep,
   updateCurrentStep,
+  baseColor,
+  updateBaseColor,
 }: Props) {
   const menuItems: MenuItem[] = [
     {
@@ -50,7 +62,14 @@ export default function BottomMenu({
       hotkeys: ["h"],
       showTooltip: true,
     },
-    // { type: "divider" },
+    { type: "divider" },
+    {
+      type: "block",
+      icon: <MdFormatColorFill />,
+      text: Tools.ColorPalette,
+      hotkeys: ["p"],
+      showTooltip: false,
+    },
     // {
     //   type: "block",
     //   icon: <LuSendToBack />,
@@ -145,6 +164,35 @@ export default function BottomMenu({
         </div>
       );
     } else if (item.type == "block") {
+      if (item.text == Tools.ColorPalette) {
+        return (
+          <div key={`3d-menu-item-${index}`} className={"relative"}>
+            <PopoverTrigger
+              asChild
+              className={`peer flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main-gray p-1 ${activeMenuItemIndex == index ? "bg-hover-main-orange text-white" : "bg-white text-main-orange hover:bg-main-orange hover:text-white"}`}
+              onClick={() => menuItemHandle(index)}
+            >
+              <span className={"text-xl/none"}>{item.icon}</span>
+            </PopoverTrigger>
+
+            {item.showTooltip && (
+              <div
+                className={
+                  "absolute -left-7 -right-7 -top-9 z-10 overflow-visible rounded-md bg-secondary-gray p-1 text-center text-xs text-white opacity-0 transition-opacity peer-hover:opacity-100"
+                }
+              >
+                {item.text}
+                {/*{item.hotkeys && (*/}
+                {/*  <span className={"text-sm capitalize text-main-gray"}>*/}
+                {/*    {item.hotkeys[0]}*/}
+                {/*  </span>*/}
+                {/*)}*/}
+              </div>
+            )}
+          </div>
+        );
+      }
+
       return (
         <div key={`3d-menu-item-${index}`} className={"relative"}>
           <div
@@ -187,7 +235,7 @@ export default function BottomMenu({
   };
 
   return (
-    <div className={"cursor-default"}>
+    <div className={"relative cursor-default"}>
       <KeyboardControls
         map={menuItems
           .filter((item) => item.type == "block")
@@ -200,7 +248,28 @@ export default function BottomMenu({
             "absolute bottom-2 left-1/2 flex -translate-x-1/2 items-center justify-center gap-2 rounded-md border border-main-orange bg-white px-2 py-1"
           }
         >
-          {menuItems.map(renderMenuItem)}
+          <div className={"relative"}>
+            <Popover>
+              <div className={"flex items-center gap-1"}>
+                {menuItems.map(renderMenuItem)}
+              </div>
+
+              <PopoverContent
+                className={"h-fit w-fit border-none bg-transparent shadow-none"}
+              >
+                <HslColorPicker
+                  color={{
+                    h: baseColor[0],
+                    s: baseColor[1],
+                    l: baseColor[2],
+                  }}
+                  onChange={(color) => {
+                    updateBaseColor([color.h, color.s, color.l]);
+                  }}
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
       </KeyboardControls>
     </div>

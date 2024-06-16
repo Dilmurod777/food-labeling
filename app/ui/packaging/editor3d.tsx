@@ -159,37 +159,37 @@ export default function Editor3D({ model }: Props) {
             "flex w-full items-center justify-between gap-2 border-b border-b-main-orange pb-2"
           }
         >
-          <div className={"flex items-center gap-4"}>
-            <h1 className={"text-2xl/none font-bold"}>Change color: </h1>
-            <div className={"relative"}>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <div
-                    className={"h-6 w-6 cursor-pointer rounded-full"}
-                    style={{
-                      backgroundColor: GetHSV(baseColor),
-                    }}
-                  />
-                </PopoverTrigger>
-                <PopoverContent
-                  className={
-                    "h-fit w-fit border-none bg-transparent shadow-none"
-                  }
-                >
-                  <HslColorPicker
-                    color={{
-                      h: baseColor[0],
-                      s: baseColor[1],
-                      l: baseColor[2],
-                    }}
-                    onChange={(color) => {
-                      setBaseColor([color.h, color.s, color.l]);
-                    }}
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-          </div>
+          {/*<div className={"flex items-center gap-4"}>*/}
+          {/*  <h1 className={"text-2xl/none font-bold"}>Change color: </h1>*/}
+          {/*  <div className={"relative"}>*/}
+          {/*    <Popover>*/}
+          {/*      <PopoverTrigger asChild>*/}
+          {/*        <div*/}
+          {/*          className={"h-6 w-6 cursor-pointer rounded-full"}*/}
+          {/*          style={{*/}
+          {/*            backgroundColor: GetHSV(baseColor),*/}
+          {/*          }}*/}
+          {/*        />*/}
+          {/*      </PopoverTrigger>*/}
+          {/*      <PopoverContent*/}
+          {/*        className={*/}
+          {/*          "h-fit w-fit border-none bg-transparent shadow-none"*/}
+          {/*        }*/}
+          {/*      >*/}
+          {/*        <HslColorPicker*/}
+          {/*          color={{*/}
+          {/*            h: baseColor[0],*/}
+          {/*            s: baseColor[1],*/}
+          {/*            l: baseColor[2],*/}
+          {/*          }}*/}
+          {/*          onChange={(color) => {*/}
+          {/*            setBaseColor([color.h, color.s, color.l]);*/}
+          {/*          }}*/}
+          {/*        />*/}
+          {/*      </PopoverContent>*/}
+          {/*    </Popover>*/}
+          {/*  </div>*/}
+          {/*</div>*/}
           <div className={"flex items-center gap-4"}>
             <h1 className={"text-2xl/none font-bold"}>Change size: </h1>
             <Popover>
@@ -236,7 +236,12 @@ export default function Editor3D({ model }: Props) {
         <div>{GetModelLayout(model)}</div>
       </div>
       <div className={"relative w-1/2"}>
-        <View initialModel={model} baseColor={baseColor} size={size} />
+        <View
+          initialModel={model}
+          baseColor={baseColor}
+          updateBaseColor={setBaseColor}
+          size={size}
+        />
       </div>
     </div>
   );
