@@ -67,7 +67,7 @@ export default function TemplatesPanel() {
           {group.images.map((image, i) => (
             <div
               className={
-                "relative aspect-square w-[18%] cursor-pointer rounded-md hover:scale-110"
+                "relative aspect-square w-[18%] cursor-pointer rounded-md hover:scale-105"
               }
               key={`image-${i}`}
             >
@@ -159,7 +159,9 @@ export default function TemplatesPanel() {
                 {uploads.map((file, i) => (
                   <div
                     key={`upload-${i}`}
-                    className={"relative h-20 w-20 rounded-md"}
+                    className={
+                      "relative h-20 w-20 cursor-pointer rounded-md hover:scale-105"
+                    }
                   >
                     <Image
                       src={URL.createObjectURL(file)}

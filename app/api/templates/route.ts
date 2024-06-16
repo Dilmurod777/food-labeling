@@ -9,14 +9,17 @@ export async function GET() {
   const folders = [
     "basic-shapes",
     "nature",
+    "leaves",
+    "trees",
     "fitness-and-health",
     "food",
     "yummy-food",
     "sweet-and-drinks",
     "gifts",
-    "leaves",
     "environment",
     "animals",
+    "transport",
+    "social-and-company",
   ];
 
   folders.forEach((FOLDER_NAME) => {
