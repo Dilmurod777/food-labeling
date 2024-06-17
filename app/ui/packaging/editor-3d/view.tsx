@@ -146,7 +146,7 @@ export default function View({
       className={"relative h-[700px] w-full flex-grow"}
       style={{ cursor: GetCurrentCursor() }}
     >
-      <Canvas shadows ref={canvasRef} gl={{ preserveDrawingBuffer: true }}>
+      <Canvas shadows ref={canvasRef} gl={{ preserveDrawingBuffer: false }}>
         <PerspectiveCamera makeDefault position={[0, 0, -10]} ref={cameraRef} />
         <directionalLight
           visible={true}

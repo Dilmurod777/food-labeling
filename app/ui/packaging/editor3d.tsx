@@ -27,6 +27,11 @@ import BoxSimpleTallLayout from "@/app/ui/packaging/layouts/box-simple-tall-layo
 import BoxDonutLayout from "@/app/ui/packaging/layouts/box-donut-layout";
 import BoxSlideLayout from "@/app/ui/packaging/layouts/box-slide-layout";
 import TemplatesPanel from "@/app/ui/packaging/templates";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
 
 interface Props {
   model: Model;
@@ -153,96 +158,77 @@ export default function Editor3D({ model }: Props) {
       <Suspense fallback={<div className={"h-full w-20 bg-transparent"} />}>
         <TemplatesPanel />
       </Suspense>
-      <div className={"relative m-12 flex w-1/2 flex-col gap-6"}>
-        <div
-          className={
-            "flex w-full items-center justify-between gap-2 border-b border-b-main-orange pb-2"
-          }
+      <ResizablePanelGroup direction="horizontal">
+        <ResizablePanel
+          defaultSize={50}
+          minSize={25}
+          className={"relative m-12 flex flex-col gap-6"}
         >
-          {/*<div className={"flex items-center gap-4"}>*/}
-          {/*  <h1 className={"text-2xl/none font-bold"}>Change color: </h1>*/}
-          {/*  <div className={"relative"}>*/}
-          {/*    <Popover>*/}
-          {/*      <PopoverTrigger asChild>*/}
-          {/*        <div*/}
-          {/*          className={"h-6 w-6 cursor-pointer rounded-full"}*/}
-          {/*          style={{*/}
-          {/*            backgroundColor: GetHSV(baseColor),*/}
-          {/*          }}*/}
-          {/*        />*/}
-          {/*      </PopoverTrigger>*/}
-          {/*      <PopoverContent*/}
-          {/*        className={*/}
-          {/*          "h-fit w-fit border-none bg-transparent shadow-none"*/}
-          {/*        }*/}
-          {/*      >*/}
-          {/*        <HslColorPicker*/}
-          {/*          color={{*/}
-          {/*            h: baseColor[0],*/}
-          {/*            s: baseColor[1],*/}
-          {/*            l: baseColor[2],*/}
-          {/*          }}*/}
-          {/*          onChange={(color) => {*/}
-          {/*            setBaseColor([color.h, color.s, color.l]);*/}
-          {/*          }}*/}
-          {/*        />*/}
-          {/*      </PopoverContent>*/}
-          {/*    </Popover>*/}
-          {/*  </div>*/}
-          {/*</div>*/}
-          <div className={"flex items-center gap-4"}>
-            <h1 className={"text-2xl/none font-bold"}>Change size: </h1>
-            <Popover>
-              <PopoverTrigger asChild>
-                <p
-                  className={
-                    "cursor-pointer text-xl/none font-normal text-main-orange"
-                  }
-                >
-                  {size.join("x")}
-                </p>
-              </PopoverTrigger>
-              <PopoverContent className="w-80" sideOffset={10}>
-                <div className="grid gap-4">
-                  <div className="grid gap-2">
-                    {size.map((s, i) => (
-                      <div
-                        className="grid grid-cols-3 items-center gap-4"
-                        key={`size-input-${i}`}
-                      >
-                        <Label htmlFor={`size-input-${i}`}>
-                          {GetSizeTitle(i)}
-                        </Label>
-                        <Input
-                          id={`size-input-${i}`}
-                          defaultValue={s}
-                          className="col-span-2 h-8"
-                          type={"number"}
-                          step={0.01}
-                          onChange={(e) => {
-                            let newSize = [...size];
-                            newSize[i] = e.target.valueAsNumber;
-                            setSize(newSize);
-                          }}
-                        />
-                      </div>
-                    ))}
+          <div
+            className={
+              "flex w-full items-center justify-between gap-2 border-b border-b-main-orange pb-2"
+            }
+          >
+            <div className={"flex items-center gap-4"}>
+              <h1 className={"text-2xl/none font-bold"}>Change size: </h1>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <p
+                    className={
+                      "cursor-pointer text-xl/none font-normal text-main-orange"
+                    }
+                  >
+                    {size.join("x")}
+                  </p>
+                </PopoverTrigger>
+                <PopoverContent className="w-80" sideOffset={10}>
+                  <div className="grid gap-4">
+                    <div className="grid gap-2">
+                      {size.map((s, i) => (
+                        <div
+                          className="grid grid-cols-3 items-center gap-4"
+                          key={`size-input-${i}`}
+                        >
+                          <Label htmlFor={`size-input-${i}`}>
+                            {GetSizeTitle(i)}
+                          </Label>
+                          <Input
+                            id={`size-input-${i}`}
+                            defaultValue={s}
+                            className="col-span-2 h-8"
+                            type={"number"}
+                            step={0.01}
+                            onChange={(e) => {
+                              let newSize = [...size];
+                              newSize[i] = e.target.valueAsNumber;
+                              setSize(newSize);
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </PopoverContent>
-            </Popover>
+                </PopoverContent>
+              </Popover>
+            </div>
           </div>
-        </div>
-        <div>{GetModelLayout(model)}</div>
-      </div>
-      <div className={"relative w-1/2"}>
-        <View
-          initialModel={model}
-          baseColor={baseColor}
-          updateBaseColor={setBaseColor}
-          size={size}
-        />
-      </div>
+          <div>{GetModelLayout(model)}</div>
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel
+          className={"relative"}
+          defaultSize={50}
+          minSize={40}
+          onResize={() => console.log("resize")}
+        >
+          <View
+            initialModel={model}
+            baseColor={baseColor}
+            updateBaseColor={setBaseColor}
+            size={size}
+          />
+        </ResizablePanel>
+      </ResizablePanelGroup>
     </div>
   );
 }
