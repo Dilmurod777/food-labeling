@@ -215,12 +215,7 @@ export default function Editor3D({ model }: Props) {
           <div>{GetModelLayout(model)}</div>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel
-          className={"relative"}
-          defaultSize={50}
-          minSize={40}
-          onResize={() => console.log("resize")}
-        >
+        <ResizablePanel className={"relative"} defaultSize={50} minSize={40}>
           <View
             initialModel={model}
             baseColor={baseColor}
