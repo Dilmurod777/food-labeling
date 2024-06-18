@@ -175,7 +175,8 @@ export default function Content({
   const GetModel = (model: Model, index: number) => {
     return (
       <PivotControls
-        activeAxes={[showPivots, showPivots, showPivots]}
+        // activeAxes={[showPivots, showPivots, showPivots]}
+        activeAxes={[false, false, false]}
         key={`model-${model.modelPath}-${index}`}
         anchor={[0, 0, 0]}
         depthTest={false}

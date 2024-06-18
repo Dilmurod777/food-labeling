@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useGLTF } from "@react-three/drei";
+import { useGLTF, useTexture } from "@react-three/drei";
 import { Vector3 } from "@react-three/fiber";
 import { GetHSV } from "@/app/lib/utilities";
 
@@ -15,6 +15,7 @@ export function CanPaintTinShortModel({
   baseColor = [34, 0, 82],
 }: Props) {
   const { nodes, materials } = useGLTF(modelPath);
+
   return (
     <group dispose={null}>
       <mesh
@@ -33,7 +34,7 @@ export function CanPaintTinShortModel({
         castShadow
         receiveShadow
       >
-        <meshStandardMaterial attach="material" color={GetHSV(baseColor)} />
+        <meshBasicMaterial attach="material" color={GetHSV(baseColor)} />
       </mesh>
     </group>
   );

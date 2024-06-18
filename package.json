@@ -71,6 +71,7 @@
     "tailwindcss-animate": "^1.0.7",
     "tesseract.js": "^5.0.5",
     "three": "^0.163.0",
+    "three-projected-material": "^2.2.2",
     "use-debounce": "^10.0.0",
     "uuid": "^9.0.1",
     "x-data-spreadsheet": "^1.1.9",

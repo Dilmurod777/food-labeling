@@ -3,6 +3,7 @@
 import { Canvas } from "@react-three/fiber";
 import {
   CameraControls,
+  Environment,
   MapControls,
   MapControlsProps,
   OrbitControls,
@@ -153,16 +154,9 @@ export default function View({
         gl={{ preserveDrawingBuffer: true }}
         camera={{ position: [0, 5, 5], fov: 75 }}
       >
+        <Environment preset={"lobby"} />
         <CameraControls ref={cameraControlsRef} />
-        <directionalLight
-          visible={true}
-          position={[0, 5, 5]}
-          castShadow
-          receiveShadow
-          intensity={1}
-        />
-        <ambientLight intensity={2} />
-        {GetCurrentControls()}
+        {/*{GetCurrentControls()}*/}
 
         <Content
           currentModel={currentModel}
