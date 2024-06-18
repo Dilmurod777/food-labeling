@@ -1,14 +1,6 @@
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { HslColorPicker } from "react-colorful";
-import { PiCursorFill } from "react-icons/pi";
+"use client";
+
 import { Model, CameraPresets } from "@/app/lib/3d";
-import { FaHandPaper } from "react-icons/fa";
-import { MdFormatColorFill } from "react-icons/md";
-import { ReactNode, useState } from "react";
 import Image from "next/image";
 import { convertCameraPresetTextToTitle } from "@/app/lib/utilities";
 import {
@@ -17,7 +9,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
+import { useThree } from "@react-three/fiber";
+import { CameraControls } from "@react-three/drei";
+import { Ref } from "react";
+import * as THREE from "three";
+
+const { DEG2RAD } = THREE.MathUtils;
 
 interface MenuItemBlock {
   type: "block";
@@ -33,9 +30,13 @@ type MenuItem = MenuItemBlock | MenuItemDivider;
 
 interface Props {
   currentModel: Model;
+  cameraControlsRef: Ref<CameraControls>;
 }
 
-export default function CameraPresetsMenu({ currentModel }: Props) {
+export default function CameraPresetsMenu({
+  currentModel,
+  cameraControlsRef,
+}: Props) {
   const menuItems: MenuItem[] = [
     {
       type: "block",
@@ -45,43 +46,89 @@ export default function CameraPresetsMenu({ currentModel }: Props) {
     { type: "divider" },
     {
       type: "block",
-      icon: "front.svg",
+      icon: "back.svg",
       text: CameraPresets.Back,
     },
     { type: "divider" },
     {
       type: "block",
-      icon: "front.svg",
+      icon: "left.svg",
       text: CameraPresets.Left,
     },
     { type: "divider" },
     {
       type: "block",
-      icon: "front.svg",
+      icon: "right.svg",
       text: CameraPresets.Right,
     },
     { type: "divider" },
     {
       type: "block",
-      icon: "front.svg",
+      icon: "top.svg",
       text: CameraPresets.Top,
     },
     { type: "divider" },
     {
       type: "block",
-      icon: "front.svg",
+      icon: "bottom.svg",
       text: CameraPresets.Bottom,
     },
     { type: "divider" },
     {
       type: "block",
-      icon: "front.svg",
+      icon: "reset.svg",
       text: CameraPresets.Reset,
     },
   ];
 
-  const menuItemHandle = (index: number) => {
-    console.log(menuItems[index]);
+  const menuItemHandle = (index: CameraPresets) => {
+    // console.log(menuItems[index]);
+    // console.log(controls);
+    // @ts-ignore
+    // console.log(cameraControlsRef?.current);
+    switch (index) {
+      case CameraPresets.Top:
+        //@ts-ignore
+        cameraControlsRef?.current?.rotatePolarTo(-20, true);
+        break;
+      case CameraPresets.Bottom:
+        //@ts-ignore
+        cameraControlsRef?.current?.rotatePolarTo(20, true);
+        break;
+      case CameraPresets.Front:
+        //@ts-ignore
+        cameraControlsRef?.current?.rotatePolarTo(Math.PI / 2, true);
+        //@ts-ignore
+        cameraControlsRef?.current?.rotateAzimuthTo(0, true);
+        break;
+      case CameraPresets.Back:
+        //@ts-ignore
+        cameraControlsRef?.current?.rotatePolarTo(Math.PI / 2, true);
+        //@ts-ignore
+        cameraControlsRef?.current?.rotateAzimuthTo(Math.PI, true);
+        break;
+      case CameraPresets.Left:
+        //@ts-ignore
+        cameraControlsRef?.current?.rotatePolarTo(Math.PI / 2, true);
+        //@ts-ignore
+        cameraControlsRef?.current?.rotateAzimuthTo(-Math.PI / 2, true);
+        break;
+      case CameraPresets.Right:
+        //@ts-ignore
+        cameraControlsRef?.current?.rotatePolarTo(Math.PI / 2, true);
+        //@ts-ignore
+        cameraControlsRef?.current?.rotateAzimuthTo(Math.PI / 2, true);
+        break;
+      case CameraPresets.Reset:
+        //@ts-ignore
+        cameraControlsRef?.current?.rotatePolarTo(Math.PI / 3, true);
+        //@ts-ignore
+        cameraControlsRef?.current?.rotateAzimuthTo(
+          ((Math.PI / 2) * 5) / 9,
+          true,
+        );
+        break;
+    }
   };
 
   const renderMenuItem = (item: MenuItem, index: number) => {
@@ -100,7 +147,7 @@ export default function CameraPresetsMenu({ currentModel }: Props) {
               <TooltipTrigger asChild>
                 <div
                   className={`peer cursor-pointer p-1 hover:bg-gray-200`}
-                  onClick={() => menuItemHandle(index)}
+                  onClick={() => menuItemHandle(item.text)}
                 >
                   <div className={"relative h-8 w-8 text-main-orange"}>
                     <Image
@@ -131,7 +178,7 @@ export default function CameraPresetsMenu({ currentModel }: Props) {
   return (
     <div
       className={
-        "bg-white1 absolute bottom-2 right-0 flex -translate-x-1/2 items-center justify-center gap-2 rounded-md border border-main-orange"
+        "bg-white1 absolute bottom-2 right-0 flex -translate-x-1/2 select-none items-center justify-center gap-2 rounded-md border border-main-orange"
       }
     >
       <div className={"relative"}>

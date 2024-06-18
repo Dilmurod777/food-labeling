@@ -2,7 +2,7 @@
 <svg id="svg2" viewBox="86.909 208.134 90.92 91.42" xmlns="http://www.w3.org/2000/svg">
   <desc>Source: openclipart.org/detail/209545</desc>
   <defs/>
-  <rect x="117.149" y="155.599" width="49.987" height="33.84" style="stroke: rgb(0, 0, 0); fill: none; transform-origin: 142.141px 172.518px;" transform="matrix(1, -0.000769, -0.962716, 1.000741, -9.361532, 106.88658)">
+  <rect x="117.149" y="155.599" width="49.987" height="33.84" style="stroke: rgb(0, 0, 0); transform-origin: 142.141px 172.518px; fill: none;" transform="matrix(1, -0.000769, -0.962716, 1.000741, -9.361532, 106.88658)">
     <title>bottom</title>
   </rect>
   <rect x="144.034" y="168.111" width="46.054" height="34.592" style="stroke: rgb(0, 0, 0); transform-origin: 167.061px 185.407px; fill: none;" transform="matrix(0.69443, -0.71956, -0.005163, 1.445379, -59.981106, 68.961535)">
@@ -11,13 +11,13 @@
   <rect x="123.399" y="212.473" width="50.334" height="50" style="stroke: rgb(0, 0, 0); fill: none;">
     <title>back</title>
   </rect>
-  <rect y="246.15" width="50.668" height="50" style="stroke: rgb(0, 0, 0); fill: rgb(251, 158, 28);" x="91.518">
+  <rect y="246.15" width="50.668" height="50" style="stroke: rgb(0, 0, 0); fill: none;" x="91.518">
     <title>front</title>
   </rect>
   <rect x="144.034" y="168.111" width="46.054" height="34.592" style="stroke: rgb(0, 0, 0); transform-box: fill-box; transform-origin: 50% 50%; fill: none;" transform="matrix(0.69443, -0.71956, -0.005163, 1.445379, -9.304778, 68.973881)">
     <title>right</title>
   </rect>
-  <rect x="117.932" y="153.094" width="50.321" height="33.295" style="stroke: rgb(0, 0, 0); transform-box: fill-box; transform-origin: 50% 50%; fill: none;" transform="matrix(1, -0.000769, -0.962716, 1.000741, -10.386614, 59.729067)">
+  <rect x="117.932" y="153.094" width="50.321" height="33.295" style="stroke: rgb(0, 0, 0); transform-box: fill-box; transform-origin: 50% 50%; fill: rgb(251, 158, 28);" transform="matrix(1, -0.000769, -0.962716, 1.000741, -10.386614, 59.729067)">
     <title>top</title>
   </rect>
 </svg>

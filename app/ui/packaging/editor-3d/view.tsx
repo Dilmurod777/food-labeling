@@ -2,7 +2,9 @@
 
 import { Canvas } from "@react-three/fiber";
 import {
+  CameraControls,
   MapControls,
+  MapControlsProps,
   OrbitControls,
   PerspectiveCamera,
   SoftShadows,
@@ -34,8 +36,8 @@ export default function View({
   const [currentModel, setCurrentModel] = useState<Model>({ ...initialModel });
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [texture, setTexture] = useState<Texture>();
-  const cameraRef = useRef(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const cameraControlsRef = useRef<CameraControls>(null);
 
   useEffect(() => {
     window.document.body.onkeydown = function (event) {
@@ -151,6 +153,7 @@ export default function View({
         gl={{ preserveDrawingBuffer: true }}
         camera={{ position: [0, 5, 5], fov: 75 }}
       >
+        <CameraControls ref={cameraControlsRef} />
         <directionalLight
           visible={true}
           position={[0, 5, 5]}
@@ -184,7 +187,10 @@ export default function View({
         baseColor={baseColor}
       />
 
-      <CameraPresetsMenu currentModel={currentModel} />
+      <CameraPresetsMenu
+        currentModel={currentModel}
+        cameraControlsRef={cameraControlsRef}
+      />
     </div>
   );
 }
