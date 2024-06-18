@@ -167,6 +167,9 @@ export default function TemplatesPanel({ updateSelectedTextures }: Props) {
                     className={
                       "relative h-20 w-20 cursor-pointer rounded-md hover:scale-105"
                     }
+                    onClick={() =>
+                      updateSelectedTextures(URL.createObjectURL(file))
+                    }
                   >
                     <Image
                       src={URL.createObjectURL(file)}
