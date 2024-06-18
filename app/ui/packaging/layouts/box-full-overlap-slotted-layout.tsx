@@ -1,4 +1,4 @@
-import { Model } from "@/app/lib/3d";
+import { LayoutBorderWidth, LayoutColors, Model } from "@/app/lib/3d";
 import { GetHSV } from "@/app/lib/utilities";
 
 interface Props {
@@ -27,8 +27,8 @@ export default function BoxFullOverlapSlottedLayout({
         >
           Full:
         </h1>
-        <div className={"flex w-full items-center justify-center gap-1"}>
-          <div className={"flex w-fit flex-col gap-1"}>
+        <div className={"flex w-full items-center justify-center gap-0"}>
+          <div className={"flex w-fit flex-col gap-0"}>
             <div
               style={{
                 width: `${width}px`,
@@ -38,6 +38,9 @@ export default function BoxFullOverlapSlottedLayout({
                   baseColor[1],
                   baseColor[2] - 5,
                 ]),
+                borderTop: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+                borderLeft: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+                borderBottom: `${LayoutBorderWidth}px dashed ${LayoutColors.Inside}`,
               }}
             />
             <div
@@ -49,6 +52,7 @@ export default function BoxFullOverlapSlottedLayout({
                   baseColor[1],
                   baseColor[2] - 2,
                 ]),
+                borderLeft: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
               }}
             />
             <div
@@ -60,10 +64,13 @@ export default function BoxFullOverlapSlottedLayout({
                   baseColor[1],
                   baseColor[2] - 5,
                 ]),
+                borderTop: `${LayoutBorderWidth}px dashed ${LayoutColors.Inside}`,
+                borderLeft: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+                borderBottom: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
               }}
             />
           </div>
-          <div className={"flex w-fit flex-col gap-1"}>
+          <div className={"flex w-fit flex-col gap-0"}>
             <div
               style={{
                 width: `${depth}px`,
@@ -73,6 +80,10 @@ export default function BoxFullOverlapSlottedLayout({
                   baseColor[1],
                   baseColor[2] - 5,
                 ]),
+                borderTop: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+                borderLeft: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+                borderRight: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+                borderBottom: `${LayoutBorderWidth}px dashed ${LayoutColors.Inside}`,
               }}
             />
             <div
@@ -84,6 +95,8 @@ export default function BoxFullOverlapSlottedLayout({
                   baseColor[1],
                   baseColor[2] - 2,
                 ]),
+                borderLeft: `${LayoutBorderWidth}px dashed ${LayoutColors.Inside}`,
+                borderRight: `${LayoutBorderWidth}px dashed ${LayoutColors.Inside}`,
               }}
             />
             <div
@@ -95,10 +108,14 @@ export default function BoxFullOverlapSlottedLayout({
                   baseColor[1],
                   baseColor[2] - 5,
                 ]),
+                borderTop: `${LayoutBorderWidth}px dashed ${LayoutColors.Inside}`,
+                borderLeft: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+                borderRight: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+                borderBottom: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
               }}
             />
           </div>
-          <div className={"flex w-fit flex-col gap-1"}>
+          <div className={"flex w-fit flex-col gap-0"}>
             <div
               style={{
                 width: `${width}px`,
@@ -108,6 +125,8 @@ export default function BoxFullOverlapSlottedLayout({
                   baseColor[1],
                   baseColor[2] - 5,
                 ]),
+                borderTop: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+                borderBottom: `${LayoutBorderWidth}px dashed ${LayoutColors.Inside}`,
               }}
             />
             <div
@@ -130,10 +149,12 @@ export default function BoxFullOverlapSlottedLayout({
                   baseColor[1],
                   baseColor[2] - 5,
                 ]),
+                borderTop: `${LayoutBorderWidth}px dashed ${LayoutColors.Inside}`,
+                borderBottom: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
               }}
             />
           </div>
-          <div className={"flex w-fit flex-col gap-1"}>
+          <div className={"flex w-fit flex-col gap-0"}>
             <div
               style={{
                 width: `${depth}px`,
@@ -143,6 +164,10 @@ export default function BoxFullOverlapSlottedLayout({
                   baseColor[1],
                   baseColor[2] - 5,
                 ]),
+                borderTop: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+                borderLeft: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+                borderRight: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+                borderBottom: `${LayoutBorderWidth}px dashed ${LayoutColors.Inside}`,
               }}
             />
             <div
@@ -154,6 +179,8 @@ export default function BoxFullOverlapSlottedLayout({
                   baseColor[1],
                   baseColor[2] - 2,
                 ]),
+                borderLeft: `${LayoutBorderWidth}px dashed ${LayoutColors.Inside}`,
+                borderRight: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
               }}
             />
             <div
@@ -165,6 +192,10 @@ export default function BoxFullOverlapSlottedLayout({
                   baseColor[1],
                   baseColor[2] - 5,
                 ]),
+                borderTop: `${LayoutBorderWidth}px dashed ${LayoutColors.Inside}`,
+                borderLeft: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+                borderRight: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+                borderBottom: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
               }}
             />
           </div>

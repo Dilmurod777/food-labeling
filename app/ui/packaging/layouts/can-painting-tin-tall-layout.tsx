@@ -1,4 +1,4 @@
-import { Model } from "@/app/lib/3d";
+import { LayoutBorderWidth, LayoutColors, Model } from "@/app/lib/3d";
 import { GetHSV } from "@/app/lib/utilities";
 
 interface Props {
@@ -12,7 +12,7 @@ export default function CanPaintingTinTallLayout({
   baseColor,
   size,
 }: Props) {
-  const base = 70;
+  const base = 80;
   const width = size[0] * base;
   const height = size[1] * base * 2;
   const depth = size[2] * base;
@@ -33,6 +33,10 @@ export default function CanPaintingTinTallLayout({
               backgroundColor: GetHSV(baseColor),
               width: `${width}px`,
               height: `${height}px`,
+              borderTop: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderLeft: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderRight: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderBottom: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
             }}
           />
         </div>
@@ -52,6 +56,10 @@ export default function CanPaintingTinTallLayout({
               backgroundColor: GetHSV(baseColor),
               width: `${width}px`,
               height: `${depth}px`,
+              borderTop: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderLeft: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderRight: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderBottom: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
             }}
           />
         </div>

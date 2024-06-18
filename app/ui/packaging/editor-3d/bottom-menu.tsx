@@ -55,13 +55,13 @@ export default function BottomMenu({
       hotkeys: ["v"],
       showTooltip: true,
     },
-    {
-      type: "block",
-      icon: <FaHandPaper />,
-      text: Tools.Hand,
-      hotkeys: ["h"],
-      showTooltip: true,
-    },
+    // {
+    //   type: "block",
+    //   icon: <FaHandPaper />,
+    //   text: Tools.Hand,
+    //   hotkeys: ["h"],
+    //   showTooltip: true,
+    // },
     { type: "divider" },
     {
       type: "block",

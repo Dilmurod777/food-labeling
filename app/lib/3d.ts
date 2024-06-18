@@ -1,6 +1,13 @@
 import { Ref } from "react";
 import { Group, Mesh } from "three";
 
+export const LayoutBorderWidth = 3;
+
+export enum LayoutColors {
+  Outside = "#e01010",
+  Inside = "#4954e6",
+}
+
 export interface Data3D {
   meshRefs: {
     top: Ref<Group>[];

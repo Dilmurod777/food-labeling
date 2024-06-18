@@ -1,4 +1,4 @@
-import { Model } from "@/app/lib/3d";
+import { LayoutBorderWidth, LayoutColors, Model } from "@/app/lib/3d";
 import { GetHSV } from "@/app/lib/utilities";
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function SachetSnackLayout({ model, baseColor, size }: Props) {
-  const base = 50;
+  const base = 60;
   const width = size[0] * base;
   const height = size[1] * base * 3;
   const depth = (size[2] * base) / 3;
@@ -29,6 +29,10 @@ export default function SachetSnackLayout({ model, baseColor, size }: Props) {
               backgroundColor: GetHSV(baseColor),
               width: `${width}px`,
               height: `${height}px`,
+              borderTop: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderLeft: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderRight: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderBottom: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
             }}
           />
         </div>
@@ -47,6 +51,10 @@ export default function SachetSnackLayout({ model, baseColor, size }: Props) {
               backgroundColor: GetHSV(baseColor),
               width: `${depth}px`,
               height: `${height}px`,
+              borderTop: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderLeft: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderRight: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderBottom: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
             }}
           />
         </div>

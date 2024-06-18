@@ -63,56 +63,26 @@ export default function BoxFullOverlapSlotted({
 
     if (step >= 0 && step <= 5) {
       // @ts-ignore
-      obj.current.rotation.x = Math.PI / 2 - (step * 18 * Math.PI) / 180;
-      // @ts-ignore
-      obj.current.position.y = height / 2 - (step * height) / 2 / 5;
-      // @ts-ignore
-      obj1.current.rotation.x = 0;
-      //@ts-ignore
-      obj1.current.position.y = depth / 2;
-      //@ts-ignore
-      obj1.current.position.z = height / 2;
-      // @ts-ignore
       obj2.current.rotation.x = 0;
       //@ts-ignore
       obj2.current.position.y = depth / 2;
       //@ts-ignore
       obj2.current.position.z = -height / 2;
       // @ts-ignore
-      obj8.current.rotation.x = 0;
-      //@ts-ignore
-      obj8.current.position.y = depth / 2;
-      //@ts-ignore
-      obj8.current.position.z = -height / 2;
-      // @ts-ignore
       obj9.current.rotation.x = 0;
       //@ts-ignore
       obj9.current.position.y = depth / 2;
       //@ts-ignore
-      obj9.current.position.z = -height / 2;
+      obj9.current.position.z = -height / 2 - 0.01;
     }
 
     if (step >= 6 && step <= 10) {
-      // @ts-ignore
-      obj1.current.rotation.x = ((step - 5) * 18 * Math.PI) / 180;
-      // @ts-ignore
-      obj1.current.position.y = depth / 2 - ((step - 5) * depth) / 5 / 2;
-      // @ts-ignore
-      obj1.current.position.z = height / 2 + ((step - 5) * depth) / 5 / 2;
-
       // @ts-ignore
       obj2.current.rotation.x = -((step - 5) * 18 * Math.PI) / 180;
       // @ts-ignore
       obj2.current.position.y = depth / 2 - ((step - 5) * depth) / 5 / 2;
       // @ts-ignore
       obj2.current.position.z = -height / 2 - ((step - 5) * depth) / 5 / 2;
-
-      // @ts-ignore
-      obj8.current.rotation.x = ((step - 5) * 18 * Math.PI) / 180;
-      // @ts-ignore
-      obj8.current.position.y = depth / 2 - ((step - 5) * depth) / 5 / 2;
-      // @ts-ignore
-      obj8.current.position.z = height / 2 + ((step - 5) * depth) / 5 / 2;
 
       // @ts-ignore
       obj9.current.rotation.x = -((step - 5) * 18 * Math.PI) / 180;
@@ -124,13 +94,6 @@ export default function BoxFullOverlapSlotted({
 
     if (step >= 11 && step <= 16) {
       // @ts-ignore
-      obj4.current.rotation.x = ((step - 11) * 18 * Math.PI) / 180;
-      // @ts-ignore
-      obj4.current.position.y = width / 2 - ((step - 11) * width) / 2 / 5;
-      // @ts-ignore
-      obj4.current.position.z =
-        (height + width) / 2 - depth + ((step - 11) * depth) / 5;
-      // @ts-ignore
       obj5.current.rotation.x = -((step - 11) * 18 * Math.PI) / 180;
       // @ts-ignore
       obj5.current.position.y = width / 2 - ((step - 11) * width) / 2 / 5;
@@ -138,50 +101,12 @@ export default function BoxFullOverlapSlotted({
       obj5.current.position.z =
         -(height + width) / 2 + depth - ((step - 11) * depth) / 5;
       // @ts-ignore
-      obj11.current.rotation.x = -((step - 11) * 18 * Math.PI) / 180;
-      // @ts-ignore
-      obj11.current.position.y = -width / 2 + ((step - 11) * width) / 2 / 5;
-      // @ts-ignore
-      obj11.current.position.z =
-        (height + width) / 2 - depth + ((step - 11) * depth) / 5;
-      // @ts-ignore
       obj12.current.rotation.x = ((step - 11) * 18 * Math.PI) / 180;
       // @ts-ignore
       obj12.current.position.y = -width / 2 + ((step - 11) * width) / 2 / 5;
       // @ts-ignore
       obj12.current.position.z =
         -(height + width) / 2 + depth - ((step - 11) * depth) / 5;
-    }
-
-    if (step >= 17 && step <= 22) {
-      // @ts-ignore
-      obj13.current.rotation.z =
-        Math.PI / 2 + ((step - 17) * 18 * Math.PI) / 180;
-      // @ts-ignore
-      obj13.current.position.x =
-        -depth / 2 - width - ((step - 17) * width) / 2 / 2 / 5;
-      // @ts-ignore
-      obj13.current.position.y = depth / 2 - ((step - 17) * depth) / 2 / 5;
-    }
-
-    if (step >= 23 && step <= 28) {
-      // @ts-ignore
-      obj6.current.rotation.z =
-        -Math.PI / 2 + ((step - 23) * 18 * Math.PI) / 180;
-      // @ts-ignore
-      obj6.current.position.x = -depth / 2 + ((step - 23) * depth) / 2 / 5;
-      // @ts-ignore
-      obj6.current.position.y = -depth / 2 + ((step - 23) * depth) / 2 / 5;
-    }
-
-    if (step >= 29 && step <= 34) {
-      // @ts-ignore
-      obj15.current.rotation.z =
-        Math.PI / 2 + -((step - 29) * 18 * Math.PI) / 180;
-      // @ts-ignore
-      obj15.current.position.x = depth / 2 + ((step - 29) * depth) / 5;
-      // @ts-ignore
-      obj15.current.position.y = width / 2 - ((step - 29) * width) / 2 / 5;
     }
   }, [step]);
 

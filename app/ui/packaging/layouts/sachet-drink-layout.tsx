@@ -1,4 +1,4 @@
-import { Model } from "@/app/lib/3d";
+import { LayoutBorderWidth, LayoutColors, Model } from "@/app/lib/3d";
 import { GetHSV } from "@/app/lib/utilities";
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function SachetDrinkLayout({ model, baseColor, size }: Props) {
-  const base = 150;
+  const base = 160;
   const width = size[0] * base;
   const height = size[1] * base;
   const depth = (size[2] * base) / 3;
@@ -29,6 +29,9 @@ export default function SachetDrinkLayout({ model, baseColor, size }: Props) {
               backgroundColor: GetHSV(baseColor),
               width: `${width * 0.5}px`,
               height: `${height * 0.2}px`,
+              borderTop: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderLeft: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderRight: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
             }}
           />
           <div
@@ -53,6 +56,7 @@ export default function SachetDrinkLayout({ model, baseColor, size }: Props) {
                 backgroundColor: GetHSV(baseColor),
                 width: `40px`,
                 height: `40px`,
+                borderTop: `${LayoutBorderWidth}px dashed ${LayoutColors.Inside}`,
               }}
             />
             <div
@@ -74,6 +78,10 @@ export default function SachetDrinkLayout({ model, baseColor, size }: Props) {
               height: `${height * 0.8}px`,
               borderBottomRightRadius: "10px",
               borderBottomLeftRadius: "10px",
+              borderTop: `${LayoutBorderWidth}px dashed ${LayoutColors.Inside}`,
+              borderLeft: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderRight: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderBottom: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
             }}
           />
         </div>
@@ -92,6 +100,10 @@ export default function SachetDrinkLayout({ model, baseColor, size }: Props) {
               backgroundColor: GetHSV(baseColor),
               width: `${depth}px`,
               height: `${height}px`,
+              borderTop: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderLeft: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderRight: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderBottom: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
             }}
           />
         </div>

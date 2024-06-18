@@ -1,4 +1,4 @@
-import { Model } from "@/app/lib/3d";
+import { LayoutBorderWidth, LayoutColors, Model } from "@/app/lib/3d";
 import { GetHSV } from "@/app/lib/utilities";
 
 interface Props {
@@ -34,6 +34,10 @@ export default function BagMediumShopping2Layout({
               backgroundColor: GetHSV(baseColor),
               width: `${width}px`,
               height: `${height}px`,
+              borderTop: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderLeft: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderRight: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderBottom: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
             }}
           />
         </div>
@@ -52,6 +56,10 @@ export default function BagMediumShopping2Layout({
               backgroundColor: GetHSV(baseColor),
               width: `${depth}px`,
               height: `${height}px`,
+              borderTop: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderLeft: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderRight: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderBottom: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
             }}
           />
         </div>

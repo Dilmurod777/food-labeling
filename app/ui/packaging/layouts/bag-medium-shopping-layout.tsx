@@ -1,4 +1,4 @@
-import { Model } from "@/app/lib/3d";
+import { LayoutBorderWidth, LayoutColors, Model } from "@/app/lib/3d";
 import { GetHSV } from "@/app/lib/utilities";
 
 interface Props {
@@ -34,12 +34,22 @@ export default function BagMediumShoppingLayout({
               backgroundColor: GetHSV(baseColor),
               width: `${width}px`,
               height: `${height}px`,
+              borderTop: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderLeft: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderRight: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderBottom: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
             }}
           >
             <div
               className={
                 "h-6 w-1/3 rounded-b-full border-b-8 border-b-white bg-white"
               }
+              style={{
+                borderTop: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+                borderLeft: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+                borderRight: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+                borderBottom: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              }}
             ></div>
           </div>
         </div>
@@ -58,6 +68,10 @@ export default function BagMediumShoppingLayout({
               backgroundColor: GetHSV(baseColor),
               width: `${depth}px`,
               height: `${height}px`,
+              borderTop: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderLeft: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderRight: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
+              borderBottom: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
             }}
           />
         </div>
