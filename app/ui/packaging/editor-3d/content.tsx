@@ -32,6 +32,7 @@ import { BagMediumShopping2Model } from "@/app/ui/packaging/models/bag-medium-sh
 import BoxSimpleTallModel from "@/app/ui/packaging/models/box-simple-tall-model";
 import BoxDonutModel from "@/app/ui/packaging/models/box-donut-model";
 import BoxSlideModel from "@/app/ui/packaging/models/box-slide-model";
+import { canvasRGBA } from "stackblur-canvas";
 
 interface Props {
   currentModel: Model;
@@ -42,6 +43,7 @@ interface Props {
   baseColor: number[];
   size: number[];
   textures: CanvasTexture[];
+  canvasRef: Ref<HTMLCanvasElement>;
 }
 
 interface CurrentModel {
@@ -58,6 +60,7 @@ export default function Content({
   baseColor,
   size,
   textures,
+  canvasRef,
 }: Props) {
   const texture = useTexture("/uploads/image1.jpg");
   const [animationValue, setAnimationValue] = useState(0);
@@ -160,6 +163,7 @@ export default function Content({
             size={size}
             baseColor={baseColor}
             textures={textures}
+            canvasRef={canvasRef}
           />
         );
       case "pouch-1":

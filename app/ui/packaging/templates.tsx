@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { SiTaichigraphics } from "react-icons/si";
 import { LuUploadCloud } from "react-icons/lu";
@@ -6,9 +6,12 @@ import { TemplateGroup } from "@/app/lib/3d";
 import { convertTemplateGroupNameToTitle } from "@/app/lib/utilities";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { IoIosAddCircleOutline } from "react-icons/io";
+import { TbTextSize } from "react-icons/tb";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 interface Props {
-  updateSelectedTextures: (t: string) => void;
+  updateSelectedTextures: (texture: string, type: string) => void;
 }
 
 export default function TemplatesPanel({ updateSelectedTextures }: Props) {
@@ -16,6 +19,7 @@ export default function TemplatesPanel({ updateSelectedTextures }: Props) {
   const [images, setImages] = useState<TemplateGroup[]>([]);
   const [showPanel, setShowPanel] = useState(-1);
   const [uploads, setUploads] = useState<File[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetchTemplates();
@@ -74,7 +78,7 @@ export default function TemplatesPanel({ updateSelectedTextures }: Props) {
                 "relative aspect-square w-[18%] cursor-pointer rounded-md hover:scale-105"
               }
               key={`image-${i}`}
-              onClick={() => updateSelectedTextures(image)}
+              onClick={() => updateSelectedTextures(image, "image")}
             >
               <Image
                 src={image}
@@ -115,6 +119,15 @@ export default function TemplatesPanel({ updateSelectedTextures }: Props) {
           >
             <LuUploadCloud className={"text-4xl/none"} />
             <span className={"text-xs/none font-bold"}>Upload</span>
+          </div>
+          <div
+            className={
+              "flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main-orange p-2"
+            }
+            onClick={() => setShowPanel(showPanel != 2 ? 2 : -1)}
+          >
+            <TbTextSize className={"text-4xl/none"} />
+            <span className={"text-xs/none font-bold"}>Text</span>
           </div>
         </>
       )}
@@ -168,7 +181,7 @@ export default function TemplatesPanel({ updateSelectedTextures }: Props) {
                       "relative h-20 w-20 cursor-pointer rounded-md hover:scale-105"
                     }
                     onClick={() =>
-                      updateSelectedTextures(URL.createObjectURL(file))
+                      updateSelectedTextures(URL.createObjectURL(file), "image")
                     }
                   >
                     <Image
@@ -180,6 +193,20 @@ export default function TemplatesPanel({ updateSelectedTextures }: Props) {
                   </div>
                 ))}
               </div>
+            </div>
+          )}
+          {showPanel == 2 && (
+            <div className={"flex flex-col gap-2 p-2"}>
+              <Input ref={inputRef} placeholder={"Enter text"} />
+              <Button
+                className={"w-fit"}
+                onClick={() => {
+                  if (!inputRef.current) return;
+                  updateSelectedTextures(inputRef.current.value, "text");
+                }}
+              >
+                Add
+              </Button>
             </div>
           )}
         </div>

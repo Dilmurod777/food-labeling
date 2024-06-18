@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { Ref, useEffect, useMemo, useRef, useState } from "react";
 import {
   Decal,
   KeyboardControls,
@@ -17,12 +17,14 @@ interface Props {
   size: number[];
   baseColor: number[];
   textures: CanvasTexture[];
+  canvasRef: Ref<HTMLCanvasElement>;
 }
 
 export function PouchChipsModel({
   size = [1, 1, 1],
   baseColor = [34, 0, 82],
   textures = [],
+  canvasRef,
 }: Props) {
   const { camera } = useThree();
   const { nodes, materials } = useGLTF(modelPath);
@@ -36,10 +38,13 @@ export function PouchChipsModel({
 
   const loadTextures = async () => {
     const newTextures = await Promise.all(
-      textures.map((t) => textureLoader.loadAsync(t.img)),
+      textures.map((t) => textureLoader.loadAsync(t.value)),
     );
     setCurrentTextures(newTextures);
   };
+
+  // @ts-ignore
+  const canvasTexture = new THREE.CanvasTexture(canvasRef.current);
 
   return (
     <group dispose={null}>
@@ -50,26 +55,39 @@ export function PouchChipsModel({
         scale={size.map((s) => s * 0.1) as Vector3}
       >
         <meshStandardMaterial attach="material" color={GetHSV(baseColor)} />
-        {currentTextures.map((t, i) => (
-          <Decal
-            key={`decal-${i}`}
-            debug={false}
-            position={[
-              -15 + textures[i].position.x * 30,
-              15 - textures[i].position.y * 30,
-              11,
-            ]}
-            rotation={[0, 0, 0]}
-            scale={[10, 10, 20]}
-          >
-            <meshBasicMaterial
-              polygonOffset
-              polygonOffsetFactor={-1}
-              map={t}
-              transparent={true}
-            />
-          </Decal>
-        ))}
+        <Decal
+          debug={false}
+          position={[0, 0, 5]}
+          rotation={[0, 0, 0]}
+          scale={[30, 50, 20]}
+        >
+          <meshBasicMaterial
+            polygonOffset
+            polygonOffsetFactor={-1}
+            map={canvasTexture}
+            transparent={true}
+          />
+        </Decal>
+        {/*{currentTextures.map((t, i) => (*/}
+        {/*  <Decal*/}
+        {/*    key={`decal-${i}`}*/}
+        {/*    debug={false}*/}
+        {/*    position={[*/}
+        {/*      -15 + textures[i].position.x * 30,*/}
+        {/*      15 - textures[i].position.y * 30,*/}
+        {/*      11,*/}
+        {/*    ]}*/}
+        {/*    rotation={[0, 0, 0]}*/}
+        {/*    scale={[10, 10, 20]}*/}
+        {/*  >*/}
+        {/*    <meshBasicMaterial*/}
+        {/*      polygonOffset*/}
+        {/*      polygonOffsetFactor={-1}*/}
+        {/*      map={t}*/}
+        {/*      transparent={true}*/}
+        {/*    />*/}
+        {/*  </Decal>*/}
+        {/*))}*/}
       </mesh>
     </group>
   );

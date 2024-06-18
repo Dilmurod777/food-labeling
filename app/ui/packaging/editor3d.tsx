@@ -165,37 +165,55 @@ export default function Editor3D({ model }: Props) {
     <div className={"relative z-0 flex h-full w-full flex-grow"}>
       <Suspense fallback={<div className={"h-full w-20 bg-transparent"} />}>
         <TemplatesPanel
-          updateSelectedTextures={(texture) => {
+          updateSelectedTextures={(texture, type) => {
             if (!canvasRef.current) return;
 
-            const img = new Image();
-            img.src = texture;
-            img.onload = function () {
-              if (!canvasRef.current) return;
+            const randomX = Math.random();
+            const randomY = Math.random();
 
-              const randomX = Math.random();
-              const randomY = Math.random();
+            if (type == "image") {
+              const img = new Image();
+              img.src = texture;
+              img.onload = function () {
+                if (!canvasRef.current) return;
 
-              setSelectedTextures([
-                ...selectedTextures,
-                {
-                  position: {
-                    x: randomX,
-                    y: randomY,
-                  },
-                  img: texture,
-                },
-              ]);
-
+                const ctx = canvasRef.current.getContext("2d");
+                ctx?.drawImage(
+                  img,
+                  randomX * (canvasRef.current.width - 50),
+                  randomY * (canvasRef.current.height - 50),
+                  50,
+                  50,
+                );
+              };
+            } else if (type == "text") {
               const ctx = canvasRef.current.getContext("2d");
-              ctx?.drawImage(
-                img,
-                randomX * (canvasRef.current.width - 50),
-                randomY * (canvasRef.current.height - 50),
-                50,
-                50,
+              if (!ctx) return;
+              ctx.font = "48px serif";
+              ctx?.fillText(
+                texture,
+                Math.min(
+                  canvasRef.current.width - 15,
+                  Math.max(5, randomX * canvasRef.current.width),
+                ),
+                Math.min(
+                  canvasRef.current.height - 15,
+                  Math.max(5, randomY * canvasRef.current.height),
+                ),
               );
-            };
+            }
+
+            setSelectedTextures([
+              ...selectedTextures,
+              {
+                type: type,
+                position: {
+                  x: randomX,
+                  y: randomY,
+                },
+                value: texture,
+              },
+            ]);
           }}
         />
       </Suspense>
@@ -263,6 +281,7 @@ export default function Editor3D({ model }: Props) {
             updateBaseColor={setBaseColor}
             size={size}
             textures={selectedTextures}
+            canvasRef={canvasRef}
           />
         </ResizablePanel>
       </ResizablePanelGroup>

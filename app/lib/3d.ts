@@ -343,7 +343,8 @@ export const DefaultModelItems: Model[] = [
 ];
 
 export interface CanvasTexture {
-  img: string;
+  type: string;
+  value: string;
   position: {
     x: number;
     y: number;

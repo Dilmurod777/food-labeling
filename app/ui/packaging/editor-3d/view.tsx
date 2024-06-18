@@ -12,7 +12,7 @@ import {
   useTexture,
 } from "@react-three/drei";
 import Content from "@/app/ui/packaging/editor-3d/content";
-import { useEffect, useRef, useState } from "react";
+import { Ref, useEffect, useRef, useState } from "react";
 import SideMenu from "@/app/ui/packaging/editor-3d/side-menu";
 import BottomMenu from "@/app/ui/packaging/editor-3d/bottom-menu";
 import {
@@ -32,6 +32,7 @@ interface Props {
   updateBaseColor: (c: number[]) => void;
   size: number[];
   textures: CanvasTexture[];
+  canvasRef: Ref<HTMLCanvasElement>;
 }
 
 export default function View({
@@ -40,12 +41,13 @@ export default function View({
   size,
   updateBaseColor,
   textures,
+  canvasRef,
 }: Props) {
   const [currentTool, setCurrentTool] = useState<Tools>(Tools.Select);
   const [currentModel, setCurrentModel] = useState<Model>({ ...initialModel });
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [texture, setTexture] = useState<Texture>();
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const exportCanvasRef = useRef<HTMLCanvasElement>(null);
   const cameraControlsRef = useRef<CameraControls>(null);
 
   useEffect(() => {
@@ -141,9 +143,9 @@ export default function View({
     } else if (text == Tools.UploadImage) {
       // UploadImage();
     } else if (text == Tools.ExportRender) {
-      if (!canvasRef.current) return;
+      if (!exportCanvasRef.current) return;
 
-      const screenshot = canvasRef.current.toDataURL("image/png", 1.0);
+      const screenshot = exportCanvasRef.current.toDataURL("image/png", 1.0);
       const a = document.createElement("a");
       a.href = screenshot;
       a.download = "scene.png";
@@ -158,7 +160,7 @@ export default function View({
     >
       <Canvas
         shadows
-        ref={canvasRef}
+        ref={exportCanvasRef}
         gl={{ preserveDrawingBuffer: true }}
         camera={{ position: [0, 5, 5], fov: 75 }}
       >
@@ -175,6 +177,7 @@ export default function View({
           baseColor={baseColor}
           size={size}
           textures={textures}
+          canvasRef={canvasRef}
         />
       </Canvas>
 
