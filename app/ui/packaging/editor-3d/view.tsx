@@ -145,16 +145,21 @@ export default function View({
       className={"relative h-[700px] w-full flex-grow"}
       style={{ cursor: GetCurrentCursor() }}
     >
-      <Canvas shadows ref={canvasRef} gl={{ preserveDrawingBuffer: true }}>
-        <PerspectiveCamera makeDefault position={[0, 0, -10]} ref={cameraRef} />
+      <Canvas
+        shadows
+        ref={canvasRef}
+        gl={{ preserveDrawingBuffer: true }}
+        camera={{ position: [0, 5, 5], fov: 75 }}
+      >
         <directionalLight
           visible={true}
-          position={[3.3, 1.0, 4.4]}
+          position={[0, 5, 5]}
           castShadow
-          intensity={0}
+          receiveShadow
+          intensity={1}
         />
+        <ambientLight intensity={2} />
         {GetCurrentControls()}
-        <SoftShadows size={10} focus={10} />
 
         <Content
           currentModel={currentModel}

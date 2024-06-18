@@ -20,38 +20,38 @@ export function CanPaintTinTallModel({
       <mesh
         // @ts-ignore
         geometry={nodes.can.geometry}
-        scale={size.map((s) => s * 10) as Vector3}
-        castShadow
-        receiveShadow
+        scale={size.map((s) => s * 30) as Vector3}
+        castShadow={true}
+        receiveShadow={true}
       >
-        <meshBasicMaterial color={GetHSV(baseColor)} />
+        <meshStandardMaterial attach="material" color={GetHSV(baseColor)} />
       </mesh>
       <mesh
         // @ts-ignore
         geometry={nodes.top.geometry}
-        scale={size.map((s) => s * 10) as Vector3}
-        castShadow
-        receiveShadow
+        scale={size.map((s) => s * 30) as Vector3}
+        castShadow={true}
+        receiveShadow={true}
       >
-        <meshBasicMaterial color={GetHSV(baseColor)} />
+        <meshStandardMaterial attach="material" color={GetHSV(baseColor)} />
       </mesh>
       <mesh
         // @ts-ignore
         geometry={nodes.paint.geometry}
-        scale={size.map((s) => s * 10) as Vector3}
-        castShadow
-        receiveShadow
+        scale={size.map((s) => s * 30) as Vector3}
+        castShadow={true}
+        receiveShadow={true}
       >
-        <meshBasicMaterial color={GetHSV(baseColor)} />
+        <meshStandardMaterial attach="material" color={GetHSV(baseColor)} />
       </mesh>
       <mesh
         // @ts-ignore
         geometry={nodes["paint-stain"].geometry}
-        scale={size.map((s) => s * 10) as Vector3}
-        castShadow
-        receiveShadow
+        scale={size.map((s) => s * 30) as Vector3}
+        castShadow={true}
+        receiveShadow={true}
       >
-        <meshBasicMaterial color={GetHSV(baseColor)} />
+        <meshStandardMaterial attach="material" color={GetHSV(baseColor)} />
       </mesh>
     </group>
   );

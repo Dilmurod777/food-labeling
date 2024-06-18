@@ -20,20 +20,20 @@ export function CanPaintTinShortModel({
       <mesh
         //@ts-ignore
         geometry={nodes.Default.geometry}
-        scale={size.map((s) => s * 10) as Vector3}
+        scale={size.map((s) => s * 40) as Vector3}
         castShadow
         receiveShadow
       >
-        <meshBasicMaterial color={GetHSV(baseColor)} />
+        <meshStandardMaterial attach="material" color={GetHSV(baseColor)} />
       </mesh>
       <mesh
         // @ts-ignore
         geometry={nodes.Default_1.geometry}
-        scale={size.map((s) => s * 10) as Vector3}
+        scale={size.map((s) => s * 40) as Vector3}
         castShadow
         receiveShadow
       >
-        <meshBasicMaterial color={GetHSV(baseColor)} />
+        <meshStandardMaterial attach="material" color={GetHSV(baseColor)} />
       </mesh>
     </group>
   );

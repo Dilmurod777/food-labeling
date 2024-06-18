@@ -20,9 +20,9 @@ export function PouchChipsModel({
       <mesh
         //@ts-ignore
         geometry={nodes.Dorrito001_Lays_0.geometry}
-        scale={size.map((s) => s * 0.05) as Vector3}
+        scale={size.map((s) => s * 0.1) as Vector3}
       >
-        <meshBasicMaterial color={GetHSV(baseColor)} />
+        <meshStandardMaterial attach="material" color={GetHSV(baseColor)} />
       </mesh>
     </group>
   );

@@ -20,20 +20,20 @@ export function BagMediumShopping2Model({
       <mesh
         // @ts-ignore
         geometry={nodes.Default.geometry}
-        castShadow
-        receiveShadow
+        castShadow={true}
+        receiveShadow={true}
         scale={size.map((s) => s * 10) as Vector3}
       >
-        <meshBasicMaterial color={GetHSV(baseColor)} />
+        <meshStandardMaterial attach="material" color={GetHSV(baseColor)} />
       </mesh>
       <mesh
         // @ts-ignore
         geometry={nodes.Default_1.geometry}
         scale={size.map((s) => s * 10) as Vector3}
-        castShadow
-        receiveShadow
+        castShadow={true}
+        receiveShadow={true}
       >
-        <meshBasicMaterial color={GetHSV(baseColor)} />
+        <meshStandardMaterial attach="material" color={GetHSV(baseColor)} />
       </mesh>
     </group>
   );

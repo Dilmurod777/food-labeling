@@ -23,7 +23,7 @@ export function SachetSnackModel({
         geometry={nodes.Default.geometry}
         scale={[size[1], size[2], size[0]].map((s) => s * 30) as Vector3}
       >
-        <meshBasicMaterial color={GetHSV(baseColor)} />
+        <meshStandardMaterial attach="material" color={GetHSV(baseColor)} />
       </mesh>
     </group>
   );

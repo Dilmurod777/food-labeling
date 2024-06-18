@@ -20,9 +20,9 @@ export function SachetDrinkModel({
       <mesh
         // @ts-ignore
         geometry={nodes.FBX_PolyPart_56926.geometry}
-        scale={size.map((s) => s * 0.2) as Vector3}
+        scale={size.map((s) => s * 0.4) as Vector3}
       >
-        <meshBasicMaterial color={GetHSV(baseColor)} />
+        <meshStandardMaterial attach="material" color={GetHSV(baseColor)} />
       </mesh>
     </group>
   );

@@ -21,10 +21,10 @@ export function BagMediumShoppingModel({
         // @ts-ignore
         geometry={nodes.bag.geometry}
         scale={size.map((s) => s * 10) as Vector3}
-        castShadow
-        receiveShadow
+        castShadow={true}
+        receiveShadow={true}
       >
-        <meshBasicMaterial color={GetHSV(baseColor)} />
+        <meshStandardMaterial attach="material" color={GetHSV(baseColor)} />
       </mesh>
     </group>
   );
