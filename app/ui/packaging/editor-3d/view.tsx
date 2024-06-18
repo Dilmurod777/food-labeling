@@ -15,6 +15,7 @@ import BottomMenu from "@/app/ui/packaging/editor-3d/bottom-menu";
 import { Model, ModelType, RestrictedKeyCodes, Tools } from "@/app/lib/3d";
 import { v4 as uuidV4 } from "uuid";
 import { Texture } from "three";
+import CameraPresetsMenu from "@/app/ui/packaging/editor-3d/camera-presets-menu";
 
 interface Props {
   initialModel: Model;
@@ -77,8 +78,6 @@ export default function View({
               minDistance={5}
               maxDistance={20}
               enabled={true}
-              minPolarAngle={0}
-              maxPolarAngle={Math.PI * 0.5}
               enableZoom={true}
             />
             {/*<GizmoHelper alignment={"bottom-right"}>*/}
@@ -146,7 +145,7 @@ export default function View({
       className={"relative h-[700px] w-full flex-grow"}
       style={{ cursor: GetCurrentCursor() }}
     >
-      <Canvas shadows ref={canvasRef} gl={{ preserveDrawingBuffer: false }}>
+      <Canvas shadows ref={canvasRef} gl={{ preserveDrawingBuffer: true }}>
         <PerspectiveCamera makeDefault position={[0, 0, -10]} ref={cameraRef} />
         <directionalLight
           visible={true}
@@ -179,6 +178,8 @@ export default function View({
         updateBaseColor={updateBaseColor}
         baseColor={baseColor}
       />
+
+      <CameraPresetsMenu currentModel={currentModel} />
     </div>
   );
 }

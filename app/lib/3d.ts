@@ -75,6 +75,16 @@ export enum Tools {
   ColorPalette = "Color",
 }
 
+export enum CameraPresets {
+  Top,
+  Bottom,
+  Front,
+  Back,
+  Left,
+  Right,
+  Reset,
+}
+
 export interface TemplateGroup {
   name: string;
   images: string[];

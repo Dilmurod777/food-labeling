@@ -191,7 +191,7 @@ export default function Content({
 
   return (
     <group position-y={-1}>
-      <Ground />
+      {/*<Ground />*/}
       <KeyboardControls map={keyMap} onChange={keyboardOnChange}>
         {GetModel(currentModel, 0)}
       </KeyboardControls>

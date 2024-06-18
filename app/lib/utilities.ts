@@ -6,7 +6,7 @@ import {
   CommonWords,
   WordReplacements,
 } from "@/app/lib/constants/common-ingredients";
-import { ModelCategory } from "@/app/lib/3d";
+import { CameraPresets, ModelCategory } from "@/app/lib/3d";
 
 export function overflowText(text: string, max_length = 30): string {
   if (!text) return "";
@@ -602,4 +602,23 @@ export function GetHSV(color: number[]): string {
 
 export function convertTemplateGroupNameToTitle(groupName: string) {
   return capitalize(groupName.replaceAll("-", " "), " ");
+}
+
+export function convertCameraPresetTextToTitle(text: CameraPresets) {
+  switch (text) {
+    case CameraPresets.Top:
+      return "Top";
+    case CameraPresets.Bottom:
+      return "Bottom";
+    case CameraPresets.Front:
+      return "Front";
+    case CameraPresets.Back:
+      return "Back";
+    case CameraPresets.Left:
+      return "Left";
+    case CameraPresets.Right:
+      return "Right";
+    case CameraPresets.Reset:
+      return "Reset";
+  }
 }
