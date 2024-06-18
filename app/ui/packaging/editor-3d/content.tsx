@@ -11,6 +11,7 @@ import {
 } from "@react-three/drei";
 import {
   AnimationKeyMap,
+  CanvasTexture,
   Keymaps,
   Model,
   ModelType,
@@ -40,6 +41,7 @@ interface Props {
   updateCurrentStep: (step: number) => void;
   baseColor: number[];
   size: number[];
+  textures: CanvasTexture[];
 }
 
 interface CurrentModel {
@@ -55,6 +57,7 @@ export default function Content({
   updateCurrentStep,
   baseColor,
   size,
+  textures,
 }: Props) {
   const texture = useTexture("/uploads/image1.jpg");
   const [animationValue, setAnimationValue] = useState(0);
@@ -152,7 +155,13 @@ export default function Content({
           />
         );
       case "pouch-0":
-        return <PouchChipsModel size={size} baseColor={baseColor} />;
+        return (
+          <PouchChipsModel
+            size={size}
+            baseColor={baseColor}
+            textures={textures}
+          />
+        );
       case "pouch-1":
         return <BagCoffeeModel size={size} baseColor={baseColor} />;
       case "sachet-0":

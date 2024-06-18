@@ -341,3 +341,11 @@ export const DefaultModelItems: Model[] = [
     baseColor: [34, 23, 60],
   },
 ];
+
+export interface CanvasTexture {
+  img: string;
+  position: {
+    x: number;
+    y: number;
+  };
+}

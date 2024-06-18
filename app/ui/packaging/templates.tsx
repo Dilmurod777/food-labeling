@@ -7,7 +7,11 @@ import { convertTemplateGroupNameToTitle } from "@/app/lib/utilities";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { IoIosAddCircleOutline } from "react-icons/io";
 
-export default function TemplatesPanel() {
+interface Props {
+  updateSelectedTextures: (t: string) => void;
+}
+
+export default function TemplatesPanel({ updateSelectedTextures }: Props) {
   const [loading, setLoading] = useState(true);
   const [images, setImages] = useState<TemplateGroup[]>([]);
   const [showPanel, setShowPanel] = useState(-1);
@@ -70,6 +74,7 @@ export default function TemplatesPanel() {
                 "relative aspect-square w-[18%] cursor-pointer rounded-md hover:scale-105"
               }
               key={`image-${i}`}
+              onClick={() => updateSelectedTextures(image)}
             >
               <Image
                 src={image}

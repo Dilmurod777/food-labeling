@@ -15,7 +15,13 @@ import Content from "@/app/ui/packaging/editor-3d/content";
 import { useEffect, useRef, useState } from "react";
 import SideMenu from "@/app/ui/packaging/editor-3d/side-menu";
 import BottomMenu from "@/app/ui/packaging/editor-3d/bottom-menu";
-import { Model, ModelType, RestrictedKeyCodes, Tools } from "@/app/lib/3d";
+import {
+  CanvasTexture,
+  Model,
+  ModelType,
+  RestrictedKeyCodes,
+  Tools,
+} from "@/app/lib/3d";
 import { v4 as uuidV4 } from "uuid";
 import { Texture } from "three";
 import CameraPresetsMenu from "@/app/ui/packaging/editor-3d/camera-presets-menu";
@@ -25,6 +31,7 @@ interface Props {
   baseColor: number[];
   updateBaseColor: (c: number[]) => void;
   size: number[];
+  textures: CanvasTexture[];
 }
 
 export default function View({
@@ -32,6 +39,7 @@ export default function View({
   baseColor,
   size,
   updateBaseColor,
+  textures,
 }: Props) {
   const [currentTool, setCurrentTool] = useState<Tools>(Tools.Select);
   const [currentModel, setCurrentModel] = useState<Model>({ ...initialModel });
@@ -166,6 +174,7 @@ export default function View({
           updateCurrentStep={setCurrentStep}
           baseColor={baseColor}
           size={size}
+          textures={textures}
         />
       </Canvas>
 

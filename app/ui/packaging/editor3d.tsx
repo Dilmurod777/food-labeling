@@ -1,9 +1,9 @@
 "use client";
 
-import { Model, ModelCategory } from "@/app/lib/3d";
+import { CanvasTexture, Model, ModelCategory } from "@/app/lib/3d";
 import View from "@/app/ui/packaging/editor-3d/view";
 import BoxTelescopeLayout from "@/app/ui/packaging/layouts/box-telescope-layout";
-import { Suspense, useState } from "react";
+import { Suspense, useRef, useState } from "react";
 import { HslColorPicker } from "react-colorful";
 import { GetHSV } from "@/app/lib/utilities";
 import {
@@ -32,6 +32,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import Konva from "konva";
 
 interface Props {
   model: Model;
@@ -40,6 +41,8 @@ interface Props {
 export default function Editor3D({ model }: Props) {
   const [baseColor, setBaseColor] = useState(model.baseColor);
   const [size, setSize] = useState(model.sizes);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [selectedTextures, setSelectedTextures] = useState<CanvasTexture[]>([]);
 
   const GetModelLayout = (model: Model) => {
     switch (model.id) {
@@ -78,7 +81,12 @@ export default function Editor3D({ model }: Props) {
       }
       case "pouch-0": {
         return (
-          <PouchChipsLayout model={model} baseColor={baseColor} size={size} />
+          <PouchChipsLayout
+            model={model}
+            baseColor={baseColor}
+            size={size}
+            canvasRef={canvasRef}
+          />
         );
       }
       case "sachet-0": {
@@ -156,7 +164,40 @@ export default function Editor3D({ model }: Props) {
   return (
     <div className={"relative z-0 flex h-full w-full flex-grow"}>
       <Suspense fallback={<div className={"h-full w-20 bg-transparent"} />}>
-        <TemplatesPanel />
+        <TemplatesPanel
+          updateSelectedTextures={(texture) => {
+            if (!canvasRef.current) return;
+
+            const img = new Image();
+            img.src = texture;
+            img.onload = function () {
+              if (!canvasRef.current) return;
+
+              const randomX = Math.random();
+              const randomY = Math.random();
+
+              setSelectedTextures([
+                ...selectedTextures,
+                {
+                  position: {
+                    x: randomX,
+                    y: randomY,
+                  },
+                  img: texture,
+                },
+              ]);
+
+              const ctx = canvasRef.current.getContext("2d");
+              ctx?.drawImage(
+                img,
+                randomX * (canvasRef.current.width - 50),
+                randomY * (canvasRef.current.height - 50),
+                50,
+                50,
+              );
+            };
+          }}
+        />
       </Suspense>
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel
@@ -221,6 +262,7 @@ export default function Editor3D({ model }: Props) {
             baseColor={baseColor}
             updateBaseColor={setBaseColor}
             size={size}
+            textures={selectedTextures}
           />
         </ResizablePanel>
       </ResizablePanelGroup>
