@@ -101,7 +101,12 @@ export default function Editor3D({ model }: Props) {
       }
       case "pouch-1": {
         return (
-          <BagCoffeeLayout model={model} baseColor={baseColor} size={size} />
+          <BagCoffeeLayout
+            model={model}
+            baseColor={baseColor}
+            size={size}
+            canvasRef={canvasRef}
+          />
         );
       }
       case "bag-0": {

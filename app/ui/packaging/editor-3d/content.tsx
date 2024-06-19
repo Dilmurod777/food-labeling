@@ -162,12 +162,17 @@ export default function Content({
           <PouchChipsModel
             size={size}
             baseColor={baseColor}
-            textures={textures}
             canvasRef={canvasRef}
           />
         );
       case "pouch-1":
-        return <BagCoffeeModel size={size} baseColor={baseColor} />;
+        return (
+          <BagCoffeeModel
+            size={size}
+            baseColor={baseColor}
+            canvasRef={canvasRef}
+          />
+        );
       case "sachet-0":
         return <SachetDrinkModel size={size} baseColor={baseColor} />;
       case "sachet-1":

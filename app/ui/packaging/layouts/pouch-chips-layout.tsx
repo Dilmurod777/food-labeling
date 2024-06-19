@@ -1,13 +1,7 @@
 "use client";
 
-import {
-  CanvasTexture,
-  LayoutBorderWidth,
-  LayoutColors,
-  Model,
-} from "@/app/lib/3d";
+import { LayoutBorderWidth, LayoutColors, Model } from "@/app/lib/3d";
 import { GetHSV } from "@/app/lib/utilities";
-import { Stage, Layer, Image } from "react-konva";
 import { Ref, useRef } from "react";
 
 interface Props {
@@ -27,9 +21,6 @@ export default function PouchChipsLayout({
   const width = size[0] * base;
   const height = size[1] * base;
   const depth = size[2] * base;
-
-  const startPosition = useRef({ x: 0, y: 0 });
-  const isDragging = useRef(false);
 
   return (
     <div className={"flex w-full flex-col items-center gap-8"}>

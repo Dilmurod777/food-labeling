@@ -11,37 +11,21 @@ import { useThree, Vector3 } from "@react-three/fiber";
 import { CanvasTexture } from "@/app/lib/3d";
 import * as THREE from "three";
 
-const modelPath = "/models/pouch-chips.glb";
+const modelPath = "/models/pouch-chips-2.glb";
 
 interface Props {
   size: number[];
   baseColor: number[];
-  textures: CanvasTexture[];
   canvasRef: Ref<HTMLCanvasElement>;
 }
 
 export function PouchChipsModel({
   size = [1, 1, 1],
   baseColor = [34, 0, 82],
-  textures = [],
   canvasRef,
 }: Props) {
-  const { camera } = useThree();
   const { nodes, materials } = useGLTF(modelPath);
   const meshRef = useRef(null);
-  const [currentTextures, setCurrentTextures] = useState<THREE.Texture[]>([]);
-  const textureLoader = new THREE.TextureLoader();
-
-  useEffect(() => {
-    loadTextures();
-  }, [textures]);
-
-  const loadTextures = async () => {
-    const newTextures = await Promise.all(
-      textures.map((t) => textureLoader.loadAsync(t.value)),
-    );
-    setCurrentTextures(newTextures);
-  };
 
   // @ts-ignore
   const canvasTexture = new THREE.CanvasTexture(canvasRef.current);
@@ -56,10 +40,10 @@ export function PouchChipsModel({
       >
         <meshStandardMaterial attach="material" color={GetHSV(baseColor)} />
         <Decal
-          debug={false}
-          position={[0, 0, 5]}
+          debug={true}
+          position={[0, 0, 6]}
           rotation={[0, 0, 0]}
-          scale={[30, 50, 20]}
+          scale={[30, 45, 15]}
         >
           <meshBasicMaterial
             polygonOffset
