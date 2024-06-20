@@ -8,6 +8,11 @@ export enum LayoutColors {
   Inside = "#4954e6",
 }
 
+export enum CanvasEvents {
+  AddElement = "add-element",
+  UpdateModel = "update-model",
+}
+
 export interface Data3D {
   meshRefs: {
     top: Ref<Group>[];

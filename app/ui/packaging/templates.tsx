@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { SiTaichigraphics } from "react-icons/si";
 import { LuUploadCloud } from "react-icons/lu";
-import { TemplateGroup } from "@/app/lib/3d";
+import { CanvasEvents, TemplateGroup } from "@/app/lib/3d";
 import { convertTemplateGroupNameToTitle } from "@/app/lib/utilities";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { IoIosAddCircleOutline } from "react-icons/io";
@@ -10,11 +10,9 @@ import { TbTextSize } from "react-icons/tb";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-interface Props {
-  updateSelectedTextures: (texture: string, type: string) => void;
-}
+interface Props {}
 
-export default function TemplatesPanel({ updateSelectedTextures }: Props) {
+export default function TemplatesPanel({}: Props) {
   const [loading, setLoading] = useState(true);
   const [images, setImages] = useState<TemplateGroup[]>([]);
   const [showPanel, setShowPanel] = useState(-1);
@@ -78,7 +76,16 @@ export default function TemplatesPanel({ updateSelectedTextures }: Props) {
                 "relative aspect-square w-[18%] cursor-pointer rounded-md hover:scale-105"
               }
               key={`image-${i}`}
-              onClick={() => updateSelectedTextures(image, "image")}
+              onClick={() => {
+                window.dispatchEvent(
+                  new CustomEvent(CanvasEvents.AddElement, {
+                    detail: {
+                      value: image,
+                      type: "image",
+                    },
+                  }),
+                );
+              }}
             >
               <Image
                 src={image}
@@ -180,9 +187,16 @@ export default function TemplatesPanel({ updateSelectedTextures }: Props) {
                     className={
                       "relative h-20 w-20 cursor-pointer rounded-md hover:scale-105"
                     }
-                    onClick={() =>
-                      updateSelectedTextures(URL.createObjectURL(file), "image")
-                    }
+                    onClick={() => {
+                      window.dispatchEvent(
+                        new CustomEvent(CanvasEvents.AddElement, {
+                          detail: {
+                            value: URL.createObjectURL(file),
+                            type: "image",
+                          },
+                        }),
+                      );
+                    }}
                   >
                     <Image
                       src={URL.createObjectURL(file)}
@@ -202,7 +216,14 @@ export default function TemplatesPanel({ updateSelectedTextures }: Props) {
                 className={"w-fit"}
                 onClick={() => {
                   if (!inputRef.current) return;
-                  updateSelectedTextures(inputRef.current.value, "text");
+                  window.dispatchEvent(
+                    new CustomEvent(CanvasEvents.AddElement, {
+                      detail: {
+                        value: inputRef.current.value,
+                        type: "text",
+                      },
+                    }),
+                  );
                 }}
               >
                 Add

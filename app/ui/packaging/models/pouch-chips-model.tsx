@@ -1,3 +1,5 @@
+"use client";
+
 import React, { Ref, useEffect, useMemo, useRef, useState } from "react";
 import {
   Decal,
@@ -8,7 +10,7 @@ import {
 } from "@react-three/drei";
 import { GetHSV } from "@/app/lib/utilities";
 import { useThree, Vector3 } from "@react-three/fiber";
-import { CanvasTexture } from "@/app/lib/3d";
+import { CanvasEvents, CanvasTexture } from "@/app/lib/3d";
 import * as THREE from "three";
 
 const modelPath = "/models/pouch-chips-2.glb";
@@ -27,8 +29,20 @@ export function PouchChipsModel({
   const { nodes, materials } = useGLTF(modelPath);
   const meshRef = useRef(null);
 
-  // @ts-ignore
-  const canvasTexture = new THREE.CanvasTexture(canvasRef.current);
+  //@ts-ignore
+  const initialTexture = new THREE.CanvasTexture(canvasRef.current);
+  initialTexture.needsUpdate = false;
+  const [canvasTexture, setCanvasTexture] =
+    useState<THREE.CanvasTexture>(initialTexture);
+
+  useEffect(() => {
+    window.addEventListener(CanvasEvents.UpdateModel, function () {
+      //@ts-ignore
+      const texture = new THREE.CanvasTexture(canvasRef.current);
+      texture.needsUpdate = false;
+      setCanvasTexture(texture);
+    });
+  }, []);
 
   return (
     <group dispose={null}>
@@ -40,7 +54,7 @@ export function PouchChipsModel({
       >
         <meshStandardMaterial attach="material" color={GetHSV(baseColor)} />
         <Decal
-          debug={true}
+          debug={false}
           position={[0, 0, 6]}
           rotation={[0, 0, 0]}
           scale={[30, 45, 15]}
@@ -52,26 +66,6 @@ export function PouchChipsModel({
             transparent={true}
           />
         </Decal>
-        {/*{currentTextures.map((t, i) => (*/}
-        {/*  <Decal*/}
-        {/*    key={`decal-${i}`}*/}
-        {/*    debug={false}*/}
-        {/*    position={[*/}
-        {/*      -15 + textures[i].position.x * 30,*/}
-        {/*      15 - textures[i].position.y * 30,*/}
-        {/*      11,*/}
-        {/*    ]}*/}
-        {/*    rotation={[0, 0, 0]}*/}
-        {/*    scale={[10, 10, 20]}*/}
-        {/*  >*/}
-        {/*    <meshBasicMaterial*/}
-        {/*      polygonOffset*/}
-        {/*      polygonOffsetFactor={-1}*/}
-        {/*      map={t}*/}
-        {/*      transparent={true}*/}
-        {/*    />*/}
-        {/*  </Decal>*/}
-        {/*))}*/}
       </mesh>
     </group>
   );

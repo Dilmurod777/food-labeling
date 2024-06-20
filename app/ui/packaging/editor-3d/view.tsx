@@ -162,10 +162,14 @@ export default function View({
         shadows
         ref={exportCanvasRef}
         gl={{ preserveDrawingBuffer: true }}
-        camera={{ position: [0, 5, 5], fov: 75 }}
+        camera={{ position: [0, 2, 5], fov: 75 }}
       >
         <Environment preset={"lobby"} />
-        <CameraControls ref={cameraControlsRef} />
+        <CameraControls
+          ref={cameraControlsRef}
+          minDistance={5}
+          maxDistance={25}
+        />
         {/*{GetCurrentControls()}*/}
 
         <Content

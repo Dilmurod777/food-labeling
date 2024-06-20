@@ -1,8 +1,15 @@
 "use client";
 
-import { LayoutBorderWidth, LayoutColors, Model } from "@/app/lib/3d";
+import {
+  CanvasEvents,
+  CanvasTexture,
+  LayoutBorderWidth,
+  LayoutColors,
+  Model,
+} from "@/app/lib/3d";
 import { GetHSV } from "@/app/lib/utilities";
-import { Ref, useRef } from "react";
+import { Ref, useEffect, useRef, useState } from "react";
+import { fabric } from "fabric";
 
 interface Props {
   model: Model;
@@ -17,10 +24,81 @@ export default function PouchChipsLayout({
   size,
   canvasRef,
 }: Props) {
-  const base = 150;
+  const base = 160;
   const width = size[0] * base;
-  const height = size[1] * base;
+  const height = size[1] * base * 1.35;
   const depth = size[2] * base;
+  const [canvas, setCanvas] = useState<fabric.Canvas>();
+
+  useEffect(() => {
+    const c = new fabric.Canvas("canvas", {
+      height: height + 15,
+      width: width + 15,
+      backgroundColor: "transparent",
+    });
+
+    setCanvas(c);
+
+    c.on("after:render", function (e) {
+      window.dispatchEvent(new Event(CanvasEvents.UpdateModel));
+    });
+
+    return () => {
+      c.dispose();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!canvas) return;
+    console.log("canvas event listener init");
+    window.addEventListener(CanvasEvents.AddElement, function (e) {
+      if (!canvas) return;
+
+      // @ts-ignore
+      const { type, value } = e.detail;
+
+      if (type == "image") {
+        fabric.Image.fromURL(
+          value,
+          function (imgObj) {
+            canvas.add(imgObj).renderAll();
+          },
+          {
+            scaleX: 0.05,
+            scaleY: 0.05,
+            left: width * 0.5,
+            top: height * 0.5,
+          },
+        );
+      } else if (type == "text") {
+        canvas
+          .add(
+            new fabric.Text(value, {
+              left: width * 0.5,
+              top: height * 0.5,
+              fontSize: 20,
+            }),
+          )
+          .renderAll();
+      }
+
+      canvas.requestRenderAll();
+    });
+
+    window.addEventListener("keydown", function (e) {
+      console.log(e.key);
+      if (e.key == "Delete") {
+        const activeObject = canvas.getActiveObject();
+        if (activeObject) {
+          canvas.remove(activeObject);
+        }
+      }
+
+      if (e.key == "Escape") {
+        canvas.discardActiveObject().renderAll();
+      }
+    });
+  }, [canvas]);
 
   return (
     <div className={"flex w-full flex-col items-center gap-8"}>
@@ -46,11 +124,9 @@ export default function PouchChipsLayout({
               borderBottom: `${LayoutBorderWidth}px solid ${LayoutColors.Outside}`,
             }}
           />
-          <canvas
-            ref={canvasRef}
-            className={`absolute z-10`}
-            style={{ width: `${width + 15}px`, height: `${height + 15}px` }}
-          />
+          <div className={"absolute z-10 h-fit w-fit"}>
+            <canvas id={"canvas"} ref={canvasRef} />
+          </div>
         </div>
       </div>
       <div className={"flex w-full flex-col gap-6"}>
