@@ -32,7 +32,6 @@ interface Props {
   updateBaseColor: (c: number[]) => void;
   size: number[];
   textures: CanvasTexture[];
-  canvasRef: Ref<HTMLCanvasElement>;
 }
 
 export default function View({
@@ -41,7 +40,6 @@ export default function View({
   size,
   updateBaseColor,
   textures,
-  canvasRef,
 }: Props) {
   const [currentTool, setCurrentTool] = useState<Tools>(Tools.Select);
   const [currentModel, setCurrentModel] = useState<Model>({ ...initialModel });
@@ -181,7 +179,6 @@ export default function View({
           baseColor={baseColor}
           size={size}
           textures={textures}
-          canvasRef={canvasRef}
         />
       </Canvas>
 

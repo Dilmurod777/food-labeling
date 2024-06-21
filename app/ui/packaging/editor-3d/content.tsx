@@ -43,7 +43,6 @@ interface Props {
   baseColor: number[];
   size: number[];
   textures: CanvasTexture[];
-  canvasRef: Ref<HTMLCanvasElement>;
 }
 
 interface CurrentModel {
@@ -60,7 +59,6 @@ export default function Content({
   baseColor,
   size,
   textures,
-  canvasRef,
 }: Props) {
   const texture = useTexture("/uploads/image1.jpg");
   const [animationValue, setAnimationValue] = useState(0);
@@ -158,21 +156,9 @@ export default function Content({
           />
         );
       case "pouch-0":
-        return (
-          <PouchChipsModel
-            size={size}
-            baseColor={baseColor}
-            canvasRef={canvasRef}
-          />
-        );
+        return <PouchChipsModel size={size} baseColor={baseColor} />;
       case "pouch-1":
-        return (
-          <BagCoffeeModel
-            size={size}
-            baseColor={baseColor}
-            canvasRef={canvasRef}
-          />
-        );
+        return <BagCoffeeModel size={size} baseColor={baseColor} />;
       case "sachet-0":
         return <SachetDrinkModel size={size} baseColor={baseColor} />;
       case "sachet-1":

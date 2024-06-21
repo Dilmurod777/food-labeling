@@ -10,18 +10,16 @@ const modelPath = "/models/bag-coffee-2.glb";
 interface Props {
   size: number[];
   baseColor: number[];
-  canvasRef: Ref<HTMLCanvasElement>;
 }
 
 export function BagCoffeeModel({
   size = [1, 1, 1],
   baseColor = [34, 0, 82],
-  canvasRef,
 }: Props) {
   const { nodes, materials } = useGLTF(modelPath);
 
   // @ts-ignore
-  const canvasTexture = new THREE.CanvasTexture(canvasRef.current);
+  // const canvasTexture = new THREE.CanvasTexture(canvasRef.current);
 
   return (
     <group dispose={null}>
@@ -44,19 +42,19 @@ export function BagCoffeeModel({
           -0.047 * size[2] * 10,
         ]}
       >
-        <Decal
-          debug={true}
-          position={[0, 0.13, 0]}
-          rotation={[0, 0, 0]}
-          scale={[0.1, 0.25, 0.1]}
-        >
-          <meshBasicMaterial
-            polygonOffset
-            polygonOffsetFactor={-1}
-            map={canvasTexture}
-            transparent={true}
-          />
-        </Decal>
+        {/*<Decal*/}
+        {/*  debug={true}*/}
+        {/*  position={[0, 0.13, 0]}*/}
+        {/*  rotation={[0, 0, 0]}*/}
+        {/*  scale={[0.1, 0.25, 0.1]}*/}
+        {/*>*/}
+        {/*  <meshBasicMaterial*/}
+        {/*    polygonOffset*/}
+        {/*    polygonOffsetFactor={-1}*/}
+        {/*    map={canvasTexture}*/}
+        {/*    transparent={true}*/}
+        {/*  />*/}
+        {/*</Decal>*/}
       </mesh>
     </group>
   );

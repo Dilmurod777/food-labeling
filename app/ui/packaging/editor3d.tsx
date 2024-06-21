@@ -41,7 +41,6 @@ interface Props {
 export default function Editor3D({ model }: Props) {
   const [baseColor, setBaseColor] = useState(model.baseColor);
   const [size, setSize] = useState(model.sizes);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [selectedTextures, setSelectedTextures] = useState<CanvasTexture[]>([]);
 
   const GetModelLayout = (model: Model) => {
@@ -81,12 +80,7 @@ export default function Editor3D({ model }: Props) {
       }
       case "pouch-0": {
         return (
-          <PouchChipsLayout
-            model={model}
-            baseColor={baseColor}
-            size={size}
-            canvasRef={canvasRef}
-          />
+          <PouchChipsLayout model={model} baseColor={baseColor} size={size} />
         );
       }
       case "sachet-0": {
@@ -101,12 +95,7 @@ export default function Editor3D({ model }: Props) {
       }
       case "pouch-1": {
         return (
-          <BagCoffeeLayout
-            model={model}
-            baseColor={baseColor}
-            size={size}
-            canvasRef={canvasRef}
-          />
+          <BagCoffeeLayout model={model} baseColor={baseColor} size={size} />
         );
       }
       case "bag-0": {
@@ -235,7 +224,6 @@ export default function Editor3D({ model }: Props) {
             updateBaseColor={setBaseColor}
             size={size}
             textures={selectedTextures}
-            canvasRef={canvasRef}
           />
         </ResizablePanel>
       </ResizablePanelGroup>

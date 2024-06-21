@@ -6,15 +6,9 @@ interface Props {
   model: Model;
   baseColor: number[];
   size: number[];
-  canvasRef: Ref<HTMLCanvasElement>;
 }
 
-export default function BagCoffeeLayout({
-  model,
-  baseColor,
-  size,
-  canvasRef,
-}: Props) {
+export default function BagCoffeeLayout({ model, baseColor, size }: Props) {
   const base = 70;
   const width = size[0] * base;
   const height = size[1] * base * 3;
@@ -76,11 +70,11 @@ export default function BagCoffeeLayout({
               }}
             />
           </div>
-          <canvas
-            ref={canvasRef}
-            className={`absolute z-10`}
-            style={{ width: `${4 * width + 15}px`, height: `${height + 15}px` }}
-          />
+          {/*<canvas*/}
+          {/*  ref={canvasRef}*/}
+          {/*  className={`absolute z-10`}*/}
+          {/*  style={{ width: `${4 * width + 15}px`, height: `${height + 15}px` }}*/}
+          {/*/>*/}
         </div>
       </div>
     </div>
