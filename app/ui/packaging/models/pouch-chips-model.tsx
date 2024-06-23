@@ -13,7 +13,7 @@ import { useThree, Vector3 } from "@react-three/fiber";
 import { CanvasEvents, CanvasTexture } from "@/app/lib/3d";
 import * as THREE from "three";
 
-const modelPath = "/models/pouch-chips-2.glb";
+const modelPath = "/models/pouch-chips.glb";
 
 interface Props {
   size: number[];
