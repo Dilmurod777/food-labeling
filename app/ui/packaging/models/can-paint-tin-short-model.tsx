@@ -7,7 +7,7 @@ import { GetHSV } from "@/app/lib/utilities";
 import * as THREE from "three";
 import { CanvasEvents } from "@/app/lib/3d";
 
-const modelPath = "/models/can-paint-tin-short-2.glb";
+const modelPath = "/models/can-paint-tin-short.glb";
 
 interface Props {
   size: number[];

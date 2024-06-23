@@ -165,7 +165,7 @@ export default function View({
         <Environment preset={"lobby"} />
         <CameraControls
           ref={cameraControlsRef}
-          minDistance={0}
+          minDistance={5}
           maxDistance={25}
         />
         {/*{GetCurrentControls()}*/}
