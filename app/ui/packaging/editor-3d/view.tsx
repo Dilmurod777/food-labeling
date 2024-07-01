@@ -159,7 +159,7 @@ export default function View({
       <Canvas
         shadows
         ref={exportCanvasRef}
-        gl={{ preserveDrawingBuffer: true }}
+        gl={{ preserveDrawingBuffer: true, antialias: true }}
         camera={{ position: [0, 2, 5], fov: 75 }}
       >
         <Environment preset={"lobby"} />

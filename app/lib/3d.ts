@@ -133,7 +133,7 @@ export const DefaultModelItems: Model[] = [
     description:
       "Telescoping boxes consist of a separate top, or top and bottom that fit over each other or a separate body. They can be produced in a number of unjoined or preglued styles and configurations.",
     badges: ["cardboard", "custom size"],
-    sizes: [3, 2, 0.75],
+    sizes: [1, 1, 1],
     baseColor: [34, 23, 60],
   },
   {

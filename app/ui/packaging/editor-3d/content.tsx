@@ -103,12 +103,9 @@ export default function Content({
       case "box-0":
         return (
           <BoxTelescopeModel
-            step={currentStep}
-            totalSteps={currentModel.totalSteps}
-            width={size[0]}
-            height={size[1]}
-            depth={size[2]}
+            size={size}
             baseColor={baseColor}
+            step={currentStep}
           />
         );
       case "box-1":
