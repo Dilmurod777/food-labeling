@@ -43,7 +43,7 @@ export default function TemplatesPanel({}: Props) {
       >
         <svg
           aria-hidden="true"
-          className="h-8 w-8 animate-spin fill-main-orange text-gray-200 dark:text-gray-600"
+          className="h-8 w-8 animate-spin fill-main text-gray-200 dark:text-gray-600"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +68,7 @@ export default function TemplatesPanel({}: Props) {
         <h1 className={"text-base/none font-bold"}>
           {convertTemplateGroupNameToTitle(group.name)}
         </h1>
-        <hr className={"border-main-orange"} />
+        <hr className={"border-main"} />
         <div className={"flex w-full flex-wrap gap-1"}>
           {group.images.map((image, i) => (
             <div
@@ -103,7 +103,7 @@ export default function TemplatesPanel({}: Props) {
   return (
     <div
       className={
-        "relative flex h-full w-24 flex-col gap-1 border-r border-r-main-orange p-1"
+        "relative flex h-full w-24 flex-col gap-1 border-r border-r-main p-1"
       }
     >
       {loading && RenderLoading()}
@@ -111,7 +111,7 @@ export default function TemplatesPanel({}: Props) {
         <>
           <div
             className={
-              "flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main-orange p-2"
+              "flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main p-2"
             }
             onClick={() => setShowPanel(showPanel != 0 ? 0 : -1)}
           >
@@ -120,7 +120,7 @@ export default function TemplatesPanel({}: Props) {
           </div>
           <div
             className={
-              "flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main-orange p-2"
+              "flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main p-2"
             }
             onClick={() => setShowPanel(showPanel != 1 ? 1 : -1)}
           >
@@ -129,7 +129,7 @@ export default function TemplatesPanel({}: Props) {
           </div>
           <div
             className={
-              "flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main-orange p-2"
+              "flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main p-2"
             }
             onClick={() => setShowPanel(showPanel != 2 ? 2 : -1)}
           >
@@ -142,7 +142,7 @@ export default function TemplatesPanel({}: Props) {
       {showPanel != -1 && (
         <div
           className={
-            "absolute bottom-0 left-[101%] top-0 z-10 h-full w-52 border-r-2 border-main-orange bg-[#fafafa]"
+            "absolute bottom-0 left-[101%] top-0 z-10 h-full w-52 border-r-2 border-main bg-[#fafafa]"
           }
         >
           {showPanel == 0 && (
@@ -156,7 +156,7 @@ export default function TemplatesPanel({}: Props) {
                 <h1 className={"text-base/none font-bold"}>Uploads</h1>
                 <label htmlFor="file-upload">
                   <IoIosAddCircleOutline
-                    className={"cursor-pointer text-2xl text-main-orange"}
+                    className={"cursor-pointer text-2xl text-main"}
                   />
                 </label>
                 <input
@@ -170,12 +170,12 @@ export default function TemplatesPanel({}: Props) {
                   }}
                 />
               </div>
-              <hr className={"border-main-orange"} />
+              <hr className={"border-main"} />
               <div className={"flex flex-wrap gap-1"}>
                 {uploads.length == 0 && (
                   <div
                     className={
-                      "flex h-full w-full justify-center py-2 text-sm font-bold text-main-orange/50"
+                      "flex h-full w-full justify-center py-2 text-sm font-bold text-main/50"
                     }
                   >
                     Empty

@@ -17,7 +17,7 @@ export default function NotAuthenticatedButtons() {
         key={"signup"}
         href={"/signup"}
         className={
-          "flex h-3/5 items-center rounded-md bg-main-green px-7 text-base font-bold text-white hover:bg-hover-main-green"
+          "flex h-3/5 items-center rounded-md bg-main px-7 text-base font-bold text-white hover:bg-hover-main"
         }
       >
         Sign up

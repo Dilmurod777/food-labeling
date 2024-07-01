@@ -30,7 +30,7 @@ export default function Title({
     <input
       type="text"
       className={
-        "h-[35px] w-[500px] rounded-md border-2 border-main-orange px-2 py-2 outline-0"
+        "h-[35px] w-[500px] rounded-md border-2 border-main px-2 py-2 outline-0"
       }
       onFocus={(e) => e.target.select()}
       onBlur={(e) => updateRecipeName(e.target.value)}
@@ -51,7 +51,7 @@ export default function Title({
       </h2>
       {editable && (
         <FaRegEdit
-          className={"cursor-pointer text-2xl text-main-orange"}
+          className={"cursor-pointer text-2xl text-main"}
           onClick={() => setEditing(true)}
         />
       )}

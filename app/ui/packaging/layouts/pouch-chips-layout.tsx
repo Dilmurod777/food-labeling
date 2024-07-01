@@ -144,13 +144,13 @@ export default function PouchChipsLayout({ model, baseColor, size }: Props) {
     <div className={"flex w-full flex-col items-center gap-8"}>
       <div className="flex h-fit w-full items-center justify-end">
         <div
-          className={`cursor-pointer rounded-bl-md rounded-tl-md border border-r-0 border-main-orange p-4 ${currentTab == TabKeys.Front ? "bg-main-orange text-white" : "bg-white text-main-orange"}`}
+          className={`cursor-pointer rounded-bl-md rounded-tl-md border border-r-0 border-main p-4 ${currentTab == TabKeys.Front ? "bg-main text-white" : "bg-white text-main"}`}
           onClick={() => setCurrentTab(TabKeys.Front)}
         >
           Front
         </div>
         <div
-          className={`cursor-pointer rounded-br-md rounded-tr-md border border-l-0 border-main-orange p-4 ${currentTab == TabKeys.Back ? "bg-main-orange text-white" : "bg-white text-main-orange"}`}
+          className={`cursor-pointer rounded-br-md rounded-tr-md border border-l-0 border-main p-4 ${currentTab == TabKeys.Back ? "bg-main text-white" : "bg-white text-main"}`}
           onClick={() => setCurrentTab(TabKeys.Back)}
         >
           Back

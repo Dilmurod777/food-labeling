@@ -53,7 +53,7 @@ export default function FormSubmitBtn({
         onClickHandler();
       }}
       className={
-        "flex cursor-pointer items-center justify-center gap-2 rounded-md bg-main-green px-4 py-2 text-sm font-normal text-white hover:bg-hover-main-green"
+        "flex cursor-pointer items-center justify-center gap-2 rounded-md bg-main px-4 py-2 text-sm font-normal text-white hover:bg-hover-main"
       }
     >
       {loading ? (

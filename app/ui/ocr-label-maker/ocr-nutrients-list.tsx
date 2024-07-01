@@ -29,15 +29,13 @@ export default function OCRNutrientsList({
           >
             <div className={"flex justify-between"}>
               <h3
-                className={`text-sm font-bold ${selectedNutrient == i ? "bg-main-orange text-white" : "transparent"}`}
+                className={`text-sm font-bold ${selectedNutrient == i ? "bg-main text-white" : "transparent"}`}
                 dangerouslySetInnerHTML={{
                   __html: title + `${unit ? ` (${unit})` : ""}`,
                 }}
               ></h3>
               <AiOutlineSelect
-                className={
-                  "cursor-pointer text-main-orange hover:text-hover-main-orange"
-                }
+                className={"cursor-pointer text-main hover:text-hover-main"}
                 onClick={() =>
                   setSelectedNutrient(selectedNutrient == i ? -1 : i)
                 }
@@ -46,7 +44,7 @@ export default function OCRNutrientsList({
             <input
               type={"number"}
               className={
-                "border border-main-gray px-2 py-2 text-sm outline-none focus-visible:border-main-orange"
+                "border border-main-gray px-2 py-2 text-sm outline-none focus-visible:border-main"
               }
               value={item.value}
               onChange={(e) => updateValue(i, e.target.valueAsNumber)}

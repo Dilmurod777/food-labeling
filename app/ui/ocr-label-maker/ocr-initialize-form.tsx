@@ -42,7 +42,7 @@ export default function OCRInitializeForm({ product, updateProduct }: Props) {
         />
 
         <Button
-          className={"bg-main-orange hover:bg-hover-main-orange"}
+          className={"bg-main hover:bg-hover-main"}
           onClick={() => {
             if (tagInputRef.current == null) return;
 

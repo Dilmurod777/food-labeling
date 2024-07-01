@@ -110,7 +110,7 @@ export default function MenuItems({ user }: Props) {
                         "flex flex-col items-start gap-0 px-4 py-2 text-sm hover:bg-[#f2f7fb]"
                       }
                     >
-                      <span className={"font-bold text-main-orange"}>
+                      <span className={"font-bold text-main"}>
                         {subItem.mainText}
                       </span>
                       {subItem.secondaryText && (

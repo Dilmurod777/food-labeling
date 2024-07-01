@@ -23,13 +23,13 @@ export default function OCRIngredientsList({
         <input
           ref={inputRef}
           className={
-            "w-full rounded-md border border-main-gray px-4 py-2 outline-none focus-visible:border-main-orange"
+            "w-full rounded-md border border-main-gray px-4 py-2 outline-none focus-visible:border-main"
           }
         />
 
         <div
           className={
-            "flex cursor-pointer items-center justify-center rounded-md bg-main-orange px-4 py-2 font-bold text-white hover:bg-hover-main-orange"
+            "flex cursor-pointer items-center justify-center rounded-md bg-main px-4 py-2 font-bold text-white hover:bg-hover-main"
           }
           onClick={() => {
             if (!inputRef.current) return;

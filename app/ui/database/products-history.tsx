@@ -122,7 +122,7 @@ export function ProductsHistory({
         return (
           <Link
             href={`/companies/${item.company_id}`}
-            className={"hover:text-main-orange"}
+            className={"hover:text-main"}
           >
             {row.getValue("name")}
           </Link>
@@ -302,7 +302,7 @@ export function ProductsHistory({
           </DialogTrigger>
 
           <Button
-            className={"flex gap-2 bg-main-green hover:bg-main-green"}
+            className={"flex gap-2 bg-main hover:bg-main"}
             type={"button"}
             onClick={() => {
               router.push("/companies/all");

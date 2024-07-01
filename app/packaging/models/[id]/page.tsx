@@ -85,11 +85,7 @@ export default function Page({ params }: { params: { id: string } }) {
         </Carousel>
       </div>
       <div className={"flex h-full w-full flex-col gap-4"}>
-        <h1
-          className={
-            "border-b border-b-main-orange pb-2 text-3xl/none font-bold"
-          }
-        >
+        <h1 className={"border-b border-b-main pb-2 text-3xl/none font-bold"}>
           {model.text}
         </h1>
         <p className={"text-base/5 font-normal"}>{model.description}</p>

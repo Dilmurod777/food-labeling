@@ -102,13 +102,11 @@ export default function GeneralPage({
       <div className={"mt-8 flex w-full"}>
         <div
           className={
-            "relative mr-4 flex w-4/12 flex-col items-start gap-4 border-r-2 border-main-orange pr-4"
+            "relative mr-4 flex w-4/12 flex-col items-start gap-4 border-r-2 border-main pr-4"
           }
         >
           <h2
-            className={
-              "w-full border-b-2 border-main-orange pb-2 text-3xl font-bold"
-            }
+            className={"w-full border-b-2 border-main pb-2 text-3xl font-bold"}
           >
             Packaging
           </h2>
@@ -216,9 +214,7 @@ export default function GeneralPage({
 
         <div className={"flex w-full flex-col gap-4"}>
           <h2
-            className={
-              "w-full border-b-2 border-main-orange pb-2 text-3xl font-bold"
-            }
+            className={"w-full border-b-2 border-main pb-2 text-3xl font-bold"}
           >
             Ingredients
           </h2>
@@ -226,7 +222,7 @@ export default function GeneralPage({
           <div className={"flex gap-4"}>
             <div
               className={
-                "flex cursor-pointer items-center justify-center gap-2 rounded-md bg-main-orange px-3 py-2 font-bold text-white hover:bg-hover-main-orange"
+                "flex cursor-pointer items-center justify-center gap-2 rounded-md bg-main px-3 py-2 font-bold text-white hover:bg-hover-main"
               }
               onClick={addIngredient}
             >
@@ -240,7 +236,7 @@ export default function GeneralPage({
                 type="text"
                 placeholder={"Enter ingredient name..."}
                 className={
-                  "w-full rounded-md border-2 border-main-gray px-2 py-2 pr-12 text-sm outline-none placeholder:text-sm placeholder:text-main-gray focus-within:border-main-orange"
+                  "w-full rounded-md border-2 border-main-gray px-2 py-2 pr-12 text-sm outline-none placeholder:text-sm placeholder:text-main-gray focus-within:border-main"
                 }
                 onFocus={(e) => e.target.select()}
                 onKeyDown={(e) => {
@@ -267,7 +263,7 @@ export default function GeneralPage({
 
               <div
                 className={
-                  "group absolute right-0 top-0 flex h-full w-10 cursor-pointer items-center justify-center rounded-r-md bg-main-orange text-xl text-white"
+                  "group absolute right-0 top-0 flex h-full w-10 cursor-pointer items-center justify-center rounded-r-md bg-main text-xl text-white"
                 }
                 onClick={translateIngredient}
               >
@@ -289,7 +285,7 @@ export default function GeneralPage({
                   <div
                     key={`suggestion-${i}`}
                     className={
-                      "w-full cursor-pointer rounded-md border border-main-orange bg-white px-2 py-0.5 text-xs text-main-orange hover:bg-main-orange hover:text-white"
+                      "w-full cursor-pointer rounded-md border border-main bg-white px-2 py-0.5 text-xs text-main hover:bg-main hover:text-white"
                     }
                     onClick={() => {
                       if (!inputRef.current) return;
@@ -331,7 +327,7 @@ export default function GeneralPage({
                   />
                   <div
                     className={
-                      "flex h-full w-full cursor-pointer items-center rounded-r-md border-l-2 border-main-orange pl-2 leading-none hover:bg-main-orange hover:text-white"
+                      "flex h-full w-full cursor-pointer items-center rounded-r-md border-l-2 border-main pl-2 leading-none hover:bg-main hover:text-white"
                     }
                     onClick={() => selectIngredient(perPage * page + i)}
                   >

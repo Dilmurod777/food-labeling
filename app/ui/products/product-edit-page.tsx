@@ -339,7 +339,7 @@ export default function ProductEditPage({ product, user }: Props) {
         <div className={"flex items-center"}>
           <div
             className={
-              "flex cursor-pointer items-center gap-2 rounded-md border-[1px] border-main-gray bg-white px-3 py-2 text-sm font-bold hover:bg-main-orange hover:text-white"
+              "flex cursor-pointer items-center gap-2 rounded-md border-[1px] border-main-gray bg-white px-3 py-2 text-sm font-bold hover:bg-main hover:text-white"
             }
             onClick={() => router.push("/dashboard")}
           >
@@ -349,13 +349,13 @@ export default function ProductEditPage({ product, user }: Props) {
 
           <div
             className={
-              "ml-4 flex items-center gap-4 border-l-2 border-main-orange pl-4"
+              "ml-4 flex items-center gap-4 border-l-2 border-main pl-4"
             }
           >
             {steps.map((step, i) => (
               <Fragment key={`step-${i}`}>
                 <div
-                  className={`flex cursor-pointer items-center justify-center gap-1 rounded-md border-2 border-main-gray px-4 py-2 font-bold hover:border-main-orange hover:bg-main-orange hover:text-white ${i == stepIndex ? "border-main-orange bg-main-orange text-white" : ""}`}
+                  className={`flex cursor-pointer items-center justify-center gap-1 rounded-md border-2 border-main-gray px-4 py-2 font-bold hover:border-main hover:bg-main hover:text-white ${i == stepIndex ? "border-main bg-main text-white" : ""}`}
                   onClick={() => setStepIndex(i)}
                 >
                   <span className={"text-lg"}>{step.icon}</span>
@@ -378,9 +378,9 @@ export default function ProductEditPage({ product, user }: Props) {
 
         <div
           className={
-            `flex cursor-pointer items-center rounded-full border-2 px-2 py-2 text-lg hover:border-main-orange hover:text-main-orange ` +
-            `${savingState == SavingState.NotSaved ? "border-main-orange text-main-orange " : ""}` +
-            `${savingState == SavingState.Saving ? "animate-pulse border-main-orange text-main-orange " : ""}` +
+            `flex cursor-pointer items-center rounded-full border-2 px-2 py-2 text-lg hover:border-main hover:text-main ` +
+            `${savingState == SavingState.NotSaved ? "border-main text-main " : ""}` +
+            `${savingState == SavingState.Saving ? "animate-pulse border-main text-main " : ""}` +
             `${savingState == SavingState.Saved ? "border-main-gray text-main-gray" : ""}`
           }
           onClick={saveRecipeToDB}

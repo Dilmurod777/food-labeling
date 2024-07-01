@@ -163,7 +163,7 @@ export default function NutritionStatementPage({
                   min={0}
                   id={input.key.toString()}
                   className={
-                    "w-full rounded-md border-2 border-main-gray px-2 py-2 text-sm outline-none focus-within:border-main-orange"
+                    "w-full rounded-md border-2 border-main-gray px-2 py-2 text-sm outline-none focus-within:border-main"
                   }
                   defaultValue={product[input.key].toString()}
                   onFocus={(e) => e.target.select()}
@@ -204,11 +204,11 @@ export default function NutritionStatementPage({
         <Tags recipe={product} updateProduct={updateProduct} editable={false} />
       </div>
 
-      <hr className={"border-main-orange"} />
+      <hr className={"border-main"} />
 
       {renderInputsList(Object.values(requiredInputs), true)}
 
-      <hr className={"border-main-orange"} />
+      <hr className={"border-main"} />
 
       {renderInputsList(Object.values(nonRequiredInputs), false)}
     </div>

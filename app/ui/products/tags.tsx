@@ -65,7 +65,7 @@ export default function Tags({
             <input
               type="text"
               className={
-                "peer h-full w-[200px] rounded-md border-2 border-main-orange py-1 pl-6 pr-1 text-xs outline-0"
+                "peer h-full w-[200px] rounded-md border-2 border-main py-1 pl-6 pr-1 text-xs outline-0"
               }
               onBlur={(e) => addTag(e.target.value)}
               onFocus={(e) => e.target.select()}
@@ -78,15 +78,13 @@ export default function Tags({
               placeholder={"my tag"}
             />
             <FaTags
-              className={
-                "absolute left-2 top-1/2 mt-[2px] text-sm text-main-orange"
-              }
+              className={"absolute left-2 top-1/2 mt-[2px] text-sm text-main"}
               style={{ transform: "translateY(-50%)" }}
             />
           </div>
         ) : tags.length ? (
           <FaPlus
-            className={"cursor-pointer text-lg text-main-orange"}
+            className={"cursor-pointer text-lg text-main"}
             onClick={() => setEditing(true)}
           />
         ) : (
@@ -94,8 +92,8 @@ export default function Tags({
             className={"flex h-[25px] cursor-pointer items-center gap-2"}
             onClick={() => setEditing(true)}
           >
-            <FaTags className={"text-lg text-main-orange"} />
-            <span className={"text-sm text-main-orange"}>Add Tags...</span>
+            <FaTags className={"text-lg text-main"} />
+            <span className={"text-sm text-main"}>Add Tags...</span>
           </div>
         ))}
     </div>

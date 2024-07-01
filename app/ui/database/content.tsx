@@ -259,7 +259,7 @@ export default function Content({
           onValueChange={(v) => setCurrentTab(v)}
         >
           <ScrollArea>
-            <TabsList className="flex justify-start gap-4 bg-main-orange">
+            <TabsList className="flex justify-start gap-4 bg-main">
               <TabsTrigger
                 value={initialTab}
                 className={"w-28"}
@@ -272,7 +272,7 @@ export default function Content({
                   <TabsTrigger
                     value={id}
                     disabled={savingAll}
-                    className={`flex w-40 justify-between gap-2 border pl-2 pr-1 ${currentTab == id ? "border-main-orange" : "border-white"}`}
+                    className={`flex w-40 justify-between gap-2 border pl-2 pr-1 ${currentTab == id ? "border-main" : "border-white"}`}
                   >
                     <span>
                       {fileTabs[id].updating
@@ -283,7 +283,7 @@ export default function Content({
                     </span>
                   </TabsTrigger>
                   <IoMdClose
-                    className={`absolute right-2 top-1/2 -translate-y-[50%] cursor-pointer text-xl ${currentTab == id ? "text-main-orange" : "text-white"}`}
+                    className={`absolute right-2 top-1/2 -translate-y-[50%] cursor-pointer text-xl ${currentTab == id ? "text-main" : "text-white"}`}
                     onClick={() => {
                       if (currentTab == id) setCurrentTab(initialTab);
                       delete fileTabs[id];
@@ -425,7 +425,7 @@ export default function Content({
                 <Button
                   onClick={downloadFileHandler}
                   disabled={downloading}
-                  className={"bg-main-green hover:bg-hover-main-green"}
+                  className={"bg-main hover:bg-hover-main"}
                 >
                   Download as CSV
                 </Button>

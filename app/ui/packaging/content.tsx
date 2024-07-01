@@ -31,7 +31,7 @@ export default function Content() {
 
           <Button
             onClick={() => router.push("/packaging/models")}
-            className={"w-fit bg-main-orange hover:bg-hover-main-orange"}
+            className={"w-fit bg-main hover:bg-hover-main"}
           >
             Get Started
           </Button>
@@ -42,7 +42,7 @@ export default function Content() {
 
       <div
         className={
-          "flex w-full flex-col items-center justify-center gap-12 bg-main-orange px-12 pb-16 pt-24"
+          "flex w-full flex-col items-center justify-center gap-12 bg-main px-12 pb-16 pt-24"
         }
       >
         <div className={"flex items-start justify-center gap-8"}>
@@ -94,7 +94,7 @@ export default function Content() {
 
         <Button
           onClick={() => router.push("/packaging/models")}
-          className={"w-fit bg-white text-main-orange hover:bg-gray-100"}
+          className={"w-fit bg-white text-main hover:bg-gray-100"}
         >
           See all packages
         </Button>

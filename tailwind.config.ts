@@ -27,6 +27,8 @@ const config = {
         "secondary-gray": "#3f4a56",
         "main-orange": "#fb9e1c",
         "hover-main-orange": "#e28503",
+        main: "#39c0c2",
+        "hover-main": "#2f9c9e",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

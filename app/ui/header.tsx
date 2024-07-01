@@ -13,7 +13,7 @@ export default async function Header() {
       <div className={"flex h-full justify-start gap-3"}>
         <Link href={"/"} className={"mr-3 flex items-center justify-center"}>
           <Image
-            src={"/logo.png"}
+            src={"/logo-3.png"}
             alt={"Logo"}
             width={80}
             height={80}

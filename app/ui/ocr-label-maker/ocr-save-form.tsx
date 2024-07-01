@@ -113,7 +113,7 @@ export default function OCRSaveForm({
 
       <Button
         onClick={saveHandler}
-        className={"mt-6 w-fit bg-main-orange hover:bg-hover-main-orange"}
+        className={"mt-6 w-fit bg-main hover:bg-hover-main"}
       >
         {saving ? "Saving..." : "Save"}
       </Button>

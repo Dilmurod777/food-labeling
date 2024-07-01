@@ -10,7 +10,7 @@ export default function FAQ({ items = defaultItems }: { items?: FAQItem[] }) {
     >
       <h2 className={"text-4xl font-bold"}>Frequently asked questions</h2>
 
-      <div className={"mb-12 mt-6 h-[8px] w-[85px] bg-main-orange"} />
+      <div className={"mb-12 mt-6 h-[8px] w-[85px] bg-main"} />
 
       <div className={"flex flex-col gap-6"}>
         {items.map((item: FAQItem, i) => (
@@ -21,7 +21,7 @@ export default function FAQ({ items = defaultItems }: { items?: FAQItem[] }) {
               boxShadow: "0 0.5em 1em -0.125em #0a0a0a1a, 0 0 0 1px #0a0a0a05",
             }}
           >
-            <h3 className={"mb-3 text-lg font-extrabold text-main-orange"}>
+            <h3 className={"mb-3 text-lg font-extrabold text-main"}>
               {item.question}
             </h3>
 

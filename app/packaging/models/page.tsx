@@ -43,7 +43,7 @@ export default function Page() {
       <div
         key={`model-${model.category}-${model.id}`}
         className={
-          "relative flex h-64 w-40 flex-col items-center overflow-hidden rounded-md border border-main-orange"
+          "relative flex h-64 w-40 flex-col items-center overflow-hidden rounded-md border border-main"
         }
       >
         <div className={"relative mt-10 h-[70%] w-[90%]"}>
@@ -68,9 +68,7 @@ export default function Page() {
         >
           <p className={"text-center text-sm/none"}>{model.text}</p>
           <AiOutlineSelect
-            className={
-              "cursor-pointer text-main-orange hover:text-hover-main-orange"
-            }
+            className={"cursor-pointer text-main hover:text-hover-main"}
             onClick={() => router.push(`/packaging/models/${model.id}`)}
           />
         </div>
@@ -95,7 +93,7 @@ export default function Page() {
           <>
             <CiCircleInfo
               className={
-                "peer absolute bottom-0 right-1 top-1 cursor-pointer text-xl text-main-orange"
+                "peer absolute bottom-0 right-1 top-1 cursor-pointer text-xl text-main"
               }
             />
             <div

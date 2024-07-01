@@ -77,7 +77,7 @@ export default function IngredientForm({ ingredient, updateItem }: Props) {
                   type={input.type}
                   id={input.key.toString()}
                   className={
-                    "w-full rounded-md border-2 border-main-gray px-2 py-2 text-sm outline-none focus-within:border-main-orange"
+                    "w-full rounded-md border-2 border-main-gray px-2 py-2 text-sm outline-none focus-within:border-main"
                   }
                   defaultValue={ingredient[input.key]?.toString() || ""}
                   onFocus={(e) => e.target.select()}

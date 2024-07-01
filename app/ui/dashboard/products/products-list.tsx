@@ -41,7 +41,7 @@ export default function RecipeList({ items, user }: Props) {
         </h2>
         <IoMdRefreshCircle
           className={
-            "cursor-pointer text-4xl font-bold text-main-orange hover:text-hover-main-orange"
+            "cursor-pointer text-4xl font-bold text-main hover:text-hover-main"
           }
           onClick={() => router.refresh()}
         />
@@ -60,9 +60,7 @@ export default function RecipeList({ items, user }: Props) {
       </div>
       <div className={"mt-4 flex flex-col"}>
         <table className={"w-full border-2 border-main-gray text-left text-sm"}>
-          <thead
-            className={"border-b-2 border-main-gray bg-main-orange text-white"}
-          >
+          <thead className={"border-b-2 border-main-gray bg-main text-white"}>
             <tr
               className={
                 "border-main-gray *:h-[45px] *:border-l-2 *:px-2 *:py-2 last:*:border-none"

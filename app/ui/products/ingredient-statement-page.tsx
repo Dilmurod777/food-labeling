@@ -57,7 +57,7 @@ export default function IngredientStatementPage({
       <div className={"flex"}>
         <div
           className={
-            "relative mr-4 flex w-3/12 flex-col items-start gap-4 border-r-2 border-main-orange pr-4"
+            "relative mr-4 flex w-3/12 flex-col items-start gap-4 border-r-2 border-main pr-4"
           }
         >
           {items.map((item, i) => {
@@ -65,8 +65,8 @@ export default function IngredientStatementPage({
               <div
                 key={`ingredient-${i}`}
                 className={
-                  `w-full cursor-pointer rounded-md border-2 border-main-gray px-3 py-3 text-sm font-normal leading-none text-black hover:border-main-orange hover:bg-main-orange hover:text-white ` +
-                  `${i == activeItemIndex ? "cursor-default border-main-orange bg-main-orange text-white" : ""}`
+                  `w-full cursor-pointer rounded-md border-2 border-main-gray px-3 py-3 text-sm font-normal leading-none text-black hover:border-main hover:bg-main hover:text-white ` +
+                  `${i == activeItemIndex ? "cursor-default border-main bg-main text-white" : ""}`
                 }
                 onClick={() => {
                   if (i == activeItemIndex) return;

@@ -328,7 +328,7 @@ export default function SubmitForm({ user }: Props) {
         className={"flex w-full select-none items-center justify-center gap-4"}
       >
         <Button
-          className={"bg-main-orange hover:bg-hover-main-orange"}
+          className={"bg-main hover:bg-hover-main"}
           onClick={() => updateStep(-1)}
           disabled={step - 1 < StepType.Initialize}
         >
@@ -336,14 +336,14 @@ export default function SubmitForm({ user }: Props) {
         </Button>
         {GetStepTitle()}
         <Button
-          className={"bg-main-orange hover:bg-hover-main-orange"}
+          className={"bg-main hover:bg-hover-main"}
           onClick={() => updateStep(1)}
           disabled={step + 1 > StepType.Save || product.name == ""}
         >
           Next
         </Button>
       </div>
-      <hr className={"w-full border border-main-orange"} />
+      <hr className={"w-full border border-main"} />
       {step == StepType.Initialize && (
         <OCRInitializeForm product={product} updateProduct={setProduct} />
       )}
@@ -381,7 +381,7 @@ export default function SubmitForm({ user }: Props) {
         >
           <svg
             aria-hidden="true"
-            className="h-8 w-8 animate-spin fill-main-orange text-white"
+            className="h-8 w-8 animate-spin fill-main text-white"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

@@ -416,7 +416,7 @@ export default function LabelPage({
 
           <div
             className={
-              "mt-4 flex flex-col gap-4 *:relative *:pl-2 *:after:absolute *:after:-bottom-3 *:after:-left-2 *:after:h-[1px] *:after:w-8/12 *:after:bg-main-orange"
+              "mt-4 flex flex-col gap-4 *:relative *:pl-2 *:after:absolute *:after:-bottom-3 *:after:-left-2 *:after:h-[1px] *:after:w-8/12 *:after:bg-main"
             }
           >
             <div className={"flex flex-col items-start gap-1"}>
@@ -632,7 +632,7 @@ export default function LabelPage({
                 name="brand"
                 id="brand"
                 className={
-                  "h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main-orange"
+                  "h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main"
                 }
                 placeholder={"Product brand"}
                 defaultValue={brand}
@@ -651,7 +651,7 @@ export default function LabelPage({
                 name="best_before"
                 id="best_before"
                 className={
-                  "h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main-orange"
+                  "h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main"
                 }
                 placeholder={"Printed on the Package"}
                 defaultValue={best_before}
@@ -670,7 +670,7 @@ export default function LabelPage({
                 name="company"
                 id="company"
                 className={
-                  "h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main-orange"
+                  "h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main"
                 }
                 placeholder={"Brand owner"}
                 defaultValue={company}
@@ -689,7 +689,7 @@ export default function LabelPage({
                 name="manufacturer"
                 id="manufacturer"
                 className={
-                  "h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main-orange"
+                  "h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main"
                 }
                 placeholder={"Manufacturer"}
                 defaultValue={manufacturer}
@@ -709,7 +709,7 @@ export default function LabelPage({
                 name="address"
                 id="address"
                 className={
-                  "h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main-orange"
+                  "h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main"
                 }
                 placeholder={"123 Tasty Way, New York, NY 10036"}
                 defaultValue={address}
@@ -730,7 +730,7 @@ export default function LabelPage({
                   <div
                     key={`address-search-result-${i}`}
                     className={
-                      "z-10 flex w-8/12 cursor-pointer items-center gap-2 border border-b-0 border-main-gray bg-white px-2 py-2 text-xs font-bold text-black last:border-b hover:bg-main-orange hover:text-white"
+                      "z-10 flex w-8/12 cursor-pointer items-center gap-2 border border-b-0 border-main-gray bg-white px-2 py-2 text-xs font-bold text-black last:border-b hover:bg-main hover:text-white"
                     }
                     onClick={() => {
                       setAddress(addr.address_name);
@@ -756,7 +756,7 @@ export default function LabelPage({
                 name="country"
                 id="country"
                 className={
-                  "h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main-orange"
+                  "h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main"
                 }
                 placeholder={"South Korea"}
                 defaultValue={country}
@@ -778,7 +778,7 @@ export default function LabelPage({
                 name="prepare_instructions"
                 id="prepare_instructions"
                 className={
-                  "min-h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main-orange"
+                  "min-h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main"
                 }
                 placeholder={"Prepare Instructions"}
                 defaultValue={prepareInstructions}
@@ -800,7 +800,7 @@ export default function LabelPage({
                 name="storage_instructions"
                 id="storage_instructions"
                 className={
-                  "min-h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main-orange"
+                  "min-h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main"
                 }
                 placeholder={"Storage Instructions"}
                 defaultValue={storageInstructions}
@@ -819,7 +819,7 @@ export default function LabelPage({
                 name="comments"
                 id="comments"
                 className={
-                  "min-h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main-orange"
+                  "min-h-[40px] w-[300px] rounded-md border border-main-gray p-2 text-sm outline-none placeholder:text-sm focus-within:border-main"
                 }
                 placeholder={"Comments"}
                 defaultValue={comments}
@@ -850,7 +850,7 @@ export default function LabelPage({
 
             <div
               className={
-                "cursor-pointer self-end rounded-md bg-main-green px-6 py-4 text-white hover:bg-hover-main-green"
+                "cursor-pointer self-end rounded-md bg-main px-6 py-4 text-white hover:bg-hover-main"
               }
               onClick={downloadProduct}
             >

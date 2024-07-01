@@ -168,7 +168,7 @@ export default function Editor3D({ model }: Props) {
         >
           <div
             className={
-              "flex w-full items-center justify-between gap-2 border-b border-b-main-orange pb-2"
+              "flex w-full items-center justify-between gap-2 border-b border-b-main pb-2"
             }
           >
             <div className={"flex items-center gap-4"}>
@@ -177,7 +177,7 @@ export default function Editor3D({ model }: Props) {
                 <PopoverTrigger asChild>
                   <p
                     className={
-                      "cursor-pointer text-xl/none font-normal text-main-orange"
+                      "cursor-pointer text-xl/none font-normal text-main"
                     }
                   >
                     {size.join("x")}

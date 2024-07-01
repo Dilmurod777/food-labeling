@@ -100,10 +100,7 @@ export default function Content({ companies }: Props) {
       cell: ({ row }) => {
         const item = row.original;
         return (
-          <Link
-            href={`/companies/${item.id}`}
-            className={"hover:text-main-orange"}
-          >
+          <Link href={`/companies/${item.id}`} className={"hover:text-main"}>
             {row.getValue("name")}
           </Link>
         );

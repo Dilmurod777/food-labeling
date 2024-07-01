@@ -149,9 +149,9 @@ export default function CameraPresetsMenu({
                   className={`peer cursor-pointer p-1 hover:bg-gray-200`}
                   onClick={() => menuItemHandle(item.text)}
                 >
-                  <div className={"relative h-8 w-8 text-main-orange"}>
+                  <div className={"relative h-8 w-8 text-main"}>
                     <Image
-                      className={"text-main-orange"}
+                      className={"text-main"}
                       src={`/camera-presets/${item.icon}`}
                       alt={convertCameraPresetTextToTitle(item.text)}
                       fill
@@ -162,7 +162,7 @@ export default function CameraPresetsMenu({
               </TooltipTrigger>
               <TooltipContent
                 side={"left"}
-                className={"border-0 bg-main-orange text-white outline-none"}
+                className={"border-0 bg-main text-white outline-none"}
               >
                 <p>{convertCameraPresetTextToTitle(item.text)}</p>
               </TooltipContent>
@@ -178,7 +178,7 @@ export default function CameraPresetsMenu({
   return (
     <div
       className={
-        "bg-white1 absolute bottom-2 right-0 flex -translate-x-1/2 select-none items-center justify-center gap-2 rounded-md border border-main-orange"
+        "bg-white1 absolute bottom-2 right-0 flex -translate-x-1/2 select-none items-center justify-center gap-2 rounded-md border border-main"
       }
     >
       <div className={"relative"}>

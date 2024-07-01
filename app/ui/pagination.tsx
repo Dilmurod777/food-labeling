@@ -25,7 +25,7 @@ export default function Pagination({
       </span>
       <ul className="inline-flex h-8 -space-x-px text-sm *:flex *:h-8 *:items-center *:justify-center *:border *:border-main-gray *:px-3 *:leading-tight">
         <li
-          className={`rounded-l-lg ${page - 1 >= 0 ? "cursor-pointer bg-white text-black hover:bg-main-orange hover:text-white" : "cursor-not-allowed bg-main-gray text-gray-400"}`}
+          className={`rounded-l-lg ${page - 1 >= 0 ? "cursor-pointer bg-white text-black hover:bg-main hover:text-white" : "cursor-not-allowed bg-main-gray text-gray-400"}`}
           onClick={() => {
             if (page - 1 < 0) return;
             setPage(page - 1);
@@ -33,14 +33,11 @@ export default function Pagination({
         >
           Previous
         </li>
-        <li
-          className={"bg-main-orange text-white"}
-          onClick={() => setPage(page)}
-        >
+        <li className={"bg-main text-white"} onClick={() => setPage(page)}>
           {page + 1}
         </li>
         <li
-          className={`rounded-r-lg ${page + 1 < totalPages ? "cursor-pointer bg-white text-black hover:bg-main-orange hover:text-white" : "cursor-not-allowed bg-main-gray text-gray-400"}`}
+          className={`rounded-r-lg ${page + 1 < totalPages ? "cursor-pointer bg-white text-black hover:bg-main hover:text-white" : "cursor-not-allowed bg-main-gray text-gray-400"}`}
           onClick={() => {
             if (page + 1 >= totalPages) return;
             setPage(page + 1);

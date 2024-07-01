@@ -158,7 +158,7 @@ export default function BottomMenu({
             value={currentStep}
             min="0"
             max={currentModel.totalSteps}
-            className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-main-gray accent-main-orange"
+            className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-main-gray accent-main"
             onChange={(e) => updateCurrentStep(e.target.valueAsNumber)}
           />
         </div>
@@ -169,7 +169,7 @@ export default function BottomMenu({
           <div key={`3d-menu-item-${index}`} className={"relative"}>
             <PopoverTrigger
               asChild
-              className={`peer flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main-gray p-1 ${activeMenuItemIndex == index ? "bg-hover-main-orange text-white" : "bg-white text-main-orange hover:bg-main-orange hover:text-white"}`}
+              className={`peer flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main-gray p-1 ${activeMenuItemIndex == index ? "bg-hover-main text-white" : "bg-white text-main hover:bg-main hover:text-white"}`}
               onClick={() => menuItemHandle(index)}
             >
               <span className={"text-xl/none"}>{item.icon}</span>
@@ -196,7 +196,7 @@ export default function BottomMenu({
       return (
         <div key={`3d-menu-item-${index}`} className={"relative"}>
           <div
-            className={`peer flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main-gray p-1 ${activeMenuItemIndex == index ? "bg-hover-main-orange text-white" : "bg-white text-main-orange hover:bg-main-orange hover:text-white"}`}
+            className={`peer flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-main-gray p-1 ${activeMenuItemIndex == index ? "bg-hover-main text-white" : "bg-white text-main hover:bg-main hover:text-white"}`}
             onClick={() => menuItemHandle(index)}
           >
             <span className={"text-xl/none"}>{item.icon}</span>
@@ -245,7 +245,7 @@ export default function BottomMenu({
       >
         <div
           className={
-            "absolute bottom-2 left-1/2 flex -translate-x-1/2 items-center justify-center gap-2 rounded-md border border-main-orange bg-white px-2 py-1"
+            "absolute bottom-2 left-1/2 flex -translate-x-1/2 items-center justify-center gap-2 rounded-md border border-main bg-white px-2 py-1"
           }
         >
           <div className={"relative"}>

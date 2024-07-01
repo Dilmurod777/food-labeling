@@ -38,7 +38,7 @@ export default function Footer() {
       <div className={"flex items-stretch justify-between"}>
         <div className={"flex basis-1/4 flex-col items-start justify-center"}>
           <Image
-            src={"/logo.png"}
+            src={"/logo-3.png"}
             alt={"logo"}
             width={100}
             height={100}

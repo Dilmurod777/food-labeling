@@ -21,7 +21,7 @@ export default function OptionWrapper({
     <div className={"flex select-none flex-col"}>
       <div
         className={
-          "flex cursor-pointer items-center justify-between rounded-t-md bg-main-orange px-4 py-3 text-white *:leading-none hover:bg-hover-main-orange"
+          "flex cursor-pointer items-center justify-between rounded-t-md bg-main px-4 py-3 text-white *:leading-none hover:bg-hover-main"
         }
         onClick={() => onClick()}
       >

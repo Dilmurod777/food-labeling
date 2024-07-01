@@ -173,19 +173,19 @@ export default function CanPaintingTinShortLayout({
     <div className={"flex w-full flex-col items-center gap-8"}>
       <div className="flex h-fit w-full items-center justify-end">
         <div
-          className={`cursor-pointer rounded-bl-md rounded-tl-md border border-r-0 border-main-orange p-4 ${currentTab == TabKeys.Side1 ? "bg-main-orange text-white" : "bg-white text-main-orange"}`}
+          className={`cursor-pointer rounded-bl-md rounded-tl-md border border-r-0 border-main p-4 ${currentTab == TabKeys.Side1 ? "bg-main text-white" : "bg-white text-main"}`}
           onClick={() => setCurrentTab(TabKeys.Side1)}
         >
           Side Front
         </div>
         <div
-          className={`cursor-pointer border border-main-orange p-4 ${currentTab == TabKeys.Side2 ? "bg-main-orange text-white" : "bg-white text-main-orange"}`}
+          className={`cursor-pointer border border-main p-4 ${currentTab == TabKeys.Side2 ? "bg-main text-white" : "bg-white text-main"}`}
           onClick={() => setCurrentTab(TabKeys.Side2)}
         >
           Side Back
         </div>
         <div
-          className={`cursor-pointer rounded-br-md rounded-tr-md border border-l-0 border-main-orange p-4 ${currentTab == TabKeys.Top ? "bg-main-orange text-white" : "bg-white text-main-orange"}`}
+          className={`cursor-pointer rounded-br-md rounded-tr-md border border-l-0 border-main p-4 ${currentTab == TabKeys.Top ? "bg-main text-white" : "bg-white text-main"}`}
           onClick={() => setCurrentTab(TabKeys.Top)}
         >
           Top
