@@ -104,7 +104,7 @@ export default function Page({ params }: { params: { id: string } }) {
         </Select>
 
         <Button
-          className={"w-fit"}
+          className={"w-fit bg-main hover:bg-main"}
           onClick={() => {
             router.push(
               `/packaging/editor?model=${model.id}&size=${selectedSize}`,

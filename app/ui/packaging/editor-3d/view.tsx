@@ -153,7 +153,7 @@ export default function View({
 
   return (
     <div
-      className={"relative h-[700px] w-full flex-grow"}
+      className={"relative h-full w-full flex-grow"}
       style={{ cursor: GetCurrentCursor() }}
     >
       <Canvas
